@@ -77,16 +77,17 @@ def validate_block(old, new_date, new_yoy):
 def apply_block(state, key, new_date, new_yoy, source, source_url):
     old = state['blocks'][key]
     validate_block(old, new_date, new_yoy)
+    new_yoy = round(float(new_yoy), 4)
     ref = float(old['core_reference_yoy_pct'])
-    d, delta = direction(float(new_yoy), ref)
-    changed = new_date != old['latest_date'] or abs(float(new_yoy) - float(old['latest_yoy_pct'])) > 1e-6
+    d, delta = direction(new_yoy, ref)
+    changed = new_date != old['latest_date'] or new_yoy != round(float(old['latest_yoy_pct']), 4)
     if changed:
         old.update({
             'latest_date': new_date,
-            'latest_yoy_pct': round(float(new_yoy), 4),
+            'latest_yoy_pct': new_yoy,
             'direction_vs_core': d,
             'delta_vs_core_pp': delta,
-            'expanding_yoy': float(new_yoy) > 0,
+            'expanding_yoy': new_yoy > 0,
             'source': source,
             'source_url': source_url,
             'status': 'OK_VERIFIED_SCHEDULED'
@@ -190,14 +191,15 @@ def refresh_usd_translation(state):
     pct = (latest_v / ref_v - 1) * 100
     if not (-30 <= pct <= 30):
         raise ValueError(f'Dollar move sanity check failed: {pct}')
+    pct_rounded = round(pct, 2)
     old = state['usd_translation']
-    changed = latest_d.isoformat() != old.get('latest_verified') or abs(pct - float(old.get('pct_change_since_core', 0))) > 1e-6
+    changed = latest_d.isoformat() != old.get('latest_verified') or pct_rounded != round(float(old.get('pct_change_since_core', 0)), 2)
     if changed:
         old.update({
             'status': 'RESEARCH_VERIFIED_SCHEDULED',
             'latest_verified': latest_d.isoformat(),
-            'pct_change_since_core': round(pct, 2),
-            'translation': 'TAILWIND_WEAKER_USD' if pct < -1 else 'HEADWIND_STRONGER_USD' if pct > 1 else 'NEUTRAL',
+            'pct_change_since_core': pct_rounded,
+            'translation': 'TAILWIND_WEAKER_USD' if pct_rounded < -1 else 'HEADWIND_STRONGER_USD' if pct_rounded > 1 else 'NEUTRAL',
             'source': 'Federal Reserve / FRED Broad Dollar Index DTWEXBGS',
             'source_url': 'https://fred.stlouisfed.org/series/DTWEXBGS'
         })
@@ -222,7 +224,6 @@ def main():
         except Exception as e:
             results[name] = {'status': 'PRESERVED_LAST_VERIFIED', 'error': str(e)[:500]}
 
-    # China remains explicitly preserved until a stable official machine-readable parser is validated.
     results['china'] = {'status': 'PRESERVED_LAST_VERIFIED', 'reason': 'Stable official PBoC current-value machine parser not yet validated.'}
 
     now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
