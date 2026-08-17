@@ -1,0 +1,92 @@
+name: GMLI deploy to existing Vercel
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: gmli-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      VERCEL_ORG_ID: team_JWLznbfg7CaiWzanxHONivzH
+      VERCEL_PROJECT_ID: prj_Q1wLBL4qYx7KkJzhr24xeGAl0X3m
+      PROD_BASE: https://gmli-fred-dashboard.vercel.app
+    steps:
+      - name: Checkout GMLI only
+        uses: actions/checkout@v4
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Syntax and frozen-Core guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          find api lib -name '*.js' -print0 | xargs -0 -n1 node --check
+          grep -q "available_date: '2026-02-28'" lib/state.js
+          grep -q "usd_score: 65.70290344348" lib/state.js
+          grep -q "fxn_score: 43.01411281977772" lib/state.js
+          test ! -e makro-cockpit
+
+      - name: Require Vercel credential
+        shell: bash
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "VERCEL_TOKEN secret is not configured; refusing deployment."
+            exit 1
+          fi
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Bind exact existing GMLI project
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .vercel
+          printf '{"orgId":"%s","projectId":"%s"}\n' "$VERCEL_ORG_ID" "$VERCEL_PROJECT_ID" > .vercel/project.json
+
+      - name: Pull production settings
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build production artifact
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy exact prebuilt artifact
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+
+      - name: Smoke-test canonical endpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const base = process.env.PROD_BASE;
+          const paths = ['/api/status','/api/decision','/api/report','/api/money-nowcast'];
+          for (const path of paths) {
+            const r = await fetch(base + path, { cache: 'no-store' });
+            if (!r.ok) throw new Error(`${path} -> HTTP ${r.status}`);
+            const j = await r.json();
+            if (j?.error) throw new Error(`${path} -> ${j.error}`);
+            console.log('OK', path);
+          }
+          const s = await fetch(base + '/api/status', { cache: 'no-store' }).then(r => r.json());
+          if (s?.money?.available_date !== '2026-02-28') throw new Error('Frozen Core date changed unexpectedly');
+          const n = await fetch(base + '/api/money-nowcast', { cache: 'no-store' }).then(r => r.json());
+          if (n?.source_mode !== 'LIVE_OFFICIAL_WITH_LAST_VERIFIED_FALLBACK') throw new Error('Live Money freshness layer not active');
+          console.log('Frozen Core preserved; live freshness active.');
+          NODE
