@@ -1,5 +1,86 @@
 import { buildOpportunity } from '../lib/opportunity-engine.js';
 import { buildDecision } from '../lib/decision-engine.js';
 import { FROZEN_STATE } from '../lib/state.js';
-function buckets(assets){const accumulate=[],watch=[],dont_chase=[],limited=[];for(const[k,x]of Object.entries(assets||{})){const row={asset:k,asset_class:x.asset_class,evidence_tier:x.evidence_tier,strategic:x.strategic_eligibility.label,entry:x.entry_quality.label,action:x.action};if(/ACCUMULATE|SCALE-IN|SCALE IN SMALL/.test(x.action))accumulate.push(row);else if(/DO NOT CHASE/.test(x.action))dont_chase.push(row);else if(/INSUFFICIENT|NO VALIDATED/.test(x.action))limited.push(row);else watch.push(row);}return{accumulate,watch,dont_chase,limited};}
-export default async function handler(req,res){res.setHeader('Access-Control-Allow-Origin','*');res.setHeader('Cache-Control','public, max-age=0, must-revalidate');try{const opportunity=await buildOpportunity();const decision=await buildDecision(opportunity);const bs=buckets(opportunity.assets);const assets=Object.fromEntries(Object.entries(opportunity.assets).map(([k,x])=>[k,{asset_class:x.asset_class,evidence_tier:x.evidence_tier,transmission:x.transmission_relationship,strategic_eligibility:x.strategic_eligibility,dislocation:x.strategic_inputs.dislocation,positioning:x.entry_inputs.positioning,turn:x.entry_inputs.turn,entry_quality:x.entry_quality,action:x.action,triggers:x.triggers,backtest:x.backtest,freshness:{money:FROZEN_STATE.money.available_date,price:x.price_as_of,positioning:x.entry_inputs.positioning?.as_of||null}}]));return res.status(200).json({schema_version:'gmli-report-v1',engine_version:'GMLI 2.3',generated_at:new Date().toISOString(),meta:{canonical:true,purpose:'Primary ChatGPT/analyst decision contract',raw_endpoints:['/api/status','/api/decision','/api/opportunity','/api/positioning','/api/money-nowcast'],warnings:[`Frozen Money Core is stale (${FROZEN_STATE.money.available_date}).`,`RESEARCH/OVERLAY signals never replace CORE.`]},regime:{engine_fact:{money:decision.money},current_research_inference:{label:decision.regime.label,tilt:decision.regime.tilt,provisional:true,money_nowcast:decision.money_nowcast,funding:decision.funding,market_confirmation:decision.market_confirmation},conviction:decision.conviction,freshness:decision.freshness},opportunity_summary:bs,assets,conflicts:[{type:'MONEY_DIVERGENCE',detail:`USD ${decision.money.usd_score} ${decision.money.usd_regime} vs FX-neutral ${decision.money.fx_neutral_score} ${decision.money.fx_neutral_regime}.`},...(opportunity.positioning.error?[{type:'POSITIONING_SOURCE',detail:opportunity.positioning.error}]:[])],research_gaps:['Exact live accel3 transmission migration remains pending; current Opportunity uses promoted relationship priors plus current Money channel.','HYG needs a reproducible long-history credit-spread series for the pre-specified 60M test.','VNQ/VEA need better fundamental dislocation models; current relative-price measures are context-only.','BTC needs a validated BTC-specific dislocation model before any accumulation label.']});}catch(e){return res.status(500).json({error:e.message,endpoint:'/api/report'});}}
+
+function buckets(assets) {
+  const accumulate = [], watch = [], dont_chase = [], limited = [];
+  for (const [k, x] of Object.entries(assets || {})) {
+    const row = { asset:k, asset_class:x.asset_class, evidence_tier:x.evidence_tier, strategic:x.strategic_eligibility.label, entry:x.entry_quality.label, action:x.action };
+    if (/ACCUMULATE|SCALE-IN|SCALE IN SMALL/.test(x.action)) accumulate.push(row);
+    else if (/DO NOT CHASE/.test(x.action)) dont_chase.push(row);
+    else if (/INSUFFICIENT|NO VALIDATED/.test(x.action)) limited.push(row);
+    else watch.push(row);
+  }
+  return { accumulate, watch, dont_chase, limited };
+}
+
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin','*');
+  res.setHeader('Cache-Control','public, max-age=0, must-revalidate');
+  try {
+    const opportunity = await buildOpportunity();
+    const decision = await buildDecision(opportunity);
+    const bs = buckets(opportunity.assets);
+    const assets = Object.fromEntries(Object.entries(opportunity.assets).map(([k,x]) => [k, {
+      asset_class:x.asset_class,
+      evidence_tier:x.evidence_tier,
+      transmission:x.transmission_relationship,
+      strategic_eligibility:x.strategic_eligibility,
+      dislocation:x.strategic_inputs.dislocation,
+      positioning:x.entry_inputs.positioning,
+      turn:x.entry_inputs.turn,
+      entry_quality:x.entry_quality,
+      action:x.action,
+      triggers:x.triggers,
+      backtest:x.backtest,
+      freshness:{ money:FROZEN_STATE.money.available_date, price:x.price_as_of, positioning:x.entry_inputs.positioning?.as_of || null }
+    }]));
+
+    return res.status(200).json({
+      schema_version:'gmli-report-v1.1',
+      engine_version:'GMLI 2.3.1',
+      generated_at:new Date().toISOString(),
+      meta:{
+        canonical:true,
+        purpose:'Primary ChatGPT/analyst decision contract',
+        raw_endpoints:['/api/status','/api/decision','/api/opportunity','/api/positioning','/api/money-nowcast'],
+        warnings:[
+          `Money specification is frozen, but the last formally validated Core vintage is stale (${FROZEN_STATE.money.available_date}).`,
+          `A newer production-source Money candidate exists (${FROZEN_STATE.money.promotion_candidate?.available_date || 'n/a'}) but remains RESEARCH until the promotion gate is fully reproducible.`,
+          'RESEARCH/OVERLAY signals never silently replace CORE.'
+        ]
+      },
+      methodology: decision.methodology,
+      regime:{
+        engine_fact:{ money:decision.money },
+        current_research_inference:{
+          label:decision.regime.label,
+          tilt:decision.regime.tilt,
+          provisional:true,
+          money_candidate:decision.money_candidate,
+          money_nowcast:decision.money_nowcast,
+          funding:decision.funding,
+          market_confirmation:decision.market_confirmation
+        },
+        conviction:decision.conviction,
+        freshness:decision.freshness
+      },
+      money_promotion_gate: decision.promotion_gate,
+      opportunity_summary:bs,
+      assets,
+      conflicts:[
+        { type:'MONEY_DIVERGENCE', detail:`Validated Core: USD ${decision.money.usd_score} ${decision.money.usd_regime} vs FX-neutral ${decision.money.fx_neutral_score} ${decision.money.fx_neutral_regime}.` },
+        ...(decision.money_candidate ? [{ type:'CORE_VINTAGE_LAG', detail:`Validated Core is ${decision.money.available_date}; production candidate is ${decision.money_candidate.available_date} and is not yet CORE.` }] : []),
+        ...(opportunity.positioning.error ? [{ type:'POSITIONING_SOURCE', detail:opportunity.positioning.error }] : [])
+      ],
+      research_gaps:[
+        'Reconstruct and checksum the frozen exact-ticker v1.2 runner, then execute the final v1.8b Core promotion rerun once. RBA DMABMS provenance and the locked +/-15% AU equivalence audit now pass.',
+        'HYG needs a reproducible long-history credit-spread series for the pre-specified 60M test.',
+        'VNQ/VEA need better fundamental dislocation models; current relative-price measures are context-only.',
+        'BTC needs a validated BTC-specific dislocation model before any accumulation label.'
+      ]
+    });
+  } catch(e) {
+    return res.status(500).json({ error:e.message, endpoint:'/api/report' });
+  }
+}
