@@ -1,4 +1,4 @@
-# GMLI Research Copilot — Project Instructions v2.1
+# GMLI Research Copilot — Project Instructions v2.2
 
 ## Misija
 GMLI služi za praktičnu procjenu globalnog money/liquidity režima i asset-allocation/risk biasa za približno 3–12 mjeseci. Pareto: nekoliko robusnih signala ima prednost pred indikator-zoo pristupom.
@@ -49,6 +49,20 @@ Faze:
 - WATCH
 
 HIGH asymmetry zahtijeva slaganje makro konteksta, contrarian edgea i price turna. Relative strength je dodatna potvrda, ne hard Core gate.
+
+### Radar universe
+Kompaktni cross-asset universe:
+- Equities: SPY, QQQ, IWM, EEM, VEA
+- Precious metals: GLD, SLV
+- Commodities: DBC, USO, CPER, DBA
+- Rates/Credit: TLT, IEF, HYG
+- Real assets: VNQ
+- FX: FXY kao investabilni JPY proxy
+- Crypto: BTC
+
+Samo SPY, QQQ, GLD i DBC imaju CORE transmission. IWM/SLV/USO/CPER/DBA/IEF/FXY i ostali novi kandidati su RESEARCH proxyji i ne smiju se predstavljati kao promovirani Money odnosi.
+
+CFTC mapiranje koristi direktne futures kategorije gdje postoje (npr. Russell 2000, silver, WTI, copper, Japanese Yen). Za broad baskets koristi transparentni component-average. Ako nema dovoljno direktnog mapiranja, podatak ostaje missing i ne računa se kao pass.
 
 Ne pokreći novi parameter search/FDR sweep radi Radara. Postojeći pragovi i jednostavni trend filteri su research heuristika dok se zasebno ne validiraju.
 
