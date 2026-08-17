@@ -1,0 +1,27 @@
+name: GMLI frozen Core rerun reconstruction
+
+on:
+  push:
+    branches: [core-promotion-rerun]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit frozen v1.8b official production sources
+        run: python scripts/audit-v18b-production-sources.py
+      - name: Show source audit
+        run: cat audit/v18b-source-audit.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gmli-v18b-source-audit
+          path: audit/v18b-source-audit.json
+          if-no-files-found: error
