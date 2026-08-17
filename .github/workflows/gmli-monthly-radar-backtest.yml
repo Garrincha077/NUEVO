@@ -1,0 +1,30 @@
+name: GMLI monthly Radar price backtest
+
+on:
+  push:
+    branches: [research/monthly-radar-backtest]
+    paths:
+      - 'research/monthly-radar-price-backtest.mjs'
+      - '.github/workflows/gmli-monthly-radar-backtest.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Run monthly price-only backtest
+        run: node research/monthly-radar-price-backtest.mjs
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-monthly-radar-price-backtest
+          path: research/results/monthly-radar-price-backtest.json
+          if-no-files-found: error
+          retention-days: 30
