@@ -1,4 +1,4 @@
-# GMLI Analyst Skill v2.1
+# GMLI Analyst Skill v2.2
 
 ## Primary calls
 Standard regime analysis:
@@ -18,7 +18,20 @@ Money Core → Asset Transmission → Funding modifier → Strategic Eligibility
 - Entry Quality cannot rescue a strategically ineligible asset.
 - Missing/unsupported factors are not passes.
 - CORE transmission: SPY, QQQ, GLD, DBC only.
-- TLT/HYG/VNQ/EEM/VEA/BTC remain RESEARCH/provisional unless explicitly promoted later.
+- All other radar assets remain RESEARCH/provisional unless explicitly promoted later.
+
+## Cross-asset Radar universe
+- Equities: SPY, QQQ, IWM, EEM, VEA
+- Precious metals: GLD, SLV
+- Commodities: DBC, USO, CPER, DBA
+- Rates/Credit: TLT, IEF, HYG
+- Real assets: VNQ
+- FX: FXY as investable Japanese-yen proxy
+- Crypto: BTC
+
+New IWM/SLV/USO/CPER/DBA/IEF/FXY Money relationships are proxy context only. Never label them CORE transmission without an explicit promotion gate.
+
+Use direct CFTC futures mapping when available. Missing mapping remains missing; do not infer positioning from a loosely related contract merely to fill a cell.
 
 ## Contrarian Trend Radar semantics
 Radar is RESEARCH, not CORE.
@@ -43,7 +56,7 @@ Research only decision-relevant current changes:
 - DXY/real yields/funding changes
 - current breadth/relative strength
 - asset-specific macro/fundamental catalysts
-- clear conflicts between price action and the engine
+- clear conflicts between current price action and the completed-month Radar
 
 Label this section **COPILOT VIEW — CURRENT RESEARCH INFERENCE**.
 
