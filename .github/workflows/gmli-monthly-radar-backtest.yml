@@ -8,6 +8,7 @@ on:
       - 'research/monthly-radar-price-benchmark.mjs'
       - 'research/monthly-radar-money-cftc-backtest.mjs'
       - 'research/monthly-radar-short-macro-backtest.mjs'
+      - 'research/monthly-radar-short-macro-baa-backtest.mjs'
       - 'research/monthly-radar-short-data-audit.mjs'
       - '.github/workflows/gmli-monthly-radar-backtest.yml'
   workflow_dispatch:
@@ -31,8 +32,8 @@ jobs:
         run: node research/monthly-radar-price-benchmark.mjs
       - name: Run Money and CFTC conditioned backtest
         run: node research/monthly-radar-money-cftc-backtest.mjs
-      - name: Run pre-specified macro short backtest
-        run: node research/monthly-radar-short-macro-backtest.mjs
+      - name: Run pre-specified macro short backtest with long-history BAA credit proxy
+        run: node research/monthly-radar-short-macro-baa-backtest.mjs
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
