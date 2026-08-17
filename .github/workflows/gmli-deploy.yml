@@ -1,6 +1,8 @@
 name: GMLI deploy to existing Vercel
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -34,21 +36,27 @@ jobs:
           grep -q "fxn_score: 43.01411281977772" lib/state.js
           test ! -e makro-cockpit
 
-      - name: Require Vercel credential
+      - name: Detect Vercel credential without exposing it
+        id: credential
         shell: bash
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           set -euo pipefail
-          if [ -z "${VERCEL_TOKEN:-}" ]; then
-            echo "VERCEL_TOKEN secret is not configured; refusing deployment."
-            exit 1
+          if [ -n "${VERCEL_TOKEN:-}" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+            echo "Vercel credential available."
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "No VERCEL_TOKEN secret. Production deploy will be safely skipped."
           fi
 
       - name: Install Vercel CLI
+        if: steps.credential.outputs.available == 'true'
         run: npm install --global vercel@latest
 
       - name: Bind exact existing GMLI project
+        if: steps.credential.outputs.available == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -56,21 +64,25 @@ jobs:
           printf '{"orgId":"%s","projectId":"%s"}\n' "$VERCEL_ORG_ID" "$VERCEL_PROJECT_ID" > .vercel/project.json
 
       - name: Pull production settings
+        if: steps.credential.outputs.available == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
 
       - name: Build production artifact
+        if: steps.credential.outputs.available == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel build --prod --token="$VERCEL_TOKEN"
 
       - name: Deploy exact prebuilt artifact
+        if: steps.credential.outputs.available == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
 
       - name: Smoke-test canonical endpoints
+        if: steps.credential.outputs.available == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -90,3 +102,7 @@ jobs:
           if (n?.source_mode !== 'LIVE_OFFICIAL_WITH_LAST_VERIFIED_FALLBACK') throw new Error('Live Money freshness layer not active');
           console.log('Frozen Core preserved; live freshness active.');
           NODE
+
+      - name: Safe no-credential result
+        if: steps.credential.outputs.available != 'true'
+        run: echo "GMLI source is ready and validated; Vercel production was not touched because no deploy credential is available."
