@@ -8,6 +8,7 @@ on:
       - 'research/monthly-radar-price-benchmark.mjs'
       - 'research/monthly-radar-money-cftc-backtest.mjs'
       - 'research/monthly-radar-short-macro-backtest.mjs'
+      - 'research/monthly-radar-short-data-audit.mjs'
       - '.github/workflows/gmli-monthly-radar-backtest.yml'
   workflow_dispatch:
 
@@ -22,6 +23,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - name: Audit macro data ranges
+        run: node research/monthly-radar-short-data-audit.mjs
       - name: Run monthly price-only backtest
         run: node research/monthly-radar-price-backtest.mjs
       - name: Add asset-matched benchmark and recent-sample control
