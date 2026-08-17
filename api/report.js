@@ -46,8 +46,8 @@ export default async function handler(req, res) {
         raw_endpoints:['/api/status','/api/decision','/api/opportunity','/api/positioning','/api/money-nowcast'],
         warnings:[
           `Money specification is frozen, but the last formally validated Core vintage is stale (${FROZEN_STATE.money.available_date}).`,
-          `A newer production-source Money candidate exists (${FROZEN_STATE.money.promotion_candidate?.available_date || 'n/a'}) but remains RESEARCH until the promotion gate is fully reproducible.`,
-          'RESEARCH/OVERLAY signals never silently replace CORE.'
+          `A newer production-source Money candidate exists (${FROZEN_STATE.money.promotion_candidate?.available_date || 'n/a'}) but remains RESEARCH: the final promotion audit is ${FROZEN_STATE.money.promotion_gate?.status || 'UNKNOWN'}.`,
+          'RBA DMABMS source purity passed; missing frozen Aug-15 input bytes prevent an honest exact rerun. RESEARCH/OVERLAY signals never silently replace CORE.'
         ]
       },
       methodology: decision.methodology,
@@ -71,10 +71,11 @@ export default async function handler(req, res) {
       conflicts:[
         { type:'MONEY_DIVERGENCE', detail:`Validated Core: USD ${decision.money.usd_score} ${decision.money.usd_regime} vs FX-neutral ${decision.money.fx_neutral_score} ${decision.money.fx_neutral_regime}.` },
         ...(decision.money_candidate ? [{ type:'CORE_VINTAGE_LAG', detail:`Validated Core is ${decision.money.available_date}; production candidate is ${decision.money_candidate.available_date} and is not yet CORE.` }] : []),
+        ...(FROZEN_STATE.money.promotion_gate?.status === 'BLOCKED_MISSING_FROZEN_INPUT_BYTES' ? [{ type:'CORE_PROMOTION_AUDIT', detail:'RBA blocker passed, but the exact Aug-15 macro matrix, adjusted-price mirror, original v1.2 exact-ticker runner and full56 baseline bytes were not preserved. Promotion remains fail-closed.' }] : []),
         ...(opportunity.positioning.error ? [{ type:'POSITIONING_SOURCE', detail:opportunity.positioning.error }] : [])
       ],
       research_gaps:[
-        'Reconstruct and checksum the frozen exact-ticker v1.2 runner, then execute the final v1.8b Core promotion rerun once. RBA DMABMS provenance and the locked +/-15% AU equivalence audit now pass.',
+        'Core promotion is audit-blocked by missing preserved Aug-15 frozen input bytes, not by RBA data. Do not rebuild those inputs from current/revised public vintages and call it the exact rerun; run the preserved checksummed contract only if the original bytes are recovered.',
         'HYG needs a reproducible long-history credit-spread series for the pre-specified 60M test.',
         'VNQ/VEA need better fundamental dislocation models; current relative-price measures are context-only.',
         'BTC needs a validated BTC-specific dislocation model before any accumulation label.'
