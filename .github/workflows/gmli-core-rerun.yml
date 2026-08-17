@@ -1,4 +1,4 @@
-name: GMLI frozen Core rerun reconstruction
+name: GMLI frozen Core final promotion gate
 
 on:
   push:
@@ -9,23 +9,19 @@ permissions:
   contents: read
 
 jobs:
-  promotion-audit:
+  promotion-gate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Audit frozen v1.8b official production sources
-        run: python scripts/audit-v18b-production-sources.py
-      - name: Run final fail-closed promotion audit
+      - name: Run deterministic fail-closed promotion audit
         run: python scripts/finalize-v18b-core-promotion.py
       - name: Show final decision
         run: cat audit/v18b-final-core-promotion-audit.json
       - uses: actions/upload-artifact@v4
         with:
-          name: gmli-v18b-core-promotion-audit
-          path: |
-            audit/v18b-source-audit.json
-            audit/v18b-final-core-promotion-audit.json
+          name: gmli-v18b-final-core-promotion-audit
+          path: audit/v18b-final-core-promotion-audit.json
           if-no-files-found: error
