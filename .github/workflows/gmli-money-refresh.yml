@@ -1,0 +1,64 @@
+name: GMLI validated Money freshness refresh
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/refresh-money-nowcast.py'
+      - '.github/workflows/gmli-money-refresh.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gmli-money-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GMLI
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Refresh only validated freshness sources
+        run: python scripts/refresh-money-nowcast.py
+
+      - name: Verify JavaScript after generated snapshot
+        run: |
+          node --check lib/nowcast-state.js
+          node --check lib/live-money-nowcast.js
+          node --check lib/decision-engine.js
+          grep -q "status: 'FROZEN_SPEC'" lib/state.js
+          grep -q "available_date: '2026-02-28'" lib/state.js
+
+      - name: Upload refresh audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-money-refresh-audit
+          path: audit/money-refresh-result.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Commit verified snapshot only when data changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- lib/nowcast-state.js; then
+            echo 'No verified Money data change; no deployment needed.'
+            exit 0
+          fi
+          git config user.name 'gmli-refresh-bot'
+          git config user.email 'gmli-refresh-bot@users.noreply.github.com'
+          git add lib/nowcast-state.js
+          git commit -m 'Refresh verified GMLI Money freshness snapshot'
+          git push origin HEAD:main
