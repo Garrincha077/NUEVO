@@ -1,0 +1,138 @@
+name: GMLI Core promotion audit
+
+on:
+  push:
+    branches: [core-promotion-audit]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rba-dmabms-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Materialize and validate official RBA D3 DMABMS
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          python3 - <<'PY'
+          import csv, io, json, re, urllib.request, datetime, pathlib
+
+          URL = 'https://www.rba.gov.au/statistics/tables/csv/d3-data.csv'
+          SERIES = 'DMABMS'
+          raw = urllib.request.urlopen(URL, timeout=30).read()
+          pathlib.Path('audit/rba-d3-raw.csv').write_bytes(raw)
+
+          text = None
+          for enc in ('utf-8-sig','utf-8','cp1252','latin-1'):
+              try:
+                  text = raw.decode(enc)
+                  break
+              except UnicodeDecodeError:
+                  pass
+          if text is None:
+              raise SystemExit('Could not decode RBA D3 CSV')
+
+          rows = list(csv.reader(io.StringIO(text)))
+          hit = None
+          for ri,row in enumerate(rows):
+              for ci,cell in enumerate(row):
+                  if cell.strip() == SERIES:
+                      hit = (ri,ci)
+                      break
+              if hit: break
+          if not hit:
+              for i,row in enumerate(rows[:30]): print('ROW',i,row[:12])
+              raise SystemExit(f'{SERIES} not found in RBA D3 CSV')
+          header_row, col = hit
+          print('DMABMS_HEADER_ROW', header_row, 'COLUMN', col)
+          for i in range(max(0,header_row-5), min(len(rows),header_row+6)):
+              print('META_ROW', i, rows[i][:min(len(rows[i]),12)])
+
+          fmts = ('%d-%b-%Y','%d/%m/%Y','%Y-%m-%d','%b-%Y','%Y-%m','%d %b %Y')
+          def parse_date(s):
+              s=s.strip()
+              for f in fmts:
+                  try:return datetime.datetime.strptime(s,f).date()
+                  except ValueError: pass
+              return None
+
+          obs=[]
+          for row in rows[header_row+1:]:
+              if len(row) <= col: continue
+              d=None
+              # RBA tables normally put date in first column; search first 3 cells defensively.
+              for cell in row[:3]:
+                  d=parse_date(cell)
+                  if d: break
+              if not d: continue
+              valtxt=row[col].replace(',','').strip()
+              if not valtxt or valtxt in ('-','..','na','n.a.'): continue
+              try: val=float(valtxt)
+              except ValueError: continue
+              if val > 0: obs.append((d,val))
+
+          obs.sort()
+          migration=[x for x in obs if x[0] >= datetime.date(2015,1,1)]
+          if len(migration) < 120:
+              raise SystemExit(f'Insufficient DMABMS migration history: {len(migration)} observations since 2015')
+          latest_d,latest_v=obs[-1]
+          if latest_d < datetime.date(2026,6,1):
+              raise SystemExit(f'DMABMS latest month unexpectedly stale: {latest_d}')
+
+          # Monthly uniqueness/continuity check over the migration window.
+          monthmap={(d.year,d.month):v for d,v in migration}
+          cur=datetime.date(2015,1,1)
+          end=datetime.date(latest_d.year,latest_d.month,1)
+          missing=[]
+          while cur <= end:
+              if (cur.year,cur.month) not in monthmap: missing.append(cur.isoformat()[:7])
+              cur = datetime.date(cur.year + (cur.month==12), 1 if cur.month==12 else cur.month+1, 1)
+          if missing:
+              raise SystemExit('Missing DMABMS months: '+','.join(missing[:20]))
+
+          def get(y,m): return monthmap.get((y,m))
+          anchors={}
+          for y,m in ((2015,1),(2022,12),(2023,1),(2025,6),(2026,5),(2026,6),(latest_d.year,latest_d.month)):
+              v=get(y,m)
+              if v is not None: anchors[f'{y:04d}-{m:02d}']=v
+
+          june26=get(2026,6); june25=get(2025,6)
+          raw_yoy = ((june26/june25)-1)*100 if june26 and june25 else None
+          result={
+              'source':'Reserve Bank of Australia Table D3 CSV',
+              'source_url':URL,
+              'series_id':SERIES,
+              'role':'AU prior-year USD-share accounting level only',
+              'signal_growth_source':'RBA D1 break-adjusted Broad Money YoY; unchanged by this audit',
+              'first_observation':obs[0][0].isoformat(),
+              'latest_observation':latest_d.isoformat(),
+              'migration_observations':len(migration),
+              'missing_months':missing,
+              'latest_level':latest_v,
+              'anchors':anchors,
+              'raw_level_yoy_june_2026_pct':None if raw_yoy is None else round(raw_yoy,6),
+              'note':'D3 levels are accounting levels and are not used to reconstruct break-adjusted AU growth; raw level YoY therefore need not equal the published D1 year-ended growth exactly.',
+              'audit':'PASS_DMABMS_MATERIALIZED' if not missing else 'FAIL'
+          }
+          pathlib.Path('audit/rba-dmabms-audit.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
+          with pathlib.Path('audit/rba-dmabms-2015plus.csv').open('w',newline='',encoding='utf-8') as f:
+              w=csv.writer(f); w.writerow(['date','DMABMS']); w.writerows([(d.isoformat(),v) for d,v in migration])
+          print('GMLI_RBA_AUDIT_JSON='+json.dumps(result,separators=(',',':')))
+          PY
+
+      - name: Show audit summary
+        run: cat audit/rba-dmabms-audit.json
+
+      - name: Upload RBA audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-rba-dmabms-audit
+          path: |
+            audit/rba-dmabms-audit.json
+            audit/rba-dmabms-2015plus.csv
+          if-no-files-found: error
