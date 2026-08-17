@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  source-audit:
+  promotion-audit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,10 +18,14 @@ jobs:
           python-version: '3.12'
       - name: Audit frozen v1.8b official production sources
         run: python scripts/audit-v18b-production-sources.py
-      - name: Show source audit
-        run: cat audit/v18b-source-audit.json
+      - name: Run final fail-closed promotion audit
+        run: python scripts/finalize-v18b-core-promotion.py
+      - name: Show final decision
+        run: cat audit/v18b-final-core-promotion-audit.json
       - uses: actions/upload-artifact@v4
         with:
-          name: gmli-v18b-source-audit
-          path: audit/v18b-source-audit.json
+          name: gmli-v18b-core-promotion-audit
+          path: |
+            audit/v18b-source-audit.json
+            audit/v18b-final-core-promotion-audit.json
           if-no-files-found: error
