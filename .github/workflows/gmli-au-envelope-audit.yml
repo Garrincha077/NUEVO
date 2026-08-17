@@ -1,0 +1,103 @@
+name: GMLI AU accounting envelope audit
+
+on:
+  push:
+    branches: [core-promotion-audit]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare-au-levels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare IMF/FRED stand-in against official RBA DMABMS
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          python3 - <<'PY'
+          import csv, io, json, urllib.request, datetime, pathlib
+
+          IMF='https://fred.stlouisfed.org/graph/fredgraph.csv?id=BRDMNYAUM189N&cosd=2015-01-01'
+          RBA='https://www.rba.gov.au/statistics/tables/csv/d3-data.csv'
+          def get(url):
+              req=urllib.request.Request(url,headers={'User-Agent':'GMLI-Audit/1.0'})
+              return urllib.request.urlopen(req,timeout=30).read()
+
+          # IMF/FRED: millions AUD -> billions AUD
+          imf_raw=get(IMF).decode('utf-8-sig')
+          imf={}
+          for row in csv.reader(io.StringIO(imf_raw)):
+              if not row or row[0] in ('DATE','observation_date'): continue
+              try:
+                  d=datetime.date.fromisoformat(row[0][:10]); v=float(row[1])/1000.0
+              except: continue
+              imf[(d.year,d.month)]=v
+
+          raw=get(RBA)
+          text=None
+          for enc in ('utf-8-sig','utf-8','cp1252','latin-1'):
+              try: text=raw.decode(enc); break
+              except UnicodeDecodeError: pass
+          rows=list(csv.reader(io.StringIO(text)))
+          hit=None
+          for ri,row in enumerate(rows):
+              for ci,cell in enumerate(row):
+                  if cell.strip()=='DMABMS': hit=(ri,ci); break
+              if hit: break
+          if not hit: raise SystemExit('DMABMS not found')
+          hr,col=hit
+          fmts=('%d-%b-%Y','%d/%m/%Y','%Y-%m-%d','%b-%Y','%Y-%m')
+          def pd(s):
+              for f in fmts:
+                  try:return datetime.datetime.strptime(s.strip(),f).date()
+                  except: pass
+          rba={}
+          for row in rows[hr+1:]:
+              if len(row)<=col: continue
+              d=None
+              for cell in row[:3]:
+                  d=pd(cell)
+                  if d: break
+              if not d: continue
+              try:v=float(row[col].replace(',','').strip())
+              except:continue
+              if v>0:rba[(d.year,d.month)]=v
+
+          common=sorted(k for k in imf if k in rba and datetime.date(*k,1)>=datetime.date(2015,1,1))
+          if len(common)<100: raise SystemExit(f'Only {len(common)} overlapping months')
+          rec=[]
+          for k in common:
+              iv,rv=imf[k],rba[k]
+              ratio=rv/iv
+              rec.append({'month':f'{k[0]:04d}-{k[1]:02d}','imf_standin_aud_bn':iv,'rba_dmabms_aud_bn':rv,'rba_over_imf':ratio,'pct_diff':(ratio-1)*100})
+          ratios=[x['rba_over_imf'] for x in rec]
+          diffs=[x['pct_diff'] for x in rec]
+          worst=max(rec,key=lambda x:abs(x['pct_diff']))
+          inside=all(0.85<=x<=1.15 for x in ratios)
+          result={
+            'audit':'PASS_WITHIN_LOCKED_15PCT_STRESS_ENVELOPE' if inside else 'FAIL_OUTSIDE_LOCKED_15PCT_STRESS_ENVELOPE',
+            'comparison':'Official RBA DMABMS / prior IMF-FRED BRDMNYAUM189N accounting stand-in',
+            'overlap_months':len(rec),
+            'first_month':rec[0]['month'],'last_month':rec[-1]['month'],
+            'min_ratio':min(ratios),'max_ratio':max(ratios),
+            'min_pct_diff':min(diffs),'max_pct_diff':max(diffs),
+            'worst_abs_month':worst,
+            'locked_sensitivity_result':'At AU scale 0.85x, 1.00x, 1.15x: supported56=6, reversed56=5, key_dir=9, key_q9=6, dbc_gld_dir=7 in all three runs.',
+            'interpretation':'If PASS, every official RBA accounting level lies inside the already-run locked +/-15% AU sensitivity envelope. This is an equivalence audit of the sole unresolved accounting input; it is not a new parameter search.'
+          }
+          pathlib.Path('audit/au-rba-vs-imf-envelope.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
+          with pathlib.Path('audit/au-rba-vs-imf-monthly.csv').open('w',newline='',encoding='utf-8') as f:
+              w=csv.DictWriter(f,fieldnames=rec[0].keys());w.writeheader();w.writerows(rec)
+          print('GMLI_AU_ENVELOPE_JSON='+json.dumps(result,separators=(',',':')))
+          if not inside: raise SystemExit('Official RBA DMABMS leaves locked +/-15% envelope')
+          PY
+      - run: cat audit/au-rba-vs-imf-envelope.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gmli-au-envelope-audit
+          path: audit/au-rba-vs-imf-*
+          if-no-files-found: error
