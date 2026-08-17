@@ -1,31 +1,18 @@
-# GMLI — gmli-fred-dashboard
+# GMLI 2.3 — Global Money & Liquidity Intelligence
 
-This branch is the isolated Git home for the GMLI Vercel project.
+Canonical production: `gmli-fred-dashboard.vercel.app`
 
-Production dashboard: `https://gmli-fred-dashboard.vercel.app`
+This repository is isolated from Macro Cockpit. The frozen Money Core remains unchanged. Live Money data are a RESEARCH freshness overlay only.
 
-## Safety boundary
+## Architecture
+- `lib/state.js` — frozen Core/overlay state; do not retune silently.
+- `lib/nowcast-state.js` — last-verified fallback snapshot.
+- `lib/live-money-nowcast.js` — live official-source freshness overlay with per-block fallback.
+- `api/status.js` — ENGINE FACT frozen state.
+- `api/money-nowcast.js` — live RESEARCH freshness.
+- `api/decision.js` — current decision inference and conviction rubric.
+- `api/opportunity.js` — Strategic Eligibility before Entry Quality.
+- `api/report.js` — canonical analyst/ChatGPT contract.
 
-This project is completely separate from `Garrincha077/makro-cockpit`.
-
-Do not merge GMLI files into Macro Cockpit. The temporary Macro Cockpit PR used for transport was closed without merge.
-
-## Frozen guardrails
-
-Do not change without an explicit research/promotion decision:
-
-- Money Core country weights
-- lags
-- horizons
-- thresholds
-- train/validation split
-- FX-neutral methodology
-- FDR rules
-
-Funding remains an overlay and does not overwrite Money Core.
-
-## Current migration status
-
-This branch initially contains the project documentation and the live Money freshness repair package. The existing local `gmli-fred-dashboard` source should be imported here as-is before this branch becomes the Vercel Git source of truth.
-
-The production Vercel project must not be reconnected to Git until the imported source is verified against `/api/status`, `/api/decision`, and `/api/report`.
+## Guardrail
+RESEARCH/OVERLAY never overwrite CORE. No changes to frozen weights, lags, horizons, thresholds, FX-neutral methodology or FDR rules in the live-freshness repair.
