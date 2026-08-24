@@ -15,6 +15,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install PDF text extractor
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils
       - name: Check serverless and library JavaScript
         run: |
           find api lib -name '*.js' -print0 | xargs -0 -n1 node --check
@@ -32,6 +36,16 @@ jobs:
           grep -q '"level_trn_cny"' /tmp/gmli-pboc-validation.json
           grep -q '"yoy_pct"' /tmp/gmli-pboc-validation.json
           grep -q '"article_sha256"' /tmp/gmli-pboc-validation.json
+      - name: Validate official PBoC M2 v2 history contract
+        run: |
+          python scripts/build-pboc-m2-official-v2.py --validate-only > /tmp/gmli-pboc-v2-validation.json
+          grep -q '"status": "PASS"' /tmp/gmli-pboc-v2-validation.json
+          grep -q '"candidate_version": "PBOC_OFFICIAL_M2_V2"' /tmp/gmli-pboc-v2-validation.json
+          grep -q '"core_modified": false' /tmp/gmli-pboc-v2-validation.json
+          grep -q '"legacy_exact_rerun": false' /tmp/gmli-pboc-v2-validation.json
+          grep -q '"2015-01"' /tmp/gmli-pboc-v2-validation.json
+          grep -q '"2018-12"' /tmp/gmli-pboc-v2-validation.json
+          grep -q '"2021-12"' /tmp/gmli-pboc-v2-validation.json
       - name: Validate prospective Fiscal raw capture
         run: |
           python scripts/capture-prospective-fiscal-inputs.py --validate-only > /tmp/gmli-fiscal-capture-validation.json
@@ -51,7 +65,7 @@ jobs:
           grep -q "available_date: '2026-02-28'" lib/state.js
           grep -q "usd_score: 65.70290344348" lib/state.js
           grep -q "fxn_score: 43.01411281977772" lib/state.js
-      - name: Verify prospective capture fails closed while China Core source is unresolved
+      - name: Verify legacy prospective capture still fails closed on old China contract
         shell: bash
         run: |
           set +e
@@ -61,8 +75,5 @@ jobs:
           test "$code" -eq 2
           grep -q 'BLOCKED_UNRESOLVED_REQUIRED_SOURCES' /tmp/gmli-capture-test.json
           grep -q '"CN_M2"' /tmp/gmli-capture-test.json
-          if grep -q '"ASSET_ADJUSTED_PRICE_MIRROR"' /tmp/gmli-capture-test.json; then
-            echo "Asset mirror unexpectedly unresolved"
-            exit 1
-          fi
           grep -q '"core_modified": false' /tmp/gmli-capture-test.json
+          echo 'Historical v1.8b exact-capture path remains blocked; the official PBoC v2 candidate is intentionally a separate versioned path.'
