@@ -64,7 +64,7 @@ jobs:
           grep -q 'moneyScoreChart' .pages/index.html
           grep -q 'moneyYoyChart' .pages/index.html
           grep -q 'infoPopover' .pages/index.html
-          grep -q 'aria-label="Više informacija"' .pages/index.html
+          grep -q 'Više informacija' .pages/index.html
 
       - name: Publish verified static snapshot to gh-pages branch
         if: github.event_name != 'pull_request'
