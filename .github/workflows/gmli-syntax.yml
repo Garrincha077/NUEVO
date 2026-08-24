@@ -54,7 +54,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          python scripts/build-global-money-v2.py --validate-only > /tmp/gmli-global-money-v2.json
+          python scripts/run-global-money-v2.py --validate-only > /tmp/gmli-global-money-v2.json
           code=$?
           set -e
           cat /tmp/gmli-global-money-v2.json
