@@ -116,11 +116,36 @@ jobs:
           grep -q '"FGRECPT"' /tmp/gmli-fiscal-capture-validation.json
           grep -q '"FGEXPND"' /tmp/gmli-fiscal-capture-validation.json
           grep -q '"raw_sha256"' /tmp/gmli-fiscal-capture-validation.json
-      - name: Guard frozen Core reference
+      - name: Guard active Money V2 and historical audit references
+        shell: bash
         run: |
-          grep -q "available_date: '2026-02-28'" lib/state.js
-          grep -q "usd_score: 65.70290344348" lib/state.js
-          grep -q "fxn_score: 43.01411281977772" lib/state.js
+          node --input-type=module <<'NODE'
+          import { FROZEN_STATE, regimeFromScore } from './lib/state.js';
+          const m = FROZEN_STATE.money;
+          function eq(actual, expected, label) {
+            if (actual !== expected) throw new Error(`${label}: ${actual} !== ${expected}`);
+          }
+          eq(m.status, 'CORE', 'active status');
+          eq(m.version, 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL', 'active version');
+          eq(m.observation_date, '2026-06-30', 'active observation');
+          eq(m.available_date, '2026-07-31', 'active available date');
+          eq(m.usd_score, 55.1121, 'active USD score');
+          eq(m.fxn_score, 44.488, 'active FXN score');
+          eq(m.promotion_gate?.status, 'PASS_PROMOTED_TO_CORE', 'active promotion gate');
+          eq(regimeFromScore(m.usd_score), 'NEUTRAL', 'active USD regime');
+          eq(regimeFromScore(m.fxn_score), 'NEUTRAL', 'active FXN regime');
+
+          const h = m.historical_reference;
+          eq(h.available_date, '2026-02-28', 'historical Core date');
+          eq(h.usd_score, 65.70290344348, 'historical USD score');
+          eq(h.fxn_score, 43.01411281977772, 'historical FXN score');
+
+          const v = m.historical_v18b_candidate;
+          eq(v.version, 'v1.8b-production-money-migration', 'historical v1.8b version');
+          eq(v.promotion_gate?.status, 'BLOCKED_MISSING_FROZEN_INPUT_BYTES', 'historical v1.8b blocker');
+          if (m.promotion_candidate !== null) throw new Error('No unpromoted active Money candidate should remain after V2 promotion');
+          console.log('PASS active Money V2 + historical audit guards');
+          NODE
       - name: Verify legacy prospective capture still fails closed on old China contract
         shell: bash
         run: |
@@ -132,4 +157,4 @@ jobs:
           grep -q 'BLOCKED_UNRESOLVED_REQUIRED_SOURCES' /tmp/gmli-capture-test.json
           grep -q '"CN_M2"' /tmp/gmli-capture-test.json
           grep -q '"core_modified": false' /tmp/gmli-capture-test.json
-          echo 'Historical v1.8b exact-capture path remains blocked; the official PBoC v2 candidate is intentionally a separate versioned path.'
+          echo 'Historical v1.8b exact-capture path remains blocked; active Money V2 is a separate versioned Core path.'
