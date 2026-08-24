@@ -10,6 +10,7 @@ on:
       - 'scripts/build-pboc-m2-official-v2.py'
       - 'scripts/extend-pboc-m2-v2-2014.py'
       - 'research/china-m2-official-v2-contract.json'
+      - 'research/china-m2-official-v2-2015-growth-manifest.json'
       - '.github/workflows/gmli-china-m2-v2-capture.yml'
 
 permissions:
@@ -33,25 +34,26 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Build continuous official PBoC M2 v2 history from 2014
+      - name: Build official PBoC V2 with locked comparable-base seed
         shell: bash
         run: |
           set -euo pipefail
           python scripts/extend-pboc-m2-v2-2014.py --build-full | tee /tmp/gmli-pboc-v2-build.json
-          grep -q '"status": "PASS_CONTINUOUS_OFFICIAL_V2_SOURCE"' /tmp/gmli-pboc-v2-build.json
+          grep -q '"status": "PASS_CONTINUOUS_OFFICIAL_V2_SOURCE_WITH_COMPARABLE_BASE_SEED"' /tmp/gmli-pboc-v2-build.json
           grep -q '"candidate_version": "PBOC_OFFICIAL_M2_V2"' /tmp/gmli-pboc-v2-build.json
-          grep -q '"core_modified": false' /tmp/gmli-pboc-v2-build.json
           grep -q '"start_month": "2014-01"' /tmp/gmli-pboc-v2-build.json
-          grep -q '"missing_months": \[\]' research/china-m2-official-v2/latest/manifest.lock.json
-          grep -q '"historical_2014_extension"' research/china-m2-official-v2/latest/manifest.lock.json
-          grep -q '"promotion_allowed": false' research/china-m2-official-v2/latest/manifest.lock.json
-          grep -q 'REBUILD_GLOBAL_MONEY_V2_WITH_2015_SIGNAL_START_THEN_FIXED_TRANSMISSION_TRANSFER_TEST' research/china-m2-official-v2/latest/manifest.lock.json
+          grep -q '"missing_months": \[\]' /tmp/gmli-pboc-v2-build.json
+          grep -q '"role": "ACCOUNTING_SEED_ONLY"' /tmp/gmli-pboc-v2-build.json
+          grep -q '"observed_stock": false' /tmp/gmli-pboc-v2-build.json
+          grep -q '"search_ranking_dependency": false' /tmp/gmli-pboc-v2-build.json
+          grep -q '"url_lock_contract": "PBOC_OFFICIAL_2015_GROWTH_LOCK_V1"' /tmp/gmli-pboc-v2-build.json
 
-      - name: Guard production Core state
+      - name: Guard promoted Money V2 contract and historical reference
         run: |
+          grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
+          grep -q "status: 'CORE_HISTORICAL_REFERENCE'" lib/state.js
           grep -q "available_date: '2026-02-28'" lib/state.js
-          grep -q "usd_score: 65.70290344348" lib/state.js
-          grep -q "fxn_score: 43.01411281977772" lib/state.js
+          grep -q "BLOCKED_MISSING_FROZEN_INPUT_BYTES" lib/state.js
 
       - name: Upload PBoC v2 audit
         uses: actions/upload-artifact@v4
@@ -74,5 +76,5 @@ jobs:
           git config user.name 'gmli-refresh-bot'
           git config user.email 'gmli-refresh-bot@users.noreply.github.com'
           git add research/china-m2-official-v2/latest
-          git commit -m 'Capture official PBoC M2 v2 source archive'
+          git commit -m 'Refresh official PBoC M2 v2 source archive'
           git push origin HEAD:main
