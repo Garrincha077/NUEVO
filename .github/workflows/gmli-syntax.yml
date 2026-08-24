@@ -21,15 +21,15 @@ jobs:
       - name: Check GMLI Python scripts
         run: |
           python -m compileall -q scripts
-      - name: Validate newly documented Money source URLs
+      - name: Validate documented prospective source URLs
         run: |
-          python scripts/validate-prospective-money-sources.py --ids GB_M4,CA_M2,JP_M2
+          python scripts/validate-prospective-money-sources.py --ids GB_M4,CA_M2,JP_M2,ASSET_ADJUSTED_PRICE_MIRROR
       - name: Guard frozen Core reference
         run: |
           grep -q "available_date: '2026-02-28'" lib/state.js
           grep -q "usd_score: 65.70290344348" lib/state.js
           grep -q "fxn_score: 43.01411281977772" lib/state.js
-      - name: Verify prospective capture fails closed while sources unresolved
+      - name: Verify prospective capture fails closed while China source is unresolved
         shell: bash
         run: |
           set +e
@@ -38,4 +38,9 @@ jobs:
           set -e
           test "$code" -eq 2
           grep -q 'BLOCKED_UNRESOLVED_REQUIRED_SOURCES' /tmp/gmli-capture-test.json
+          grep -q '"CN_M2"' /tmp/gmli-capture-test.json
+          if grep -q '"ASSET_ADJUSTED_PRICE_MIRROR"' /tmp/gmli-capture-test.json; then
+            echo "Asset mirror unexpectedly unresolved"
+            exit 1
+          fi
           grep -q '"core_modified": false' /tmp/gmli-capture-test.json
