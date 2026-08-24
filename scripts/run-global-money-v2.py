@@ -25,6 +25,9 @@ def provider_ym(value):
     s = str(value or '').strip()
     if re.fullmatch(r'20\d{4}', s):
         return f'{s[:4]}-{s[4:6]}'
+    m = re.fullmatch(r'(\d{1,2})/(\d{1,2})/(\d{4})', s)
+    if m:
+        return f'{int(m.group(3)):04d}-{int(m.group(2)):02d}'
     m = re.fullmatch(r'\d{1,2}\s+([A-Za-z]{3})\s+(\d{2}|\d{4})', s)
     if m and m.group(1).lower() in MONS:
         y = int(m.group(2))
@@ -97,7 +100,6 @@ def rba_series_fullscan(url, code):
             continue
         out[md] = v
     if not out:
-        # Useful fail-closed diagnostics if the provider changes layout again.
         sample = [row[:min(8, len(row))] for row in rows[max(0, code_row-2):min(len(rows), code_row+8)]]
         raise ValueError(f'No RBA observations for {code}; code_row={code_row}, code_col={code_col}, sample={sample!r}')
     return out, raw, meta
