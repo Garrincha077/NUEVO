@@ -1,5 +1,6 @@
 import { buildOpportunity } from '../lib/opportunity-engine.js';
 import { buildDecision } from '../lib/decision-engine.js';
+import { buildFreshnessHealth } from '../lib/freshness-health.js';
 import { FROZEN_STATE } from '../lib/state.js';
 
 function buckets(assets) {
@@ -18,8 +19,10 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin','*');
   res.setHeader('Cache-Control','public, max-age=0, must-revalidate');
   try {
+    const generatedAt = new Date();
     const opportunity = await buildOpportunity();
     const decision = await buildDecision(opportunity);
+    const dataHealth = buildFreshnessHealth(decision, opportunity, generatedAt);
     const bs = buckets(opportunity.assets);
     const assets = Object.fromEntries(Object.entries(opportunity.assets).map(([k,x]) => [k, {
       asset_class:x.asset_class,
@@ -37,9 +40,9 @@ export default async function handler(req, res) {
     }]));
 
     return res.status(200).json({
-      schema_version:'gmli-report-v1.1',
+      schema_version:'gmli-report-v1.2',
       engine_version:'GMLI 2.3.1',
-      generated_at:new Date().toISOString(),
+      generated_at:generatedAt.toISOString(),
       meta:{
         canonical:true,
         purpose:'Primary ChatGPT/analyst decision contract',
@@ -50,6 +53,7 @@ export default async function handler(req, res) {
           'RBA DMABMS source purity passed; missing frozen Aug-15 input bytes prevent an honest exact rerun. RESEARCH/OVERLAY signals never silently replace CORE.'
         ]
       },
+      data_health:dataHealth,
       methodology: decision.methodology,
       regime:{
         engine_fact:{ money:decision.money },
