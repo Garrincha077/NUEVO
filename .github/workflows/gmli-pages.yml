@@ -22,7 +22,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -52,6 +52,25 @@ jobs:
           test -s .pages/index.html
           test -s .pages/api/report.json
           test -s .pages/api/radar.json
+
+      - name: Publish verified static snapshot to gh-pages branch
+        if: github.event_name != 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          work="$(mktemp -d)"
+          cp -a .pages/. "$work/"
+          cd "$work"
+          git init -q
+          git config user.name 'gmli-pages-bot'
+          git config user.email 'gmli-pages-bot@users.noreply.github.com'
+          git checkout -q -b gh-pages
+          git add -A
+          git commit -q -m "Publish verified GMLI Pages snapshot ${GITHUB_SHA}"
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push -q --force origin HEAD:gh-pages
+          echo "Static snapshot published to gh-pages branch."
 
       - name: Configure Pages
         if: github.event_name != 'pull_request'
