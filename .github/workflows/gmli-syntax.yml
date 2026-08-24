@@ -32,6 +32,20 @@ jobs:
           grep -q '"level_trn_cny"' /tmp/gmli-pboc-validation.json
           grep -q '"yoy_pct"' /tmp/gmli-pboc-validation.json
           grep -q '"article_sha256"' /tmp/gmli-pboc-validation.json
+      - name: Validate prospective Fiscal raw capture
+        run: |
+          python scripts/capture-prospective-fiscal-inputs.py --validate-only > /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"status": "PASS"' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"state_modified": false' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"production_state_modified": false' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"strict_release_ready": false' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"MTSDS133FMS"' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"GDP"' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"GFDEBTN"' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"A091RC1Q027SBEA"' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"FGRECPT"' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"FGEXPND"' /tmp/gmli-fiscal-capture-validation.json
+          grep -q '"raw_sha256"' /tmp/gmli-fiscal-capture-validation.json
       - name: Guard frozen Core reference
         run: |
           grep -q "available_date: '2026-02-28'" lib/state.js
