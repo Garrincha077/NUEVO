@@ -37,8 +37,14 @@ jobs:
           grep -q '"yoy_pct"' /tmp/gmli-pboc-validation.json
           grep -q '"article_sha256"' /tmp/gmli-pboc-validation.json
       - name: Validate official PBoC M2 v2 history contract
+        shell: bash
         run: |
+          set +e
           python scripts/build-pboc-m2-official-v2.py --validate-only > /tmp/gmli-pboc-v2-validation.json
+          code=$?
+          set -e
+          cat /tmp/gmli-pboc-v2-validation.json
+          test "$code" -eq 0
           grep -q '"status": "PASS"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"candidate_version": "PBOC_OFFICIAL_M2_V2"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"core_modified": false' /tmp/gmli-pboc-v2-validation.json
