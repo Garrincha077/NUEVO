@@ -1,0 +1,19 @@
+{
+  "contract": "PBOC_OFFICIAL_2015_GROWTH_LOCK_V1",
+  "purpose": "Static official-source manifest for the 2015 China M2 comparable-base seed. Production history must not depend on PBoC search ranking.",
+  "source_policy": "Fetch only the locked central PBoC article URL for each month; validate title/body month, M2 balance and YoY against these expected semantics. Article SHA is recorded as discovery provenance but semantic validation is authoritative if PBoC republishes identical content at the same locked URL.",
+  "records": [
+    {"month":"2015-01","url":"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212540167441/index.html","level_trn_cny":124.27,"yoy_pct":10.8,"article_sha256":"0aa8cdb77c2b9de4725f6ede0950a36647a439535af24c5860e6e37fafaa361f","title_mode":"EXACT_MONTH"},
+    {"month":"2015-02","url":"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/2811006/index.html","level_trn_cny":125.74,"yoy_pct":12.5,"article_sha256":"6bd19842f2e28e262173bd5a820d09b449d1c50284e2173b2c01b15415f93f7e","title_mode":"EXACT_MONTH"},
+    {"month":"2015-03","url":"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/2811564/index.html","level_trn_cny":127.53,"yoy_pct":11.6,"article_sha256":"53ec0df346b25fca4b5588d94fdd19c72698ccdf26ad45f88406bd8eb5aa4a0f","title_mode":"PERIOD_END"},
+    {"month":"2015-04","url":"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212542676250/index.html","level_trn_cny":128.08,"yoy_pct":10.1,"article_sha256":"034a831620cace3f81f0fbaaadd6813d355a61ecb9ac8a0939b9aff17182ca63","title_mode":"EXACT_MONTH"},
+    {"month":"2015-05","url":"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212542554280/index.html","level_trn_cny":130.74,"yoy_pct":10.8,"article_sha256":"1db77ea6b697ea948394c77f77e9b5129f0b9481e50a90fc03534056fbf73c73","title_mode":"EXACT_MONTH"},
+    {"month":"2015-06","url":"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/2892632/index.html","level_trn_cny":133.34,"yoy_pct":11.8,"article_sha256":"aea4aaf4d87717e1553ee1682a2eda92f02c6a062a76c66a33b020dae37139fc","title_mode":"PERIOD_END"},
+    {"month":"2015-07","url":"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212542977024/index.html","level_trn_cny":135.32,"yoy_pct":13.3,"article_sha256":"cd9892fe93900d8c782b58caaf3b1365fdf100fa434592ca42d0061eaed924e6","title_mode":"EXACT_MONTH"},
+    {"month":"2015-08","url":"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212543075807/index.html","level_trn_cny":135.69,"yoy_pct":13.3,"article_sha256":"150defaf65d09221ca12af25406a58f61bc41fd6227e5cdb41403f7b343968fd","title_mode":"EXACT_MONTH"},
+    {"month":"2015-09","url":"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2025092212543098527/index.html","level_trn_cny":135.98,"yoy_pct":13.1,"article_sha256":"edceacb6a750347d802cfed690f40ffb8fccf47870c0b3bf3b5ddae8b149b84e","title_mode":"PERIOD_END"},
+    {"month":"2015-10","url":"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/f8385792c6b44ab9b396737fdfead3ee/index.html","level_trn_cny":136.1,"yoy_pct":13.5,"article_sha256":"efa45af65740ed62c33c9c5a72210ab55ac73d22eed89179643eb327dbf1ffd8","title_mode":"EXACT_MONTH"},
+    {"month":"2015-11","url":"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/eaa8c83b22bb4532b094b87341a94379/index.html","level_trn_cny":137.4,"yoy_pct":13.7,"article_sha256":"9082622b971b03de7f266f47c9d01047d26b3004df0e0bd6d601136f379908ec","title_mode":"EXACT_MONTH"},
+    {"month":"2015-12","url":"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/97765ac732da497b842c87a46b880718/index.html","level_trn_cny":139.23,"yoy_pct":13.3,"article_sha256":"4abd4b51f226d68b6cfd166664f6ff09fcbd85e6a9211544b8a522f5acde4160","title_mode":"PERIOD_END"}
+  ]
+}
