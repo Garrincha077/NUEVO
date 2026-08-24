@@ -1,0 +1,280 @@
+{
+  "status": "PASS_CONTINUOUS_OFFICIAL_V2_SOURCE",
+  "candidate_version": "PBOC_OFFICIAL_M2_V2",
+  "source_contract": "PBOC_OFFICIAL_HTML_MONEY_SUPPLY_TABLES",
+  "evidence_tier": "RESEARCH_SOURCE_CANDIDATE",
+  "built_at": "2026-08-24T09:35:55Z",
+  "core_modified": false,
+  "legacy_exact_rerun": false,
+  "start_month": "2015-01",
+  "end_month": "2026-07",
+  "months": 139,
+  "missing_months": [],
+  "latest": {
+    "month": "2026-07",
+    "m2_100m": 3555077.24,
+    "derived_yoy_pct": 7.748255,
+    "source_type": "PBOC_OFFICIAL_MONEY_SUPPLY_HTML",
+    "source_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/08/2026081416590597261.htm",
+    "raw_sha256": "92ac1b565111460cd00ad9b18121238f053f5b55fcd30527f24e1b66eb832c5f"
+  },
+  "current_report_cross_check_diff_100m": -22.76,
+  "statistics_index": {
+    "url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/index.html",
+    "raw_file": "raw/statistics-index.html",
+    "raw_sha256": "6314e36292fec63514dd55ed2a6a6efa3d07ff020c93f690d2505bc28ec99fdb",
+    "http_status": 200
+  },
+  "years": [
+    {
+      "year": 2015,
+      "months": 12,
+      "first_month": "2015-01",
+      "last_month": "2015-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/2161324/2161340/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/fileDir/resource/cms/2016/01/2016011818584510775.htm",
+      "overview_sha256": "555c6b09545c07208de6c0d78f7b70853fea7dd69bb2af6d930ebd9547ed52e3",
+      "supply_sha256": "a81b634310d859629a6a4f51f396decf963560dc7c65acd3685451a6c61951ce"
+    },
+    {
+      "year": 2016,
+      "months": 12,
+      "first_month": "2016-01",
+      "last_month": "2016-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/3013637/3013641/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/fileDir/resource/cms/2017/01/2017011618241733781.htm",
+      "overview_sha256": "9a01fbd67546418993d0326c5ed337795163386baed94bee0ba0e85f3ceb5b63",
+      "supply_sha256": "4a4848482dba096951e33546a793280564a8c614baf217a19a315f937377aca2"
+    },
+    {
+      "year": 2017,
+      "months": 12,
+      "first_month": "2017-01",
+      "last_month": "2017-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/3245697/3245856/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/fileDir/resource/cms/2018/04/2018041812261055101.htm",
+      "overview_sha256": "71d4e784c0ce60f2f95d823e9d231d9ef0f3bbab60021993e7569366d87cc669",
+      "supply_sha256": "7ec852b496b88980354773b7d3acbcf63c6dc84aebe5d136860871a6bc496c34"
+    },
+    {
+      "year": 2018,
+      "months": 12,
+      "first_month": "2018-01",
+      "last_month": "2018-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/3471721/3471760/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/fileDir/resource/cms/2019/01/2019011619032875652.htm",
+      "overview_sha256": "6e029741e7362f4671fc9fe1931b0e0ec1da742380ce152ad4fad160cf62be5b",
+      "supply_sha256": "74e26598230b046e136f08d81a7bcd86dbde7b9d850085e7e4b79a831510066b"
+    },
+    {
+      "year": 2019,
+      "months": 12,
+      "first_month": "2019-01",
+      "last_month": "2019-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/3750274/3750284/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/fileDir/resource/cms/2020/01/2020011716393273983.htm",
+      "overview_sha256": "444dbb47081167f4c378e571c7b11bb0162806fd3ad2c1021c00a13c8ff52cc8",
+      "supply_sha256": "b75af050672a935f1dd908c1dc99b739605c95cd13c89b5e2697a3f68752b5a5"
+    },
+    {
+      "year": 2020,
+      "months": 12,
+      "first_month": "2020-01",
+      "last_month": "2020-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/3959050/3959052/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025110510340673173.htm",
+      "overview_sha256": "40f5d6113f9dc154b7475ea12dc843ccb36d3c38e8af0187e482a27c5eaf85db",
+      "supply_sha256": "13a528b400927e6d21d7ddfc0d91e7f4131fba25e34870c56aef3ebb1f104ab1"
+    },
+    {
+      "year": 2021,
+      "months": 12,
+      "first_month": "2021-01",
+      "last_month": "2021-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/4184109/4184111/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025110510401872306.htm",
+      "overview_sha256": "aaeab6f73b1b0522df1c4b8e4a9ef47a57c01f9466e84e3a4fdd4dbecebaef33",
+      "supply_sha256": "1da24f849ade6c1102296c6d9dd298db840193e5f237d76e0c6b41f234d46bad"
+    },
+    {
+      "year": 2022,
+      "months": 12,
+      "first_month": "2022-01",
+      "last_month": "2022-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/4458449/4458451/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025110417121192339.htm",
+      "overview_sha256": "b9841827639410128f798ee2cfe21ce3be571368997d26c03d1dd7da63378da9",
+      "supply_sha256": "9bde06b38b2f573a9455428458bc8302a3fe9447d3e24f9f8fd7fdb86d55e5f1"
+    },
+    {
+      "year": 2023,
+      "months": 12,
+      "first_month": "2023-01",
+      "last_month": "2023-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/4780803/4780805/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025110416484155591.htm",
+      "overview_sha256": "5fc674d99820193c824afafe2709495a48cebbae5822dfe9ad65eb5ef403b501",
+      "supply_sha256": "bc87327d98d569f6af3f4d931ef8c5b2fea7758efa2465cc0a3411fdb5140052"
+    },
+    {
+      "year": 2024,
+      "months": 12,
+      "first_month": "2024-01",
+      "last_month": "2024-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/5225358/5225360/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025111416483339795.htm",
+      "overview_sha256": "d3165a44e952ebdc1d723f172a34c12d40f193e7f324406ff95383cf09d7f1c2",
+      "supply_sha256": "70837f4f2cc1332216104bae93cbfc11d7fde60d094a6da4758283b0a0f3a9c9"
+    },
+    {
+      "year": 2025,
+      "months": 12,
+      "first_month": "2025-01",
+      "last_month": "2025-12",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/5570903/5570886/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/01/2026011515582640595.htm",
+      "overview_sha256": "3b9b610b6520b7e18e11d19f7c9e5647e385cbfb57eba1c6444dea1da8b9eb96",
+      "supply_sha256": "c94755c94d4000b9b81f99f02d78cdcf8ee27068547f8e0ed142985667228bfa"
+    },
+    {
+      "year": 2026,
+      "months": 7,
+      "first_month": "2026-01",
+      "last_month": "2026-07",
+      "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/2026ntjsj/hbtjgl/index.html",
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/08/2026081416590597261.htm",
+      "overview_sha256": "0d14fbfe84ae23acf1fbd144cc7887b9de68073e5ac40f9c3ad73d7653b8a768",
+      "supply_sha256": "92ac1b565111460cd00ad9b18121238f053f5b55fcd30527f24e1b66eb832c5f"
+    }
+  ],
+  "raw_source_files": [
+    {
+      "filename": "raw/2015-money-banking-overview.html",
+      "bytes": 31498,
+      "sha256": "555c6b09545c07208de6c0d78f7b70853fea7dd69bb2af6d930ebd9547ed52e3"
+    },
+    {
+      "filename": "raw/2015-money-supply.html",
+      "bytes": 52631,
+      "sha256": "a81b634310d859629a6a4f51f396decf963560dc7c65acd3685451a6c61951ce"
+    },
+    {
+      "filename": "raw/2016-money-banking-overview.html",
+      "bytes": 32138,
+      "sha256": "9a01fbd67546418993d0326c5ed337795163386baed94bee0ba0e85f3ceb5b63"
+    },
+    {
+      "filename": "raw/2016-money-supply.html",
+      "bytes": 43659,
+      "sha256": "4a4848482dba096951e33546a793280564a8c614baf217a19a315f937377aca2"
+    },
+    {
+      "filename": "raw/2017-money-banking-overview.html",
+      "bytes": 32188,
+      "sha256": "71d4e784c0ce60f2f95d823e9d231d9ef0f3bbab60021993e7569366d87cc669"
+    },
+    {
+      "filename": "raw/2017-money-supply.html",
+      "bytes": 51997,
+      "sha256": "7ec852b496b88980354773b7d3acbcf63c6dc84aebe5d136860871a6bc496c34"
+    },
+    {
+      "filename": "raw/2018-money-banking-overview.html",
+      "bytes": 32205,
+      "sha256": "6e029741e7362f4671fc9fe1931b0e0ec1da742380ce152ad4fad160cf62be5b"
+    },
+    {
+      "filename": "raw/2018-money-supply.html",
+      "bytes": 143604,
+      "sha256": "74e26598230b046e136f08d81a7bcd86dbde7b9d850085e7e4b79a831510066b"
+    },
+    {
+      "filename": "raw/2019-money-banking-overview.html",
+      "bytes": 31676,
+      "sha256": "444dbb47081167f4c378e571c7b11bb0162806fd3ad2c1021c00a13c8ff52cc8"
+    },
+    {
+      "filename": "raw/2019-money-supply.html",
+      "bytes": 51527,
+      "sha256": "b75af050672a935f1dd908c1dc99b739605c95cd13c89b5e2697a3f68752b5a5"
+    },
+    {
+      "filename": "raw/2020-money-banking-overview.html",
+      "bytes": 31401,
+      "sha256": "40f5d6113f9dc154b7475ea12dc843ccb36d3c38e8af0187e482a27c5eaf85db"
+    },
+    {
+      "filename": "raw/2020-money-supply.html",
+      "bytes": 49999,
+      "sha256": "13a528b400927e6d21d7ddfc0d91e7f4131fba25e34870c56aef3ebb1f104ab1"
+    },
+    {
+      "filename": "raw/2021-money-banking-overview.html",
+      "bytes": 31403,
+      "sha256": "aaeab6f73b1b0522df1c4b8e4a9ef47a57c01f9466e84e3a4fdd4dbecebaef33"
+    },
+    {
+      "filename": "raw/2021-money-supply.html",
+      "bytes": 50001,
+      "sha256": "1da24f849ade6c1102296c6d9dd298db840193e5f237d76e0c6b41f234d46bad"
+    },
+    {
+      "filename": "raw/2022-money-banking-overview.html",
+      "bytes": 31386,
+      "sha256": "b9841827639410128f798ee2cfe21ce3be571368997d26c03d1dd7da63378da9"
+    },
+    {
+      "filename": "raw/2022-money-supply.html",
+      "bytes": 48530,
+      "sha256": "9bde06b38b2f573a9455428458bc8302a3fe9447d3e24f9f8fd7fdb86d55e5f1"
+    },
+    {
+      "filename": "raw/2023-money-banking-overview.html",
+      "bytes": 31408,
+      "sha256": "5fc674d99820193c824afafe2709495a48cebbae5822dfe9ad65eb5ef403b501"
+    },
+    {
+      "filename": "raw/2023-money-supply.html",
+      "bytes": 49358,
+      "sha256": "bc87327d98d569f6af3f4d931ef8c5b2fea7758efa2465cc0a3411fdb5140052"
+    },
+    {
+      "filename": "raw/2024-money-banking-overview.html",
+      "bytes": 31392,
+      "sha256": "d3165a44e952ebdc1d723f172a34c12d40f193e7f324406ff95383cf09d7f1c2"
+    },
+    {
+      "filename": "raw/2024-money-supply.html",
+      "bytes": 49643,
+      "sha256": "70837f4f2cc1332216104bae93cbfc11d7fde60d094a6da4758283b0a0f3a9c9"
+    },
+    {
+      "filename": "raw/2025-money-banking-overview.html",
+      "bytes": 31447,
+      "sha256": "3b9b610b6520b7e18e11d19f7c9e5647e385cbfb57eba1c6444dea1da8b9eb96"
+    },
+    {
+      "filename": "raw/2025-money-supply.html",
+      "bytes": 57355,
+      "sha256": "c94755c94d4000b9b81f99f02d78cdcf8ee27068547f8e0ed142985667228bfa"
+    },
+    {
+      "filename": "raw/2026-money-banking-overview.html",
+      "bytes": 31637,
+      "sha256": "0d14fbfe84ae23acf1fbd144cc7887b9de68073e5ac40f9c3ad73d7653b8a768"
+    },
+    {
+      "filename": "raw/2026-money-supply.html",
+      "bytes": 47155,
+      "sha256": "92ac1b565111460cd00ad9b18121238f053f5b55fcd30527f24e1b66eb832c5f"
+    },
+    {
+      "filename": "raw/statistics-index.html",
+      "bytes": 89073,
+      "sha256": "6314e36292fec63514dd55ed2a6a6efa3d07ff020c93f690d2505bc28ec99fdb"
+    }
+  ],
+  "promotion_allowed": false,
+  "next_gate": "BUILD_GLOBAL_MONEY_V2_CANDIDATE_AND_COMPARE_TRANSFER",
+  "note": "China source provenance is closed for a NEW official-source candidate. Historical v1.8b exact-rerun status remains unchanged."
+}
