@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-pboc-m2-official-v2.py'
+      - 'scripts/extend-pboc-m2-v2-2014.py'
       - 'research/china-m2-official-v2-contract.json'
       - '.github/workflows/gmli-china-m2-v2-capture.yml'
 
@@ -32,18 +33,19 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Build continuous official PBoC M2 v2 history
+      - name: Build continuous official PBoC M2 v2 history from 2014
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/build-pboc-m2-official-v2.py --build-full | tee /tmp/gmli-pboc-v2-build.json
+          python scripts/extend-pboc-m2-v2-2014.py --build-full | tee /tmp/gmli-pboc-v2-build.json
           grep -q '"status": "PASS_CONTINUOUS_OFFICIAL_V2_SOURCE"' /tmp/gmli-pboc-v2-build.json
           grep -q '"candidate_version": "PBOC_OFFICIAL_M2_V2"' /tmp/gmli-pboc-v2-build.json
           grep -q '"core_modified": false' /tmp/gmli-pboc-v2-build.json
-          grep -q '"legacy_exact_rerun": false' /tmp/gmli-pboc-v2-build.json
+          grep -q '"start_month": "2014-01"' /tmp/gmli-pboc-v2-build.json
           grep -q '"missing_months": \[\]' research/china-m2-official-v2/latest/manifest.lock.json
+          grep -q '"historical_2014_extension"' research/china-m2-official-v2/latest/manifest.lock.json
           grep -q '"promotion_allowed": false' research/china-m2-official-v2/latest/manifest.lock.json
-          grep -q 'BUILD_GLOBAL_MONEY_V2_CANDIDATE_AND_COMPARE_TRANSFER' research/china-m2-official-v2/latest/manifest.lock.json
+          grep -q 'REBUILD_GLOBAL_MONEY_V2_WITH_2015_SIGNAL_START_THEN_FIXED_TRANSMISSION_TRANSFER_TEST' research/china-m2-official-v2/latest/manifest.lock.json
 
       - name: Guard production Core state
         run: |
