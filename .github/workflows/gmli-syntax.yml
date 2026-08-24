@@ -21,6 +21,9 @@ jobs:
       - name: Check GMLI Python scripts
         run: |
           python -m compileall -q scripts
+      - name: Validate newly documented Money source URLs
+        run: |
+          python scripts/validate-prospective-money-sources.py --ids GB_M4,CA_M2,JP_M2
       - name: Guard frozen Core reference
         run: |
           grep -q "available_date: '2026-02-28'" lib/state.js
