@@ -44,18 +44,24 @@ export default async function handler(req, res) {
       freshness:{ money:FROZEN_STATE.money.available_date, price:x.price_as_of, positioning:x.entry_inputs.positioning?.as_of || null, current_market:currentMarket.assets?.[k]?.latest_completed_session || null }
     }]));
 
+    const conflicts = [
+      ...(decision.money.agreement === 'DIVERGENT' ? [{ type:'MONEY_DIVERGENCE', detail:`Active Money V2: USD ${decision.money.usd_score} ${decision.money.usd_regime} vs FX-neutral ${decision.money.fx_neutral_score} ${decision.money.fx_neutral_regime}.` }] : []),
+      ...(currentMarket.divergences || []).map(x => ({ type:'CURRENT_MARKET_DIVERGENCE', detail:`${x.asset}: ${x.type} versus completed-month structure.` })),
+      ...(opportunity.positioning.error ? [{ type:'POSITIONING_SOURCE', detail:opportunity.positioning.error }] : [])
+    ];
+
     return res.status(200).json({
-      schema_version:'gmli-report-v1.3',
-      engine_version:'GMLI 2.3.1',
+      schema_version:'gmli-report-v1.4',
+      engine_version:'GMLI 2.4.0',
       generated_at:generatedAt.toISOString(),
       meta:{
         canonical:true,
         purpose:'Primary ChatGPT/analyst decision contract',
         raw_endpoints:['/api/status','/api/decision','/api/opportunity','/api/positioning','/api/money-nowcast','/api/current-market'],
         warnings:[
-          `Money specification is frozen, but the last formally validated Core vintage is stale (${FROZEN_STATE.money.available_date}).`,
-          `A newer production-source Money candidate exists (${FROZEN_STATE.money.promotion_candidate?.available_date || 'n/a'}) but remains RESEARCH: the final promotion audit is ${FROZEN_STATE.money.promotion_gate?.status || 'UNKNOWN'}.`,
-          'RBA DMABMS source purity passed; missing frozen Aug-15 input bytes prevent an honest exact rerun. RESEARCH/OVERLAY signals never silently replace CORE.'
+          `Money V2 is the active promoted Core (${FROZEN_STATE.money.version}), currently available ${FROZEN_STATE.money.available_date}.`,
+          'The 2026-02-28 pre-V2 Core is preserved only as a historical reference.',
+          'Historical v1.8b remains BLOCKED_MISSING_FROZEN_INPUT_BYTES as an audit fact; it does not block the separately versioned and promoted Money V2 contract.'
         ]
       },
       data_health:dataHealth,
@@ -65,8 +71,7 @@ export default async function handler(req, res) {
         current_research_inference:{
           label:decision.regime.label,
           tilt:decision.regime.tilt,
-          provisional:true,
-          money_candidate:decision.money_candidate,
+          provisional:decision.regime.provisional,
           money_nowcast:decision.money_nowcast,
           funding:decision.funding,
           structural_market_confirmation:decision.market_confirmation,
@@ -77,20 +82,19 @@ export default async function handler(req, res) {
       },
       current_market_confirmation:currentMarket,
       money_promotion_gate: decision.promotion_gate,
+      money_history: decision.money_history,
       opportunity_summary:bs,
       assets,
-      conflicts:[
-        { type:'MONEY_DIVERGENCE', detail:`Validated Core: USD ${decision.money.usd_score} ${decision.money.usd_regime} vs FX-neutral ${decision.money.fx_neutral_score} ${decision.money.fx_neutral_regime}.` },
-        ...(decision.money_candidate ? [{ type:'CORE_VINTAGE_LAG', detail:`Validated Core is ${decision.money.available_date}; production candidate is ${decision.money_candidate.available_date} and is not yet CORE.` }] : []),
-        ...(currentMarket.divergences || []).map(x => ({ type:'CURRENT_MARKET_DIVERGENCE', detail:`${x.asset}: ${x.type} versus completed-month structure.` })),
-        ...(FROZEN_STATE.money.promotion_gate?.status === 'BLOCKED_MISSING_FROZEN_INPUT_BYTES' ? [{ type:'CORE_PROMOTION_AUDIT', detail:'RBA blocker passed, but the exact Aug-15 macro matrix, adjusted-price mirror, original v1.2 exact-ticker runner and full56 baseline bytes were not preserved. Promotion remains fail-closed.' }] : []),
-        ...(opportunity.positioning.error ? [{ type:'POSITIONING_SOURCE', detail:opportunity.positioning.error }] : [])
-      ],
+      conflicts,
+      historical_audit:{
+        pre_v2_core_reference:FROZEN_STATE.money.historical_reference,
+        v18b_migration_candidate:FROZEN_STATE.money.historical_v18b_candidate
+      },
       research_gaps:[
-        'Core promotion is audit-blocked by missing preserved Aug-15 frozen input bytes, not by RBA data. Do not rebuild those inputs from current/revised public vintages and call it the exact rerun; run the preserved checksummed contract only if the original bytes are recovered.',
-        'HYG needs a reproducible long-history credit-spread series for the pre-specified 60M test.',
-        'VNQ/VEA need better fundamental dislocation models; current relative-price measures are context-only.',
-        'BTC needs a validated BTC-specific dislocation model before any accumulation label.'
+        'Historical v1.8b exact rerun remains impossible without the original frozen Aug-15 bytes; this is closed as historical audit context and is not an active V2 blocker.',
+        'Funding exact production baseline mismatch remains unresolved; Funding stays an overlay and cannot override Money Core.',
+        'Credit/Velocity exact old construction provenance remains incomplete; do not infer the old formula.',
+        'HYG, BTC and VNQ/VEA asset-specific models remain secondary to maintaining the promoted Money V2 refresh contract.'
       ]
     });
   } catch(e) {
