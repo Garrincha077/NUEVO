@@ -38,13 +38,13 @@ Success condition: a newer formally validated CORE vintage with preserved, repro
 
 ### P0 — Money nowcast 4/4 automated
 
-Current scheduled refresh already handles US, euro area, Japan and USD translation. China is preserved as last verified because a stable official PBoC machine-readable parser is not yet validated.
+US, euro area and Japan already use scheduled official-source refresh. The China parser now has a CI-validated official PBoC Financial Statistics Report path; production activation and scheduled smoke verification remain before this item is complete.
 
 Tasks:
 
-- Validate a stable PBoC source/ingestion path.
-- Add `refresh_china()` with date regression checks, YoY sanity checks and last-good preservation.
-- Include China in refresh audit output.
+- Validate a stable PBoC source/ingestion path. **CI PASS 2026-08-24.**
+- Add `refresh_china()` with date regression checks, YoY sanity checks and last-good preservation. **Implemented; production activation pending.**
+- Include China in refresh audit output. **Implemented; production activation pending.**
 - Keep request-time live parsing disabled; scheduled verified snapshots remain the intended path.
 
 Success condition: US/EA/JP/CN refresh automatically with auditable last-good fallback.
@@ -105,7 +105,7 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 
 ### Phase 1 — Freshness infrastructure
 - [x] Add canonical Data Health block
-- [ ] Validate/add China scheduled ingestion
+- [ ] Validate/add China scheduled ingestion — code + CI complete; production scheduled run pending
 - [ ] Add Funding/Credit/Fiscal scheduled refresh
 - [ ] Add explicit freshness labels and last-good status
 
@@ -123,6 +123,7 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 
 ### Phase 4 — Production hardening
 - [ ] CI checks for date regression and stale critical data
+- [x] Write-capable Money refresh push trigger restricted to `main`
 - [ ] Failure preserves last verified data
 - [ ] Audit artifacts retained
 - [x] Deploy initial Data Health slice to existing `gmli-fred-dashboard`
@@ -141,15 +142,15 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 ### 2026-08-24 — China ingestion research
 
 - Official PBoC M2 indicator and monthly Financial Statistics Report publication path were confirmed.
-- A stable machine-readable value endpoint has not yet been validated.
-- Decision: keep China on last-verified fallback rather than introduce brittle chart scraping.
+- The public indicator chart itself remains unsuitable as a source because its value layer is not a stable machine-readable contract.
+- Decision: use the official Financial Statistics Report path for scheduled RESEARCH nowcast only after source discovery and parsing pass CI; do not infer values from the chart.
 
 ### 2026-08-24 — Prospective promotion plumbing started
 
 - Added a fail-closed prospective source manifest.
 - Added a raw-input capture runner that preserves exact bytes, SHA-256, retrieval provenance, manifest hash, runner hash and frozen-state hash.
 - Capture refuses to run as promotion-ready while any required source remains unresolved and never modifies `lib/state.js`.
-- Source validation is intentionally separate from capture; unresolved China, exact BoJ/BoE/BoC paths and the adjusted-price mirror remain blockers before the first complete prospective vintage can be frozen.
+- Source validation is intentionally separate from capture.
 
 ### 2026-08-24 — BoE / BoC / BoJ prospective sources validated
 
@@ -159,18 +160,26 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
   - BoE M4 `LPMAUYN`: 4,206 bytes, `application/csv`.
   - BoC seasonally adjusted gross M2 `V41552796`: 3,529 bytes, `text/csv; charset=UTF-8`.
 - Prospective source manifest now has explicit validated fetch paths for US, EA, JP, GB, CA and both AU inputs.
-- Remaining unresolved blockers are `CN_M2` and `ASSET_ADJUSTED_PRICE_MIRROR`.
-- Frozen Core values remain unchanged and prospective capture still fails closed while either blocker is unresolved.
+- Frozen Core values remain unchanged.
 
 ### 2026-08-24 — Exact-ticker market raw-source contract validated
 
 - v1.2 documentation reconfirmed the frozen exact-ticker set: SPY, QQQ, GLD, DBC, IEF, TLT and BIL.
 - Prospective capture now supports multipart raw sources with independent bytes and SHA-256 for every part.
 - Six Yahoo/yfinance tickers use max-history monthly Chart API responses with adjusted close present; BIL retains the v1.2 Digrin adjusted-price provenance rather than silently switching providers.
-- GitHub Actions live-fetched all seven parts successfully with HTTP 200. Aggregate raw market payload was 322,901 bytes in the validation run.
+- GitHub Actions live-fetched all seven parts successfully with HTTP 200. Aggregate raw market payload was about 323 KB in validation.
 - The future transform contract is recorded but not executed by raw capture: 2015-01+, monthly adjusted price, local mirror rounded to 2 decimals.
-- `ASSET_ADJUSTED_PRICE_MIRROR` is no longer unresolved. The prospective capture fail-closed test now identifies only `CN_M2` as unresolved.
+- `ASSET_ADJUSTED_PRICE_MIRROR` is no longer unresolved. The prospective Core capture still fails closed on `CN_M2`.
 - Frozen Core values and all frozen Money methodology parameters remain unchanged.
+
+### 2026-08-24 — Official PBoC RESEARCH nowcast parser validated in CI
+
+- Initial unfiltered PBoC search attempt failed closed, proving the gate works.
+- Discovery was corrected to the PBoC filtered-search contract (`dr=true`, relevance sort) rather than weakening validation.
+- CI then passed official central-PBoC report discovery and extraction of report month, M2 balance, M2 YoY and raw-source SHA-256 provenance.
+- `--validate-china-only` performs the live source check without modifying state.
+- Scheduled `refresh_china()` retains date-regression, YoY sanity and last-good preservation guards.
+- This does **not** promote or resolve the prospective Core China source: `CN_M2` remains intentionally unresolved until its frozen stitched-level semantics are reproduced and preserved.
 
 ## Definition of done
 
