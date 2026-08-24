@@ -162,6 +162,16 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 - Remaining unresolved blockers are `CN_M2` and `ASSET_ADJUSTED_PRICE_MIRROR`.
 - Frozen Core values remain unchanged and prospective capture still fails closed while either blocker is unresolved.
 
+### 2026-08-24 — Exact-ticker market raw-source contract validated
+
+- v1.2 documentation reconfirmed the frozen exact-ticker set: SPY, QQQ, GLD, DBC, IEF, TLT and BIL.
+- Prospective capture now supports multipart raw sources with independent bytes and SHA-256 for every part.
+- Six Yahoo/yfinance tickers use max-history monthly Chart API responses with adjusted close present; BIL retains the v1.2 Digrin adjusted-price provenance rather than silently switching providers.
+- GitHub Actions live-fetched all seven parts successfully with HTTP 200. Aggregate raw market payload was 322,901 bytes in the validation run.
+- The future transform contract is recorded but not executed by raw capture: 2015-01+, monthly adjusted price, local mirror rounded to 2 decimals.
+- `ASSET_ADJUSTED_PRICE_MIRROR` is no longer unresolved. The prospective capture fail-closed test now identifies only `CN_M2` as unresolved.
+- Frozen Core values and all frozen Money methodology parameters remain unchanged.
+
 ## Definition of done
 
 GMLI is materially improved when:
