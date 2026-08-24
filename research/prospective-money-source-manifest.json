@@ -1,0 +1,103 @@
+{
+  "contract": "GMLI prospective Money Core input capture",
+  "version": 1,
+  "methodology_status": "FROZEN_SPEC",
+  "purpose": "Preserve exact source bytes for future Money Core promotion vintages before any transformation or test execution.",
+  "guardrails": {
+    "no_retuning": true,
+    "no_core_auto_update": true,
+    "all_required_sources_must_be_validated": true,
+    "raw_bytes_must_be_preserved_before_transform": true,
+    "unresolved_sources_fail_closed": true
+  },
+  "required_sources": [
+    {
+      "id": "US_M2SL",
+      "region": "US",
+      "role": "money_signal_and_weight_input",
+      "status": "VALIDATED_FETCH",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=M2SL",
+      "filename": "us-fred-m2sl.csv",
+      "source_authority": "Federal Reserve / FRED"
+    },
+    {
+      "id": "EA_M2",
+      "region": "EA",
+      "role": "money_signal_and_weight_input",
+      "status": "VALIDATED_FETCH",
+      "url": "https://data-api.ecb.europa.eu/service/data/BSI/M.U2.Y.V.M20.X.1.U2.2300.Z01.E?format=csvdata",
+      "filename": "ea-ecb-m2.csv",
+      "source_authority": "European Central Bank"
+    },
+    {
+      "id": "AU_BROAD_MONEY_SIGNAL",
+      "region": "AU",
+      "role": "money_signal_input",
+      "status": "VALIDATED_FETCH",
+      "url": "https://www.rba.gov.au/statistics/tables/csv/d1-data.csv",
+      "filename": "au-rba-d1.csv",
+      "source_authority": "Reserve Bank of Australia",
+      "series": "DGFABM12"
+    },
+    {
+      "id": "AU_BROAD_MONEY_WEIGHT",
+      "region": "AU",
+      "role": "accounting_level_weight_input",
+      "status": "VALIDATED_FETCH",
+      "url": "https://www.rba.gov.au/statistics/tables/csv/d3-data.csv",
+      "filename": "au-rba-d3.csv",
+      "source_authority": "Reserve Bank of Australia",
+      "series": "DMABMS"
+    },
+    {
+      "id": "CN_M2",
+      "region": "CN",
+      "role": "money_signal_and_weight_input",
+      "status": "UNRESOLVED",
+      "url": null,
+      "filename": "cn-pboc-m2.bin",
+      "source_authority": "People's Bank of China",
+      "note": "Official monthly Financial Statistics Report confirmed, but stable machine-readable source path is not yet validated. Do not replace with brittle chart scraping."
+    },
+    {
+      "id": "JP_M2",
+      "region": "JP",
+      "role": "money_signal_and_weight_input",
+      "status": "UNRESOLVED",
+      "url": null,
+      "filename": "jp-boj-m2.bin",
+      "source_authority": "Bank of Japan",
+      "note": "Exact frozen-Core level-series source path must be explicitly validated before prospective capture; do not infer it from the nowcast YoY endpoint."
+    },
+    {
+      "id": "GB_M4",
+      "region": "GB",
+      "role": "money_signal_and_weight_input",
+      "status": "UNRESOLVED",
+      "url": null,
+      "filename": "gb-boe-lpmauyn.bin",
+      "source_authority": "Bank of England",
+      "series": "LPMAUYN"
+    },
+    {
+      "id": "CA_M2",
+      "region": "CA",
+      "role": "money_signal_and_weight_input",
+      "status": "UNRESOLVED",
+      "url": null,
+      "filename": "ca-boc-v41552796.bin",
+      "source_authority": "Bank of Canada",
+      "series": "V41552796"
+    },
+    {
+      "id": "ASSET_ADJUSTED_PRICE_MIRROR",
+      "region": "MARKET",
+      "role": "frozen_asset_transmission_test_input",
+      "status": "UNRESOLVED",
+      "url": null,
+      "filename": "asset-adjusted-monthly.bin",
+      "source_authority": "TO_BE_VALIDATED",
+      "note": "A reproducible exact-ticker adjusted-price source/mirror must be frozen with the prospective vintage before transmission tests run."
+    }
+  ]
+}

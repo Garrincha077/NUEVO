@@ -12,11 +12,27 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Check serverless and library JavaScript
         run: |
           find api lib -name '*.js' -print0 | xargs -0 -n1 node --check
+      - name: Check GMLI Python scripts
+        run: |
+          python -m compileall -q scripts
       - name: Guard frozen Core reference
         run: |
           grep -q "available_date: '2026-02-28'" lib/state.js
           grep -q "usd_score: 65.70290344348" lib/state.js
           grep -q "fxn_score: 43.01411281977772" lib/state.js
+      - name: Verify prospective capture fails closed while sources unresolved
+        shell: bash
+        run: |
+          set +e
+          python scripts/capture-prospective-money-inputs.py --vintage 2099-01 > /tmp/gmli-capture-test.json
+          code=$?
+          set -e
+          test "$code" -eq 2
+          grep -q 'BLOCKED_UNRESOLVED_REQUIRED_SOURCES' /tmp/gmli-capture-test.json
+          grep -q '"core_modified": false' /tmp/gmli-capture-test.json
