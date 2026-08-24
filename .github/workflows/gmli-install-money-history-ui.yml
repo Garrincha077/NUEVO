@@ -1,0 +1,41 @@
+name: Install GMLI money history UI
+
+on:
+  push:
+    branches: [gmli-money-history-charts]
+    paths:
+      - 'scripts/install-money-history-ui.py'
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gmli-money-history-charts
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Apply deterministic UI/history patch
+        run: python scripts/install-money-history-ui.py
+      - name: Validate generated code and Pages snapshot
+        run: |
+          git diff --check
+          node --check lib/money-history.js
+          node --check api/history.js
+          node --check scripts/build-pages-snapshot.mjs
+          node scripts/build-pages-snapshot.mjs
+          test -s .pages/api/history.json
+      - name: Commit generated feature
+        run: |
+          git config user.name gmli-ui-bot
+          git config user.email gmli-ui-bot@users.noreply.github.com
+          git add index.html lib/money-history.js api/history.js scripts/build-pages-snapshot.mjs .github/workflows/gmli-pages.yml
+          git commit -m 'Add Global Money history charts and explainers'
+          git push origin HEAD:gmli-money-history-charts
