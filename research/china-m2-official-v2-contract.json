@@ -4,7 +4,7 @@
   "status": "RESEARCH_SOURCE_CANDIDATE",
   "purpose": "Replace the opaque legacy China stitch prospectively with a reproducible PBoC-native M2 level history while preserving the existing GMLI seven-region architecture and evaluating the impact before any Core promotion.",
   "unit": "RMB 100 million",
-  "start_month": "2015-01",
+  "start_month": "2014-01",
   "statistics_index": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/index.html",
   "methodology_policy": {
     "legacy_exact_rerun": false,
@@ -12,17 +12,20 @@
     "old_v18b_gate_unchanged": "BLOCKED_MISSING_FROZEN_INPUT_BYTES",
     "candidate_rule": "Treat this as a new versioned production-source candidate. Compare it with the legacy benchmark; do not call it the missing historical exact rerun.",
     "preferred_source_order": [
-      "PBoC Statistics -> year -> Money and Banking Statistics -> Money Supply -> HTML",
-      "PBoC monthly Financial Statistics Report as an independent latest-value cross-check"
+      "2015 onward: PBoC Statistics -> year -> Money and Banking Statistics -> Money Supply -> HTML",
+      "2014 seed year only: official central PBoC monthly Financial Statistics Reports"
     ]
   },
   "history_contract": {
-    "discovery": "Discover each year's Money and Banking Statistics page from the official PBoC Statistics index, then resolve its Money Supply HTML table. Do not depend on search-engine ranking or opaque legacy mirrors.",
-    "years": "2015 through current year",
+    "years": "2014 through current year",
+    "precision_history": "2015 onward uses official Money Supply table values in RMB 100 million directly.",
+    "seed_year_2014": "2014 uses the M2 balance published in each official central PBoC monthly Financial Statistics Report, converted from trillion yuan to RMB 100 million. It is a rounded seed year used only to make 2015 YoY computable.",
+    "seed_year_precision": "0.01 trillion yuan = 100 RMB 100-million units; do not claim 2014 has the same precision as the 2015+ HTML tables.",
+    "seed_year_reason": "The official 2014 Money and Banking Statistics overview is still discoverable, but its historical Money Supply HTML target currently returns 404. Missing historical bytes are not reconstructed.",
     "past_year_requirement": "12 monthly M2 levels",
     "current_year_requirement": "all populated M2 months through the latest official table update",
-    "raw_byte_policy": "Preserve the Statistics index, each yearly Money Supply HTML payload, source URL, retrieval timestamp and SHA-256.",
-    "precision": "Use the official table values in RMB 100 million directly; do not round to trillion-yuan report values for the history series."
+    "raw_byte_policy": "Preserve the Statistics index and each 2015+ Money Supply HTML payload. For every 2014 seed month preserve the PBoC search payload and selected central-PBoC Financial Statistics article payload, source URLs, retrieval timestamp and SHA-256.",
+    "no_proxy_rule": "No OECD, commercial vendor, mirror or reconstructed legacy series may fill 2014."
   },
   "validation_anchors": {
     "2015-01_100m": 1242710.22,
@@ -52,7 +55,13 @@
     "latest_known_month": "2026-07",
     "latest_known_level_trn_cny": 355.51,
     "tolerance_100m": 60,
-    "note": "Rounded report values are a cross-check only. The HTML Money Supply table is the authoritative precision source for V2 levels."
+    "note": "Rounded report values are a cross-check only for the 2015+ precision history."
+  },
+  "seed_validation": {
+    "month": "2014-05",
+    "reported_level_trn_cny": 118.23,
+    "source": "Official central PBoC 2014-05 Financial Statistics Report",
+    "rule": "The collected 2014-05 seed must equal the published 118.23 trillion yuan at report precision."
   },
   "promotion_policy": "A complete official V2 series may be used to construct a new Money candidate and rerun the locked transmission evaluation. Promotion, if justified, is a new version decision and does not alter the historical fact that the old v1.8b exact rerun was impossible."
 }
