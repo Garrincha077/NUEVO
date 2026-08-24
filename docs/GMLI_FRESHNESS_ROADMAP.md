@@ -25,7 +25,13 @@ The priority is freshness, auditability and clear separation of ENGINE FACT from
 
 ### P0 — Money Core V2 official-source path
 
-The opaque China legacy stitch has been superseded prospectively by `PBOC_OFFICIAL_M2_V2`, a continuous official PBoC HTML Money Supply history with preserved raw bytes/hashes.
+The opaque China legacy stitch is superseded prospectively by `PBOC_OFFICIAL_M2_V2` as a new versioned candidate. The candidate uses precise official PBoC Money Supply HTML levels from 2015 onward with preserved raw bytes/hashes.
+
+To preserve the original 2015 train start without pretending to recover the dead 2014 source, the 2014 China rows are explicit comparable accounting bases derived only from official PBoC 2015 components:
+
+`implied_2014_base_m = precise_2015_level_m / (1 + official_2015_yoy_m / 100)`
+
+These rows are `ACCOUNTING_SEED_ONLY`, `observed_stock: false`; they are not an observed 2014 M2 series and are not recovered frozen bytes.
 
 Global Money V2 reuses the documented seven-region production architecture:
 - US / CN / EA / JP / GB / CA / AU
@@ -36,16 +42,26 @@ Global Money V2 reuses the documented seven-region production architecture:
 - score `50 + (50/3)*z`
 
 Current gate status:
-1. [x] Official PBoC V2 source history 2015-01 through 2026-07, 139/139 months.
-2. [x] Global Money V2 May-2026 convention regression against v1.8 bridge.
-3. [ ] Extend official China history to 2014 if available so the original 2015-2022 signal/train window is fully preserved.
-4. [ ] Run fixed transmission-transfer test only on the preselected promoted relationships.
-5. [ ] Emit explicit V2 promotion report.
-6. [ ] Promote V2 only if transfer quality is robust and production smoke passes.
+1. [x] Official PBoC V2 precision history 2015-01 through 2026-07, 139/139 months.
+2. [x] Official-component comparable-base accounting seed for all 12 months of 2014; not an observed stock series.
+3. [x] Global Money V2 May-2026 convention regression against v1.8 bridge.
+4. [x] Fixed transmission-transfer test on only the six preselected promoted relationships: 6/6 PASS.
+5. [x] Explicit V2 promotion gate report emitted.
+6. [ ] Production integration, Vercel deploy and four-endpoint smoke; only then promote V2 to active CORE.
 
 May-2026 regression result: old bridge USD 9.3258% / FX-neutral 6.1275%; V2 USD 9.341915% / FX-neutral 6.153468%. Deltas are only +0.0161 pp and +0.0260 pp respectively.
 
-Latest full-coverage V2 headline is observation 2026-06, available 2026-07-31: USD YoY 7.956975%, score 55.1121; FX-neutral YoY 5.946277%, score 44.4880. This remains RESEARCH/PROMOTION CANDIDATE until the fixed transmission gate passes.
+Latest decision-eligible V2 headline is observation 2026-06, available 2026-07-31: USD YoY 7.956975%, score 55.1121; FX-neutral YoY 5.946277%, score 44.4880. The promotion gate is PASS, but this remains `RESEARCH / PROMOTION_GATE_PASS` until production integration and smoke complete.
+
+Fixed transfer result, without asset/horizon/lag/parameter search or new FDR claim:
+- SPY USD accel3 12M: train Pearson +0.4473; OOS Pearson +0.3613; OOS Spearman +0.3359.
+- QQQ USD accel3 12M: +0.3897; +0.5663; +0.5589.
+- GLD FX-neutral accel3 12M: +0.0872; +0.5903; +0.5657.
+- DBC USD level 6M: +0.5892; +0.6324; +0.5431.
+- DBC USD level 12M: +0.6340; +0.6344; +0.5935.
+- DBC FX-neutral level 6M: +0.6270; +0.7080; +0.6849.
+
+Promotion report: `research/global-money-v2/GMLI_GLOBAL_MONEY_V2_PROMOTION_REPORT.md`.
 
 ### P0 — Money nowcast 4/4 automated
 
@@ -79,7 +95,7 @@ Closed as a historical audit fact. Do not spend further effort trying to reconst
 
 ### P3 — Secondary research gaps
 
-Defer HYG, BTC, VNQ/VEA and other new asset-specific models until Money V2 transfer/promotion is resolved.
+Defer HYG, BTC, VNQ/VEA and other new asset-specific models until Money V2 production integration is resolved.
 
 ## Execution order
 
@@ -91,14 +107,14 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until Money V2 trans
 
 ### Phase 2 — Money V2 prospective promotion
 - [x] Preserve official PBoC raw bytes and hashes
-- [x] Continuous official China V2 source archive
+- [x] Continuous official China V2 precision source archive from 2015 onward
+- [x] Preserve 2015 train start with official-component 2014 comparable accounting seed
 - [x] Rebuild Global Money headline from official production sources
 - [x] May-2026 bridge convention regression
-- [ ] Preserve Global Money V2 source/transformed candidate archive on schedule
-- [ ] Extend China source history to 2014 if official archive permits
-- [ ] Fixed transmission transfer gate
-- [ ] Explicit V2 promotion contract/report
-- [ ] Promote only on PASS
+- [x] Preserve Global Money V2 source/transformed candidate archive on main schedule
+- [x] Fixed transmission transfer gate: 6/6 PASS
+- [x] Explicit V2 promotion contract/report
+- [ ] Controlled production integration + smoke
 
 ### Phase 3 — Current market confirmation
 - [x] Daily SPY/QQQ/GLD/DBC current confirmation layer
@@ -108,10 +124,12 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until Money V2 trans
 ### Phase 4 — Production hardening
 - [x] Main-only write-capable Money nowcast refresh
 - [x] PBoC V2 main-only source capture
-- [ ] Global Money V2 main-only candidate capture — PR #11 pending final merge/production capture
+- [x] Global Money V2 main-only candidate capture
 - [x] Failure preserves validated production Core
 - [x] Audit artifacts retained for implemented prospective captures
 - [x] Smoke-tested current production decision endpoints after prior production changes
+- [ ] Promote Money V2 as explicit active Core version while preserving 2026-02-28 historical reference and v1.8b blocker
+- [ ] Smoke `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision` after V2 production integration
 
 ## Progress log
 
@@ -122,24 +140,37 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until Money V2 trans
 - Funding/Credit/Fiscal refreshability is explicit rather than silently assumed.
 
 ### 2026-08-24 — Official PBoC M2 V2 source milestone
-- Replaced the prospective opaque China legacy dependency with official PBoC Money Supply HTML tables.
-- Full archive is continuous 2015-01 through 2026-07: 139 months, zero missing.
+- Replaced the prospective opaque China legacy dependency with official PBoC Money Supply HTML levels from 2015 onward.
+- Precision archive is continuous 2015-01 through 2026-07: 139 months, zero missing.
 - Exact source HTML bytes and SHA-256 provenance are preserved.
 - Latest 2026-07 official level is 3,555,077.24 RMB 100m; derived YoY ~7.7483%, consistent with the rounded 7.7% monthly report cross-check.
 - This is a new versioned source candidate, not a false historical v1.8b exact rerun.
+
+### 2026-08-24 — Comparable-base seed gate PASS
+- Abandoned the flawed attempt to treat 2014 search results as a complete observed monthly PBoC series after audit caught wrong quarter/adjacent-month matches.
+- Preserved the 2015 train start using a cleaner official-component method: precise 2015 PBoC levels plus each month's official published comparable M2 YoY.
+- Quarter-end 2015 months use only the corresponding Q1/H1/Q3/annual report and require the exact month-end balance sentence.
+- 12/12 comparable-base months pass; each is explicitly `ACCOUNTING_SEED_ONLY`, `observed_stock: false`.
+- Historical v1.8b exact-rerun status remains `BLOCKED_MISSING_FROZEN_INPUT_BYTES`.
 
 ### 2026-08-24 — Global Money V2 headline regression PASS
 - Reconstructed the documented seven-region production construction on current official sources.
 - Provider transport normalization was made explicit for BoJ, BoE and RBA without changing economic logic.
 - Recovered the documented Euro Area split: ECB M2 stock level for accounting/weights; official comparable ECB M2 annual-growth series for the signal.
 - May-2026 V2 reproduces the old bridge nearly exactly: USD 9.341915% vs 9.3258%; FX-neutral 6.153468% vs 6.1275%.
-- Latest full-coverage candidate (2026-06, available 2026-07-31): USD score 55.1121, FX-neutral score 44.4880.
-- No Core value was modified. Next material gate is fixed transmission transfer, preferably after extending official China history through 2014.
+- Latest decision-eligible candidate (2026-06, available 2026-07-31): USD score 55.1121, FX-neutral score 44.4880.
+
+### 2026-08-24 — Fixed transmission gate 6/6 PASS
+- Ran only the six already-promoted transmission relationships over the preserved 2015-2022 train and 2023+ OOS windows.
+- No asset, horizon, lag or parameter search and no new FDR claim.
+- All six retain positive train Pearson, positive OOS Pearson and positive OOS Spearman.
+- DBC remains the strongest and most consistent transmission family; QQQ remains strong OOS; SPY stays positive; GLD retains its historically weak train Pearson but strong OOS transfer.
+- Formal promotion report recommends a separate controlled production-integration review. No Core value was modified by this gate.
 
 ## Definition of done
 
 GMLI is materially improved when:
-1. Money V2 has a reproducible official-source history and fixed transfer evidence sufficient for an explicit promotion decision.
+1. Money V2 has a reproducible official-source history and fixed transfer evidence sufficient for an explicit promotion decision. **GATE DONE; production integration pending.**
 2. Money nowcast remains verified 4/4 without brittle request-time scraping. **DONE.**
 3. Funding/credit/fiscal freshness is explicit and automated/re-versioned where provenance permits.
 4. Current market confirmation remains separate from structural completed-month confirmation. **DONE.**
