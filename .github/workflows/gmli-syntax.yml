@@ -64,11 +64,11 @@ jobs:
           grep -q '"missing_months": \[\]' /tmp/gmli-pboc-v2-2014.json
           grep -q '"core_modified": false' /tmp/gmli-pboc-v2-2014.json
           grep -q '"historical_2014_extension"' /tmp/gmli-pboc-v2-2014.json
-      - name: Validate Global Money v2 headline candidate
+      - name: Build Global Money v2 headline candidate
         shell: bash
         run: |
           set +e
-          python scripts/run-global-money-v2.py --validate-only > /tmp/gmli-global-money-v2.json
+          python scripts/run-global-money-v2.py --build-full > /tmp/gmli-global-money-v2.json
           code=$?
           set -e
           cat /tmp/gmli-global-money-v2.json
@@ -79,6 +79,25 @@ jobs:
           grep -q '"status": "PASS"' /tmp/gmli-global-money-v2.json
           grep -q '"start_month": "2015-01"' /tmp/gmli-global-money-v2.json
           grep -q '"next_gate": "FIXED_TRANSMISSION_TRANSFER_TEST"' /tmp/gmli-global-money-v2.json
+      - name: Run fixed Global Money v2 transmission transfer gate
+        shell: bash
+        run: |
+          set +e
+          python scripts/test-global-money-v2-transmission.py --build-full > /tmp/gmli-v2-transfer.json
+          code=$?
+          set -e
+          cat /tmp/gmli-v2-transfer.json
+          test "$code" -eq 0
+          grep -q '"status": "PASS_FIXED_TRANSMISSION_DIRECTION_TRANSFER"' /tmp/gmli-v2-transfer.json
+          grep -q '"passed_relations": 6' /tmp/gmli-v2-transfer.json
+          grep -q '"total_relations": 6' /tmp/gmli-v2-transfer.json
+          grep -q '"parameter_search": false' /tmp/gmli-v2-transfer.json
+          grep -q '"lag_search": false' /tmp/gmli-v2-transfer.json
+          grep -q '"horizon_search": false' /tmp/gmli-v2-transfer.json
+          grep -q '"asset_search": false' /tmp/gmli-v2-transfer.json
+          grep -q '"fdr_claim": false' /tmp/gmli-v2-transfer.json
+          grep -q '"core_modified": false' /tmp/gmli-v2-transfer.json
+          grep -q 'PROMOTION_REPORT_AND_PRODUCTION_INTEGRATION_REVIEW' /tmp/gmli-v2-transfer.json
       - name: Validate prospective Fiscal raw capture
         run: |
           python scripts/capture-prospective-fiscal-inputs.py --validate-only > /tmp/gmli-fiscal-capture-validation.json
