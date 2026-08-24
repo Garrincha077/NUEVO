@@ -20,6 +20,7 @@ import json
 import pathlib
 import re
 import sys
+import urllib.parse
 from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -56,6 +57,18 @@ PERIOD_END_TITLE = {
 }
 
 
+def pbc_2015_search_url(month):
+    query = PERIOD_END_TITLE.get(month, f'2015年{month}月金融统计数据报告')
+    params = urllib.parse.urlencode({
+        'dr': 'true',
+        'pNo': '1',
+        'pageId': nowcast.PBOC_SEARCH_PAGE_ID,
+        'q': query,
+        'sr': 'score desc',
+    })
+    return nowcast.PBOC_SEARCH_BASE + '?' + params
+
+
 def parse_2015_growth_article(text, month):
     """Parse one 2015 PBoC Financial Statistics report without broad title relaxation.
 
@@ -90,13 +103,13 @@ def parse_2015_growth_article(text, month):
 
 
 def discover_2015_report(month):
-    search_url = nowcast.pbc_search_url(2015, month)
+    search_url = pbc_2015_search_url(month)
     search_raw = nowcast.fetch_bytes(search_url, timeout=35, accept='text/html')
     candidates = nowcast.central_pbc_urls(nowcast.decode_bytes(search_raw))
     if not candidates:
         raise ValueError(f'No central PBoC report URL discovered for 2015-{month:02d}')
     errors = []
-    for url in candidates[:16]:
+    for url in candidates[:20]:
         try:
             page_raw = nowcast.fetch_bytes(url, timeout=30, accept='text/html')
             parsed = parse_2015_growth_article(nowcast.decode_bytes(page_raw), month)
@@ -169,7 +182,6 @@ def build_seed(contract):
 
         current_month = record['month']
         current_100m = precision[current_month]
-        # Rounded Financial Statistics report level must agree with precision HTML level.
         report_100m = record['reported_level_trn_cny'] * 10000.0
         if abs(current_100m - report_100m) > 60.0:
             raise ValueError(f'{current_month} precision HTML/report level mismatch: precise={current_100m}, report={report_100m}')
@@ -181,7 +193,6 @@ def build_seed(contract):
         implied = current_100m / (1.0 + yoy / 100.0)
         seeds[prior_month] = implied
 
-        # Round-trip must recover the exact official published YoY by construction.
         roundtrip = (current_100m / implied - 1.0) * 100.0
         if abs(roundtrip - yoy) > 1e-9:
             raise ValueError(f'{current_month} comparable-base round-trip failed: {roundtrip} vs {yoy}')
@@ -247,7 +258,6 @@ def build_seed(contract):
             'raw_sha256': p['raw_sha256'],
         })
 
-    # Every 2015 derived YoY must reproduce the official published report growth.
     report_yoy = {r['month']: r['published_yoy_pct'] for r in reports}
     for row in rows:
         if row['month'].startswith('2015-'):
