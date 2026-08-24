@@ -1,0 +1,384 @@
+{
+  "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
+  "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
+  "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
+  "built_at": "2026-08-24T09:56:47Z",
+  "core_modified": false,
+  "legacy_exact_rerun": false,
+  "methodology": {
+    "regions": [
+      "US",
+      "CN",
+      "EA",
+      "JP",
+      "GB",
+      "CA",
+      "AU"
+    ],
+    "publication_lag_months": 1,
+    "weighting": "prior-year USD money-level share",
+    "zscore": "rolling 120 calendar months, min 36, population ddof=0",
+    "score": "50 + (50/3)*z",
+    "china_source": "PBOC_OFFICIAL_M2_V2"
+  },
+  "history": {
+    "start_month": "2016-01",
+    "end_month": "2026-06",
+    "full_coverage_months": 126
+  },
+  "may_2026_bridge_regression": {
+    "status": "PASS",
+    "month": "2026-05",
+    "checks": [
+      {
+        "label": "weight_US_pct",
+        "actual": 21.474289,
+        "expected": 20.99,
+        "delta": 0.484289,
+        "tolerance": 1.5,
+        "pass": true
+      },
+      {
+        "label": "local_US_yoy_pct",
+        "actual": 5.584305,
+        "expected": 5.58,
+        "delta": 0.004305,
+        "tolerance": 0.65,
+        "pass": true
+      },
+      {
+        "label": "fx_US_yoy_pct",
+        "actual": 0.0,
+        "expected": 0.0,
+        "delta": 0.0,
+        "tolerance": 0.35,
+        "pass": true
+      },
+      {
+        "label": "weight_CN_pct",
+        "actual": 44.395463,
+        "expected": 43.4,
+        "delta": 0.995463,
+        "tolerance": 1.5,
+        "pass": true
+      },
+      {
+        "label": "local_CN_yoy_pct",
+        "actual": 8.559382,
+        "expected": 8.56,
+        "delta": -0.000618,
+        "tolerance": 1.0,
+        "pass": true
+      },
+      {
+        "label": "fx_CN_yoy_pct",
+        "actual": 6.132714,
+        "expected": 6.13,
+        "delta": 0.002714,
+        "tolerance": 0.35,
+        "pass": true
+      },
+      {
+        "label": "weight_EA_pct",
+        "actual": 17.433604,
+        "expected": 18.32,
+        "delta": -0.886396,
+        "tolerance": 1.5,
+        "pass": true
+      },
+      {
+        "label": "local_EA_yoy_pct",
+        "actual": 2.99623,
+        "expected": 3.2,
+        "delta": -0.20377,
+        "tolerance": 0.65,
+        "pass": true
+      },
+      {
+        "label": "fx_EA_yoy_pct",
+        "actual": 3.610076,
+        "expected": 3.61,
+        "delta": 7.6e-05,
+        "tolerance": 0.35,
+        "pass": true
+      },
+      {
+        "label": "weight_JP_pct",
+        "actual": 8.600744,
+        "expected": 8.41,
+        "delta": 0.190744,
+        "tolerance": 1.5,
+        "pass": true
+      },
+      {
+        "label": "local_JP_yoy_pct",
+        "actual": 2.450359,
+        "expected": 2.45,
+        "delta": 0.000359,
+        "tolerance": 0.65,
+        "pass": true
+      },
+      {
+        "label": "fx_JP_yoy_pct",
+        "actual": -8.394909,
+        "expected": -8.39,
+        "delta": -0.004909,
+        "tolerance": 0.35,
+        "pass": true
+      },
+      {
+        "label": "weight_GB_pct",
+        "actual": 4.13441,
+        "expected": 4.04,
+        "delta": 0.09441,
+        "tolerance": 1.5,
+        "pass": true
+      },
+      {
+        "label": "local_GB_yoy_pct",
+        "actual": 4.27196,
+        "expected": 3.97,
+        "delta": 0.30196,
+        "tolerance": 0.65,
+        "pass": true
+      },
+      {
+        "label": "fx_GB_yoy_pct",
+        "actual": 1.048061,
+        "expected": 1.05,
+        "delta": -0.001939,
+        "tolerance": 0.35,
+        "pass": true
+      },
+      {
+        "label": "weight_CA_pct",
+        "actual": 1.925217,
+        "expected": 2.66,
+        "delta": -0.734783,
+        "tolerance": 1.5,
+        "pass": true
+      },
+      {
+        "label": "local_CA_yoy_pct",
+        "actual": 4.348339,
+        "expected": 4.35,
+        "delta": -0.001661,
+        "tolerance": 0.65,
+        "pass": true
+      },
+      {
+        "label": "fx_CA_yoy_pct",
+        "actual": 1.093534,
+        "expected": 1.09,
+        "delta": 0.003534,
+        "tolerance": 0.35,
+        "pass": true
+      },
+      {
+        "label": "weight_AU_pct",
+        "actual": 2.036272,
+        "expected": 2.18,
+        "delta": -0.143728,
+        "tolerance": 1.5,
+        "pass": true
+      },
+      {
+        "label": "local_AU_yoy_pct",
+        "actual": 7.9,
+        "expected": 7.9,
+        "delta": 0.0,
+        "tolerance": 0.65,
+        "pass": true
+      },
+      {
+        "label": "fx_AU_yoy_pct",
+        "actual": 11.701632,
+        "expected": 11.7,
+        "delta": 0.001632,
+        "tolerance": 0.35,
+        "pass": true
+      },
+      {
+        "label": "gbm_usd_yoy_pct",
+        "actual": 9.341915,
+        "expected": 9.3258,
+        "delta": 0.016115,
+        "tolerance": 1.0,
+        "pass": true
+      },
+      {
+        "label": "gbm_fxn_yoy_pct",
+        "actual": 6.153468,
+        "expected": 6.1275,
+        "delta": 0.025968,
+        "tolerance": 0.7,
+        "pass": true
+      }
+    ]
+  },
+  "latest_eligible": {
+    "month": "2026-06",
+    "available_date": "2026-07-31",
+    "gbm_usd_yoy_pct": 7.956975,
+    "gbm_fxn_yoy_pct": 5.946277,
+    "fx_effect_pp": 2.010698,
+    "usd_z": 0.306729,
+    "usd_score": 55.1121,
+    "fxn_z": -0.330721,
+    "fxn_score": 44.488,
+    "weights_pct": {
+      "US": 21.2546,
+      "CN": 44.5558,
+      "EA": 17.5695,
+      "JP": 8.5017,
+      "GB": 4.1473,
+      "CA": 1.9275,
+      "AU": 2.0436
+    },
+    "local_yoy_pct": {
+      "US": 5.5258,
+      "CN": 8.0003,
+      "EA": 3.2245,
+      "JP": 2.2078,
+      "GB": 4.9229,
+      "CA": 4.4262,
+      "AU": 8.0
+    },
+    "fx_yoy_pct": {
+      "US": 0.0,
+      "CN": 5.9713,
+      "EA": -0.1561,
+      "JP": -10.1303,
+      "GB": -1.7603,
+      "CA": -2.608,
+      "AU": 7.9275
+    }
+  },
+  "latest_source_preview": {
+    "month": "2026-06",
+    "available_date": "2026-07-31",
+    "gbm_usd_yoy_pct": 7.956975,
+    "gbm_fxn_yoy_pct": 5.946277,
+    "fx_effect_pp": 2.010698,
+    "usd_z": 0.306729,
+    "usd_score": 55.1121,
+    "fxn_z": -0.330721,
+    "fxn_score": 44.488,
+    "weights_pct": {
+      "US": 21.2546,
+      "CN": 44.5558,
+      "EA": 17.5695,
+      "JP": 8.5017,
+      "GB": 4.1473,
+      "CA": 1.9275,
+      "AU": 2.0436
+    },
+    "local_yoy_pct": {
+      "US": 5.5258,
+      "CN": 8.0003,
+      "EA": 3.2245,
+      "JP": 2.2078,
+      "GB": 4.9229,
+      "CA": 4.4262,
+      "AU": 8.0
+    },
+    "fx_yoy_pct": {
+      "US": 0.0,
+      "CN": 5.9713,
+      "EA": -0.1561,
+      "JP": -10.1303,
+      "GB": -1.7603,
+      "CA": -2.608,
+      "AU": 7.9275
+    }
+  },
+  "promotion_allowed": false,
+  "next_gate": "FIXED_TRANSMISSION_TRANSFER_TEST",
+  "note": "This is a new versioned production-source candidate. It does not rewrite the historical v1.8b exact-rerun failure.",
+  "raw_sources": [
+    {
+      "filename": "raw/us-m2sl.csv",
+      "bytes": 2872,
+      "sha256": "77f3384d3163b45f200e24c3e549b4e64b39f761c9eac255406f3e88a70c3938",
+      "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=M2SL&cosd=2014-01-01"
+    },
+    {
+      "filename": "raw/cn-pboc-v2.csv",
+      "bytes": 29427,
+      "sha256": "d156b146d134df3a600e3ca269fc2193e077a1013e6012a600adff5128af94e6",
+      "source_url": "research/china-m2-official-v2/latest/china_m2_100m.csv"
+    },
+    {
+      "filename": "raw/ea-ecb-m2.csv",
+      "bytes": 78212,
+      "sha256": "07b396af310a4549bf8306bd28955ca0e088422dbe7f47aa3424151290541cd2",
+      "source_url": "https://data-api.ecb.europa.eu/service/data/BSI/M.U2.Y.V.M20.X.1.U2.2300.Z01.E?startPeriod=2014-01&format=csvdata"
+    },
+    {
+      "filename": "raw/jp-boj-m2.json",
+      "bytes": 2878,
+      "sha256": "97ca6b16fb69fd2dd4f216beaf674f56154d54ddab566baaf38da362272689ba",
+      "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
+    },
+    {
+      "filename": "raw/gb-boe-m4.csv",
+      "bytes": 3164,
+      "sha256": "198595059e99e4ef92199d29e519a5d306b0feed2c94149101094eb0acf45460",
+      "source_url": "https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Jan/2014&Dateto=now&SeriesCodes=LPMAUYN&UsingCodes=Y&CSVF=TN&VPD=Y&VFD=N"
+    },
+    {
+      "filename": "raw/ca-boc-m2.csv",
+      "bytes": 3817,
+      "sha256": "e3593d90c2ccf5dd81fab40b0d068b1d5c5065871842bb3ce4b57c587e72c844",
+      "source_url": "https://www.bankofcanada.ca/valet/observations/V41552796/csv?start_date=2014-01-01"
+    },
+    {
+      "filename": "raw/au-rba-d3.csv",
+      "bytes": 60490,
+      "sha256": "beb163053d91d6036c032ffbf84d4fac97c418cb13376dfd71ff845871f5b754",
+      "source_url": "https://www.rba.gov.au/statistics/tables/csv/d3-data.csv"
+    },
+    {
+      "filename": "raw/au-rba-d1.csv",
+      "bytes": 59152,
+      "sha256": "9a7deccf6cdd762c40e5ce0ab83870e0c9ce9c7064a2a48b5b992575cc60abdb",
+      "source_url": "https://www.rba.gov.au/statistics/tables/csv/d1-data.csv"
+    },
+    {
+      "filename": "raw/fx-1.csv",
+      "bytes": 2742,
+      "sha256": "34a542ab5fbfa86390975fecbfbb433493e12688eb966f04ebb0e80787811785",
+      "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXCHUS&cosd=2014-01-01"
+    },
+    {
+      "filename": "raw/fx-2.csv",
+      "bytes": 2742,
+      "sha256": "4f051481a2a2448ec0464760802ba71e4f5b0ee946b35840157936f8bf2a3f32",
+      "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXUSEU&cosd=2014-01-01"
+    },
+    {
+      "filename": "raw/fx-3.csv",
+      "bytes": 3044,
+      "sha256": "2a15af01db94f585803793fac0ef1d69a775ddf1fa56919b3057387a7d93e455",
+      "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXJPUS&cosd=2014-01-01"
+    },
+    {
+      "filename": "raw/fx-4.csv",
+      "bytes": 2742,
+      "sha256": "d13291ede06a1fedcfaf954b8c3244c15c38201e583eca3a059afeadd86efa2f",
+      "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXUSUK&cosd=2014-01-01"
+    },
+    {
+      "filename": "raw/fx-5.csv",
+      "bytes": 2742,
+      "sha256": "0016009c499aad93c092c1dd446180ee471c6d2bda9c5e5108d4a8b46721e006",
+      "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXCAUS&cosd=2014-01-01"
+    },
+    {
+      "filename": "raw/fx-6.csv",
+      "bytes": 2742,
+      "sha256": "13990a26f367c7a09f1bc3950d7f8956b889849d8b4753a4120e06a785c71806",
+      "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXUSAL&cosd=2014-01-01"
+    }
+  ]
+}
