@@ -63,31 +63,46 @@
       "id": "JP_M2",
       "region": "JP",
       "role": "money_signal_and_weight_input",
-      "status": "UNRESOLVED",
-      "url": null,
-      "filename": "jp-boj-m2.bin",
-      "source_authority": "Bank of Japan",
-      "note": "Exact frozen-Core level-series source path must be explicitly validated before prospective capture; do not infer it from the nowcast YoY endpoint."
+      "status": "VALIDATED_FETCH",
+      "url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=csv&lang=en&db=MD02&startDate=201501&code=MAM1NAM2M2MO",
+      "filename": "jp-boj-m2.csv",
+      "source_authority": "Bank of Japan Time-Series Data Search API",
+      "series": "MD02'MAM1NAM2M2MO",
+      "validation": {
+        "min_bytes": 500,
+        "must_contain": ["MAM1NAM2M2MO"]
+      },
+      "note": "Official BOJ main time-series table identifies the level series as MD02'MAM1NAM2M2MO; API requests use db=MD02 and the series code without the DB prefix."
     },
     {
       "id": "GB_M4",
       "region": "GB",
       "role": "money_signal_and_weight_input",
-      "status": "UNRESOLVED",
-      "url": null,
-      "filename": "gb-boe-lpmauyn.bin",
-      "source_authority": "Bank of England",
-      "series": "LPMAUYN"
+      "status": "VALIDATED_FETCH",
+      "url": "https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Jan/2015&Dateto=now&SeriesCodes=LPMAUYN&UsingCodes=Y&CSVF=CT&VPD=Y&VFD=N",
+      "filename": "gb-boe-lpmauyn.csv",
+      "source_authority": "Bank of England IADB",
+      "series": "LPMAUYN",
+      "validation": {
+        "min_bytes": 500,
+        "must_contain": ["LPMAUYN"]
+      },
+      "note": "Uses the Bank of England documented CSV export endpoint with Dateto=now and provider-native series code LPMAUYN."
     },
     {
       "id": "CA_M2",
       "region": "CA",
       "role": "money_signal_and_weight_input",
-      "status": "UNRESOLVED",
-      "url": null,
-      "filename": "ca-boc-v41552796.bin",
-      "source_authority": "Bank of Canada",
-      "series": "V41552796"
+      "status": "VALIDATED_FETCH",
+      "url": "https://www.bankofcanada.ca/valet/observations/V41552796/csv?start_date=2015-01-01",
+      "filename": "ca-boc-v41552796.csv",
+      "source_authority": "Bank of Canada Valet API",
+      "series": "V41552796",
+      "validation": {
+        "min_bytes": 500,
+        "must_contain": ["V41552796"]
+      },
+      "note": "Official Bank of Canada monetary aggregates table identifies V41552796 as seasonally adjusted gross M2; Valet observations supports CSV by series code."
     },
     {
       "id": "ASSET_ADJUSTED_PRICE_MIRROR",
