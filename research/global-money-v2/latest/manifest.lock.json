@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-08-24T09:56:47Z",
+  "built_at": "2026-08-24T11:52:28Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -22,9 +22,9 @@
     "china_source": "PBOC_OFFICIAL_M2_V2"
   },
   "history": {
-    "start_month": "2016-01",
+    "start_month": "2015-01",
     "end_month": "2026-06",
-    "full_coverage_months": 126
+    "full_coverage_months": 138
   },
   "may_2026_bridge_regression": {
     "status": "PASS",
@@ -304,8 +304,8 @@
     },
     {
       "filename": "raw/cn-pboc-v2.csv",
-      "bytes": 29427,
-      "sha256": "d156b146d134df3a600e3ca269fc2193e077a1013e6012a600adff5128af94e6",
+      "bytes": 32176,
+      "sha256": "e7a2b5293de23361f479308caaf5dbf3d61e3385d92397bffe99fca86f6b9e30",
       "source_url": "research/china-m2-official-v2/latest/china_m2_100m.csv"
     },
     {
@@ -317,7 +317,7 @@
     {
       "filename": "raw/jp-boj-m2.json",
       "bytes": 2878,
-      "sha256": "97ca6b16fb69fd2dd4f216beaf674f56154d54ddab566baaf38da362272689ba",
+      "sha256": "ed2fff92f63929480d9b1a4dbb411499b2099b0532b262f1756d9f82ce809cc9",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
