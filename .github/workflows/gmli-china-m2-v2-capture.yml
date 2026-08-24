@@ -1,0 +1,76 @@
+name: GMLI official PBoC M2 v2 capture
+
+on:
+  schedule:
+    - cron: '47 6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build-pboc-m2-official-v2.py'
+      - 'research/china-m2-official-v2-contract.json'
+      - '.github/workflows/gmli-china-m2-v2-capture.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gmli-china-m2-v2-capture
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GMLI
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build continuous official PBoC M2 v2 history
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/build-pboc-m2-official-v2.py --build-full | tee /tmp/gmli-pboc-v2-build.json
+          grep -q '"status": "PASS_CONTINUOUS_OFFICIAL_V2_SOURCE"' /tmp/gmli-pboc-v2-build.json
+          grep -q '"candidate_version": "PBOC_OFFICIAL_M2_V2"' /tmp/gmli-pboc-v2-build.json
+          grep -q '"core_modified": false' /tmp/gmli-pboc-v2-build.json
+          grep -q '"legacy_exact_rerun": false' /tmp/gmli-pboc-v2-build.json
+          grep -q '"missing_months": \[\]' research/china-m2-official-v2/latest/manifest.lock.json
+          grep -q '"promotion_allowed": false' research/china-m2-official-v2/latest/manifest.lock.json
+          grep -q 'BUILD_GLOBAL_MONEY_V2_CANDIDATE_AND_COMPARE_TRANSFER' research/china-m2-official-v2/latest/manifest.lock.json
+
+      - name: Guard production Core state
+        run: |
+          grep -q "available_date: '2026-02-28'" lib/state.js
+          grep -q "usd_score: 65.70290344348" lib/state.js
+          grep -q "fxn_score: 43.01411281977772" lib/state.js
+
+      - name: Upload PBoC v2 audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-pboc-m2-v2-capture
+          path: |
+            audit/china-m2-official-v2.json
+            research/china-m2-official-v2/latest/
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Commit verified source archive only when changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain -- research/china-m2-official-v2/latest)" ]; then
+            echo 'No PBoC M2 v2 source change; no commit needed.'
+            exit 0
+          fi
+          git config user.name 'gmli-refresh-bot'
+          git config user.email 'gmli-refresh-bot@users.noreply.github.com'
+          git add research/china-m2-official-v2/latest
+          git commit -m 'Capture official PBoC M2 v2 source archive'
+          git push origin HEAD:main
