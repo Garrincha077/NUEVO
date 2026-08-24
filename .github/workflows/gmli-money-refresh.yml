@@ -5,6 +5,7 @@ on:
     - cron: '17 6 * * *'
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - 'scripts/refresh-money-nowcast.py'
       - '.github/workflows/gmli-money-refresh.yml'

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
+import argparse
 import csv
+import hashlib
+import html
 import io
 import json
 import pathlib
@@ -15,7 +18,13 @@ AUDIT_DIR.mkdir(exist_ok=True)
 
 PREFIX = 'export const MONEY_NOWCAST = '
 SUFFIX = ';\n\nexport function summarizeNowcast()'
-UA = 'GMLI-Research-Copilot/2.3 scheduled-refresh'
+UA = 'GMLI-Research-Copilot/2.4 scheduled-refresh'
+PBOC_SEARCH_BASE = 'https://wzdig.pbc.gov.cn/search/pcRender'
+PBOC_SEARCH_PAGE_ID = 'c177a85bd02b4114bebebd210809f691'
+
+
+def sha256_bytes(raw):
+    return hashlib.sha256(raw).hexdigest()
 
 
 def fetch_bytes(url, timeout=25, accept='*/*'):
@@ -24,14 +33,26 @@ def fetch_bytes(url, timeout=25, accept='*/*'):
         return r.read()
 
 
-def fetch_text(url, timeout=25, accept='*/*'):
-    raw = fetch_bytes(url, timeout, accept)
-    for enc in ('utf-8-sig', 'utf-8', 'cp1252', 'latin-1'):
+def decode_bytes(raw):
+    for enc in ('utf-8-sig', 'utf-8', 'gb18030', 'cp1252', 'latin-1'):
         try:
             return raw.decode(enc)
         except UnicodeDecodeError:
             pass
     raise ValueError('Unable to decode response')
+
+
+def fetch_text(url, timeout=25, accept='*/*'):
+    return decode_bytes(fetch_bytes(url, timeout, accept))
+
+
+def strip_html(value):
+    s = re.sub(r'<script[\s\S]*?</script>', ' ', str(value), flags=re.I)
+    s = re.sub(r'<style[\s\S]*?</style>', ' ', s, flags=re.I)
+    s = re.sub(r'<[^>]+>', ' ', s)
+    s = html.unescape(s)
+    s = s.replace('\u3000', ' ').replace('\xa0', ' ')
+    return re.sub(r'\s+', ' ', s).strip()
 
 
 def load_state():
@@ -74,24 +95,27 @@ def validate_block(old, new_date, new_yoy):
         raise ValueError(f'Same-month revision too large: {old["latest_yoy_pct"]} -> {new_yoy}')
 
 
-def apply_block(state, key, new_date, new_yoy, source, source_url):
+def apply_block(state, key, new_date, new_yoy, source, source_url, extras=None):
     old = state['blocks'][key]
     validate_block(old, new_date, new_yoy)
     new_yoy = round(float(new_yoy), 4)
     ref = float(old['core_reference_yoy_pct'])
     d, delta = direction(new_yoy, ref)
-    changed = new_date != old['latest_date'] or new_yoy != round(float(old['latest_yoy_pct']), 4)
+    payload = {
+        'latest_date': new_date,
+        'latest_yoy_pct': new_yoy,
+        'direction_vs_core': d,
+        'delta_vs_core_pp': delta,
+        'expanding_yoy': new_yoy > 0,
+        'source': source,
+        'source_url': source_url,
+        'status': 'OK_VERIFIED_SCHEDULED'
+    }
+    if extras:
+        payload.update(extras)
+    changed = any(old.get(k) != v for k, v in payload.items())
     if changed:
-        old.update({
-            'latest_date': new_date,
-            'latest_yoy_pct': new_yoy,
-            'direction_vs_core': d,
-            'delta_vs_core_pp': delta,
-            'expanding_yoy': new_yoy > 0,
-            'source': source,
-            'source_url': source_url,
-            'status': 'OK_VERIFIED_SCHEDULED'
-        })
+        old.update(payload)
     return changed
 
 
@@ -142,7 +166,6 @@ def refresh_ea(state):
 
 
 def refresh_japan(state):
-    # Official BOJ API launched in 2026. MD02\'MAM1YAM2M2MO is M2 YoY.
     params = urllib.parse.urlencode({
         'format': 'json', 'lang': 'en', 'db': 'MD02',
         'startDate': '202602', 'code': 'MAM1YAM2M2MO'
@@ -170,6 +193,123 @@ def refresh_japan(state):
         raise ValueError('BOJ API no numeric M2 YoY observations')
     d, v = sorted(obs, key=lambda x: month_key(x[0]))[-1]
     return apply_block(state, 'japan', d, v, 'Bank of Japan Time-Series Data Search API', 'https://www.stat-search.boj.or.jp/api/v1/getDataCode')
+
+
+def pbc_search_url(year, month):
+    query = f'{year}年{month}月金融统计数据报告'
+    params = urllib.parse.urlencode({
+        'dr': 'true',
+        'pNo': '1',
+        'pageId': PBOC_SEARCH_PAGE_ID,
+        'q': query,
+        'sr': 'score desc'
+    })
+    return PBOC_SEARCH_BASE + '?' + params
+
+
+def central_pbc_urls(search_html):
+    decoded = html.unescape(search_html)
+    urls = re.findall(r'https?://(?:www\.)?pbc\.gov\.cn/[^"\'<>\s]+/index\.html', decoded, flags=re.I)
+    out = []
+    for url in urls:
+        parsed = urllib.parse.urlparse(url)
+        if parsed.hostname not in ('pbc.gov.cn', 'www.pbc.gov.cn'):
+            continue
+        normalized = urllib.parse.urlunparse(('https', 'www.pbc.gov.cn', parsed.path, '', '', ''))
+        if normalized not in out:
+            out.append(normalized)
+    return out
+
+
+def parse_pbc_m2_report(text, year, month):
+    clean = strip_html(text).replace('（', '(').replace('）', ')').replace('％', '%').replace('，', ',')
+    title_token = f'{year}年{month}月'
+    if title_token not in clean or '金融统计' not in clean:
+        raise ValueError(f'PBoC report title/month mismatch for {year}-{month:02d}')
+    patterns = [
+        r'广义货币\s*\(?M2\)?\s*余额\s*([0-9]+(?:\.[0-9]+)?)\s*万亿元[^。]{0,160}?同比增长\s*([+-]?[0-9]+(?:\.[0-9]+)?)\s*%',
+        r'M2[^。]{0,80}?余额\s*([0-9]+(?:\.[0-9]+)?)\s*万亿元[^。]{0,160}?同比增长\s*([+-]?[0-9]+(?:\.[0-9]+)?)\s*%'
+    ]
+    for pattern in patterns:
+        m = re.search(pattern, clean, flags=re.I)
+        if m:
+            level = float(m.group(1))
+            yoy = float(m.group(2))
+            if not (50 <= level <= 1000):
+                raise ValueError(f'PBoC M2 level sanity check failed: {level} trillion yuan')
+            if not (-20 <= yoy <= 30):
+                raise ValueError(f'PBoC M2 YoY sanity check failed: {yoy}')
+            return {'level_trn_cny': level, 'yoy_pct': yoy}
+    raise ValueError('PBoC report found but M2 balance/YoY sentence was not parsed')
+
+
+def find_pbc_report(year, month):
+    search_url = pbc_search_url(year, month)
+    search_raw = fetch_bytes(search_url, timeout=35, accept='text/html')
+    search_text = decode_bytes(search_raw)
+    candidates = central_pbc_urls(search_text)
+    if not candidates:
+        raise ValueError(f'No central PBoC report URL discovered for {year}-{month:02d}')
+    errors = []
+    for url in candidates[:12]:
+        try:
+            page_raw = fetch_bytes(url, timeout=30, accept='text/html')
+            page_text = decode_bytes(page_raw)
+            parsed = parse_pbc_m2_report(page_text, year, month)
+            return {
+                'report_month': f'{year}-{month:02d}',
+                'url': url,
+                **parsed,
+                'search_url': search_url,
+                'search_sha256': sha256_bytes(search_raw),
+                'article_sha256': sha256_bytes(page_raw),
+                'search_bytes': len(search_raw),
+                'article_bytes': len(page_raw)
+            }
+        except Exception as exc:
+            errors.append(f'{url}: {str(exc)[:180]}')
+    raise ValueError('PBoC candidates failed validation: ' + ' | '.join(errors[:4]))
+
+
+def latest_pbc_report(state):
+    old = state['blocks']['china']
+    now = datetime.now(timezone.utc)
+    anchor_year = now.year
+    anchor_month = now.month - 1
+    if anchor_month == 0:
+        anchor_month = 12
+        anchor_year -= 1
+    errors = []
+    for back in range(0, 6):
+        total = anchor_year * 12 + (anchor_month - 1) - back
+        year, month0 = divmod(total, 12)
+        month = month0 + 1
+        try:
+            report = find_pbc_report(year, month)
+            validate_block(old, report['report_month'], report['yoy_pct'])
+            return report
+        except Exception as exc:
+            errors.append(f'{year}-{month:02d}: {str(exc)[:250]}')
+    raise ValueError('No current official PBoC Financial Statistics Report passed validation: ' + ' | '.join(errors))
+
+
+def refresh_china(state):
+    report = latest_pbc_report(state)
+    changed = apply_block(
+        state,
+        'china',
+        report['report_month'],
+        report['yoy_pct'],
+        'People\'s Bank of China Financial Statistics Report',
+        report['url'],
+        extras={
+            'latest_level_trn_cny': report['level_trn_cny'],
+            'source_article_sha256': report['article_sha256'],
+            'source_search_sha256': report['search_sha256'],
+            'note': 'Official central PBoC monthly Financial Statistics Report; scheduled parser validates report month, M2 balance and YoY before replacing last-good RESEARCH nowcast data.'
+        }
+    )
+    return changed, report
 
 
 def refresh_usd_translation(state):
@@ -206,8 +346,27 @@ def refresh_usd_translation(state):
     return changed
 
 
+def validate_china_only(state):
+    report = latest_pbc_report(state)
+    return {
+        'status': 'PASS',
+        'core_modified': False,
+        'state_modified': False,
+        'source': 'People\'s Bank of China Financial Statistics Report',
+        'report': report
+    }
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--validate-china-only', action='store_true', help='Fetch and validate the latest official PBoC M2 report without modifying state.')
+    args = parser.parse_args()
+
     original, state = load_state()
+    if args.validate_china_only:
+        print(json.dumps(validate_china_only(state), ensure_ascii=False, indent=2))
+        return
+
     results = {}
     changed = False
     jobs = [
@@ -222,20 +381,34 @@ def main():
             results[name] = {'status': 'PASS', 'changed': did_change}
             changed = changed or did_change
         except Exception as e:
-            results[name] = {'status': 'PRESERVED_LAST_VERIFIED', 'error': str(e)[:500]}
+            results[name] = {'status': 'PRESERVED_LAST_VERIFIED', 'error': str(e)[:1000]}
 
-    results['china'] = {'status': 'PRESERVED_LAST_VERIFIED', 'reason': 'Stable official PBoC current-value machine parser not yet validated.'}
+    try:
+        china_changed, china_report = refresh_china(state)
+        results['china'] = {
+            'status': 'PASS',
+            'changed': china_changed,
+            'report_month': china_report['report_month'],
+            'level_trn_cny': china_report['level_trn_cny'],
+            'yoy_pct': china_report['yoy_pct'],
+            'source_url': china_report['url'],
+            'source_article_sha256': china_report['article_sha256'],
+            'source_search_sha256': china_report['search_sha256']
+        }
+        changed = changed or china_changed
+    except Exception as e:
+        results['china'] = {'status': 'PRESERVED_LAST_VERIFIED', 'error': str(e)[:1500]}
 
     now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
     audit = {'attempted_at': now, 'changed': changed, 'results': results}
-    (AUDIT_DIR / 'money-refresh-result.json').write_text(json.dumps(audit, indent=2), encoding='utf-8')
+    (AUDIT_DIR / 'money-refresh-result.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2), encoding='utf-8')
 
     if changed:
         state.setdefault('refresh', {})['last_verified_at'] = now
         state['refresh']['last_result'] = results
         dump_state(original, state)
 
-    print(json.dumps(audit, indent=2))
+    print(json.dumps(audit, ensure_ascii=False, indent=2))
 
 
 if __name__ == '__main__':
