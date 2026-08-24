@@ -18,6 +18,7 @@ import importlib.util
 import io
 import json
 import pathlib
+import re
 import sys
 from datetime import datetime, timezone
 
@@ -47,14 +48,82 @@ def load_contract():
     return data
 
 
+PERIOD_END_TITLE = {
+    3: '2015年一季度金融统计数据报告',
+    6: '2015年上半年金融统计数据报告',
+    9: '2015年前三季度金融统计数据报告',
+    12: '2015年金融统计数据报告',
+}
+
+
+def parse_2015_growth_article(text, month):
+    """Parse one 2015 PBoC Financial Statistics report without broad title relaxation.
+
+    Non-quarter months still require the exact YYYY年M月 title. Quarter-end months
+    may use only the known PBoC period titles (Q1/H1/Q3/annual), and every accepted
+    page must explicitly contain the requested ``M月末`` balance sentence.
+    """
+    clean = nowcast.strip_html(text).replace('（', '(').replace('）', ')').replace('％', '%').replace('，', ',')
+    exact_title = f'2015年{month}月金融统计数据报告'
+    allowed_title = PERIOD_END_TITLE.get(month, exact_title)
+    if allowed_title not in clean or '金融统计' not in clean:
+        raise ValueError(f'PBoC report title/month mismatch for 2015-{month:02d}')
+    if f'{month}月末' not in clean:
+        raise ValueError(f'PBoC report body month mismatch for 2015-{month:02d}')
+
+    patterns = [
+        r'广义货币\s*\(?M2\)?\s*余额\s*([0-9]+(?:\.[0-9]+)?)\s*万亿元[^。]{0,160}?同比增长\s*([+-]?[0-9]+(?:\.[0-9]+)?)\s*%',
+        r'M2[^。]{0,80}?余额\s*([0-9]+(?:\.[0-9]+)?)\s*万亿元[^。]{0,160}?同比增长\s*([+-]?[0-9]+(?:\.[0-9]+)?)\s*%'
+    ]
+    for pattern in patterns:
+        m = re.search(pattern, clean, flags=re.I)
+        if not m:
+            continue
+        level = float(m.group(1))
+        yoy = float(m.group(2))
+        if not (50 <= level <= 1000):
+            raise ValueError(f'PBoC M2 level sanity check failed: {level} trillion yuan')
+        if not (-20 <= yoy <= 30):
+            raise ValueError(f'PBoC M2 YoY sanity check failed: {yoy}')
+        return {'level_trn_cny': level, 'yoy_pct': yoy}
+    raise ValueError('PBoC report found but M2 balance/YoY sentence was not parsed')
+
+
+def discover_2015_report(month):
+    search_url = nowcast.pbc_search_url(2015, month)
+    search_raw = nowcast.fetch_bytes(search_url, timeout=35, accept='text/html')
+    candidates = nowcast.central_pbc_urls(nowcast.decode_bytes(search_raw))
+    if not candidates:
+        raise ValueError(f'No central PBoC report URL discovered for 2015-{month:02d}')
+    errors = []
+    for url in candidates[:16]:
+        try:
+            page_raw = nowcast.fetch_bytes(url, timeout=30, accept='text/html')
+            parsed = parse_2015_growth_article(nowcast.decode_bytes(page_raw), month)
+            return {
+                'report_month': f'2015-{month:02d}',
+                'url': url,
+                **parsed,
+                'search_url': search_url,
+                'search_sha256': nowcast.sha256_bytes(search_raw),
+                'article_sha256': nowcast.sha256_bytes(page_raw),
+                'search_bytes': len(search_raw),
+                'article_bytes': len(page_raw),
+                'title_mode': 'PERIOD_END' if month in PERIOD_END_TITLE else 'EXACT_MONTH',
+            }
+        except Exception as exc:
+            errors.append(f'{url}: {str(exc)[:180]}')
+    raise ValueError('PBoC 2015 candidates failed validation: ' + ' | '.join(errors[:6]))
+
+
 def exact_2015_report(month):
-    report = nowcast.find_pbc_report(2015, month)
+    report = discover_2015_report(month)
     expected = f'2015-{month:02d}'
     if report.get('report_month') != expected:
         raise ValueError(f'PBoC exact-month mismatch: expected={expected}, got={report.get("report_month")}')
 
     article_raw, article_meta = base.fetch_bytes(report['url'], timeout=40)
-    parsed = nowcast.parse_pbc_m2_report(base.decode_bytes(article_raw), 2015, month)
+    parsed = parse_2015_growth_article(base.decode_bytes(article_raw), month)
     level_trn = float(parsed['level_trn_cny'])
     yoy_pct = float(parsed['yoy_pct'])
     if abs(level_trn - float(report['level_trn_cny'])) > 1e-9 or abs(yoy_pct - float(report['yoy_pct'])) > 1e-9:
@@ -68,6 +137,7 @@ def exact_2015_report(month):
         'reported_level_trn_cny': level_trn,
         'published_yoy_pct': yoy_pct,
         'search_url': report['search_url'],
+        'title_mode': report['title_mode'],
     }
 
 
@@ -128,6 +198,7 @@ def build_seed(contract):
             'article_url': record['article_url'],
             'article_sha256': record['article_sha256'],
             'search_url': record['search_url'],
+            'title_mode': record['title_mode'],
         })
 
     anchor = (contract.get('published_growth_anchor') or {}).get('2015-01_yoy_pct')
@@ -152,6 +223,7 @@ def build_seed(contract):
             'observed_stock': False,
             'formula': 'precise_2015_level / (1 + official_2015_yoy/100)',
             'source_month': source_month,
+            'title_mode': item['title_mode'],
         }
     provenance_path.write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
@@ -175,7 +247,7 @@ def build_seed(contract):
             'raw_sha256': p['raw_sha256'],
         })
 
-    # Every 2015 derived YoY must reproduce the official published exact-month report.
+    # Every 2015 derived YoY must reproduce the official published report growth.
     report_yoy = {r['month']: r['published_yoy_pct'] for r in reports}
     for row in rows:
         if row['month'].startswith('2015-'):
@@ -202,7 +274,7 @@ def build_seed(contract):
             'role': 'ACCOUNTING_SEED_ONLY',
             'observed_stock': False,
             'source_precision_history': '2015 current-month level uses precise PBoC Money Supply HTML values',
-            'source_growth': 'exact-month official 2015 PBoC Financial Statistics Report YoY',
+            'source_growth': 'official 2015 PBoC Financial Statistics Report YoY; quarter-end months use only the corresponding Q1/H1/Q3/annual period report',
             'formula': 'implied_2014_base = precise_2015_level / (1 + published_2015_yoy/100)',
             'sources': seed_manifest,
         },
