@@ -1,6 +1,6 @@
 {
   "contract": "GMLI prospective Money Core input capture",
-  "version": 1,
+  "version": 2,
   "methodology_status": "FROZEN_SPEC",
   "purpose": "Preserve exact source bytes for future Money Core promotion vintages before any transformation or test execution.",
   "guardrails": {
@@ -108,11 +108,69 @@
       "id": "ASSET_ADJUSTED_PRICE_MIRROR",
       "region": "MARKET",
       "role": "frozen_asset_transmission_test_input",
-      "status": "UNRESOLVED",
-      "url": null,
-      "filename": "asset-adjusted-monthly.bin",
-      "source_authority": "TO_BE_VALIDATED",
-      "note": "A reproducible exact-ticker adjusted-price source/mirror must be frozen with the prospective vintage before transmission tests run."
+      "status": "VALIDATED_FETCH",
+      "capture_mode": "MULTIPART_HTTP",
+      "source_authority": "Yahoo Finance chart API for SPY/QQQ/GLD/DBC/IEF/TLT; Digrin adjusted price history for BIL",
+      "transform_contract": {
+        "status": "NOT_EXECUTED_BY_RAW_CAPTURE",
+        "tickers": ["SPY", "QQQ", "GLD", "DBC", "IEF", "TLT", "BIL"],
+        "start_month": "2015-01",
+        "frequency": "monthly",
+        "price_field": "adjusted_price",
+        "local_mirror_rounding_decimals": 2,
+        "note": "v1.2 exact-ticker research mirror used these seven tickers; six were cross-checked to Yahoo/yfinance and BIL used Digrin adjusted-price history. Raw capture preserves provider bytes only; matrix transformation is a separate frozen gate."
+      },
+      "parts": [
+        {
+          "id": "SPY_YAHOO_ADJCLOSE",
+          "ticker": "SPY",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=max&interval=1mo&events=history&includeAdjustedClose=true",
+          "filename": "market-spy-yahoo-chart.json",
+          "validation": {"min_bytes": 5000, "must_contain": ["\"symbol\":\"SPY\"", "adjclose"]}
+        },
+        {
+          "id": "QQQ_YAHOO_ADJCLOSE",
+          "ticker": "QQQ",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?range=max&interval=1mo&events=history&includeAdjustedClose=true",
+          "filename": "market-qqq-yahoo-chart.json",
+          "validation": {"min_bytes": 5000, "must_contain": ["\"symbol\":\"QQQ\"", "adjclose"]}
+        },
+        {
+          "id": "GLD_YAHOO_ADJCLOSE",
+          "ticker": "GLD",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD?range=max&interval=1mo&events=history&includeAdjustedClose=true",
+          "filename": "market-gld-yahoo-chart.json",
+          "validation": {"min_bytes": 5000, "must_contain": ["\"symbol\":\"GLD\"", "adjclose"]}
+        },
+        {
+          "id": "DBC_YAHOO_ADJCLOSE",
+          "ticker": "DBC",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/DBC?range=max&interval=1mo&events=history&includeAdjustedClose=true",
+          "filename": "market-dbc-yahoo-chart.json",
+          "validation": {"min_bytes": 5000, "must_contain": ["\"symbol\":\"DBC\"", "adjclose"]}
+        },
+        {
+          "id": "IEF_YAHOO_ADJCLOSE",
+          "ticker": "IEF",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/IEF?range=max&interval=1mo&events=history&includeAdjustedClose=true",
+          "filename": "market-ief-yahoo-chart.json",
+          "validation": {"min_bytes": 5000, "must_contain": ["\"symbol\":\"IEF\"", "adjclose"]}
+        },
+        {
+          "id": "TLT_YAHOO_ADJCLOSE",
+          "ticker": "TLT",
+          "url": "https://query1.finance.yahoo.com/v8/finance/chart/TLT?range=max&interval=1mo&events=history&includeAdjustedClose=true",
+          "filename": "market-tlt-yahoo-chart.json",
+          "validation": {"min_bytes": 5000, "must_contain": ["\"symbol\":\"TLT\"", "adjclose"]}
+        },
+        {
+          "id": "BIL_DIGRIN_ADJUSTED_PRICE",
+          "ticker": "BIL",
+          "url": "https://www.digrin.com/stocks/detail/BIL/price",
+          "filename": "market-bil-digrin-price.html",
+          "validation": {"min_bytes": 5000, "must_contain": ["BIL", "Adjusted price", "Price History"]}
+        }
+      ]
     }
   ]
 }

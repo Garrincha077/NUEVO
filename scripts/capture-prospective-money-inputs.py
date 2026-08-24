@@ -19,7 +19,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "research" / "prospective-money-source-manifest.json"
 CAPTURE_ROOT = ROOT / "research" / "prospective-inputs"
 AUDIT_ROOT = ROOT / "audit"
-USER_AGENT = "GMLI-prospective-capture/1.0"
+USER_AGENT = "GMLI-prospective-capture/1.1"
 
 
 def sha256_bytes(raw: bytes) -> str:
@@ -80,12 +80,45 @@ def load_manifest(path: pathlib.Path):
     return manifest
 
 
+def source_fetchable(source):
+    if source.get("status") != "VALIDATED_FETCH":
+        return False
+    if source.get("url"):
+        return True
+    parts = source.get("parts")
+    return (
+        isinstance(parts, list)
+        and bool(parts)
+        and all(isinstance(p, dict) and p.get("url") and p.get("filename") for p in parts)
+    )
+
+
 def unresolved_sources(manifest):
-    bad = []
-    for source in manifest["required_sources"]:
-        if source.get("status") != "VALIDATED_FETCH" or not source.get("url"):
-            bad.append(source.get("id") or "UNKNOWN")
-    return bad
+    return [
+        source.get("id") or "UNKNOWN"
+        for source in manifest["required_sources"]
+        if not source_fetchable(source)
+    ]
+
+
+def write_raw_part(raw_root, vintage_root, source, part=None):
+    item = part or source
+    filename = safe_filename(item["filename"])
+    raw, headers, final_url = fetch_source(item["url"])
+    out = raw_root / filename
+    if out.exists():
+        raise FileExistsError(f"Duplicate raw capture filename: {filename}")
+    out.write_bytes(raw)
+    return {
+        "part_id": item.get("id"),
+        "ticker": item.get("ticker"),
+        "requested_url": item["url"],
+        "final_url": final_url,
+        "filename": str(out.relative_to(vintage_root)),
+        "bytes": len(raw),
+        "sha256": sha256_bytes(raw),
+        "response": headers,
+    }
 
 
 def capture(vintage: str, manifest_path: pathlib.Path, allow_incomplete: bool = False):
@@ -124,27 +157,30 @@ def capture(vintage: str, manifest_path: pathlib.Path, allow_incomplete: bool = 
     skipped = []
     for source in manifest["required_sources"]:
         sid = source["id"]
-        if source.get("status") != "VALIDATED_FETCH" or not source.get("url"):
+        if not source_fetchable(source):
             skipped.append(sid)
             continue
         try:
-            filename = safe_filename(source["filename"])
-            raw, headers, final_url = fetch_source(source["url"])
-            out = raw_root / filename
-            out.write_bytes(raw)
-            captured.append({
+            record = {
                 "id": sid,
                 "region": source.get("region"),
                 "role": source.get("role"),
                 "source_authority": source.get("source_authority"),
                 "series": source.get("series"),
-                "requested_url": source["url"],
-                "final_url": final_url,
-                "filename": str(out.relative_to(vintage_root)),
-                "bytes": len(raw),
-                "sha256": sha256_bytes(raw),
-                "response": headers,
-            })
+            }
+            if source.get("url"):
+                record.update(write_raw_part(raw_root, vintage_root, source))
+            else:
+                record["capture_mode"] = "MULTIPART_HTTP"
+                record["parts"] = [
+                    write_raw_part(raw_root, vintage_root, source, part)
+                    for part in source["parts"]
+                ]
+                record["bytes"] = sum(p["bytes"] for p in record["parts"])
+                record["parts_sha256"] = sha256_bytes(
+                    "\n".join(p["sha256"] for p in record["parts"]).encode("utf-8")
+                )
+            captured.append(record)
         except Exception as exc:
             failures.append({"id": sid, "error": str(exc)[:1000]})
 

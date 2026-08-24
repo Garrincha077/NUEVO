@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Validate documented source URLs for prospective GMLI Money capture.
+"""Validate documented source URLs for prospective GMLI capture.
 
 This validator performs read-only network checks. It never transforms data,
-changes lib/state.js, or promotes a Money vintage. A source is considered
-usable only when its exact HTTPS URL returns a non-trivial payload containing
-its expected provider-native series marker.
+changes lib/state.js, or promotes a Money vintage. Single-URL and multipart
+sources must return non-trivial payloads containing their declared markers.
 """
 
 import argparse
@@ -17,7 +16,7 @@ import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "research" / "prospective-money-source-manifest.json"
-USER_AGENT = "GMLI-source-validation/1.0"
+USER_AGENT = "GMLI-source-validation/1.1"
 
 
 def load_manifest(path: pathlib.Path):
@@ -38,7 +37,7 @@ def fetch(url: str, timeout: int, attempts: int):
                 url,
                 headers={
                     "User-Agent": USER_AGENT,
-                    "Accept": "text/csv,text/plain,application/json,*/*;q=0.1",
+                    "Accept": "text/csv,text/plain,application/json,text/html,*/*;q=0.1",
                 },
             )
             with urllib.request.urlopen(req, timeout=timeout) as response:
@@ -56,16 +55,16 @@ def fetch(url: str, timeout: int, attempts: int):
     raise RuntimeError(f"Fetch failed after {attempts} attempts: {last_error}")
 
 
-def validate_source(source, timeout: int, attempts: int):
-    sid = source.get("id") or "UNKNOWN"
-    url = source.get("url")
-    validation = source.get("validation") or {}
+def validate_item(item, timeout: int, attempts: int):
+    iid = item.get("id") or "UNKNOWN"
+    url = item.get("url")
+    validation = item.get("validation") or {}
     min_bytes = int(validation.get("min_bytes", 200))
     markers = validation.get("must_contain") or []
     if not url:
-        return {"id": sid, "status": "FAIL", "error": "missing url"}
+        return {"id": iid, "status": "FAIL", "error": "missing url"}
     if not markers:
-        return {"id": sid, "status": "FAIL", "error": "missing validation.must_contain"}
+        return {"id": iid, "status": "FAIL", "error": "missing validation.must_contain"}
 
     try:
         fetched = fetch(url, timeout=timeout, attempts=attempts)
@@ -77,14 +76,31 @@ def validate_source(source, timeout: int, attempts: int):
         if missing:
             raise ValueError(f"expected marker(s) missing: {missing}")
         return {
-            "id": sid,
+            "id": iid,
+            "ticker": item.get("ticker"),
             "status": "PASS",
             "bytes": len(raw),
             "markers": markers,
             **fetched,
         }
     except Exception as exc:
-        return {"id": sid, "status": "FAIL", "error": str(exc)}
+        return {"id": iid, "ticker": item.get("ticker"), "status": "FAIL", "error": str(exc)}
+
+
+def validate_source(source, timeout: int, attempts: int):
+    sid = source.get("id") or "UNKNOWN"
+    parts = source.get("parts")
+    if isinstance(parts, list) and parts:
+        part_results = [validate_item(part, timeout, attempts) for part in parts]
+        failed = [x for x in part_results if x["status"] != "PASS"]
+        return {
+            "id": sid,
+            "status": "PASS" if not failed else "FAIL",
+            "capture_mode": "MULTIPART_HTTP",
+            "parts": part_results,
+            "bytes": sum(x.get("bytes", 0) for x in part_results),
+        }
+    return validate_item(source, timeout, attempts)
 
 
 def main():
@@ -120,7 +136,7 @@ def main():
     results = [validate_source(x, args.timeout, args.attempts) for x in selected]
     failed = [x for x in results if x["status"] != "PASS"]
     out = {
-        "validator": "GMLI prospective Money source URL validation",
+        "validator": "GMLI prospective source URL validation",
         "core_modified": False,
         "selected": [x.get("id") for x in selected],
         "status": "PASS" if not failed else "FAIL",
