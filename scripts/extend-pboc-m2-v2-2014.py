@@ -53,29 +53,34 @@ def fetch_month_report(month):
     if report.get('report_month') != expected:
         raise ValueError(f'PBoC exact-month mismatch: expected={expected}, got={report.get("report_month")}')
     level_trn = float(report['level_trn_cny'])
+    yoy_pct = float(report['yoy_pct'])
     if not (50 <= level_trn <= 300):
         raise ValueError(f'{expected} M2 level sanity failure: {level_trn} tn CNY')
 
     # Re-fetch the exact accepted search/article payloads so the seed archive
-    # preserves raw bytes, not merely parsed values/hashes.
+    # preserves the bytes actually captured. PBoC search pages can change bytes
+    # between requests, so raw-byte equality across two separate HTTP calls is
+    # not an invariant. Instead, re-parse the accepted article and require the
+    # same exact month semantics and economic values.
     search_raw, search_meta = base.fetch_bytes(report['search_url'], timeout=45)
     article_raw, article_meta = base.fetch_bytes(report['url'], timeout=40)
-    if base.sha256_bytes(search_raw) != report['search_sha256']:
-        raise ValueError(f'{expected} PBoC search payload changed within capture')
-    if base.sha256_bytes(article_raw) != report['article_sha256']:
-        raise ValueError(f'{expected} PBoC article payload changed within capture')
+    parsed_again = nowcast.parse_pbc_m2_report(base.decode_bytes(article_raw), year, month)
+    if abs(float(parsed_again['level_trn_cny']) - level_trn) > 1e-9:
+        raise ValueError(f'{expected} PBoC M2 level changed across capture: {level_trn} -> {parsed_again["level_trn_cny"]}')
+    if abs(float(parsed_again['yoy_pct']) - yoy_pct) > 1e-9:
+        raise ValueError(f'{expected} PBoC M2 YoY changed across capture: {yoy_pct} -> {parsed_again["yoy_pct"]}')
 
     return {
         'month': expected,
         'level_trn_cny': level_trn,
-        'yoy_pct': float(report['yoy_pct']),
+        'yoy_pct': yoy_pct,
         'm2_100m': round(level_trn * 10000.0, 2),
         'search_url': report['search_url'],
         'article_url': report['url'],
         'search_raw': search_raw,
         'article_raw': article_raw,
-        'search_sha256': report['search_sha256'],
-        'article_sha256': report['article_sha256'],
+        'search_sha256': base.sha256_bytes(search_raw),
+        'article_sha256': base.sha256_bytes(article_raw),
         'search_http_status': search_meta.get('http_status'),
         'article_http_status': article_meta.get('http_status'),
     }
@@ -130,7 +135,7 @@ def validate(contract):
         'last_month': '2014-12',
         'may_2014_m2_100m': values['2014-05'],
         'precision_note': '2014 balances are rounded to 0.01 trillion CNY in monthly reports; 2015+ remains precision HTML history.',
-        'months_preview': [{'month':r['month'],'m2_100m':r['m2_100m'],'yoy_pct':r['yoy_pct'],'article_url':r['article_url']} for r in records],
+        'months_preview': [{'month':r['month'],'m2_100m':r['m2_100m'],'yoy_pct':r['yoy_pct'],'article_url':r['article_url'],'article_sha256':r['article_sha256']} for r in records],
         'next_gate': 'REBUILD_CONTINUOUS_PBOC_V2_2014_CURRENT',
     }
 
@@ -173,6 +178,7 @@ def build(contract):
             'source_precision': '0.01 trillion CNY (100 RMB 100-million units)',
             'role': 'SEED_YEAR_ONLY',
             'exact_month_validated': True,
+            'semantic_refetch_validated': True,
         }
         seed_manifest.append({
             'month': month,
@@ -217,12 +223,13 @@ def build(contract):
             'role': 'SEED_YEAR_ONLY',
             'precision': '0.01 trillion CNY per monthly Financial Statistics Report',
             'exact_month_validation': True,
+            'semantic_refetch_validation': True,
             'may_2014_m2_100m': seed_values['2014-05'],
             'sources': seed_manifest,
         },
         'promotion_allowed': False,
         'next_gate': 'REBUILD_GLOBAL_MONEY_V2_WITH_2015_SIGNAL_START_THEN_FIXED_TRANSMISSION_TRANSFER_TEST',
-        'note': 'Official PBoC V2 starts 2014-01. Every 2014 seed month passed exact year+month report validation; 2015+ is precision Money Supply HTML history. No dead historical source is reconstructed.'
+        'note': 'Official PBoC V2 starts 2014-01. Every 2014 seed month passed exact year+month report validation and semantic refetch validation; 2015+ is precision Money Supply HTML history. No dead historical source is reconstructed.'
     })
     manifest['years'] = sorted(
         [y for y in manifest.get('years', []) if y.get('year') != 2014] + [{
@@ -233,6 +240,7 @@ def build(contract):
             'source_type': 'PBOC_OFFICIAL_MONTHLY_FINANCIAL_STATISTICS_REPORT_SEED',
             'precision': '0.01 trillion CNY',
             'exact_month_validation': True,
+            'semantic_refetch_validation': True,
         }], key=lambda x: x['year'])
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     AUDIT_PATH.parent.mkdir(exist_ok=True)
