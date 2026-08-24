@@ -50,6 +50,20 @@ jobs:
           grep -q '"2018-12"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"2021-12"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"2026-07"' /tmp/gmli-pboc-v2-validation.json
+      - name: Validate Global Money v2 headline candidate
+        shell: bash
+        run: |
+          set +e
+          python scripts/run-global-money-v2.py --validate-only > /tmp/gmli-global-money-v2.json
+          code=$?
+          set -e
+          cat /tmp/gmli-global-money-v2.json
+          test "$code" -eq 0
+          grep -q '"status": "PASS_GLOBAL_MONEY_V2_HEADLINE"' /tmp/gmli-global-money-v2.json
+          grep -q '"candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL"' /tmp/gmli-global-money-v2.json
+          grep -q '"core_modified": false' /tmp/gmli-global-money-v2.json
+          grep -q '"status": "PASS"' /tmp/gmli-global-money-v2.json
+          grep -q '"next_gate": "FIXED_TRANSMISSION_TRANSFER_TEST"' /tmp/gmli-global-money-v2.json
       - name: Validate prospective Fiscal raw capture
         run: |
           python scripts/capture-prospective-fiscal-inputs.py --validate-only > /tmp/gmli-fiscal-capture-validation.json

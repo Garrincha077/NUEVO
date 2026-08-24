@@ -6,45 +6,54 @@ Started: 2026-08-24
 
 ## Goal
 
-Improve decision quality by fixing stale data plumbing without changing frozen Money Core methodology, country weights, lags, horizons, thresholds, train/validation split, FX-neutral methodology or FDR rules.
+Improve decision quality by fixing stale data plumbing and replacing brittle/opaque sources with reproducible official-source versions where that is materially better. Historical frozen results remain auditable facts; they are not permanent blockers on a better explicitly versioned engine.
 
 The priority is freshness, auditability and clear separation of ENGINE FACT from CURRENT RESEARCH INFERENCE.
 
 ## Guardrails
 
 - Never reconstruct missing frozen input bytes from today's revised public data and call it an exact rerun.
-- v1.8b remains `BLOCKED_MISSING_FROZEN_INPUT_BYTES` unless the original preserved bytes are recovered.
+- Historical v1.8b remains `BLOCKED_MISSING_FROZEN_INPUT_BYTES`; a better new version does not rewrite that fact.
+- Better sources/methods may advance as explicitly versioned candidates after fixed regression/transfer gates.
 - RESEARCH and OVERLAY signals never silently replace CORE.
 - Funding remains an overlay and cannot override Money Core.
 - Completed-month market structure remains separate from current/live market confirmation.
-- Every promoted future Money vintage must preserve raw source bytes, hashes, transformed matrices, runner version and audit outputs.
-- Overlay refreshes are fail-closed: a scheduler may advance an overlay only after its exact July 2026 production baseline is regression-matched from documented/preserved inputs.
+- Every future promoted Money version must preserve raw source bytes, hashes, transformed matrices, runner version and audit outputs.
+- Overlay refreshes remain fail-closed unless their production construction is sufficiently reproduced or explicitly replaced by a better versioned method.
 
 ## Pareto priorities
 
-### P0 — Fresh Money Core
+### P0 — Money Core V2 official-source path
 
-Build a prospective promotion pipeline for the next complete Money vintage:
-1. Fetch production-source Money inputs.
-2. Preserve raw source bytes immediately.
-3. SHA-256 every source file/input.
-4. Preserve transformed Money matrix.
-5. Record exact Git commit and runner hash.
-6. Run existing frozen tests unchanged.
-7. Emit explicit promotion contract/report.
-8. Promote only on full PASS; otherwise fail closed.
+The opaque China legacy stitch has been superseded prospectively by `PBOC_OFFICIAL_M2_V2`, a continuous official PBoC HTML Money Supply history with preserved raw bytes/hashes.
 
-Success condition: a newer formally validated CORE vintage with preserved, reproducible inputs.
+Global Money V2 reuses the documented seven-region production architecture:
+- US / CN / EA / JP / GB / CA / AU
+- prior-year USD money-level share weights
+- local-money and USD-translated channels
+- 1M publication lag
+- rolling 120M z, minimum 36, population ddof=0
+- score `50 + (50/3)*z`
+
+Current gate status:
+1. [x] Official PBoC V2 source history 2015-01 through 2026-07, 139/139 months.
+2. [x] Global Money V2 May-2026 convention regression against v1.8 bridge.
+3. [ ] Extend official China history to 2014 if available so the original 2015-2022 signal/train window is fully preserved.
+4. [ ] Run fixed transmission-transfer test only on the preselected promoted relationships.
+5. [ ] Emit explicit V2 promotion report.
+6. [ ] Promote V2 only if transfer quality is robust and production smoke passes.
+
+May-2026 regression result: old bridge USD 9.3258% / FX-neutral 6.1275%; V2 USD 9.341915% / FX-neutral 6.153468%. Deltas are only +0.0161 pp and +0.0260 pp respectively.
+
+Latest full-coverage V2 headline is observation 2026-06, available 2026-07-31: USD YoY 7.956975%, score 55.1121; FX-neutral YoY 5.946277%, score 44.4880. This remains RESEARCH/PROMOTION CANDIDATE until the fixed transmission gate passes.
 
 ### P0 — Money nowcast 4/4 automated
 
-US, euro area, Japan and China now use scheduled validated official-source refresh with last-good preservation. China uses the official central PBoC monthly Financial Statistics Report and preserves source hashes in the audit/snapshot.
+US, euro area, Japan and China use scheduled validated official-source refresh with last-good preservation. China uses the official central PBoC monthly Financial Statistics Report and preserves source hashes in the audit/snapshot.
 
 Success condition: US/EA/JP/CN refresh automatically with auditable last-good fallback. **MET.**
 
 ### P1 — Funding / Credit / Fiscal refresh
-
-Automate monthly validated refresh for these overlays without changing their scoring logic.
 
 Freshness policy:
 - FRESH: <=35 days
@@ -52,116 +61,87 @@ Freshness policy:
 - STALE: >60 days
 
 Current refreshability audit:
-- **Funding:** `BLOCKED_BASELINE_MISMATCH`. Frozen 5/5 research report gives July z -0.796 / 36.73, while production baseline is z -0.8378753441 / 36.0354109320. Exact production baseline must be reproduced before automation.
-- **Credit/Velocity:** `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Final July score is preserved, but exact frozen component/source construction has not been recovered. Do not redesign it.
-- **Fiscal:** `PROSPECTIVE_SOURCE_CAPTURE_IMPLEMENTED_SCORE_REFRESH_BLOCKED`. Frozen strict actual-release construction is documented and its July z/score exactly matches production. Because the exact historical strict-release runner/vintages were not recovered, current revised history will not be substituted. A prospective raw-source archive now preserves future source bytes, hashes and first-seen timing; production score remains locked until a strict-release transform can reproduce the July baseline exactly under CI.
-
-Success condition: each overlay carries source date, age, freshness label, last verified status and an auditable refreshability state; only regression-matched overlays may auto-advance.
+- **Funding:** `BLOCKED_BASELINE_MISMATCH`. Construction is documented, but exact production July baseline is not reproduced yet. A better version may replace it if explicitly validated.
+- **Credit/Velocity:** `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Do not infer the old formula; redesign only as an explicit new version if useful.
+- **Fiscal:** prospective raw-source capture is active. Production strict-actual-release score remains unchanged until a valid refresh/version gate is proven.
 
 ### P1 — Current market confirmation
 
-Keep existing completed-month structural signal, then add a separate current market layer for SPY, QQQ, GLD and DBC.
-
-Minimum fields:
-- latest completed session date
-- 1M return
-- simple 50D/200D trend state or equivalent minimal trend flag
-- divergence vs structural completed-month signal
-
-Optional contextual inputs only when materially useful: DXY and real yields.
-
-Success condition: dashboard distinguishes STRUCTURAL MONTHLY CONFIRMATION from CURRENT MARKET CONFIRMATION.
+**IMPLEMENTED.** Dashboard and `/api/report` distinguish completed-month structural confirmation from a current SPY/QQQ/GLD/DBC layer using latest completed session, 1M return, 50D/200D trend and divergence flags.
 
 ### P1 — Data Health block
 
-Canonical `/api/report` freshness must show validated Core, candidate, per-country nowcast, overlays, market structure, positioning, oldest critical input and overlay refreshability/last-good state.
+**IMPLEMENTED.** Canonical `/api/report` shows Core/candidate freshness, per-country nowcast, overlays, current/structural market context and overlay refreshability/last-good state.
 
-Freshness affects conviction, not the underlying Money score.
+### P2 — Historical v1.8b blocker
 
-### P2 — Close historical v1.8b blocker
-
-Keep the old candidate as RESEARCH evidence only. Do not spend further work reconstructing missing Aug-15 frozen bytes. Re-open only if original preserved inputs are recovered.
+Closed as a historical audit fact. Do not spend further effort trying to reconstruct missing Aug-15 bytes. New official-source V2 work proceeds independently.
 
 ### P3 — Secondary research gaps
 
-Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and Core promotion plumbing are reliable.
+Defer HYG, BTC, VNQ/VEA and other new asset-specific models until Money V2 transfer/promotion is resolved.
 
 ## Execution order
 
 ### Phase 1 — Freshness infrastructure
-- [x] Add canonical Data Health block
-- [x] Validate/add China scheduled ingestion
-- [ ] Add Funding/Credit/Fiscal scheduled refresh — refreshability audit complete; Fiscal prospective capture implemented pending CI/production verification; Funding/Credit remain blocked
-- [x] Add explicit freshness labels, overlay refreshability and last-good status
+- [x] Canonical Data Health block
+- [x] China scheduled nowcast ingestion
+- [x] Fiscal prospective source archive
+- [x] Explicit overlay freshness/refreshability/last-good status
 
-### Phase 2 — Prospective Money promotion
-- [ ] Preserve raw bytes for next vintage
-- [ ] Preserve hashes and transformed matrix
-- [ ] Run frozen guard suite
-- [ ] Emit promotion contract
+### Phase 2 — Money V2 prospective promotion
+- [x] Preserve official PBoC raw bytes and hashes
+- [x] Continuous official China V2 source archive
+- [x] Rebuild Global Money headline from official production sources
+- [x] May-2026 bridge convention regression
+- [ ] Preserve Global Money V2 source/transformed candidate archive on schedule
+- [ ] Extend China source history to 2014 if official archive permits
+- [ ] Fixed transmission transfer gate
+- [ ] Explicit V2 promotion contract/report
 - [ ] Promote only on PASS
 
 ### Phase 3 — Current market confirmation
-- [ ] Add daily SPY/QQQ/GLD/DBC confirmation layer
-- [ ] Keep completed-month structural signal unchanged
-- [ ] Surface divergences in `/api/report`
+- [x] Daily SPY/QQQ/GLD/DBC current confirmation layer
+- [x] Keep completed-month structural signal separate
+- [x] Surface divergences in `/api/report` and dashboard
 
 ### Phase 4 — Production hardening
-- [ ] CI checks for date regression and stale critical data
-- [x] Write-capable Money refresh push trigger restricted to `main`
-- [ ] Failure preserves last verified data
-- [ ] Audit artifacts retained
-- [x] Deploy initial Data Health slice to existing `gmli-fred-dashboard`
-- [x] Smoke-test `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision` for initial Data Health slice
-- [x] Smoke-test PBoC scheduled refresh and resulting production deployment
-- [ ] Smoke-test first prospective Fiscal raw-source capture; verify production Fiscal score remains unchanged
+- [x] Main-only write-capable Money nowcast refresh
+- [x] PBoC V2 main-only source capture
+- [ ] Global Money V2 main-only candidate capture — PR #11 pending final merge/production capture
+- [x] Failure preserves validated production Core
+- [x] Audit artifacts retained for implemented prospective captures
+- [x] Smoke-tested current production decision endpoints after prior production changes
 
 ## Progress log
 
-### 2026-08-24 — Data Health slice complete
-- `/api/report` upgraded to `gmli-report-v1.2` with canonical `data_health`.
-- Production correctly reports `DEGRADED_CORE_STALE` and identifies validated Money Core 2026-02-28 as the oldest decision-critical input.
-- Frozen Money scores and methodology were unchanged.
+### 2026-08-24 — Data Health / nowcast / market-confirmation infrastructure
+- Canonical Data Health and explicit freshness shipped.
+- Official-source 4/4 Money nowcast shipped.
+- Current SPY/QQQ/GLD/DBC confirmation layer shipped separately from monthly structure.
+- Funding/Credit/Fiscal refreshability is explicit rather than silently assumed.
 
-### 2026-08-24 — Prospective promotion plumbing started
-- Added fail-closed source manifest and raw-input capture runner with exact bytes, SHA-256, retrieval provenance, manifest hash, runner hash and frozen-state hash.
-- Capture refuses promotion-readiness while any required source remains unresolved and never modifies `lib/state.js`.
+### 2026-08-24 — Official PBoC M2 V2 source milestone
+- Replaced the prospective opaque China legacy dependency with official PBoC Money Supply HTML tables.
+- Full archive is continuous 2015-01 through 2026-07: 139 months, zero missing.
+- Exact source HTML bytes and SHA-256 provenance are preserved.
+- Latest 2026-07 official level is 3,555,077.24 RMB 100m; derived YoY ~7.7483%, consistent with the rounded 7.7% monthly report cross-check.
+- This is a new versioned source candidate, not a false historical v1.8b exact rerun.
 
-### 2026-08-24 — BoE / BoC / BoJ prospective sources validated
-- Official BoJ M2, BoE M4 and BoC M2 paths passed live CI validation.
-- Frozen Core values remain unchanged.
-
-### 2026-08-24 — Exact-ticker market raw-source contract validated
-- Exact set: SPY, QQQ, GLD, DBC, IEF, TLT, BIL.
-- Six Yahoo adjusted-close sources plus Digrin BIL passed CI; raw capture preserves independent bytes/hashes.
-- Prospective Core capture still fails closed on `CN_M2`.
-
-### 2026-08-24 — Official PBoC RESEARCH nowcast production complete
-- PBoC filtered-search/report parser passed CI and was merged in PR #5.
-- Scheduled refresh committed the verified 2026-07 snapshot: M2 355.51tn CNY, YoY 7.7%, with source hashes.
-- Production smoke tests returned 200 for `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision`.
-- Prospective Core `CN_M2` remains a separate unresolved stitched-level problem.
-
-### 2026-08-24 — Overlay refreshability audit
-- Funding construction is documented but its published July 5/5 baseline does not equal production; automation is blocked until exact regression matching is recovered.
-- Fiscal strict actual-release construction is documented and its July strict z 0.1523733869 exactly matches production.
-- Credit/Velocity exact construction/source provenance could not be recovered; automation is blocked rather than guessed.
-- `/api/report` exposes last-good dates and refresh blockers without changing scores.
-
-### 2026-08-24 — Fiscal prospective source-capture contract
-- Exact historical strict-release runner/vintages were not recovered, so current revised FRED history is explicitly not used as an exact historical backfill.
-- Added a prospective raw capture for the six documented Fiscal source series: `MTSDS133FMS`, `GDP`, `GFDEBTN`, `A091RC1Q027SBEA`, `FGRECPT`, `FGEXPND`.
-- Capture preserves exact FRED CSV bytes, SHA-256, retrieval timestamp, first-observed timestamp for the newest observation, latest observation metadata and date-regression checks.
-- `--validate-only` performs a live source test without writing state/files.
-- Scheduler stores only source vintages and audit artifacts; it cannot compute or advance the production Fiscal score.
-- Unlock condition for score refresh remains: implement strict-release transformation and reproduce the July 2026 production z/score exactly under CI.
+### 2026-08-24 — Global Money V2 headline regression PASS
+- Reconstructed the documented seven-region production construction on current official sources.
+- Provider transport normalization was made explicit for BoJ, BoE and RBA without changing economic logic.
+- Recovered the documented Euro Area split: ECB M2 stock level for accounting/weights; official comparable ECB M2 annual-growth series for the signal.
+- May-2026 V2 reproduces the old bridge nearly exactly: USD 9.341915% vs 9.3258%; FX-neutral 6.153468% vs 6.1275%.
+- Latest full-coverage candidate (2026-06, available 2026-07-31): USD score 55.1121, FX-neutral score 44.4880.
+- No Core value was modified. Next material gate is fixed transmission transfer, preferably after extending official China history through 2014.
 
 ## Definition of done
 
 GMLI is materially improved when:
-1. A newer Money vintage can be promoted prospectively with fully preserved inputs.
-2. Money nowcast is verified 4/4 without brittle request-time scraping. **DONE.**
-3. Funding/credit/fiscal freshness is explicit and automated where provenance permits.
-4. Current market confirmation is separated from structural completed-month confirmation.
-5. `/api/report` makes stale or non-refreshable decision-critical inputs impossible to miss.
-6. Frozen methodology remains unchanged.
+1. Money V2 has a reproducible official-source history and fixed transfer evidence sufficient for an explicit promotion decision.
+2. Money nowcast remains verified 4/4 without brittle request-time scraping. **DONE.**
+3. Funding/credit/fiscal freshness is explicit and automated/re-versioned where provenance permits.
+4. Current market confirmation remains separate from structural completed-month confirmation. **DONE.**
+5. `/api/report` makes stale or non-refreshable decision-critical inputs impossible to miss. **DONE.**
+6. Historical frozen results remain auditable, while demonstrably better versioned solutions are allowed to replace them prospectively.
