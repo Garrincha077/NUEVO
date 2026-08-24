@@ -26,14 +26,30 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Syntax and frozen-Core guard
+      - name: Syntax and Money V2 production guard
         shell: bash
         run: |
           set -euo pipefail
           find api lib -name '*.js' -print0 | xargs -0 -n1 node --check
+
+          # Active promoted Money V2 data vintage.
+          grep -q "observation_month: '2026-06'" lib/money-v2-active.js
+          grep -q "available_date: '2026-07-31'" lib/money-v2-active.js
+          grep -q "usd_score: 55.1121" lib/money-v2-active.js
+          grep -q "fxn_score: 44.488" lib/money-v2-active.js
+
+          # Frozen promoted methodology + explicit promotion gate.
+          grep -q "status: 'FROZEN_V2_SPEC'" lib/state.js
+          grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
+          grep -q "status: 'PASS_MONEY_V2_PRODUCTION_PROMOTION'" lib/state.js
+          grep -q "status: 'PASS_6_OF_6'" lib/state.js
+
+          # Pre-V2 Core and historical v1.8b blocker remain audit references.
+          grep -q "status: 'CORE_HISTORICAL_REFERENCE'" lib/state.js
           grep -q "available_date: '2026-02-28'" lib/state.js
           grep -q "usd_score: 65.70290344348" lib/state.js
           grep -q "fxn_score: 43.01411281977772" lib/state.js
+          grep -q "BLOCKED_MISSING_FROZEN_INPUT_BYTES" lib/state.js
           test ! -e makro-cockpit
 
       - name: Detect Vercel credential without exposing it
@@ -81,26 +97,58 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
 
-      - name: Smoke-test canonical endpoints
+      - name: Smoke-test canonical Money V2 production
         if: steps.credential.outputs.available == 'true'
         shell: bash
         run: |
           set -euo pipefail
           node - <<'NODE'
           const base = process.env.PROD_BASE;
-          const paths = ['/api/status','/api/decision','/api/report','/api/money-nowcast'];
+          const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+          async function json(path) {
+            let last;
+            for (let i = 0; i < 12; i++) {
+              try {
+                const r = await fetch(base + path, { cache: 'no-store' });
+                if (!r.ok) throw new Error(`${path} -> HTTP ${r.status}`);
+                const j = await r.json();
+                if (j?.error) throw new Error(`${path} -> ${j.error}`);
+                return j;
+              } catch (e) {
+                last = e;
+                await sleep(5000);
+              }
+            }
+            throw last;
+          }
+
+          const paths = ['/api/status','/api/decision','/api/report','/api/money-nowcast','/api/current-market'];
+          const out = {};
           for (const path of paths) {
-            const r = await fetch(base + path, { cache: 'no-store' });
-            if (!r.ok) throw new Error(`${path} -> HTTP ${r.status}`);
-            const j = await r.json();
-            if (j?.error) throw new Error(`${path} -> ${j.error}`);
+            out[path] = await json(path);
             console.log('OK', path);
           }
-          const s = await fetch(base + '/api/status', { cache: 'no-store' }).then(r => r.json());
-          if (s?.money?.available_date !== '2026-02-28') throw new Error('Frozen Core date changed unexpectedly');
-          const n = await fetch(base + '/api/money-nowcast', { cache: 'no-store' }).then(r => r.json());
+
+          const s = out['/api/status'];
+          if (s?.methodology?.status !== 'FROZEN_V2_SPEC') throw new Error('Active frozen methodology is not V2');
+          if (s?.money?.version !== 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL') throw new Error('Money V2 is not active Core');
+          if (s?.money?.available_date !== '2026-07-31') throw new Error(`Unexpected active Money date ${s?.money?.available_date}`);
+          if (Math.abs(Number(s?.money?.usd_score) - 55.1121) > 1e-6) throw new Error('Unexpected active USD score');
+          if (Math.abs(Number(s?.money?.fxn_score) - 44.488) > 1e-6) throw new Error('Unexpected active FX-neutral score');
+          if (s?.money?.promotion_gate?.status !== 'PASS_MONEY_V2_PRODUCTION_PROMOTION') throw new Error('Money V2 promotion gate not PASS');
+          if (s?.money?.historical_reference?.available_date !== '2026-02-28') throw new Error('Pre-V2 Core audit reference missing');
+          if (s?.money?.historical_v18b_candidate?.promotion_gate?.status !== 'BLOCKED_MISSING_FROZEN_INPUT_BYTES') throw new Error('Historical v1.8b audit blocker changed unexpectedly');
+
+          const r = out['/api/report'];
+          if (r?.schema_version !== 'gmli-report-v1.4') throw new Error('Canonical report schema is not v1.4');
+          if (r?.regime?.engine_fact?.money?.available_date !== '2026-07-31') throw new Error('Canonical report is not using active Money V2');
+          if (r?.data_health?.status === 'DEGRADED_CORE_STALE') throw new Error('Data Health still treats pre-V2 Core as active');
+
+          const n = out['/api/money-nowcast'];
           if (n?.source_mode !== 'LIVE_OFFICIAL_WITH_LAST_VERIFIED_FALLBACK') throw new Error('Live Money freshness layer not active');
-          console.log('Frozen Core preserved; live freshness active.');
+
+          console.log('Money V2 active; historical Core preserved; canonical production smoke PASS.');
           NODE
 
       - name: Safe no-credential result
