@@ -1,4 +1,4 @@
-name: GMLI Global Money v2 candidate capture
+name: GMLI promoted Money v2 refresh
 
 on:
   schedule:
@@ -9,6 +9,8 @@ on:
     paths:
       - 'scripts/build-global-money-v2.py'
       - 'scripts/run-global-money-v2.py'
+      - 'scripts/test-global-money-v2-transmission.py'
+      - 'scripts/sync-active-money-v2.py'
       - 'research/china-m2-official-v2/latest/china_m2_100m.csv'
       - '.github/workflows/gmli-global-money-v2-capture.yml'
 
@@ -16,11 +18,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: gmli-global-money-v2-capture
+  group: gmli-global-money-v2-refresh
   cancel-in-progress: false
 
 jobs:
-  capture:
+  refresh:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GMLI
@@ -33,44 +35,72 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Build Global Money v2 candidate
+      - name: Build Global Money V2 from promoted official-source contract
         shell: bash
         run: |
           set -euo pipefail
           python scripts/run-global-money-v2.py --build-full | tee /tmp/gmli-global-money-v2.json
           grep -q '"status": "PASS_GLOBAL_MONEY_V2_HEADLINE"' /tmp/gmli-global-money-v2.json
           grep -q '"candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL"' /tmp/gmli-global-money-v2.json
-          grep -q '"core_modified": false' /tmp/gmli-global-money-v2.json
           grep -q '"status": "PASS"' /tmp/gmli-global-money-v2.json
-          grep -q '"promotion_allowed": false' /tmp/gmli-global-money-v2.json
-          grep -q '"next_gate": "FIXED_TRANSMISSION_TRANSFER_TEST"' /tmp/gmli-global-money-v2.json
+          grep -q '"start_month": "2015-01"' /tmp/gmli-global-money-v2.json
 
-      - name: Guard production Core state
-        run: |
-          grep -q "available_date: '2026-02-28'" lib/state.js
-          grep -q "usd_score: 65.70290344348" lib/state.js
-          grep -q "fxn_score: 43.01411281977772" lib/state.js
-
-      - name: Upload Global Money v2 audit
-        uses: actions/upload-artifact@v4
-        with:
-          name: gmli-global-money-v2-capture
-          path: |
-            audit/global-money-v2-headline.json
-            research/global-money-v2/latest/
-          if-no-files-found: error
-          retention-days: 90
-
-      - name: Commit verified candidate archive only when changed
+      - name: Re-run frozen six-relation transfer guard
         shell: bash
         run: |
           set -euo pipefail
-          if [ -z "$(git status --porcelain -- research/global-money-v2/latest)" ]; then
-            echo 'No Global Money v2 candidate change; no commit needed.'
+          python scripts/test-global-money-v2-transmission.py --build-full | tee /tmp/gmli-v2-transfer.json
+          grep -q '"status": "PASS_FIXED_TRANSMISSION_DIRECTION_TRANSFER"' /tmp/gmli-v2-transfer.json
+          grep -q '"passed_relations": 6' /tmp/gmli-v2-transfer.json
+          grep -q '"total_relations": 6' /tmp/gmli-v2-transfer.json
+          grep -q '"parameter_search": false' /tmp/gmli-v2-transfer.json
+          grep -q '"lag_search": false' /tmp/gmli-v2-transfer.json
+          grep -q '"horizon_search": false' /tmp/gmli-v2-transfer.json
+          grep -q '"asset_search": false' /tmp/gmli-v2-transfer.json
+          grep -q '"fdr_claim": false' /tmp/gmli-v2-transfer.json
+
+      - name: Advance active Core data snapshot only after all guards pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/sync-active-money-v2.py --apply | tee /tmp/gmli-v2-sync.json
+          grep -q '"status": "PASS_ACTIVE_MONEY_V2_SYNC_GUARDS"' /tmp/gmli-v2-sync.json
+          grep -q '"transfer_gate": "6/6"' /tmp/gmli-v2-sync.json
+
+      - name: Guard frozen methodology and historical audit state
+        run: |
+          grep -q "status: 'FROZEN_V2_SPEC'" lib/state.js
+          grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
+          grep -q "status: 'PASS_MONEY_V2_PRODUCTION_PROMOTION'" lib/state.js
+          grep -q "status: 'CORE_HISTORICAL_REFERENCE'" lib/state.js
+          grep -q "available_date: '2026-02-28'" lib/state.js
+          grep -q "usd_score: 65.70290344348" lib/state.js
+          grep -q "fxn_score: 43.01411281977772" lib/state.js
+          grep -q "BLOCKED_MISSING_FROZEN_INPUT_BYTES" lib/state.js
+
+      - name: Upload promoted Money V2 audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-promoted-money-v2-refresh
+          path: |
+            audit/global-money-v2-headline.json
+            audit/global-money-v2-transmission-transfer.json
+            research/global-money-v2/latest/
+            research/global-money-v2/transfer/latest/
+            lib/money-v2-active.js
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Commit verified Core vintage only when changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain -- research/global-money-v2/latest research/global-money-v2/transfer/latest lib/money-v2-active.js)" ]; then
+            echo 'No promoted Money V2 change; no commit needed.'
             exit 0
           fi
           git config user.name 'gmli-refresh-bot'
           git config user.email 'gmli-refresh-bot@users.noreply.github.com'
-          git add research/global-money-v2/latest
-          git commit -m 'Capture GMLI Global Money v2 candidate'
+          git add research/global-money-v2/latest research/global-money-v2/transfer/latest lib/money-v2-active.js
+          git commit -m 'Refresh promoted GMLI Money v2 Core vintage'
           git push origin HEAD:main
