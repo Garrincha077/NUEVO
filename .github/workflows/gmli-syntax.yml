@@ -24,12 +24,20 @@ jobs:
       - name: Validate documented prospective source URLs
         run: |
           python scripts/validate-prospective-money-sources.py --ids GB_M4,CA_M2,JP_M2,ASSET_ADJUSTED_PRICE_MIRROR
+      - name: Validate official PBoC China nowcast parser
+        run: |
+          python scripts/refresh-money-nowcast.py --validate-china-only > /tmp/gmli-pboc-validation.json
+          grep -q '"status": "PASS"' /tmp/gmli-pboc-validation.json
+          grep -q '"state_modified": false' /tmp/gmli-pboc-validation.json
+          grep -q '"level_trn_cny"' /tmp/gmli-pboc-validation.json
+          grep -q '"yoy_pct"' /tmp/gmli-pboc-validation.json
+          grep -q '"article_sha256"' /tmp/gmli-pboc-validation.json
       - name: Guard frozen Core reference
         run: |
           grep -q "available_date: '2026-02-28'" lib/state.js
           grep -q "usd_score: 65.70290344348" lib/state.js
           grep -q "fxn_score: 43.01411281977772" lib/state.js
-      - name: Verify prospective capture fails closed while China source is unresolved
+      - name: Verify prospective capture fails closed while China Core source is unresolved
         shell: bash
         run: |
           set +e
