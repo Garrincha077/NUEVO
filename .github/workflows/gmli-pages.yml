@@ -9,6 +9,7 @@ on:
       - 'lib/**'
       - 'scripts/build-pages-snapshot.mjs'
       - 'scripts/pages-money-ui.mjs'
+      - 'scripts/pages-mobile-info.mjs'
       - 'research/global-money-v2/latest/**'
       - '.github/workflows/gmli-pages.yml'
   pull_request:
@@ -19,6 +20,7 @@ on:
       - 'lib/**'
       - 'scripts/build-pages-snapshot.mjs'
       - 'scripts/pages-money-ui.mjs'
+      - 'scripts/pages-mobile-info.mjs'
       - 'research/global-money-v2/latest/**'
       - '.github/workflows/gmli-pages.yml'
   schedule:
@@ -61,6 +63,8 @@ jobs:
           grep -q 'Global Money Trend' .pages/index.html
           grep -q 'moneyScoreChart' .pages/index.html
           grep -q 'moneyYoyChart' .pages/index.html
+          grep -q 'infoPopover' .pages/index.html
+          grep -q 'aria-label="Više informacija"' .pages/index.html
 
       - name: Publish verified static snapshot to gh-pages branch
         if: github.event_name != 'pull_request'
