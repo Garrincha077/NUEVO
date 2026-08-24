@@ -15,10 +15,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install PDF text extractor
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq poppler-utils
       - name: Check serverless and library JavaScript
         run: |
           find api lib -name '*.js' -print0 | xargs -0 -n1 node --check
@@ -36,22 +32,24 @@ jobs:
           grep -q '"level_trn_cny"' /tmp/gmli-pboc-validation.json
           grep -q '"yoy_pct"' /tmp/gmli-pboc-validation.json
           grep -q '"article_sha256"' /tmp/gmli-pboc-validation.json
-      - name: Validate official PBoC M2 v2 history contract
+      - name: Validate official PBoC M2 v2 HTML history contract
         shell: bash
         run: |
           set +e
-          python scripts/run-pboc-m2-official-v2.py --validate-only > /tmp/gmli-pboc-v2-validation.json
+          python scripts/build-pboc-m2-official-v2.py --validate-only > /tmp/gmli-pboc-v2-validation.json
           code=$?
           set -e
           cat /tmp/gmli-pboc-v2-validation.json
           test "$code" -eq 0
           grep -q '"status": "PASS"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"candidate_version": "PBOC_OFFICIAL_M2_V2"' /tmp/gmli-pboc-v2-validation.json
+          grep -q '"source_contract": "PBOC_OFFICIAL_HTML_MONEY_SUPPLY_TABLES"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"core_modified": false' /tmp/gmli-pboc-v2-validation.json
           grep -q '"legacy_exact_rerun": false' /tmp/gmli-pboc-v2-validation.json
           grep -q '"2015-01"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"2018-12"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"2021-12"' /tmp/gmli-pboc-v2-validation.json
+          grep -q '"2026-07"' /tmp/gmli-pboc-v2-validation.json
       - name: Validate prospective Fiscal raw capture
         run: |
           python scripts/capture-prospective-fiscal-inputs.py --validate-only > /tmp/gmli-fiscal-capture-validation.json
