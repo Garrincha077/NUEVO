@@ -18,6 +18,7 @@ The priority is freshness, auditability and clear separation of ENGINE FACT from
 - Funding remains an overlay and cannot override Money Core.
 - Completed-month market structure remains separate from current/live market confirmation.
 - Every promoted future Money vintage must preserve raw source bytes, hashes, transformed matrices, runner version and audit outputs.
+- Overlay refreshes are fail-closed: a scheduler may advance an overlay only after its exact July 2026 production baseline is regression-matched from documented/preserved inputs.
 
 ## Pareto priorities
 
@@ -40,13 +41,6 @@ Success condition: a newer formally validated CORE vintage with preserved, repro
 
 US, euro area, Japan and China now use scheduled validated official-source refresh with last-good preservation. China uses the official central PBoC monthly Financial Statistics Report and preserves source hashes in the audit/snapshot.
 
-Tasks:
-
-- Validate a stable PBoC source/ingestion path. **DONE 2026-08-24.**
-- Add `refresh_china()` with date regression checks, YoY sanity checks and last-good preservation. **DONE 2026-08-24.**
-- Include China in refresh audit output. **DONE 2026-08-24.**
-- Keep request-time live parsing disabled; scheduled verified snapshots remain the intended path. **DONE.**
-
 Success condition: US/EA/JP/CN refresh automatically with auditable last-good fallback. **MET.**
 
 ### P1 — Funding / Credit / Fiscal refresh
@@ -54,19 +48,22 @@ Success condition: US/EA/JP/CN refresh automatically with auditable last-good fa
 Automate monthly validated refresh for these overlays without changing their scoring logic.
 
 Freshness policy:
-
 - FRESH: <=35 days
 - AGING: 36-60 days
 - STALE: >60 days
 
-Success condition: each overlay carries source date, age, freshness label and last verified refresh status.
+Current refreshability audit:
+- **Funding:** `BLOCKED_BASELINE_MISMATCH`. Frozen 5/5 research report gives July z -0.796 / 36.73, while production baseline is z -0.8378753441 / 36.0354109320. Exact production baseline must be reproduced before automation.
+- **Credit/Velocity:** `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Final July score is preserved, but exact frozen component/source construction has not been recovered. Do not redesign it.
+- **Fiscal:** `BASELINE_MATCHED_IMPLEMENTATION_PENDING`. Frozen strict actual-release construction is documented and its July z/score exactly matches production; a preserved-vintage refresh runner still needs to be built and regression-tested.
+
+Success condition: each overlay carries source date, age, freshness label, last verified status and an auditable refreshability state; only regression-matched overlays may auto-advance.
 
 ### P1 — Current market confirmation
 
 Keep existing completed-month structural signal, then add a separate current market layer for SPY, QQQ, GLD and DBC.
 
 Minimum fields:
-
 - latest completed session date
 - 1M return
 - simple 50D/200D trend state or equivalent minimal trend flag
@@ -78,18 +75,7 @@ Success condition: dashboard distinguishes STRUCTURAL MONTHLY CONFIRMATION from 
 
 ### P1 — Data Health block
 
-Add one canonical freshness block to `/api/report` and dashboard.
-
-It must show:
-
-- validated Money Core date and age
-- production candidate date and age
-- per-country Money nowcast dates
-- Funding/Credit/Fiscal dates
-- market structure date
-- CFTC positioning date
-- oldest decision-critical input
-- explicit status such as HEALTHY / DEGRADED_CORE_STALE
+Canonical `/api/report` freshness must show validated Core, candidate, per-country nowcast, overlays, market structure, positioning, oldest critical input and overlay refreshability/last-good state.
 
 Freshness affects conviction, not the underlying Money score.
 
@@ -106,8 +92,8 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 ### Phase 1 — Freshness infrastructure
 - [x] Add canonical Data Health block
 - [x] Validate/add China scheduled ingestion
-- [ ] Add Funding/Credit/Fiscal scheduled refresh
-- [ ] Add explicit freshness labels and last-good status
+- [ ] Add Funding/Credit/Fiscal scheduled refresh — fail-closed audit complete; Fiscal implementation next; Funding/Credit blocked pending provenance/regression match
+- [x] Add explicit freshness labels, overlay refreshability and last-good status
 
 ### Phase 2 — Prospective Money promotion
 - [ ] Preserve raw bytes for next vintage
@@ -133,58 +119,41 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 ## Progress log
 
 ### 2026-08-24 — Data Health slice complete
-
 - `/api/report` upgraded to `gmli-report-v1.2` with canonical `data_health`.
 - Production correctly reports `DEGRADED_CORE_STALE` and identifies validated Money Core 2026-02-28 as the oldest decision-critical input.
-- Freshness policy is FRESH <=35 days, AGING 36-60 days, STALE >60 days.
 - Frozen Money scores and methodology were unchanged.
-- CI/frozen Core guards passed and production smoke tests returned HTTP 200.
 
 ### 2026-08-24 — Prospective promotion plumbing started
-
-- Added a fail-closed prospective source manifest.
-- Added a raw-input capture runner that preserves exact bytes, SHA-256, retrieval provenance, manifest hash, runner hash and frozen-state hash.
-- Capture refuses to run as promotion-ready while any required source remains unresolved and never modifies `lib/state.js`.
-- Source validation is intentionally separate from capture.
+- Added fail-closed source manifest and raw-input capture runner with exact bytes, SHA-256, retrieval provenance, manifest hash, runner hash and frozen-state hash.
+- Capture refuses promotion-readiness while any required source remains unresolved and never modifies `lib/state.js`.
 
 ### 2026-08-24 — BoE / BoC / BoJ prospective sources validated
-
-- Added a read-only source validation runner and gated the new paths in CI.
-- GitHub Actions fetched all three official sources successfully with HTTP 200 and provider-native series markers:
-  - BoJ M2 level `MD02'MAM1NAM2M2MO`.
-  - BoE M4 `LPMAUYN`.
-  - BoC seasonally adjusted gross M2 `V41552796`.
-- Prospective source manifest now has explicit validated fetch paths for US, EA, JP, GB, CA and both AU inputs.
+- Official BoJ M2, BoE M4 and BoC M2 paths passed live CI validation.
 - Frozen Core values remain unchanged.
 
 ### 2026-08-24 — Exact-ticker market raw-source contract validated
-
-- v1.2 documentation reconfirmed the frozen exact-ticker set: SPY, QQQ, GLD, DBC, IEF, TLT and BIL.
-- Prospective capture supports multipart raw sources with independent bytes and SHA-256 for every part.
-- Six Yahoo/yfinance tickers use max-history monthly Chart API responses with adjusted close present; BIL retains the v1.2 Digrin adjusted-price provenance.
-- GitHub Actions live-fetched all seven parts successfully with HTTP 200.
-- The future transform contract is recorded but not executed by raw capture: 2015-01+, monthly adjusted price, local mirror rounded to 2 decimals.
-- `ASSET_ADJUSTED_PRICE_MIRROR` is no longer unresolved. The prospective Core capture still fails closed on `CN_M2`.
-- Frozen Core values and all frozen Money methodology parameters remain unchanged.
+- Exact set: SPY, QQQ, GLD, DBC, IEF, TLT, BIL.
+- Six Yahoo adjusted-close sources plus Digrin BIL passed CI; raw capture preserves independent bytes/hashes.
+- Prospective Core capture still fails closed on `CN_M2`.
 
 ### 2026-08-24 — Official PBoC RESEARCH nowcast production complete
+- PBoC filtered-search/report parser passed CI and was merged in PR #5.
+- Scheduled refresh committed the verified 2026-07 snapshot: M2 355.51tn CNY, YoY 7.7%, with source hashes.
+- Production smoke tests returned 200 for `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision`.
+- Prospective Core `CN_M2` remains a separate unresolved stitched-level problem.
 
-- Initial unfiltered PBoC search attempt failed closed, proving the gate works.
-- Discovery was corrected to the PBoC filtered-search contract (`dr=true`, relevance sort) rather than weakening validation.
-- CI passed official central-PBoC report discovery and extraction of report month, M2 balance, M2 YoY and raw-source SHA-256 provenance.
-- PR #5 merged to `main` after all source and frozen Core guards passed.
-- The write-capable scheduled refresh ran automatically after merge and committed a verified snapshot at 2026-08-24T08:29:10Z.
-- China production snapshot: 2026-07, M2 balance 355.51tn CNY, YoY 7.7%, source = official PBoC Financial Statistics Report, with article/search SHA-256 preserved.
-- Vercel deployed the refresh commit to production and `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision` all returned HTTP 200.
-- This resolves the RESEARCH nowcast path only. Prospective Core `CN_M2` remains intentionally unresolved until frozen stitched-level semantics are reproduced and preserved.
+### 2026-08-24 — Overlay refreshability audit
+- Funding frozen construction is documented: five 20% components, 120M rolling z, 36M minimum, ±3z clipping. However its published July 5/5 research baseline (z -0.796) does not equal production (z -0.8378753441), so automated refresh is blocked until exact regression matching is recovered.
+- Fiscal frozen strict actual-release construction is documented: deficit/GDP, debt-growth gap, interest burden and NIPA fiscal gap, 25% each, 120M/36M/±3z. Its July strict z 0.1523733869 exactly matches production, so it is the next safe implementation candidate.
+- Credit/Velocity exact construction/source provenance could not be recovered from current Git/research artifacts after targeted searches. Its July production value remains preserved, but automation is blocked rather than guessed.
+- Added machine-readable overlay refreshability metadata so `/api/report` can expose last-good dates and blockers without changing any score.
 
 ## Definition of done
 
 GMLI is materially improved when:
-
 1. A newer Money vintage can be promoted prospectively with fully preserved inputs.
 2. Money nowcast is verified 4/4 without brittle request-time scraping. **DONE.**
-3. Funding/credit/fiscal freshness is explicit and automated.
+3. Funding/credit/fiscal freshness is explicit and automated where provenance permits.
 4. Current market confirmation is separated from structural completed-month confirmation.
-5. `/api/report` makes stale decision-critical inputs impossible to miss.
+5. `/api/report` makes stale or non-refreshable decision-critical inputs impossible to miss.
 6. Frozen methodology remains unchanged.
