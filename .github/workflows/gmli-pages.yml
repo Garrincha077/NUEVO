@@ -8,6 +8,8 @@ on:
       - 'api/**'
       - 'lib/**'
       - 'scripts/build-pages-snapshot.mjs'
+      - 'scripts/pages-money-ui.mjs'
+      - 'research/global-money-v2/latest/**'
       - '.github/workflows/gmli-pages.yml'
   pull_request:
     branches: [main]
@@ -16,6 +18,8 @@ on:
       - 'api/**'
       - 'lib/**'
       - 'scripts/build-pages-snapshot.mjs'
+      - 'scripts/pages-money-ui.mjs'
+      - 'research/global-money-v2/latest/**'
       - '.github/workflows/gmli-pages.yml'
   schedule:
     - cron: '20 6 * * *'
@@ -49,9 +53,14 @@ jobs:
           grep -q 'PASS_GITHUB_PAGES_SNAPSHOT' /tmp/gmli-pages.json
           grep -q 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL' /tmp/gmli-pages.json
           grep -q '2026-07-31' /tmp/gmli-pages.json
+          grep -q '"history_rows"' /tmp/gmli-pages.json
           test -s .pages/index.html
           test -s .pages/api/report.json
           test -s .pages/api/radar.json
+          test -s .pages/api/history.json
+          grep -q 'Global Money Trend' .pages/index.html
+          grep -q 'moneyScoreChart' .pages/index.html
+          grep -q 'moneyYoyChart' .pages/index.html
 
       - name: Publish verified static snapshot to gh-pages branch
         if: github.event_name != 'pull_request'
