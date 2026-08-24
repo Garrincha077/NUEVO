@@ -198,10 +198,11 @@ def refresh_japan(state):
 def pbc_search_url(year, month):
     query = f'{year}年{month}月金融统计数据报告'
     params = urllib.parse.urlencode({
+        'dr': 'true',
         'pNo': '1',
         'pageId': PBOC_SEARCH_PAGE_ID,
         'q': query,
-        'sr': 'date desc'
+        'sr': 'score desc'
     })
     return PBOC_SEARCH_BASE + '?' + params
 
@@ -273,7 +274,6 @@ def find_pbc_report(year, month):
 def latest_pbc_report(state):
     old = state['blocks']['china']
     now = datetime.now(timezone.utc)
-    # A month-M report is normally released during M+1. Begin with the previous month.
     anchor_year = now.year
     anchor_month = now.month - 1
     if anchor_month == 0:
