@@ -151,6 +151,17 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 - Capture refuses to run as promotion-ready while any required source remains unresolved and never modifies `lib/state.js`.
 - Source validation is intentionally separate from capture; unresolved China, exact BoJ/BoE/BoC paths and the adjusted-price mirror remain blockers before the first complete prospective vintage can be frozen.
 
+### 2026-08-24 — BoE / BoC / BoJ prospective sources validated
+
+- Added a read-only source validation runner and gated the new paths in CI.
+- GitHub Actions fetched all three official sources successfully with HTTP 200 and provider-native series markers:
+  - BoJ M2 level `MD02'MAM1NAM2M2MO`: 16,550 bytes, `text/csv; charset=utf-8`.
+  - BoE M4 `LPMAUYN`: 4,206 bytes, `application/csv`.
+  - BoC seasonally adjusted gross M2 `V41552796`: 3,529 bytes, `text/csv; charset=UTF-8`.
+- Prospective source manifest now has explicit validated fetch paths for US, EA, JP, GB, CA and both AU inputs.
+- Remaining unresolved blockers are `CN_M2` and `ASSET_ADJUSTED_PRICE_MIRROR`.
+- Frozen Core values remain unchanged and prospective capture still fails closed while either blocker is unresolved.
+
 ## Definition of done
 
 GMLI is materially improved when:
