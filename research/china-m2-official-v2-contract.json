@@ -4,7 +4,7 @@
   "status": "RESEARCH_SOURCE_CANDIDATE",
   "purpose": "Replace the opaque legacy China stitch prospectively with a reproducible PBoC-native M2 level history while preserving the existing GMLI seven-region architecture and evaluating the impact before any Core promotion.",
   "unit": "RMB 100 million",
-  "start_month": "2015-01",
+  "start_month": "2014-01",
   "statistics_index": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/index.html",
   "methodology_policy": {
     "legacy_exact_rerun": false,
@@ -18,7 +18,7 @@
   },
   "history_contract": {
     "discovery": "Discover each year's Money and Banking Statistics page from the official PBoC Statistics index, then resolve its Money Supply HTML table. Do not depend on search-engine ranking or opaque legacy mirrors.",
-    "years": "2015 through current year",
+    "years": "2014 through current year",
     "past_year_requirement": "12 monthly M2 levels",
     "current_year_requirement": "all populated M2 months through the latest official table update",
     "raw_byte_policy": "Preserve the Statistics index, each yearly Money Supply HTML payload, source URL, retrieval timestamp and SHA-256.",
@@ -53,6 +53,12 @@
     "latest_known_level_trn_cny": 355.51,
     "tolerance_100m": 60,
     "note": "Rounded report values are a cross-check only. The HTML Money Supply table is the authoritative precision source for V2 levels."
+  },
+  "historical_cross_check": {
+    "month": "2014-05",
+    "reported_level_trn_cny": 118.23,
+    "source": "Official PBoC 2014-05 Financial Statistics Report",
+    "note": "Independent rounded cross-check for the newly added 2014 official HTML history; exact history value continues to come from the Money Supply table."
   },
   "promotion_policy": "A complete official V2 series may be used to construct a new Money candidate and rerun the locked transmission evaluation. Promotion, if justified, is a new version decision and does not alter the historical fact that the old v1.8b exact rerun was impossible."
 }
