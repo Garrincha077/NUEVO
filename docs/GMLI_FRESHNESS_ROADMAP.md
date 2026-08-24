@@ -25,7 +25,6 @@ The priority is freshness, auditability and clear separation of ENGINE FACT from
 ### P0 — Fresh Money Core
 
 Build a prospective promotion pipeline for the next complete Money vintage:
-
 1. Fetch production-source Money inputs.
 2. Preserve raw source bytes immediately.
 3. SHA-256 every source file/input.
@@ -55,7 +54,7 @@ Freshness policy:
 Current refreshability audit:
 - **Funding:** `BLOCKED_BASELINE_MISMATCH`. Frozen 5/5 research report gives July z -0.796 / 36.73, while production baseline is z -0.8378753441 / 36.0354109320. Exact production baseline must be reproduced before automation.
 - **Credit/Velocity:** `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Final July score is preserved, but exact frozen component/source construction has not been recovered. Do not redesign it.
-- **Fiscal:** `BASELINE_MATCHED_IMPLEMENTATION_PENDING`. Frozen strict actual-release construction is documented and its July z/score exactly matches production; a preserved-vintage refresh runner still needs to be built and regression-tested.
+- **Fiscal:** `PROSPECTIVE_SOURCE_CAPTURE_IMPLEMENTED_SCORE_REFRESH_BLOCKED`. Frozen strict actual-release construction is documented and its July z/score exactly matches production. Because the exact historical strict-release runner/vintages were not recovered, current revised history will not be substituted. A prospective raw-source archive now preserves future source bytes, hashes and first-seen timing; production score remains locked until a strict-release transform can reproduce the July baseline exactly under CI.
 
 Success condition: each overlay carries source date, age, freshness label, last verified status and an auditable refreshability state; only regression-matched overlays may auto-advance.
 
@@ -92,7 +91,7 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 ### Phase 1 — Freshness infrastructure
 - [x] Add canonical Data Health block
 - [x] Validate/add China scheduled ingestion
-- [ ] Add Funding/Credit/Fiscal scheduled refresh — fail-closed audit complete; Fiscal implementation next; Funding/Credit blocked pending provenance/regression match
+- [ ] Add Funding/Credit/Fiscal scheduled refresh — refreshability audit complete; Fiscal prospective capture implemented pending CI/production verification; Funding/Credit remain blocked
 - [x] Add explicit freshness labels, overlay refreshability and last-good status
 
 ### Phase 2 — Prospective Money promotion
@@ -115,6 +114,7 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 - [x] Deploy initial Data Health slice to existing `gmli-fred-dashboard`
 - [x] Smoke-test `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision` for initial Data Health slice
 - [x] Smoke-test PBoC scheduled refresh and resulting production deployment
+- [ ] Smoke-test first prospective Fiscal raw-source capture; verify production Fiscal score remains unchanged
 
 ## Progress log
 
@@ -143,10 +143,18 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 - Prospective Core `CN_M2` remains a separate unresolved stitched-level problem.
 
 ### 2026-08-24 — Overlay refreshability audit
-- Funding frozen construction is documented: five 20% components, 120M rolling z, 36M minimum, ±3z clipping. However its published July 5/5 research baseline (z -0.796) does not equal production (z -0.8378753441), so automated refresh is blocked until exact regression matching is recovered.
-- Fiscal frozen strict actual-release construction is documented: deficit/GDP, debt-growth gap, interest burden and NIPA fiscal gap, 25% each, 120M/36M/±3z. Its July strict z 0.1523733869 exactly matches production, so it is the next safe implementation candidate.
-- Credit/Velocity exact construction/source provenance could not be recovered from current Git/research artifacts after targeted searches. Its July production value remains preserved, but automation is blocked rather than guessed.
-- Added machine-readable overlay refreshability metadata so `/api/report` can expose last-good dates and blockers without changing any score.
+- Funding construction is documented but its published July 5/5 baseline does not equal production; automation is blocked until exact regression matching is recovered.
+- Fiscal strict actual-release construction is documented and its July strict z 0.1523733869 exactly matches production.
+- Credit/Velocity exact construction/source provenance could not be recovered; automation is blocked rather than guessed.
+- `/api/report` exposes last-good dates and refresh blockers without changing scores.
+
+### 2026-08-24 — Fiscal prospective source-capture contract
+- Exact historical strict-release runner/vintages were not recovered, so current revised FRED history is explicitly not used as an exact historical backfill.
+- Added a prospective raw capture for the six documented Fiscal source series: `MTSDS133FMS`, `GDP`, `GFDEBTN`, `A091RC1Q027SBEA`, `FGRECPT`, `FGEXPND`.
+- Capture preserves exact FRED CSV bytes, SHA-256, retrieval timestamp, first-observed timestamp for the newest observation, latest observation metadata and date-regression checks.
+- `--validate-only` performs a live source test without writing state/files.
+- Scheduler stores only source vintages and audit artifacts; it cannot compute or advance the production Fiscal score.
+- Unlock condition for score refresh remains: implement strict-release transformation and reproduce the July 2026 production z/score exactly under CI.
 
 ## Definition of done
 
