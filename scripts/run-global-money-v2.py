@@ -2,10 +2,11 @@
 """Stable provider-normalization entry point for Global Money V2.
 
 Provider-native date conventions differ across official sources. This wrapper
-normalizes only those transport formats (for example BOJ YYYYMM and BoE
-'DD Mon YY') before invoking the unchanged Global Money V2 construction.
+normalizes transport formats only; the Global Money construction is unchanged.
 """
+import csv
 import importlib.util
+import io
 import pathlib
 import re
 import sys
@@ -32,7 +33,28 @@ def provider_ym(value):
     return _base_ym(value)
 
 
+def boe_m4_clean():
+    # Official BoE IADB export; TN produces a stable two-column DATE,LPMAUYN CSV.
+    url = ('https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?'
+           'csv.x=yes&Datefrom=01/Jan/2014&Dateto=now&SeriesCodes=LPMAUYN&UsingCodes=Y&CSVF=TN&VPD=Y&VFD=N')
+    raw, meta = mod.fetch(url, 'text/csv', 60)
+    rows = list(csv.DictReader(io.StringIO(mod.decode(raw))))
+    out = {}
+    for row in rows:
+        md = provider_ym(row.get('DATE'))
+        try:
+            v = float(str(row.get('LPMAUYN', '')).replace(',', '').strip())
+        except ValueError:
+            continue
+        if md:
+            out[md] = v / 1000.0  # sterling millions -> GBP bn
+    if not out:
+        raise ValueError('No BoE LPMAUYN observations from official TN export')
+    return out, raw, meta
+
+
 mod.ym = provider_ym
+mod.boe_m4 = boe_m4_clean
 
 if __name__ == '__main__':
     sys.exit(mod.main())
