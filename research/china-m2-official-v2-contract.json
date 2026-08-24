@@ -5,96 +5,38 @@
   "purpose": "Replace the opaque legacy China stitch prospectively with a reproducible PBoC-native M2 level history while preserving the existing GMLI seven-region architecture and evaluating the impact before any Core promotion.",
   "unit": "RMB 100 million",
   "start_month": "2015-01",
+  "statistics_index": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/index.html",
   "methodology_policy": {
     "legacy_exact_rerun": false,
     "core_modified": false,
     "old_v18b_gate_unchanged": "BLOCKED_MISSING_FROZEN_INPUT_BYTES",
     "candidate_rule": "Treat this as a new versioned production-source candidate. Compare it with the legacy benchmark; do not call it the missing historical exact rerun.",
     "preferred_source_order": [
-      "PBoC annual Money Supply table with monthly M2 levels",
-      "PBoC monthly Financial Statistics Report for gaps/current year"
+      "PBoC Statistics -> year -> Money and Banking Statistics -> Money Supply -> HTML",
+      "PBoC monthly Financial Statistics Report as an independent latest-value cross-check"
     ]
   },
-  "annual_tables": [
-    {
-      "year": 2016,
-      "url": "https://www.pbc.gov.cn/diaochatongjisi/fileDir/resource/cms/2017/01/2017011815321483353.pdf",
-      "expected_months": 12,
-      "anchor_month": "2016-12",
-      "anchor_m2": 1550066.67
-    },
-    {
-      "year": 2017,
-      "url": "https://www.pbc.gov.cn/diaochatongjisi/fileDir/resource/cms/2019/03/2019032816082219734.pdf",
-      "expected_months": 12,
-      "anchor_month": "2017-12",
-      "anchor_m2": 1690235.31,
-      "note": "PBoC retrospectively updated 2017 M2 for the January 2018 money-market-fund statistical-method change; use the comparable revised levels in this official table."
-    },
-    {
-      "year": 2019,
-      "url": "https://www.pbc.gov.cn/diaochatongjisi/fileDir/resource/cms/2020/01/2020011915353830823.pdf",
-      "expected_months": 12,
-      "anchor_month": "2019-12",
-      "anchor_m2": 1986488.82
-    },
-    {
-      "year": 2020,
-      "url": "https://www.pbc.gov.cn/diaochatongjisi/fileDir/resource/cms/2021/01/2021011909524819782.pdf",
-      "expected_months": 12,
-      "anchor_month": "2020-12",
-      "anchor_m2": 2186795.89
-    },
-    {
-      "year": 2022,
-      "url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025110417122994319.pdf",
-      "expected_months": 12,
-      "anchor_month": "2022-12",
-      "anchor_m2": 2664320.84,
-      "note": "PBoC notes the December 2022 e-CNY M0 change does not materially change M1/M2 growth rates."
-    },
-    {
-      "year": 2023,
-      "url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025110416490190973.pdf",
-      "expected_months": 12,
-      "anchor_month": "2023-12",
-      "anchor_m2": 2922713.33
-    },
-    {
-      "year": 2024,
-      "url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025111416484293445.pdf",
-      "expected_months": 12,
-      "anchor_month": "2024-12",
-      "anchor_m2": 3135322.30
-    },
-    {
-      "year": 2025,
-      "url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2025/11/2025111913535682666.pdf",
-      "expected_months": 10,
-      "anchor_month": "2025-10",
-      "anchor_m2": 3351312.31,
-      "note": "This preserved official table currently contains Jan-Oct 2025; later months are filled only from official monthly Financial Statistics Reports. The 2025 M1 definition change is not an M2 definition change."
-    }
-  ],
-  "report_fill_ranges": [
-    {"start": "2015-01", "end": "2015-12", "reason": "Annual Report exposes quarter-end M2, while monthly Financial Statistics Reports provide all monthly balances."},
-    {"start": "2018-01", "end": "2018-12", "reason": "Use official monthly reports across the 2018 statistical-method transition; 2017 comparable revised levels come from the official 2017 table."},
-    {"start": "2021-01", "end": "2021-12", "reason": "Use official monthly reports unless a simpler full-year Money Supply table is validated later."},
-    {"start": "2025-11", "end": "2026-12", "reason": "Current/forward extension from official monthly reports; stop automatically at the latest report that exists."}
-  ],
+  "history_contract": {
+    "discovery": "Discover each year's Money and Banking Statistics page from the official PBoC Statistics index, then resolve its Money Supply HTML table. Do not depend on search-engine ranking or opaque legacy mirrors.",
+    "years": "2015 through current year",
+    "past_year_requirement": "12 monthly M2 levels",
+    "current_year_requirement": "all populated M2 months through the latest official table update",
+    "raw_byte_policy": "Preserve the Statistics index, each yearly Money Supply HTML payload, source URL, retrieval timestamp and SHA-256.",
+    "precision": "Use the official table values in RMB 100 million directly; do not round to trillion-yuan report values for the history series."
+  },
   "validation_anchors": {
-    "2015-01_trn_cny": 124.27,
-    "2015-12_trn_cny_approx": 139.2,
-    "2015-12_annual_exact_100m": 1392278.11,
-    "2018-01_trn_cny": 172.08,
-    "2018-12_trn_cny": 182.67,
+    "2015-01_100m": 1242710.22,
+    "2015-12_100m": 1392278.11,
+    "2018-01_100m": 1720814.46,
+    "2018-12_100m": 1826744.22,
     "2021-12_100m": 2382899.56,
-    "2026-07_trn_cny": 355.51
+    "2025-12_100m": 3402948.06,
+    "2026-07_100m": 3555077.24
   },
   "known_breaks": [
     {
       "date": "2018-01",
-      "description": "PBoC improved the money-market-fund component of money supply statistics and retrospectively revised 2017 M2 for comparability."
+      "description": "PBoC improved the money-market-fund component of money supply statistics and retrospectively revised 2017 M2 growth for comparability. The official level tables remain the V2 accounting history; the break is explicitly recorded."
     },
     {
       "date": "2022-12",
@@ -105,5 +47,12 @@
       "description": "PBoC revised M1 definition; this contract uses M2 and records the break for provenance only."
     }
   ],
+  "current_cross_check": {
+    "source": "PBoC monthly Financial Statistics Report",
+    "latest_known_month": "2026-07",
+    "latest_known_level_trn_cny": 355.51,
+    "tolerance_100m": 60,
+    "note": "Rounded report values are a cross-check only. The HTML Money Supply table is the authoritative precision source for V2 levels."
+  },
   "promotion_policy": "A complete official V2 series may be used to construct a new Money candidate and rerun the locked transmission evaluation. Promotion, if justified, is a new version decision and does not alter the historical fact that the old v1.8b exact rerun was impossible."
 }
