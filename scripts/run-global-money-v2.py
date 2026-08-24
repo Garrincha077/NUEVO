@@ -2,8 +2,9 @@
 """Stable provider-normalization entry point for Global Money V2.
 
 Provider-native date/layout conventions differ across official sources. This
-wrapper normalizes transport formats only; the Global Money construction is
-unchanged.
+wrapper normalizes transport formats and preserves the documented split between
+accounting levels and official comparable growth signals. The Global Money
+aggregation itself is unchanged.
 """
 import csv
 import importlib.util
@@ -18,7 +19,16 @@ spec = importlib.util.spec_from_file_location('gmli_global_money_v2_base', BASE)
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 _base_ym = mod.ym
+_base_yoy = mod.yoy
+_base_ecb_m2 = mod.ecb_m2
 MONS = {'jan':1,'feb':2,'mar':3,'apr':4,'may':5,'jun':6,'jul':7,'aug':8,'sep':9,'oct':10,'nov':11,'dec':12}
+
+
+class EALevels(dict):
+    """Marker type: ECB M2 stock levels are used for prior-year USD weights."""
+
+
+_EA_GROWTH = {}
 
 
 def provider_ym(value):
@@ -49,6 +59,42 @@ def provider_ym(value):
     return _base_ym(value)
 
 
+def ecb_m2_level_and_signal():
+    levels, level_raw, level_meta = _base_ecb_m2()
+    # Documented v1.8 construction: the stock series is the accounting/weight
+    # input, while the official comparable annual-growth series is the signal.
+    key = 'M.U2.Y.V.M20.X.I.U2.2300.Z01.A'
+    url = f'https://data-api.ecb.europa.eu/service/data/BSI/{key}?startPeriod=2014-01&format=csvdata'
+    growth_raw, growth_meta = mod.fetch(url, 'text/csv', 60)
+    rows = list(csv.DictReader(io.StringIO(mod.decode(growth_raw))))
+    growth = {}
+    for row in rows:
+        md = provider_ym(row.get('TIME_PERIOD') or row.get('TIME_PERIOD_START') or row.get('TIME_PERIOD_END'))
+        try:
+            value = float(row.get('OBS_VALUE', ''))
+        except ValueError:
+            continue
+        if md:
+            growth[md] = value
+    if not growth:
+        raise ValueError('No official ECB M2 annual-growth observations')
+    _EA_GROWTH.clear()
+    _EA_GROWTH.update(growth)
+    # Preserve both source payloads in the build audit without changing the
+    # base function signature: attach the growth provenance to the level meta.
+    level_meta = dict(level_meta)
+    level_meta['signal_url'] = growth_meta['url']
+    level_meta['signal_sha256'] = growth_meta['sha256']
+    level_meta['signal_bytes'] = growth_meta['bytes']
+    return EALevels(levels), level_raw, level_meta
+
+
+def signal_yoy(levels, month):
+    if isinstance(levels, EALevels):
+        return _EA_GROWTH.get(month)
+    return _base_yoy(levels, month)
+
+
 def boe_m4_clean():
     # Official BoE IADB export; TN produces a stable two-column DATE,LPMAUYN CSV.
     url = ('https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?'
@@ -59,11 +105,11 @@ def boe_m4_clean():
     for row in rows:
         md = provider_ym(row.get('DATE'))
         try:
-            v = float(str(row.get('LPMAUYN', '')).replace(',', '').strip())
+            value = float(str(row.get('LPMAUYN', '')).replace(',', '').strip())
         except ValueError:
             continue
         if md:
-            out[md] = v / 1000.0  # sterling millions -> GBP bn
+            out[md] = value / 1000.0  # sterling millions -> GBP bn
     if not out:
         raise ValueError('No BoE LPMAUYN observations from official TN export')
     return out, raw, meta
@@ -95,10 +141,10 @@ def rba_series_fullscan(url, code):
         if not md:
             continue
         try:
-            v = float(str(row[code_col]).replace(',', '').strip())
+            value = float(str(row[code_col]).replace(',', '').strip())
         except ValueError:
             continue
-        out[md] = v
+        out[md] = value
     if not out:
         sample = [row[:min(8, len(row))] for row in rows[max(0, code_row-2):min(len(rows), code_row+8)]]
         raise ValueError(f'No RBA observations for {code}; code_row={code_row}, code_col={code_col}, sample={sample!r}')
@@ -106,6 +152,8 @@ def rba_series_fullscan(url, code):
 
 
 mod.ym = provider_ym
+mod.ecb_m2 = ecb_m2_level_and_signal
+mod.yoy = signal_yoy
 mod.boe_m4 = boe_m4_clean
 mod.rba_series = rba_series_fullscan
 
