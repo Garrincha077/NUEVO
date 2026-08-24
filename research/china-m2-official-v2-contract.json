@@ -2,7 +2,7 @@
   "contract": "GMLI China M2 official-source candidate v2",
   "version": "PBOC_OFFICIAL_M2_V2",
   "status": "RESEARCH_SOURCE_CANDIDATE",
-  "purpose": "Replace the opaque legacy China stitch prospectively with a reproducible PBoC-native M2 level history while preserving the existing GMLI seven-region architecture and evaluating the impact before any Core promotion.",
+  "purpose": "Replace the opaque legacy China stitch prospectively with a reproducible PBoC-native M2 history while preserving the existing GMLI seven-region architecture and evaluating the impact before any Core promotion.",
   "unit": "RMB 100 million",
   "start_month": "2014-01",
   "statistics_index": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/index.html",
@@ -10,22 +10,23 @@
     "legacy_exact_rerun": false,
     "core_modified": false,
     "old_v18b_gate_unchanged": "BLOCKED_MISSING_FROZEN_INPUT_BYTES",
-    "candidate_rule": "Treat this as a new versioned production-source candidate. Compare it with the legacy benchmark; do not call it the missing historical exact rerun.",
+    "candidate_rule": "Treat this as a new versioned official-source candidate. Do not call it the missing historical exact rerun.",
     "preferred_source_order": [
-      "2015 onward: PBoC Statistics -> year -> Money and Banking Statistics -> Money Supply -> HTML",
-      "2014 seed year only: official central PBoC monthly Financial Statistics Reports"
+      "2015 onward accounting levels: PBoC Statistics -> year -> Money and Banking Statistics -> Money Supply -> HTML",
+      "2015 published growth: exact-month central PBoC Financial Statistics Reports",
+      "2014 comparable-base accounting seed: implied from each precise 2015 HTML level and the same month's official published 2015 M2 YoY"
     ]
   },
   "history_contract": {
-    "years": "2014 through current year",
     "precision_history": "2015 onward uses official Money Supply table values in RMB 100 million directly.",
-    "seed_year_2014": "2014 uses the M2 balance published in each official central PBoC monthly Financial Statistics Report, converted from trillion yuan to RMB 100 million. It is a rounded seed year used only to make 2015 YoY computable.",
-    "seed_year_precision": "0.01 trillion yuan = 100 RMB 100-million units; do not claim 2014 has the same precision as the 2015+ HTML tables.",
-    "seed_year_reason": "The official 2014 Money and Banking Statistics overview is still discoverable, but its historical Money Supply HTML target currently returns 404. Missing historical bytes are not reconstructed.",
-    "past_year_requirement": "12 monthly M2 levels",
-    "current_year_requirement": "all populated M2 months through the latest official table update",
-    "raw_byte_policy": "Preserve the Statistics index and each 2015+ Money Supply HTML payload. For every 2014 seed month preserve the PBoC search payload and selected central-PBoC Financial Statistics article payload, source URLs, retrieval timestamp and SHA-256.",
-    "no_proxy_rule": "No OECD, commercial vendor, mirror or reconstructed legacy series may fill 2014."
+    "signal_start": "2015-01",
+    "seed_year_2014_role": "ACCOUNTING_SEED_ONLY. The 2014 rows are implied comparable-base levels, not claimed observed 2014 stock values.",
+    "seed_formula": "implied_prior_level_2014_m = precise_level_2015_m / (1 + official_published_yoy_2015_m / 100)",
+    "seed_reason": "The historical 2014 Money Supply HTML target is dead and the old archive is inconsistent. Rather than guess or use a proxy, derive only the prior-year comparable accounting base required for 2015 weights from two official PBoC published components.",
+    "signal_semantics": "For 2015, derived China YoY from the implied comparable base equals the exact-month official PBoC published YoY by construction. From 2016 onward, YoY is calculated from precision PBoC HTML levels.",
+    "raw_byte_policy": "Preserve the Statistics index and each 2015+ Money Supply HTML payload. Preserve each accepted 2015 Financial Statistics article payload and SHA-256 used to construct the comparable-base seed.",
+    "no_proxy_rule": "No OECD, commercial vendor, mirror or reconstructed legacy series may fill the seed.",
+    "honesty_rule": "Never describe the implied 2014 comparable base as an observed 2014 Money Supply series or as recovered historical frozen bytes."
   },
   "validation_anchors": {
     "2015-01_100m": 1242710.22,
@@ -35,6 +36,11 @@
     "2021-12_100m": 2382899.56,
     "2025-12_100m": 3402948.06,
     "2026-07_100m": 3555077.24
+  },
+  "published_growth_anchor": {
+    "2015-01_yoy_pct": 10.8,
+    "source": "Official central PBoC 2015-01 Financial Statistics Report",
+    "note": "The report explicitly says January 2015 M2 YoY is calculated on a comparable basis."
   },
   "known_breaks": [
     {
@@ -56,12 +62,6 @@
     "latest_known_level_trn_cny": 355.51,
     "tolerance_100m": 60,
     "note": "Rounded report values are a cross-check only for the 2015+ precision history."
-  },
-  "seed_validation": {
-    "month": "2014-05",
-    "reported_level_trn_cny": 118.23,
-    "source": "Official central PBoC 2014-05 Financial Statistics Report",
-    "rule": "The collected 2014-05 seed must equal the published 118.23 trillion yuan at report precision."
   },
   "promotion_policy": "A complete official V2 series may be used to construct a new Money candidate and rerun the locked transmission evaluation. Promotion, if justified, is a new version decision and does not alter the historical fact that the old v1.8b exact rerun was impossible."
 }

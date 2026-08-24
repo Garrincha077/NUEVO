@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
-"""Extend PBOC_OFFICIAL_M2_V2 through 2014 using official monthly PBoC reports.
+"""Build the China V2 2014 comparable-base accounting seed.
 
-2014 is a rounded seed year only, used to make 2015 China YoY computable.
-2015+ remains the precision PBoC Money Supply HTML history. This script never
-reconstructs the dead 2014 HTML target and never modifies lib/state.js.
+2015+ accounting levels come from precise official PBoC Money Supply HTML tables.
+To preserve the 2015-01 signal/train start without guessing a dead 2014 source,
+this script constructs ONLY the prior-year comparable accounting base required
+for 2015 from two official PBoC components for each month:
+
+    implied_2014_base = precise_2015_level / (1 + published_2015_yoy/100)
+
+The implied 2014 rows are ACCOUNTING_SEED_ONLY. They are not observed 2014 stock
+values and are never described as recovered frozen bytes. No proxy source is used.
+The script never modifies lib/state.js.
 """
 import argparse
 import csv
@@ -13,6 +20,7 @@ import json
 import pathlib
 import re
 import sys
+import urllib.parse
 from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -37,189 +45,252 @@ nowcast = load_module('pboc_nowcast_parser', NOWCAST_PATH)
 def load_contract():
     data = json.loads(CONTRACT_PATH.read_text(encoding='utf-8'))
     if data.get('start_month') != '2014-01':
-        raise ValueError('2014 extension requires contract start_month=2014-01')
+        raise ValueError('Comparable-base seed requires contract start_month=2014-01')
     return data
 
 
-def parse_month_level(clean, month):
+PERIOD_END_TITLE = {
+    3: '2015年一季度金融统计数据报告',
+    6: '2015年上半年金融统计数据报告',
+    9: '2015年前三季度金融统计数据报告',
+    12: '2015年金融统计数据报告',
+}
+
+
+def pbc_2015_search_url(month):
+    query = PERIOD_END_TITLE.get(month, f'2015年{month}月金融统计数据报告')
+    params = urllib.parse.urlencode({
+        'dr': 'true',
+        'pNo': '1',
+        'pageId': nowcast.PBOC_SEARCH_PAGE_ID,
+        'q': query,
+        'sr': 'score desc',
+    })
+    return nowcast.PBOC_SEARCH_BASE + '?' + params
+
+
+def parse_2015_growth_article(text, month):
+    """Parse one 2015 PBoC Financial Statistics report without broad title relaxation.
+
+    Non-quarter months still require the exact YYYY年M月 title. Quarter-end months
+    may use only the known PBoC period titles (Q1/H1/Q3/annual), and every accepted
+    page must explicitly contain the requested ``M月末`` balance sentence.
+    """
+    clean = nowcast.strip_html(text).replace('（', '(').replace('）', ')').replace('％', '%').replace('，', ',')
+    exact_title = f'2015年{month}月金融统计数据报告'
+    allowed_title = PERIOD_END_TITLE.get(month, exact_title)
+    if allowed_title not in clean or '金融统计' not in clean:
+        raise ValueError(f'PBoC report title/month mismatch for 2015-{month:02d}')
+    if f'{month}月末' not in clean:
+        raise ValueError(f'PBoC report body month mismatch for 2015-{month:02d}')
+
     patterns = [
-        rf'{month}月末[，,\s]*[^。]{{0,280}}?广义货币\s*\(?M2\)?\s*余额\s*([0-9]+(?:\.[0-9]+)?)\s*万亿元',
-        rf'{month}月末[，,\s]*[^。]{{0,280}}?M2[^。]{{0,120}}?余额\s*([0-9]+(?:\.[0-9]+)?)\s*万亿元',
-        r'广义货币\s*\(?M2\)?\s*余额\s*([0-9]+(?:\.[0-9]+)?)\s*万亿元',
+        r'广义货币\s*\(?M2\)?\s*余额\s*([0-9]+(?:\.[0-9]+)?)\s*万亿元[^。]{0,160}?同比增长\s*([+-]?[0-9]+(?:\.[0-9]+)?)\s*%',
+        r'M2[^。]{0,80}?余额\s*([0-9]+(?:\.[0-9]+)?)\s*万亿元[^。]{0,160}?同比增长\s*([+-]?[0-9]+(?:\.[0-9]+)?)\s*%'
     ]
     for pattern in patterns:
         m = re.search(pattern, clean, flags=re.I)
-        if m:
-            level = float(m.group(1))
-            if not (50 <= level <= 300):
-                raise ValueError(f'2014-{month:02d} M2 level sanity failure: {level} tn CNY')
-            return level
-    raise ValueError(f'No M2 balance sentence for 2014-{month:02d}')
+        if not m:
+            continue
+        level = float(m.group(1))
+        yoy = float(m.group(2))
+        if not (50 <= level <= 1000):
+            raise ValueError(f'PBoC M2 level sanity check failed: {level} trillion yuan')
+        if not (-20 <= yoy <= 30):
+            raise ValueError(f'PBoC M2 YoY sanity check failed: {yoy}')
+        return {'level_trn_cny': level, 'yoy_pct': yoy}
+    raise ValueError('PBoC report found but M2 balance/YoY sentence was not parsed')
 
 
-def fetch_month_report(month):
-    year = 2014
-    search_url = nowcast.pbc_search_url(year, month)
-    search_raw, search_meta = base.fetch_bytes(search_url, timeout=45)
-    candidates = nowcast.central_pbc_urls(base.decode_bytes(search_raw))
+def discover_2015_report(month):
+    search_url = pbc_2015_search_url(month)
+    search_raw = nowcast.fetch_bytes(search_url, timeout=35, accept='text/html')
+    candidates = nowcast.central_pbc_urls(nowcast.decode_bytes(search_raw))
     if not candidates:
-        raise ValueError(f'No central PBoC search candidates for 2014-{month:02d}')
-
+        raise ValueError(f'No central PBoC report URL discovered for 2015-{month:02d}')
     errors = []
-    for url in candidates[:15]:
+    for url in candidates[:20]:
         try:
-            article_raw, article_meta = base.fetch_bytes(url, timeout=40)
-            clean = nowcast.strip_html(base.decode_bytes(article_raw)).replace('（', '(').replace('）', ')')
-            if '2014' not in clean or '金融统计' not in clean:
-                raise ValueError('not a 2014 financial-statistics article')
-            level_trn = parse_month_level(clean, month)
+            page_raw = nowcast.fetch_bytes(url, timeout=30, accept='text/html')
+            parsed = parse_2015_growth_article(nowcast.decode_bytes(page_raw), month)
             return {
-                'month': f'2014-{month:02d}',
-                'level_trn_cny': level_trn,
-                'm2_100m': round(level_trn * 10000.0, 2),
+                'report_month': f'2015-{month:02d}',
+                'url': url,
+                **parsed,
                 'search_url': search_url,
-                'article_url': url,
-                'search_raw': search_raw,
-                'article_raw': article_raw,
-                'search_sha256': base.sha256_bytes(search_raw),
-                'article_sha256': base.sha256_bytes(article_raw),
-                'search_http_status': search_meta.get('http_status'),
-                'article_http_status': article_meta.get('http_status'),
+                'search_sha256': nowcast.sha256_bytes(search_raw),
+                'article_sha256': nowcast.sha256_bytes(page_raw),
+                'search_bytes': len(search_raw),
+                'article_bytes': len(page_raw),
+                'title_mode': 'PERIOD_END' if month in PERIOD_END_TITLE else 'EXACT_MONTH',
             }
         except Exception as exc:
-            errors.append(f'{url}: {str(exc)[:160]}')
-    raise ValueError(f'No official 2014-{month:02d} PBoC report passed: ' + ' | '.join(errors[:5]))
+            errors.append(f'{url}: {str(exc)[:180]}')
+    raise ValueError('PBoC 2015 candidates failed validation: ' + ' | '.join(errors[:6]))
 
 
-def fetch_2014_reports(contract):
-    records = [fetch_month_report(month) for month in range(1, 13)]
-    values = {r['month']: r['m2_100m'] for r in records}
-    expected = [f'2014-{m:02d}' for m in range(1, 13)]
-    if sorted(values) != expected:
-        raise ValueError(f'2014 monthly report seed is incomplete: {sorted(values)}')
+def exact_2015_report(month):
+    report = discover_2015_report(month)
+    expected = f'2015-{month:02d}'
+    if report.get('report_month') != expected:
+        raise ValueError(f'PBoC exact-month mismatch: expected={expected}, got={report.get("report_month")}')
 
-    ordered = [values[m] for m in expected]
-    for i in range(1, len(ordered)):
-        ratio = ordered[i] / ordered[i - 1]
-        if not (0.90 <= ratio <= 1.10):
-            raise ValueError(f'2014 monthly-report seed continuity failure at {expected[i]}: ratio={ratio:.4f}')
-
-    seed = contract.get('seed_validation') or {}
-    check_month = seed.get('month')
-    expected_trn = seed.get('reported_level_trn_cny')
-    if check_month and expected_trn is not None:
-        actual = values.get(check_month)
-        target = float(expected_trn) * 10000.0
-        if actual is None or abs(actual - target) > 0.01:
-            raise ValueError(f'2014 seed anchor mismatch at {check_month}: actual={actual}, expected={target}')
-
-    return records, values
-
-
-def validate(contract):
-    records, values = fetch_2014_reports(contract)
+    article_raw, article_meta = base.fetch_bytes(report['url'], timeout=40)
+    parsed = parse_2015_growth_article(base.decode_bytes(article_raw), month)
+    level_trn = float(parsed['level_trn_cny'])
+    yoy_pct = float(parsed['yoy_pct'])
+    if abs(level_trn - float(report['level_trn_cny'])) > 1e-9 or abs(yoy_pct - float(report['yoy_pct'])) > 1e-9:
+        raise ValueError(f'{expected} semantic refetch mismatch')
     return {
-        'status': 'PASS_2014_OFFICIAL_MONTHLY_REPORT_SEED',
-        'candidate_version': contract['version'],
-        'core_modified': False,
-        'legacy_exact_rerun': False,
-        'source_contract': 'PBOC_OFFICIAL_MONTHLY_REPORT_SEED_2014',
-        'year': 2014,
-        'months': 12,
-        'first_month': '2014-01',
-        'last_month': '2014-12',
-        'may_2014_m2_100m': values['2014-05'],
-        'precision_note': '2014 balances are rounded to 0.01 trillion CNY in monthly reports; 2015+ remains precision HTML history.',
-        'article_urls': [r['article_url'] for r in records],
-        'next_gate': 'REBUILD_CONTINUOUS_PBOC_V2_2014_CURRENT',
+        'month': expected,
+        'article_url': report['url'],
+        'article_raw': article_raw,
+        'article_sha256': base.sha256_bytes(article_raw),
+        'article_http_status': article_meta.get('http_status'),
+        'reported_level_trn_cny': level_trn,
+        'published_yoy_pct': yoy_pct,
+        'search_url': report['search_url'],
+        'title_mode': report['title_mode'],
     }
 
 
-def build(contract):
+def build_seed(contract):
+    # First rebuild the precision 2015-current official HTML history.
     base_contract = dict(contract)
     base_contract['start_month'] = '2015-01'
     base.build_full(base_contract)
-    records, seed_values = fetch_2014_reports(contract)
 
     csv_path = OUT_ROOT / 'china_m2_100m.csv'
-    existing = list(csv.DictReader(io.StringIO(csv_path.read_text(encoding='utf-8'))))
-    values = {row['month']: float(row['m2_100m']) for row in existing}
-    values.update(seed_values)
-    months = sorted(values)
-    if months[0] != '2014-01':
-        raise ValueError(f'Unexpected extended start month {months[0]}')
+    existing_rows = list(csv.DictReader(io.StringIO(csv_path.read_text(encoding='utf-8'))))
+    precision = {row['month']: float(row['m2_100m']) for row in existing_rows}
+    if not all(f'2015-{m:02d}' in precision for m in range(1, 13)):
+        raise ValueError('Precision 2015 PBoC HTML history is incomplete')
 
-    retrieved_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
-    provenance_path = OUT_ROOT / 'provenance.json'
-    provenance = json.loads(provenance_path.read_text(encoding='utf-8'))
-    raw_root = OUT_ROOT / 'raw'
+    reports = [exact_2015_report(month) for month in range(1, 13)]
+    seen_hashes = {}
+    seeds = {}
     seed_manifest = []
-    for record in records:
-        month = record['month']
-        search_name = f'{month}-search.html'
-        article_name = f'{month}-financial-statistics.html'
-        (raw_root / search_name).write_bytes(record['search_raw'])
+    raw_root = OUT_ROOT / 'raw'
+    raw_root.mkdir(parents=True, exist_ok=True)
+    retrieved_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
+
+    for record in reports:
+        h = record['article_sha256']
+        if h in seen_hashes:
+            raise ValueError(f'Duplicate 2015 PBoC article for {seen_hashes[h]} and {record["month"]}')
+        seen_hashes[h] = record['month']
+
+        current_month = record['month']
+        current_100m = precision[current_month]
+        report_100m = record['reported_level_trn_cny'] * 10000.0
+        if abs(current_100m - report_100m) > 60.0:
+            raise ValueError(f'{current_month} precision HTML/report level mismatch: precise={current_100m}, report={report_100m}')
+
+        yoy = record['published_yoy_pct']
+        if not (-20.0 < yoy < 30.0):
+            raise ValueError(f'{current_month} implausible published M2 YoY: {yoy}')
+        prior_month = f'2014-{current_month[5:7]}'
+        implied = current_100m / (1.0 + yoy / 100.0)
+        seeds[prior_month] = implied
+
+        roundtrip = (current_100m / implied - 1.0) * 100.0
+        if abs(roundtrip - yoy) > 1e-9:
+            raise ValueError(f'{current_month} comparable-base round-trip failed: {roundtrip} vs {yoy}')
+
+        article_name = f'{current_month}-financial-statistics-growth.html'
         (raw_root / article_name).write_bytes(record['article_raw'])
-        provenance[month] = {
-            'source_type': 'PBOC_OFFICIAL_MONTHLY_FINANCIAL_STATISTICS_REPORT_SEED',
-            'source_url': record['article_url'],
-            'raw_file': f'raw/{article_name}',
-            'raw_sha256': record['article_sha256'],
-            'search_url': record['search_url'],
-            'search_raw_file': f'raw/{search_name}',
-            'search_sha256': record['search_sha256'],
-            'retrieved_at': retrieved_at,
-            'unit': 'RMB 100 million',
-            'source_precision': '0.01 trillion CNY (100 RMB 100-million units)',
-            'role': 'SEED_YEAR_ONLY',
-        }
         seed_manifest.append({
-            'month': month,
-            'm2_100m': record['m2_100m'],
+            'seed_month': prior_month,
+            'source_month': current_month,
+            'implied_comparable_base_100m': round(implied, 6),
+            'precision_current_level_100m': round(current_100m, 2),
+            'published_yoy_pct': yoy,
+            'reported_level_trn_cny': record['reported_level_trn_cny'],
             'article_url': record['article_url'],
             'article_sha256': record['article_sha256'],
             'search_url': record['search_url'],
-            'search_sha256': record['search_sha256'],
+            'title_mode': record['title_mode'],
         })
+
+    anchor = (contract.get('published_growth_anchor') or {}).get('2015-01_yoy_pct')
+    if anchor is not None:
+        jan = next(r for r in reports if r['month'] == '2015-01')
+        if abs(jan['published_yoy_pct'] - float(anchor)) > 1e-9:
+            raise ValueError(f'2015-01 published growth anchor mismatch: {jan["published_yoy_pct"]} vs {anchor}')
+
+    provenance_path = OUT_ROOT / 'provenance.json'
+    provenance = json.loads(provenance_path.read_text(encoding='utf-8'))
+    for item in seed_manifest:
+        seed_month = item['seed_month']
+        source_month = item['source_month']
+        provenance[seed_month] = {
+            'source_type': 'PBOC_IMPLIED_COMPARABLE_BASE_FROM_OFFICIAL_2015_LEVEL_AND_YOY',
+            'source_url': item['article_url'],
+            'raw_file': f'raw/{source_month}-financial-statistics-growth.html',
+            'raw_sha256': item['article_sha256'],
+            'retrieved_at': retrieved_at,
+            'unit': 'RMB 100 million',
+            'role': 'ACCOUNTING_SEED_ONLY',
+            'observed_stock': False,
+            'formula': 'precise_2015_level / (1 + official_2015_yoy/100)',
+            'source_month': source_month,
+            'title_mode': item['title_mode'],
+        }
     provenance_path.write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+    values = dict(precision)
+    values.update(seeds)
+    months = sorted(values)
+    if months[0] != '2014-01' or not all(f'2014-{m:02d}' in values for m in range(1, 13)):
+        raise ValueError('Comparable-base accounting seed is incomplete')
 
     rows = []
     for month in months:
         prior = f'{int(month[:4])-1:04d}-{month[5:7]}'
-        yoy = (values[month] / values[prior] - 1) * 100 if prior in values else None
+        derived_yoy = (values[month] / values[prior] - 1.0) * 100.0 if prior in values else None
         p = provenance[month]
         rows.append({
             'month': month,
-            'm2_100m': round(values[month], 2),
-            'derived_yoy_pct': None if yoy is None else round(yoy, 6),
+            'm2_100m': round(values[month], 6 if month.startswith('2014-') else 2),
+            'derived_yoy_pct': None if derived_yoy is None else round(derived_yoy, 6),
             'source_type': p['source_type'],
             'source_url': p['source_url'],
             'raw_sha256': p['raw_sha256'],
         })
+
+    report_yoy = {r['month']: r['published_yoy_pct'] for r in reports}
+    for row in rows:
+        if row['month'].startswith('2015-'):
+            if abs(float(row['derived_yoy_pct']) - report_yoy[row['month']]) > 0.000001:
+                raise ValueError(f'{row["month"]} derived YoY does not reproduce official published growth')
+
     with csv_path.open('w', encoding='utf-8', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=['month','m2_100m','derived_yoy_pct','source_type','source_url','raw_sha256'])
-        writer.writeheader()
-        writer.writerows(rows)
+        writer.writeheader(); writer.writerows(rows)
 
     manifest_path = OUT_ROOT / 'manifest.lock.json'
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
     manifest.update({
-        'status': 'PASS_CONTINUOUS_OFFICIAL_V2_SOURCE',
+        'status': 'PASS_CONTINUOUS_OFFICIAL_V2_SOURCE_WITH_COMPARABLE_BASE_SEED',
         'built_at': retrieved_at,
         'start_month': '2014-01',
+        'end_month': months[-1],
         'months': len(months),
         'missing_months': [],
-        'historical_2014_extension': {
-            'status': 'PASS_OFFICIAL_MONTHLY_REPORT_SEED',
+        'historical_2014_extension': None,
+        'comparable_base_seed_2014': {
+            'status': 'PASS_OFFICIAL_COMPONENT_DERIVATION',
             'months': 12,
-            'role': 'SEED_YEAR_ONLY',
-            'precision': '0.01 trillion CNY per monthly Financial Statistics Report',
-            'may_2014_m2_100m': seed_values['2014-05'],
+            'role': 'ACCOUNTING_SEED_ONLY',
+            'observed_stock': False,
+            'source_precision_history': '2015 current-month level uses precise PBoC Money Supply HTML values',
+            'source_growth': 'official 2015 PBoC Financial Statistics Report YoY; quarter-end months use only the corresponding Q1/H1/Q3/annual period report',
+            'formula': 'implied_2014_base = precise_2015_level / (1 + published_2015_yoy/100)',
             'sources': seed_manifest,
         },
         'promotion_allowed': False,
-        'next_gate': 'REBUILD_GLOBAL_MONEY_V2_WITH_2015_SIGNAL_START_THEN_FIXED_TRANSMISSION_TRANSFER_TEST',
-        'note': 'Official PBoC V2 starts 2014-01. 2014 is a rounded official-report seed year; 2015+ is precision Money Supply HTML history. No dead historical source is reconstructed.'
+        'next_gate': 'REBUILD_GLOBAL_MONEY_V2_THEN_FIXED_TRANSMISSION_TRANSFER_TEST',
+        'note': '2014 rows are explicit comparable-base accounting seeds derived only from official PBoC 2015 level+growth components; they are not observed 2014 stocks and not recovered frozen bytes.'
     })
     manifest['years'] = sorted(
         [y for y in manifest.get('years', []) if y.get('year') != 2014] + [{
@@ -227,8 +298,9 @@ def build(contract):
             'months': 12,
             'first_month': '2014-01',
             'last_month': '2014-12',
-            'source_type': 'PBOC_OFFICIAL_MONTHLY_FINANCIAL_STATISTICS_REPORT_SEED',
-            'precision': '0.01 trillion CNY',
+            'source_type': 'PBOC_IMPLIED_COMPARABLE_BASE_FROM_OFFICIAL_2015_LEVEL_AND_YOY',
+            'role': 'ACCOUNTING_SEED_ONLY',
+            'observed_stock': False,
         }], key=lambda x: x['year'])
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     AUDIT_PATH.parent.mkdir(exist_ok=True)
@@ -244,7 +316,7 @@ def main():
     args = parser.parse_args()
     contract = load_contract()
     try:
-        result = validate(contract) if args.validate_only else build(contract)
+        result = build_seed(contract)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     except Exception as exc:
