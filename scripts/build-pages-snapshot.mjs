@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { enhancePagesHtml } from './pages-money-ui.mjs';
+import { enhanceMobileInfo } from './pages-mobile-info.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, '.pages');
@@ -76,7 +77,7 @@ async function main() {
   await fs.writeFile(path.join(API_OUT, 'history.json'), JSON.stringify(history, null, 2) + '\n');
 
   let html = await fs.readFile(path.join(ROOT, 'index.html'), 'utf8');
-  html = enhancePagesHtml(html)
+  html = enhanceMobileInfo(enhancePagesHtml(html))
     .replaceAll("fetch('/api/report')", "fetch('./api/report.json', {cache:'no-store'})")
     .replaceAll("fetch('/api/radar')", "fetch('./api/radar.json', {cache:'no-store'})")
     .replaceAll("fetch('/api/history')", "fetch('./api/history.json', {cache:'no-store'})")
