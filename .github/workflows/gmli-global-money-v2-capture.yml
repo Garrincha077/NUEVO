@@ -1,0 +1,76 @@
+name: GMLI Global Money v2 candidate capture
+
+on:
+  schedule:
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build-global-money-v2.py'
+      - 'scripts/run-global-money-v2.py'
+      - 'research/china-m2-official-v2/latest/china_m2_100m.csv'
+      - '.github/workflows/gmli-global-money-v2-capture.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gmli-global-money-v2-capture
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GMLI
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build Global Money v2 candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/run-global-money-v2.py --build-full | tee /tmp/gmli-global-money-v2.json
+          grep -q '"status": "PASS_GLOBAL_MONEY_V2_HEADLINE"' /tmp/gmli-global-money-v2.json
+          grep -q '"candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL"' /tmp/gmli-global-money-v2.json
+          grep -q '"core_modified": false' /tmp/gmli-global-money-v2.json
+          grep -q '"status": "PASS"' /tmp/gmli-global-money-v2.json
+          grep -q '"promotion_allowed": false' /tmp/gmli-global-money-v2.json
+          grep -q '"next_gate": "FIXED_TRANSMISSION_TRANSFER_TEST"' /tmp/gmli-global-money-v2.json
+
+      - name: Guard production Core state
+        run: |
+          grep -q "available_date: '2026-02-28'" lib/state.js
+          grep -q "usd_score: 65.70290344348" lib/state.js
+          grep -q "fxn_score: 43.01411281977772" lib/state.js
+
+      - name: Upload Global Money v2 audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-global-money-v2-capture
+          path: |
+            audit/global-money-v2-headline.json
+            research/global-money-v2/latest/
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Commit verified candidate archive only when changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain -- research/global-money-v2/latest)" ]; then
+            echo 'No Global Money v2 candidate change; no commit needed.'
+            exit 0
+          fi
+          git config user.name 'gmli-refresh-bot'
+          git config user.email 'gmli-refresh-bot@users.noreply.github.com'
+          git add research/global-money-v2/latest
+          git commit -m 'Capture GMLI Global Money v2 candidate'
+          git push origin HEAD:main
