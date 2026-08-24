@@ -104,7 +104,7 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 ## Execution order
 
 ### Phase 1 — Freshness infrastructure
-- [ ] Add canonical Data Health block
+- [x] Add canonical Data Health block
 - [ ] Validate/add China scheduled ingestion
 - [ ] Add Funding/Credit/Fiscal scheduled refresh
 - [ ] Add explicit freshness labels and last-good status
@@ -125,8 +125,31 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 - [ ] CI checks for date regression and stale critical data
 - [ ] Failure preserves last verified data
 - [ ] Audit artifacts retained
-- [ ] Deploy to existing `gmli-fred-dashboard`
-- [ ] Smoke-test `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision`
+- [x] Deploy initial Data Health slice to existing `gmli-fred-dashboard`
+- [x] Smoke-test `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision` for initial Data Health slice
+
+## Progress log
+
+### 2026-08-24 — Data Health slice complete
+
+- `/api/report` upgraded to `gmli-report-v1.2` with canonical `data_health`.
+- Production correctly reports `DEGRADED_CORE_STALE` and identifies validated Money Core 2026-02-28 as the oldest decision-critical input.
+- Freshness policy is FRESH <=35 days, AGING 36-60 days, STALE >60 days.
+- Frozen Money scores and methodology were unchanged.
+- CI/frozen Core guards passed and production smoke tests returned HTTP 200.
+
+### 2026-08-24 — China ingestion research
+
+- Official PBoC M2 indicator and monthly Financial Statistics Report publication path were confirmed.
+- A stable machine-readable value endpoint has not yet been validated.
+- Decision: keep China on last-verified fallback rather than introduce brittle chart scraping.
+
+### 2026-08-24 — Prospective promotion plumbing started
+
+- Added a fail-closed prospective source manifest.
+- Added a raw-input capture runner that preserves exact bytes, SHA-256, retrieval provenance, manifest hash, runner hash and frozen-state hash.
+- Capture refuses to run as promotion-ready while any required source remains unresolved and never modifies `lib/state.js`.
+- Source validation is intentionally separate from capture; unresolved China, exact BoJ/BoE/BoC paths and the adjusted-price mirror remain blockers before the first complete prospective vintage can be frozen.
 
 ## Definition of done
 
