@@ -50,6 +50,12 @@ jobs:
           grep -q '"2018-12"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"2021-12"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"2026-07"' /tmp/gmli-pboc-v2-validation.json
+      - name: Discover lockable PBoC 2015 growth URLs
+        shell: bash
+        run: |
+          python scripts/discover-pboc-2015-growth-urls.py | tee /tmp/gmli-pboc-2015-urls.json
+          grep -q '"status": "PASS_LOCKABLE_2015_PBOC_GROWTH_URLS"' /tmp/gmli-pboc-2015-urls.json
+          grep -q '"count": 12' /tmp/gmli-pboc-2015-urls.json
       - name: Build and validate PBoC comparable-base seed
         shell: bash
         run: |
