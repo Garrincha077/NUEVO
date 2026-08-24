@@ -35,6 +35,12 @@ function assertClose(a, b, label) {
   }
 }
 
+function assertRoundedScore(a, b, label) {
+  if (a == null || b == null || Number(a.toFixed(1)) !== Number(b.toFixed(1))) {
+    throw new Error(`Pages ${label} history/report mismatch after 1dp report rounding: ${a} vs ${b}`);
+  }
+}
+
 async function main() {
   await fs.rm(OUT, { recursive: true, force: true });
   await fs.mkdir(API_OUT, { recursive: true });
@@ -62,8 +68,8 @@ async function main() {
   }
   assertClose(latest.usd_yoy_pct, core.usd_yoy_pct, 'USD YoY');
   assertClose(latest.fx_neutral_yoy_pct, core.fx_neutral_yoy_pct, 'FX-neutral YoY');
-  assertClose(latest.usd_score, core.usd_score, 'USD score');
-  assertClose(latest.fx_neutral_score, core.fx_neutral_score, 'FX-neutral score');
+  assertRoundedScore(latest.usd_score, core.usd_score, 'USD score');
+  assertRoundedScore(latest.fx_neutral_score, core.fx_neutral_score, 'FX-neutral score');
 
   await fs.writeFile(path.join(API_OUT, 'report.json'), JSON.stringify(report, null, 2) + '\n');
   await fs.writeFile(path.join(API_OUT, 'radar.json'), JSON.stringify(radar, null, 2) + '\n');
