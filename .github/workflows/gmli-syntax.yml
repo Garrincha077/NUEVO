@@ -40,7 +40,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          python scripts/build-pboc-m2-official-v2.py --validate-only > /tmp/gmli-pboc-v2-validation.json
+          python scripts/run-pboc-m2-official-v2.py --validate-only > /tmp/gmli-pboc-v2-validation.json
           code=$?
           set -e
           cat /tmp/gmli-pboc-v2-validation.json
