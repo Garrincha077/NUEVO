@@ -38,16 +38,16 @@ Success condition: a newer formally validated CORE vintage with preserved, repro
 
 ### P0 — Money nowcast 4/4 automated
 
-US, euro area and Japan already use scheduled official-source refresh. The China parser now has a CI-validated official PBoC Financial Statistics Report path; production activation and scheduled smoke verification remain before this item is complete.
+US, euro area, Japan and China now use scheduled validated official-source refresh with last-good preservation. China uses the official central PBoC monthly Financial Statistics Report and preserves source hashes in the audit/snapshot.
 
 Tasks:
 
-- Validate a stable PBoC source/ingestion path. **CI PASS 2026-08-24.**
-- Add `refresh_china()` with date regression checks, YoY sanity checks and last-good preservation. **Implemented; production activation pending.**
-- Include China in refresh audit output. **Implemented; production activation pending.**
-- Keep request-time live parsing disabled; scheduled verified snapshots remain the intended path.
+- Validate a stable PBoC source/ingestion path. **DONE 2026-08-24.**
+- Add `refresh_china()` with date regression checks, YoY sanity checks and last-good preservation. **DONE 2026-08-24.**
+- Include China in refresh audit output. **DONE 2026-08-24.**
+- Keep request-time live parsing disabled; scheduled verified snapshots remain the intended path. **DONE.**
 
-Success condition: US/EA/JP/CN refresh automatically with auditable last-good fallback.
+Success condition: US/EA/JP/CN refresh automatically with auditable last-good fallback. **MET.**
 
 ### P1 — Funding / Credit / Fiscal refresh
 
@@ -105,7 +105,7 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 
 ### Phase 1 — Freshness infrastructure
 - [x] Add canonical Data Health block
-- [ ] Validate/add China scheduled ingestion — code + CI complete; production scheduled run pending
+- [x] Validate/add China scheduled ingestion
 - [ ] Add Funding/Credit/Fiscal scheduled refresh
 - [ ] Add explicit freshness labels and last-good status
 
@@ -128,6 +128,7 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 - [ ] Audit artifacts retained
 - [x] Deploy initial Data Health slice to existing `gmli-fred-dashboard`
 - [x] Smoke-test `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision` for initial Data Health slice
+- [x] Smoke-test PBoC scheduled refresh and resulting production deployment
 
 ## Progress log
 
@@ -138,12 +139,6 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 - Freshness policy is FRESH <=35 days, AGING 36-60 days, STALE >60 days.
 - Frozen Money scores and methodology were unchanged.
 - CI/frozen Core guards passed and production smoke tests returned HTTP 200.
-
-### 2026-08-24 — China ingestion research
-
-- Official PBoC M2 indicator and monthly Financial Statistics Report publication path were confirmed.
-- The public indicator chart itself remains unsuitable as a source because its value layer is not a stable machine-readable contract.
-- Decision: use the official Financial Statistics Report path for scheduled RESEARCH nowcast only after source discovery and parsing pass CI; do not infer values from the chart.
 
 ### 2026-08-24 — Prospective promotion plumbing started
 
@@ -156,37 +151,39 @@ Defer HYG, BTC, VNQ/VEA and other new asset-specific models until freshness and 
 
 - Added a read-only source validation runner and gated the new paths in CI.
 - GitHub Actions fetched all three official sources successfully with HTTP 200 and provider-native series markers:
-  - BoJ M2 level `MD02'MAM1NAM2M2MO`: 16,550 bytes, `text/csv; charset=utf-8`.
-  - BoE M4 `LPMAUYN`: 4,206 bytes, `application/csv`.
-  - BoC seasonally adjusted gross M2 `V41552796`: 3,529 bytes, `text/csv; charset=UTF-8`.
+  - BoJ M2 level `MD02'MAM1NAM2M2MO`.
+  - BoE M4 `LPMAUYN`.
+  - BoC seasonally adjusted gross M2 `V41552796`.
 - Prospective source manifest now has explicit validated fetch paths for US, EA, JP, GB, CA and both AU inputs.
 - Frozen Core values remain unchanged.
 
 ### 2026-08-24 — Exact-ticker market raw-source contract validated
 
 - v1.2 documentation reconfirmed the frozen exact-ticker set: SPY, QQQ, GLD, DBC, IEF, TLT and BIL.
-- Prospective capture now supports multipart raw sources with independent bytes and SHA-256 for every part.
-- Six Yahoo/yfinance tickers use max-history monthly Chart API responses with adjusted close present; BIL retains the v1.2 Digrin adjusted-price provenance rather than silently switching providers.
-- GitHub Actions live-fetched all seven parts successfully with HTTP 200. Aggregate raw market payload was about 323 KB in validation.
+- Prospective capture supports multipart raw sources with independent bytes and SHA-256 for every part.
+- Six Yahoo/yfinance tickers use max-history monthly Chart API responses with adjusted close present; BIL retains the v1.2 Digrin adjusted-price provenance.
+- GitHub Actions live-fetched all seven parts successfully with HTTP 200.
 - The future transform contract is recorded but not executed by raw capture: 2015-01+, monthly adjusted price, local mirror rounded to 2 decimals.
 - `ASSET_ADJUSTED_PRICE_MIRROR` is no longer unresolved. The prospective Core capture still fails closed on `CN_M2`.
 - Frozen Core values and all frozen Money methodology parameters remain unchanged.
 
-### 2026-08-24 — Official PBoC RESEARCH nowcast parser validated in CI
+### 2026-08-24 — Official PBoC RESEARCH nowcast production complete
 
 - Initial unfiltered PBoC search attempt failed closed, proving the gate works.
 - Discovery was corrected to the PBoC filtered-search contract (`dr=true`, relevance sort) rather than weakening validation.
-- CI then passed official central-PBoC report discovery and extraction of report month, M2 balance, M2 YoY and raw-source SHA-256 provenance.
-- `--validate-china-only` performs the live source check without modifying state.
-- Scheduled `refresh_china()` retains date-regression, YoY sanity and last-good preservation guards.
-- This does **not** promote or resolve the prospective Core China source: `CN_M2` remains intentionally unresolved until its frozen stitched-level semantics are reproduced and preserved.
+- CI passed official central-PBoC report discovery and extraction of report month, M2 balance, M2 YoY and raw-source SHA-256 provenance.
+- PR #5 merged to `main` after all source and frozen Core guards passed.
+- The write-capable scheduled refresh ran automatically after merge and committed a verified snapshot at 2026-08-24T08:29:10Z.
+- China production snapshot: 2026-07, M2 balance 355.51tn CNY, YoY 7.7%, source = official PBoC Financial Statistics Report, with article/search SHA-256 preserved.
+- Vercel deployed the refresh commit to production and `/api/status`, `/api/report`, `/api/money-nowcast`, `/api/decision` all returned HTTP 200.
+- This resolves the RESEARCH nowcast path only. Prospective Core `CN_M2` remains intentionally unresolved until frozen stitched-level semantics are reproduced and preserved.
 
 ## Definition of done
 
 GMLI is materially improved when:
 
 1. A newer Money vintage can be promoted prospectively with fully preserved inputs.
-2. Money nowcast is verified 4/4 without brittle request-time scraping.
+2. Money nowcast is verified 4/4 without brittle request-time scraping. **DONE.**
 3. Funding/credit/fiscal freshness is explicit and automated.
 4. Current market confirmation is separated from structural completed-month confirmation.
 5. `/api/report` makes stale decision-critical inputs impossible to miss.
