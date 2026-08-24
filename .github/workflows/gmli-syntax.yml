@@ -50,7 +50,7 @@ jobs:
           grep -q '"2018-12"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"2021-12"' /tmp/gmli-pboc-v2-validation.json
           grep -q '"2026-07"' /tmp/gmli-pboc-v2-validation.json
-      - name: Build and validate official PBoC 2014 extension
+      - name: Build and validate PBoC comparable-base seed
         shell: bash
         run: |
           set +e
@@ -59,11 +59,15 @@ jobs:
           set -e
           cat /tmp/gmli-pboc-v2-2014.json
           test "$code" -eq 0
-          grep -q '"status": "PASS_CONTINUOUS_OFFICIAL_V2_SOURCE"' /tmp/gmli-pboc-v2-2014.json
+          grep -q '"status": "PASS_CONTINUOUS_OFFICIAL_V2_SOURCE_WITH_COMPARABLE_BASE_SEED"' /tmp/gmli-pboc-v2-2014.json
           grep -q '"start_month": "2014-01"' /tmp/gmli-pboc-v2-2014.json
           grep -q '"missing_months": \[\]' /tmp/gmli-pboc-v2-2014.json
           grep -q '"core_modified": false' /tmp/gmli-pboc-v2-2014.json
-          grep -q '"historical_2014_extension"' /tmp/gmli-pboc-v2-2014.json
+          grep -q '"legacy_exact_rerun": false' /tmp/gmli-pboc-v2-2014.json
+          grep -q '"role": "ACCOUNTING_SEED_ONLY"' /tmp/gmli-pboc-v2-2014.json
+          grep -q '"observed_stock": false' /tmp/gmli-pboc-v2-2014.json
+          grep -q '"status": "PASS_OFFICIAL_COMPONENT_DERIVATION"' /tmp/gmli-pboc-v2-2014.json
+          grep -q '"historical_2014_extension": null' /tmp/gmli-pboc-v2-2014.json
       - name: Build Global Money v2 headline candidate
         shell: bash
         run: |
