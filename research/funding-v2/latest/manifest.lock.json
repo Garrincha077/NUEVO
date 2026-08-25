@@ -1,0 +1,95 @@
+{
+  "status": "PASS_ACTIVE_FUNDING_V2_REFRESH_GUARDS",
+  "version": "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS",
+  "candidate_version": "GMLI_FUNDING_V2_CANDIDATE_2",
+  "built_at": "2026-08-25T07:12:48Z",
+  "as_of": "2026-08-25",
+  "previous_available_date": "2026-07-31",
+  "latest_eligible": {
+    "observation_month": "2026-06",
+    "available_date": "2026-07-31",
+    "effective_score": 37.968440260099676,
+    "regime": "RESTRICTIVE",
+    "structural_support_score": 37.968440260099676,
+    "observed_conditions_score": 59.099496149440164,
+    "structural_support_z": -0.7218935843940193,
+    "observed_conditions_z": 0.5459697689664098,
+    "component_supportive_z": {
+      "ANFCI": 0.5459697689664098,
+      "DFII10": -1.4075411335077272,
+      "THREEFYTP10": -1.8362835506147819,
+      "WRESBAL_3M_PCT": -0.18971942241997763
+    },
+    "raw": {
+      "ANFCI": -0.56375,
+      "DFII10": 2.179047619047619,
+      "THREEFYTP10": 0.7529238095238096,
+      "WRESBAL_3M_PCT": -1.4208296383880215
+    }
+  },
+  "directional_gate_pass": true,
+  "frozen_usefulness_gate": "PASS_NARROW_FUNDING_USEFULNESS",
+  "promotion_lock": "PASS_FUNDING_V2_PRODUCTION_PROMOTION",
+  "money_core_modified": false,
+  "methodology_modified": false,
+  "sources": {
+    "ANFCI": {
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=ANFCI&cosd=2002-01-01&coed=2026-08-25",
+      "sha256": "e9bb2227704ea6224a9605ec9472f8a9c21f27c0cb3a68843b24601f8a0b90b5",
+      "bytes": 23008,
+      "first_observation": "2002-01-04",
+      "last_observation": "2026-08-14",
+      "last_value": -0.587
+    },
+    "DFII10": {
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFII10&cosd=2002-01-01&coed=2026-08-25",
+      "sha256": "b61ba38993d08f47b086ebd5cf268f15bc3b74627511edc1a41e6a3169e301d9",
+      "bytes": 98639,
+      "first_observation": "2003-01-02",
+      "last_observation": "2026-08-21",
+      "last_value": 2.4
+    },
+    "THREEFYTP10": {
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=THREEFYTP10&cosd=2002-01-01&coed=2026-08-25",
+      "sha256": "5f3e51d6b35176bf184cec44b6d02ebd4eff9b490155736d02e926cbb5eec956",
+      "bytes": 115243,
+      "first_observation": "2002-01-02",
+      "last_observation": "2026-08-14",
+      "last_value": 0.8393
+    },
+    "WRESBAL": {
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WRESBAL&cosd=2002-01-01&coed=2026-08-25",
+      "sha256": "b10e207ffbe19ae510fb4e8a7606710f8f417fe619ca7151752dc628f348d523",
+      "bytes": 22708,
+      "first_observation": "2002-12-18",
+      "last_observation": "2026-08-19",
+      "last_value": 2935287.0
+    }
+  },
+  "raw_archive": {
+    "ANFCI": {
+      "file": "raw/ANFCI.csv",
+      "sha256": "e9bb2227704ea6224a9605ec9472f8a9c21f27c0cb3a68843b24601f8a0b90b5",
+      "bytes": 23008
+    },
+    "THREEFYTP10": {
+      "file": "raw/THREEFYTP10.csv",
+      "sha256": "5f3e51d6b35176bf184cec44b6d02ebd4eff9b490155736d02e926cbb5eec956",
+      "bytes": 115243
+    },
+    "WRESBAL": {
+      "file": "raw/WRESBAL.csv",
+      "sha256": "b10e207ffbe19ae510fb4e8a7606710f8f417fe619ca7151752dc628f348d523",
+      "bytes": 22708
+    },
+    "DFII10": {
+      "file": "raw/DFII10.csv",
+      "sha256": "b61ba38993d08f47b086ebd5cf268f15bc3b74627511edc1a41e6a3169e301d9",
+      "bytes": 98639
+    }
+  },
+  "history_rows": 247,
+  "history_start": "2006-02",
+  "history_end": "2026-08",
+  "guardrail": "Funding V2 remains an OVERLAY and bounded conviction modifier; strongest validated transmission use is DBC 6M/12M."
+}
