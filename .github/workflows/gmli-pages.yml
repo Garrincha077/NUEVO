@@ -10,6 +10,7 @@ on:
       - 'scripts/build-pages-snapshot.mjs'
       - 'scripts/pages-money-ui.mjs'
       - 'scripts/pages-mobile-info.mjs'
+      - 'scripts/pages-signal-role-ui.mjs'
       - 'research/global-money-v2/latest/**'
       - 'research/fiscal-v2/latest/**'
       - '.github/workflows/gmli-pages.yml'
@@ -22,6 +23,7 @@ on:
       - 'scripts/build-pages-snapshot.mjs'
       - 'scripts/pages-money-ui.mjs'
       - 'scripts/pages-mobile-info.mjs'
+      - 'scripts/pages-signal-role-ui.mjs'
       - 'research/global-money-v2/latest/**'
       - 'research/fiscal-v2/latest/**'
       - '.github/workflows/gmli-pages.yml'
@@ -61,6 +63,7 @@ jobs:
           grep -q '"signal_role_scoring_effect": "NONE"' /tmp/gmli-pages.json
           grep -q '"fiscal_automatic_weight": 0' /tmp/gmli-pages.json
           grep -q '"report_schema": "gmli-report-v1.6"' /tmp/gmli-pages.json
+          grep -q '"pages_context_ui": true' /tmp/gmli-pages.json
           grep -q '2026-07-31' /tmp/gmli-pages.json
           grep -q '"history_rows"' /tmp/gmli-pages.json
           grep -q '"static_api_files": 9' /tmp/gmli-pages.json
@@ -74,6 +77,10 @@ jobs:
           grep -q '"automatic_global_conviction_weight": 0' .pages/api/status.json
           grep -q '"fiscal_v2_automatic_weight": 0' .pages/api/decision.json
           grep -q 'Global Money Trend' .pages/index.html
+          grep -q 'id="contextLayers"' .pages/index.html
+          grep -q 'FISCAL V2' .pages/index.html
+          grep -q 'SIGNAL ROLE CHAIN' .pages/index.html
+          grep -q 'CONTEXT</a>' .pages/index.html
           grep -q 'moneyScoreChart' .pages/index.html
           grep -q 'moneyYoyChart' .pages/index.html
           grep -q 'infoPopover' .pages/index.html
