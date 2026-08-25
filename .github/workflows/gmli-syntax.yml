@@ -138,7 +138,8 @@ jobs:
           grep -q "automation_status: 'ACTIVE_GUARDED_REFRESH'" lib/overlay-refresh-status.js
           grep -q "refreshable: true" lib/overlay-refresh-status.js
           grep -q "Funding V2 remains a bounded conviction overlay" lib/overlay-refresh-status.js
-          grep -q "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS" api/report.js
+          grep -q "funding_promotion_gate: FROZEN_STATE.funding.promotion_gate" api/report.js
+          grep -q "Funding V2 is the active promoted OVERLAY" api/report.js
           grep -q "Funding V2" lib/decision-engine.js
       - name: Verify legacy prospective capture still fails closed on old China contract
         shell: bash
