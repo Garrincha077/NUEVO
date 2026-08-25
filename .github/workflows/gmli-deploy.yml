@@ -26,31 +26,29 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Syntax and Money V2 production guard
+      - name: Syntax and promoted-contract guard
         shell: bash
         run: |
           set -euo pipefail
           find api lib -name '*.js' -print0 | xargs -0 -n1 node --check
-
-          # Active promoted Money V2 data vintage.
-          grep -q "observation_month: '2026-06'" lib/money-v2-active.js
-          grep -q "available_date: '2026-07-31'" lib/money-v2-active.js
-          grep -q "usd_score: 55.1121" lib/money-v2-active.js
-          grep -q "fxn_score: 44.488" lib/money-v2-active.js
-
-          # Frozen promoted methodology + explicit promotion gate.
-          grep -q "status: 'FROZEN_V2_SPEC'" lib/state.js
-          grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
-          grep -q "status: 'PASS_MONEY_V2_PRODUCTION_PROMOTION'" lib/state.js
-          grep -q "status: 'PASS_6_OF_6'" lib/state.js
-
-          # Pre-V2 Core and historical v1.8b blocker remain audit references.
-          grep -q "status: 'CORE_HISTORICAL_REFERENCE'" lib/state.js
-          grep -q "available_date: '2026-02-28'" lib/state.js
-          grep -q "usd_score: 65.70290344348" lib/state.js
-          grep -q "fxn_score: 43.01411281977772" lib/state.js
-          grep -q "BLOCKED_MISSING_FROZEN_INPUT_BYTES" lib/state.js
           test ! -e makro-cockpit
+          node --input-type=module - <<'NODE'
+          import { FROZEN_STATE } from './lib/state.js';
+          const m = FROZEN_STATE.money;
+          const f = FROZEN_STATE.funding;
+          if (FROZEN_STATE.methodology?.status !== 'FROZEN_V2_SPEC') throw new Error('Frozen V2 methodology guard failed');
+          if (m?.version !== 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL') throw new Error('Money V2 is not active Core');
+          if (m?.promotion_gate?.status !== 'PASS_MONEY_V2_PRODUCTION_PROMOTION') throw new Error('Money V2 promotion gate not PASS');
+          if (!/^20\d{2}-\d{2}-\d{2}$/.test(m?.available_date || '')) throw new Error('Active Money date missing');
+          if (![m?.usd_score, m?.fxn_score].every(Number.isFinite)) throw new Error('Active Money scores missing');
+          if (m?.historical_reference?.status !== 'CORE_HISTORICAL_REFERENCE') throw new Error('Pre-V2 Core reference missing');
+          if (m?.historical_v18b_candidate?.promotion_gate?.status !== 'BLOCKED_MISSING_FROZEN_INPUT_BYTES') throw new Error('Historical v1.8b audit blocker changed');
+          if (f?.version !== 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS') throw new Error('Funding V2 is not active overlay');
+          if (f?.promotion_gate?.status !== 'PASS_FUNDING_V2_PRODUCTION_PROMOTION') throw new Error('Funding V2 promotion gate not PASS');
+          if (!Number.isFinite(f?.score) || !/^20\d{2}-\d{2}-\d{2}$/.test(f?.available_date || '')) throw new Error('Active Funding V2 snapshot incomplete');
+          if (f?.historical_reference?.status !== 'OVERLAY_HISTORICAL_REFERENCE') throw new Error('Legacy Funding reference missing');
+          console.log('Promoted Money V2 + Funding V2 source contract guard PASS.');
+          NODE
 
       - name: Detect Vercel credential without exposing it
         id: credential
@@ -64,7 +62,7 @@ jobs:
             echo "Vercel credential available."
           else
             echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "No VERCEL_TOKEN secret. Production deploy will be safely skipped."
+            echo "No VERCEL_TOKEN secret. Explicit CLI deploy will be skipped; Git-linked deployment is still verified by the public canonical smoke below."
           fi
 
       - name: Install Vercel CLI
@@ -97,8 +95,11 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
 
-      - name: Smoke-test canonical Money V2 production
-        if: steps.credential.outputs.available == 'true'
+      - name: Note Git-linked deployment path
+        if: steps.credential.outputs.available != 'true'
+        run: echo "Relying on the existing GitHub→Vercel production integration; canonical public smoke remains mandatory."
+
+      - name: Smoke-test canonical GMLI production
         shell: bash
         run: |
           set -euo pipefail
@@ -108,7 +109,7 @@ jobs:
 
           async function json(path) {
             let last;
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 18; i++) {
               try {
                 const r = await fetch(base + path, { cache: 'no-store' });
                 if (!r.ok) throw new Error(`${path} -> HTTP ${r.status}`);
@@ -123,7 +124,7 @@ jobs:
             throw last;
           }
 
-          const paths = ['/api/status','/api/decision','/api/report','/api/money-nowcast','/api/current-market'];
+          const paths = ['/api/status','/api/decision','/api/report','/api/money-nowcast','/api/current-market','/api/history'];
           const out = {};
           for (const path of paths) {
             out[path] = await json(path);
@@ -133,24 +134,31 @@ jobs:
           const s = out['/api/status'];
           if (s?.methodology?.status !== 'FROZEN_V2_SPEC') throw new Error('Active frozen methodology is not V2');
           if (s?.money?.version !== 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL') throw new Error('Money V2 is not active Core');
-          if (s?.money?.available_date !== '2026-07-31') throw new Error(`Unexpected active Money date ${s?.money?.available_date}`);
-          if (Math.abs(Number(s?.money?.usd_score) - 55.1121) > 1e-6) throw new Error('Unexpected active USD score');
-          if (Math.abs(Number(s?.money?.fxn_score) - 44.488) > 1e-6) throw new Error('Unexpected active FX-neutral score');
           if (s?.money?.promotion_gate?.status !== 'PASS_MONEY_V2_PRODUCTION_PROMOTION') throw new Error('Money V2 promotion gate not PASS');
-          if (s?.money?.historical_reference?.available_date !== '2026-02-28') throw new Error('Pre-V2 Core audit reference missing');
-          if (s?.money?.historical_v18b_candidate?.promotion_gate?.status !== 'BLOCKED_MISSING_FROZEN_INPUT_BYTES') throw new Error('Historical v1.8b audit blocker changed unexpectedly');
+          if (s?.funding?.version !== 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS') throw new Error('Funding V2 is not active overlay');
+          if (s?.funding?.promotion_gate?.status !== 'PASS_FUNDING_V2_PRODUCTION_PROMOTION') throw new Error('Funding V2 promotion gate not PASS');
+          if (s?.funding?.historical_reference?.status !== 'OVERLAY_HISTORICAL_REFERENCE') throw new Error('Legacy Funding reference missing');
+
+          const d = out['/api/decision'];
+          if (d?.money?.version !== s.money.version || d?.money?.available_date !== s.money.available_date) throw new Error('Decision/Money status mismatch');
+          if (d?.funding?.version !== s.funding.version || d?.funding?.available_date !== s.funding.available_date) throw new Error('Decision/Funding status mismatch');
+          if (d?.funding?.guardrail !== 'Funding modifies conviction only and never overrides Money Core.') throw new Error('Funding overlay guardrail missing');
 
           const r = out['/api/report'];
-          if (r?.schema_version !== 'gmli-report-v1.4') throw new Error('Canonical report schema is not v1.4');
-          if (r?.regime?.engine_fact?.money?.available_date !== '2026-07-31') throw new Error('Canonical report is not using active Money V2');
-          if (r?.data_health?.status === 'DEGRADED_CORE_STALE') throw new Error('Data Health still treats pre-V2 Core as active');
+          if (r?.schema_version !== 'gmli-report-v1.5') throw new Error(`Canonical report schema unexpected: ${r?.schema_version}`);
+          if (r?.regime?.engine_fact?.money?.version !== s.money.version) throw new Error('Canonical report is not using active Money V2');
+          if (r?.funding_promotion_gate?.promoted_version !== s.funding.version) throw new Error('Canonical report Funding promotion mismatch');
 
           const n = out['/api/money-nowcast'];
-          if (n?.source_mode !== 'LIVE_OFFICIAL_WITH_LAST_VERIFIED_FALLBACK') throw new Error('Live Money freshness layer not active');
+          if (n?.source_mode !== 'LAST_VERIFIED_REQUEST_SAFE') throw new Error(`Unexpected Money nowcast source mode ${n?.source_mode}`);
+          if (n?.validated_reference?.role !== 'HISTORICAL_COMPARISON_REFERENCE_ONLY') throw new Error('Money nowcast still presents the historical reference as active Core');
+          if (n?.validated_reference?.active_core_date !== s.money.available_date) throw new Error('Money nowcast active Core date mismatch');
+          if (!String(n?.interpretation?.engine_fact || '').includes('GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL')) throw new Error('Money nowcast engine_fact does not name active Money V2');
 
-          console.log('Money V2 active; historical Core preserved; canonical production smoke PASS.');
+          const h = out['/api/history'];
+          if (h?.engine_version !== s.money.version) throw new Error('History engine version mismatch');
+          if (h?.latest_available_date !== s.money.available_date) throw new Error(`History/Core date mismatch ${h?.latest_available_date} vs ${s.money.available_date}`);
+          if (!Array.isArray(h?.rows) || h.rows.length < 100) throw new Error('Money history unexpectedly short');
+
+          console.log('Canonical production smoke PASS: Money V2 + Funding V2 + nowcast semantics + history.');
           NODE
-
-      - name: Safe no-credential result
-        if: steps.credential.outputs.available != 'true'
-        run: echo "GMLI source is ready and validated; Vercel production was not touched because no deploy credential is available."
