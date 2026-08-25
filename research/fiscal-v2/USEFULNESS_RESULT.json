@@ -1,0 +1,62 @@
+{
+  "decision": "PASS_NARROW_FISCAL_USEFULNESS",
+  "gate_version": "GMLI_FISCAL_V2_USEFULNESS_GATE_V1",
+  "candidate_version": "GMLI_FISCAL_V2_CANDIDATE_1",
+  "evidence_tier": "RESEARCH",
+  "as_of": "2026-08-25",
+  "workflow_run_id": 32827643623,
+  "workflow_artifact_id": 9555498880,
+  "workflow_artifact_sha256": "71adc28797c001c2bec19b69d52d9aa4e19b35dfead674cacb2df190a896dc1d",
+  "primary_results": [
+    {
+      "id": "SPY_FISCAL_V2_12M",
+      "asset": "SPY",
+      "horizon_m": 12,
+      "effective_lag_m": 2,
+      "train": {
+        "n": 62,
+        "pearson_r": 0.306755,
+        "spearman_rho": 0.301918
+      },
+      "oos": {
+        "n": 30,
+        "pearson_r": 0.446855,
+        "spearman_rho": 0.486096
+      },
+      "direction_pass": true
+    }
+  ],
+  "secondary_diagnostics_not_in_gate": [
+    {
+      "id": "QQQ_FISCAL_V2_12M",
+      "train_pearson_r": 0.128531,
+      "oos_pearson_r": 0.275142,
+      "oos_spearman_rho": 0.366852,
+      "direction_pass": true
+    },
+    {
+      "id": "DBC_FISCAL_V2_12M",
+      "train_pearson_r": 0.522353,
+      "oos_pearson_r": 0.026881,
+      "oos_spearman_rho": 0.123471,
+      "direction_pass": true,
+      "interpretation": "Positive direction but economically weak OOS diagnostic; not a promotion claim."
+    }
+  ],
+  "primary_passed": 1,
+  "primary_total": 1,
+  "promotion_allowed": false,
+  "next_gate": "PRODUCTION_READINESS_REVIEW",
+  "production_modified": false,
+  "money_core_modified": false,
+  "funding_v2_modified": false,
+  "no_search": {
+    "asset_search": false,
+    "horizon_search": false,
+    "lag_search": false,
+    "parameter_search": false,
+    "threshold_search": false,
+    "subperiod_search": false,
+    "fdr_claim": false
+  }
+}

@@ -1,4 +1,4 @@
-# GMLI Analyst Skill v2.3
+# GMLI Analyst Skill v2.5
 
 ## Primary calls
 Standard regime analysis:
@@ -14,27 +14,93 @@ Contrarian / long-short / early-trend analysis:
 If Vercel is unavailable/stale, use the verified GitHub Pages snapshot. GitHub repository is source-of-truth for methodology, contracts, research and promotion evidence.
 
 ## Decision hierarchy
-Money Core → Asset Transmission → Funding modifier → Market Confirmation → Strategic Opportunity/Radar → Copilot Research View → Allocation implication.
+Money Core **[LEADING]** → Asset Transmission → Funding **[REACTIVE_CONFIRMATION]** → Fiscal **[MIXED]** → Market Confirmation **[REACTIVE_CONFIRMATION]** → Strategic Opportunity/Radar → Copilot Research View → Allocation implication.
 
-Money defines the baseline regime. Funding and market data modify conviction; they do not silently overwrite Money.
+Money defines the baseline regime. Funding modifies conviction under the frozen rubric but is primarily a current financial-conditions confirmation layer, not a clean equity-leading predictor. Fiscal V2 is a MIXED OVERLAY confirmation layer with zero automatic global-conviction weight. Market data confirm/diverge; no overlay silently overwrites Money.
+
+Canonical role standard:
+`docs/GMLI_SIGNAL_ROLE_TAXONOMY_V1.md`
+
+Role semantics:
+- **LEADING** = upstream/forward-oriented evidence; not structural causality or guaranteed monthly timing.
+- **REACTIVE_CONFIRMATION** = current-state/friction/price confirmation; can matter for conviction without being an independent leading forecast.
+- **MIXED** = useful forward association exists, but temporal direction is regime-dependent/control-sensitive or ambiguous.
+
+Role taxonomy is interpretation-only. It does not change CORE/OVERLAY/RESEARCH evidence tiers, scores or the frozen 10-point conviction rubric.
 
 ## Current promoted production layers
 ### Money Core
 Active Core:
 `GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL`
 
+Signal role: **LEADING**.
+
 Do not hardcode live score/vintage in analysis. Read the current `/api/report` because promoted data can refresh within the frozen V2 contract.
+
+Role evidence summary:
+- promoted fixed Money transmission remains 6/6;
+- no robust market→Money dominance across stationary promoted transforms in the fixed role test;
+- SPY Money accel3 forward 12M correlation materially exceeds trailing correlation;
+- QQQ shows the same broad asymmetry and a fixed ex-pandemic 3M Money→QQQ precedence result;
+- do not generalize this into a structural causality claim or universal short-horizon timing claim.
 
 ### Funding
 Active OVERLAY:
 `GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS`
+
+Signal role: **REACTIVE_CONFIRMATION**.
 
 Rules:
 - bounded conviction modifier
 - never Core override
 - guarded/reproducible refresh
 - strongest fixed promoted empirical asset-use: DBC 6M and DBC 12M
-- not a universal equity-return signal.
+- not a universal equity-return signal
+- do not describe Funding as a clean equity-leading signal.
+
+Reverse-mechanism research found robust SPY/QQQ→Funding precedence and no comparable Funding→equity precedence in the fixed 1/3/6M family. VIX absorbs most incremental SPY information, consistent with a shared financial-stress channel. This strengthens the interpretation of Funding as current conditions/friction confirmation.
+
+Funding and completed-month Market Confirmation are both reactive but not materially redundant in the fixed overlap diagnostic: Funding rubric vs market score Pearson +0.128, Spearman +0.087, exact 0–2 agreement ~23% over 222 aligned months. Do not change weights from this result; any de-duplication/reweighting requires a versioned decision-engine candidate.
+
+### Fiscal
+Active OVERLAY:
+`GMLI_FISCAL_V2_DEFICIT_IMPULSE`
+
+Signal role: **MIXED**.
+
+Construction:
+- TTM federal deficit / nominal GDP
+- 12M change in deficit/GDP
+- equal 50/50 rolling-z combination
+- 120M window, 24M minimum, ddof=0, component clip ±3
+- score `<40 RESTRICTIVE`, `40–60 NEUTRAL`, `>60 SUPPORTIVE`.
+
+Use rules:
+- fixed primary usefulness gate is SPY 12M only;
+- gate passed train Pearson > 0, OOS Pearson > 0 and OOS Spearman > 0;
+- QQQ/DBC diagnostics are not promotion claims;
+- no universal return claim;
+- `automatic_global_conviction_weight = 0`;
+- do not add Fiscal points to the current 10-point rubric;
+- any automatic Fiscal weighting requires a separately frozen decision-engine candidate.
+
+Role interpretation:
+- fixed SPY 12M forward usefulness remains valid;
+- full-sample reverse SPY→Fiscal precedence appears at 3M but disappears ex-pandemic and under VIX + unemployment controls;
+- therefore Fiscal is policy/context confirmation with some forward information, not a clean leading layer.
+
+Historical caveat:
+- revised FRED history + conservative publication lags is valid for the versioned V2 research contract;
+- it is not exact historical release-time data;
+- July-2026 legacy `STRICT_ACTUAL_RELEASE` Fiscal remains historical reference because exact old runner/vintages were not recovered.
+
+Promotion report:
+`research/fiscal-v2/GMLI_FISCAL_V2_PROMOTION_REPORT.md`
+
+### Market Confirmation
+Signal role: **REACTIVE_CONFIRMATION**.
+
+Completed-month price turn confirms/diverges from the upstream Money thesis. It does not create the macro regime and should be described as confirmation evidence, not as an independent macro leading factor.
 
 ### Funding-equity contrarian side finding
 Evidence tier: RESEARCH only.
@@ -57,22 +123,12 @@ CORE transmission relationships:
 
 Other assets remain RESEARCH/proxy unless separately promoted.
 
-## Fiscal next-phase rule
-Fiscal is the next active development priority and remains an OVERLAY.
+## Next-phase rule
+Money, Money nowcast, Funding V2 and Fiscal V2 have promoted guarded paths, and Signal Role Taxonomy v1 now separates leading from confirmation functions without changing scoring. Preserve those contracts before adding breadth.
 
-When working on Fiscal:
-1. inspect current production Fiscal state and prospective raw archive;
-2. attempt strict-actual-release legacy reproduction only if it can be done without guesswork;
-3. do not treat current revised FRED history as exact historical release-time data;
-4. if legacy reproduction is not realistically recoverable, build an explicit versioned Fiscal V2 candidate;
-5. freeze sources/transforms/publication lag/scoring before testing;
-6. run only a narrow usefulness/regression gate, no broad parameter/horizon search;
-7. automate refresh only after promotion guards pass.
+Credit/Velocity remains `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Do not infer the old formula. Build a new version only if there is a material decision gap, and freeze construction + usefulness gate before empirical testing.
 
-Detailed handoff:
-`docs/FISCAL_HANDOFF_2026-08-25.md`
-
-Credit/Velocity and broad secondary-asset research stay deferred unless explicitly requested or Fiscal exposes a material decision gap.
+Broad secondary-asset research remains deferred unless explicitly requested or its incremental allocation value is clear.
 
 ## Opportunity semantics
 - Strategic Eligibility dominates Entry Quality.
@@ -120,17 +176,19 @@ Use the engine's transparent 0–10 rubric:
 - Funding confirmation 0–2
 - market confirmation 0–2
 
-Radar asymmetry is separate from regime conviction.
+Fiscal V2 is currently outside this numeric rubric (`automatic_global_conviction_weight = 0`) and should be reported as OVERLAY confirmation context. Radar asymmetry is also separate from regime conviction.
+
+Signal roles are descriptive labels only. Do not add/subtract points merely because a layer is LEADING, REACTIVE_CONFIRMATION or MIXED.
 
 ## Default standard response
 ### GMLI NOW
-Regime, conviction, Money, Funding, market confirmation, freshness.
+Regime, conviction, Money [LEADING], Funding [REACTIVE_CONFIRMATION], Fiscal [MIXED], Market Confirmation [REACTIVE_CONFIRMATION], freshness.
 
 ### ASSET BIAS
 Strongest, Positive, Neutral, Defensive/Avoid.
 
 ### ZAŠTO
-3–5 decision-critical reasons.
+3–5 decision-critical reasons. Explicitly separate upstream/leading evidence from confirmation/divergence evidence.
 
 ### ŠTO BI PROMIJENILO MIŠLJENJE
 2–3 concrete triggers.

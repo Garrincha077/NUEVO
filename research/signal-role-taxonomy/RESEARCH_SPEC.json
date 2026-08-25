@@ -1,0 +1,68 @@
+{
+  "study_version": "GMLI_SIGNAL_ROLE_TAXONOMY_V1",
+  "status": "FROZEN_BEFORE_MONEY_DIRECTION_TEST",
+  "evidence_tier": "RESEARCH",
+  "purpose": "Separate upstream/leading signals from reactive/confirmation signals without changing any production score, weight, threshold or promotion status.",
+  "roles": {
+    "LEADING": "Has predeclared forward transmission/usefulness evidence and does not show robust market-to-signal dominance under the fixed directional diagnostics.",
+    "REACTIVE_CONFIRMATION": "Market-to-signal predictive precedence is robust while signal-to-market precedence is absent or materially weaker; use primarily as conditions/confirmation context.",
+    "MIXED": "Forward usefulness exists but temporal direction is bidirectional, regime-dependent, control-sensitive or otherwise ambiguous.",
+    "UNRESOLVED": "Evidence is insufficient to classify without adding new research degrees of freedom."
+  },
+  "fixed_layers": [
+    {
+      "id": "MONEY_CORE",
+      "version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
+      "direction_test_required": true,
+      "fixed_relations": [
+        {"asset":"SPY","channel":"usd","transform":"accel3","promoted_horizon_months":12},
+        {"asset":"QQQ","channel":"usd","transform":"accel3","promoted_horizon_months":12},
+        {"asset":"GLD","channel":"fxn","transform":"accel3","promoted_horizon_months":12},
+        {"asset":"DBC","channel":"usd","transform":"level","promoted_horizon_months":12}
+      ]
+    },
+    {
+      "id": "FUNDING_V2",
+      "version": "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS",
+      "direction_test_required": false,
+      "evidence_source": "research/reverse-overlay-mechanism/RESULT.json"
+    },
+    {
+      "id": "FISCAL_V2",
+      "version": "GMLI_FISCAL_V2_DEFICIT_IMPULSE",
+      "direction_test_required": false,
+      "evidence_source": "research/fiscal-v2/CAUSALITY_RESEARCH_RESULT.json plus reverse-overlay follow-up"
+    },
+    {
+      "id": "MARKET_CONFIRMATION",
+      "direction_test_required": false,
+      "preassigned_role": "REACTIVE_CONFIRMATION",
+      "reason": "It is contemporaneous/price confirmation by construction, not an upstream macro predictor."
+    }
+  ],
+  "money_direction_protocol": {
+    "signal_availability": "Money observation month t is investable only from t+1, matching the promoted transmission contract.",
+    "monthly_directional_test": "Bidirectional Granger predictive-precedence on stationary signal transform versus exact-ticker monthly adjusted log return.",
+    "lags_months": [1,3,6],
+    "multiple_testing": "Holm correction within each asset and direction across the three fixed lags.",
+    "lead_lag_check": "Compare promoted predictor association with forward 12M return versus trailing 12M return using the same available signal months.",
+    "subsample_check": "Repeat the fixed 3M directional test excluding 2020-03 through 2021-12; no additional subperiod search.",
+    "classification_rule": "Money is LEADING if its already-promoted forward transmission remains intact and no majority of fixed assets shows robust market-to-Money dominance after Holm and the fixed ex-pandemic check. If market-to-Money dominance is broad/robust, classify MIXED rather than rewriting Core."
+  },
+  "no_search": {
+    "asset_search": false,
+    "transform_search": false,
+    "lag_search": false,
+    "horizon_search": false,
+    "threshold_search": false,
+    "subperiod_search": false,
+    "weight_search": false
+  },
+  "production_modified": false,
+  "automatic_weight_change": 0,
+  "money_core_modified": false,
+  "funding_v2_modified": false,
+  "fiscal_v2_modified": false,
+  "decision_engine_modified": false,
+  "guardrail": "This taxonomy changes interpretation labels only. Any future scoring/weight change requires a separately frozen versioned decision-engine candidate."
+}

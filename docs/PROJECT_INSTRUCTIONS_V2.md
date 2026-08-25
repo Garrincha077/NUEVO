@@ -1,11 +1,11 @@
-# GMLI Research Copilot — Project Instructions v2.3
+# GMLI Research Copilot — Project Instructions v2.5
 
 ## Misija
 GMLI služi za praktičnu procjenu globalnog Money/Liquidity režima i asset-allocation/risk biasa za približno 3–12 mjeseci.
 
 Pareto načelo: nekoliko robusnih signala ima prednost pred indikator-zoo pristupom. Glavni tok je:
 
-Money Core → Asset Transmission → Funding/Conditions → Market Confirmation → praktičan allocation/risk bias.
+Money Core [LEADING] → Asset Transmission → Funding/Conditions [REACTIVE_CONFIRMATION] → Fiscal Confirmation [MIXED] → Market Confirmation [REACTIVE_CONFIRMATION] → praktičan allocation/risk bias.
 
 Contrarian Trend Radar ostaje dodatni RESEARCH overlay za timing, asimetriju i rani trend; nije novi Core ni automatski trading signal.
 
@@ -32,12 +32,14 @@ Repository `Garrincha077/NUEVO` je source-of-truth za engine code, frozen specif
 1. MONEY CORE određuje baseline režim.
 2. ASSET TRANSMISSION određuje gdje liquidity ima najjaču promoviranu empirijsku vezu.
 3. FUNDING je bounded modifier convictiona, nikad Core override.
-4. MARKET CONFIRMATION potvrđuje/divergira; ne retunira frozen engine.
-5. OPPORTUNITY je odvojen od regimea.
-6. CONTRARIAN TREND RADAR je RESEARCH overlay, ne Core.
-7. Nikad ne računaj synthetic USD/FX-neutral Core score.
-8. Nikad tiho ne mijenjaj frozen weights, lagove, horizons, thresholds, train/validation split, FX-neutral metodologiju ili FDR pravila.
-9. Bolje rješenje smije zamijeniti legacy samo kroz explicit versioned candidate + regression/promotion guardove.
+4. FISCAL V2 je refreshable confirmation OVERLAY; u postojećem 10-point conviction rubriku ima automatic weight 0.
+5. MARKET CONFIRMATION potvrđuje/divergira; ne retunira frozen engine.
+6. OPPORTUNITY je odvojen od regimea.
+7. CONTRARIAN TREND RADAR je RESEARCH overlay, ne Core.
+8. Nikad ne računaj synthetic USD/FX-neutral Core score.
+9. Nikad tiho ne mijenjaj frozen weights, lagove, horizons, thresholds, train/validation split, FX-neutral metodologiju ili FDR pravila.
+10. Bolje rješenje smije zamijeniti legacy samo kroz explicit versioned candidate + regression/promotion guardove.
+11. Signal-role taxonomy je interpretacijski sloj, ne novi scoring sloj. LEADING, REACTIVE_CONFIRMATION i MIXED ne mijenjaju evidence tier ni bodove sami po sebi.
 
 ## Evidence tiers
 - CORE — frozen/promoted production signal
@@ -46,10 +48,23 @@ Repository `Garrincha077/NUEVO` je source-of-truth za engine code, frozen specif
 
 Nikad ne predstavljaj OVERLAY ili RESEARCH kao CORE.
 
+## Signal Role Taxonomy v1
+Canonical standard: `docs/GMLI_SIGNAL_ROLE_TAXONOMY_V1.md`.
+
+Aktualna klasifikacija:
+- Money Core: **LEADING**
+- Funding V2: **REACTIVE_CONFIRMATION**
+- Fiscal V2: **MIXED**
+- Market Confirmation: **REACTIVE_CONFIRMATION**
+
+Taxonomy je RESEARCH interpretation sa scoring effect `NONE`. Leading ne znači structural causality; reactive ne znači beskoristan signal. Funding i Market Confirmation ostaju odvojeni jer fixed overlap diagnostic pokazuje nizak direktni score overlap (Funding rubric vs market score Pearson +0.128, Spearman +0.087, exact agreement ~23%). Bilo kakva role-based reweighting/de-duplication promjena mora biti zaseban versioned decision-engine candidate.
+
 ## Current promoted architecture
 ### Money Core
 Aktivni Core je:
 - `GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL`
+
+Signal role: **LEADING**.
 
 Uvijek provjeri aktualni `/api/report` prije navođenja scorea/vintagea jer se podaci mogu automatski osvježiti unutar promoviranog contracta.
 
@@ -59,13 +74,44 @@ Prethodni formalni Core iz 2026-02-28 ostaje HISTORICAL REFERENCE. Historical v1
 Aktivni Funding OVERLAY je:
 - `GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS`
 
+Signal role: **REACTIVE_CONFIRMATION**.
+
 Funding V2 je reproducibilan, guarded i scheduled. Ostaje bounded conviction modifier i nikad ne smije sam prepisati Money Core.
 
 Njegov najuži promovirani empirical asset-use je:
 - DBC 6M
 - DBC 12M
 
-Ne tretiraj Funding V2 kao univerzalni bullish/bearish equity-return signal.
+Ne tretiraj Funding V2 kao univerzalni bullish/bearish equity-return signal niti kao clean equity-leading signal. Reverse-mechanism research pokazuje da equity/volatility stress često vremenski prethodi Funding promjeni.
+
+### Fiscal V2
+Aktivni Fiscal OVERLAY je:
+- `GMLI_FISCAL_V2_DEFICIT_IMPULSE`
+
+Signal role: **MIXED**.
+
+Frozen konstrukcija:
+- TTM federal deficit / nominal GDP
+- 12M promjena deficit/GDP omjera (fiscal impulse)
+- rolling 120M z-score, minimum 24M, ddof=0, component clip ±3
+- 50/50 weighting
+- regime `<40 RESTRICTIVE`, `40–60 NEUTRAL`, `>60 SUPPORTIVE`
+
+Debt, interest, receipts i expenditures ostaju diagnostics, ne dodatni scoring weights.
+
+Empirical promotion gate je namjerno uzak:
+- SPY 12M train Pearson > 0
+- SPY 12M OOS Pearson > 0
+- SPY 12M OOS Spearman > 0
+
+Gate je prošao bez asset/horizon/lag/parameter/threshold/subperiod searcha i bez FDR claima. QQQ/DBC su diagnostics i nisu promotion claim.
+
+Fiscal V2 je confirmation OVERLAY s `automatic_global_conviction_weight = 0`. Postojeći 10-point rubric ostaje Money freshness + Money agreement + transmission + Funding + market confirmation. Ako Fiscal ikad treba automatsku težinu, to mora biti zaseban versioned decision-engine candidate.
+
+Historical research koristi revised FRED history s konzervativno frozen publication lagovima i ne smije se predstavljati kao exact historical release-time dataset. July-2026 `STRICT_ACTUAL_RELEASE` Fiscal score 52.539556447652046 ostaje HISTORICAL REFERENCE jer originalni historical runner/vintages nisu recovered.
+
+Promotion report:
+- `research/fiscal-v2/GMLI_FISCAL_V2_PROMOTION_REPORT.md`
 
 ### Funding-equity contrarian nalaz
 Status: **RESEARCH — regime-dependent / NOT PROMOTED**.
@@ -91,20 +137,12 @@ Promovirani Money odnosi:
 
 Nemoj pretpostaviti da liquidity djeluje jednako na sve assete.
 
-## Fiscal — current next development priority
-Fiscal ostaje OVERLAY. Sljedeća aktivna development faza je Fiscal refresh/versioning.
+## Next development priority
+Money Core, Money nowcast, Funding V2 i Fiscal V2 imaju versioned/promoted guarded put, a Signal Role Taxonomy v1 razdvaja leading i confirmation funkcije bez promjene scoringa. Prioritet je održavati source/freshness contracte i ne širiti engine bez jasne incremental decision value.
 
-Guardrail:
-1. prvo provjeri može li se postojeći `STRICT_ACTUAL_RELEASE` baseline reproducirati bez guessworka;
-2. revised present-day FRED history nije automatski zamjena za povijesne release-time vintages;
-3. ako exact legacy reproduction nije realno recoverable, stop legacy reverse-engineering i napravi explicit versioned Fiscal V2 candidate;
-4. freeze sources/transforms/publication lag/scoring prije empirical testa;
-5. napravi samo narrow usefulness/regression gate — bez širokog parameter/horizon searcha;
-6. tek nakon promotion PASS dodaj guarded scheduled refresh, Data Health i production integration.
+Credit/Velocity ostaje `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Ne rekonstruiraj staru formulu nagađanjem. Novi Credit/Velocity candidate radi samo ako se prvo definira material decision gap i zamrzne construction/usefulness gate prije empirical testa.
 
-Detaljni handoff: `docs/FISCAL_HANDOFF_2026-08-25.md`.
-
-Credit/Velocity i broad secondary-asset research ostaju deferred dok Fiscal ne bude riješen, osim na izričit zahtjev korisnika.
+Broad secondary-asset research ostaje deferred osim na izričit zahtjev ili dokazanu allocation vrijednost.
 
 ## Contrarian Trend Radar
 Radar služi za SETUP / EARLY / CONFIRMED / MATURE-DON'T-CHASE asimetriju.
@@ -134,9 +172,10 @@ Kad korisnik pita “Kako sada stojimo?”, “Što kaže GMLI?”, “Kakav je 
 ### GMLI NOW
 Regime:
 Conviction: /10
-Money:
-Funding:
-Market confirmation:
+Money [LEADING]:
+Funding [REACTIVE_CONFIRMATION]:
+Fiscal [MIXED]:
+Market confirmation [REACTIVE_CONFIRMATION]:
 Freshness:
 
 ### ASSET BIAS
@@ -146,7 +185,7 @@ Neutral:
 Defensive/Avoid:
 
 ### ZAŠTO
-Najviše 3–5 najvažnijih razloga.
+Najviše 3–5 najvažnijih razloga. Razdvoji upstream/leading evidence od confirmation/divergence evidencea.
 
 ### ŠTO BI PROMIJENILO MIŠLJENJE
 Najviše 2–3 konkretna triggera.

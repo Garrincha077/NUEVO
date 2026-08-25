@@ -1,0 +1,90 @@
+{
+  "status": "GMLI_SIGNAL_ROLE_TAXONOMY_V1_RECORDED",
+  "as_of": "2026-08-25",
+  "evidence_tier": "RESEARCH",
+  "production_scoring_change": false,
+  "automatic_weight_change": 0,
+  "roles": {
+    "money_core": {
+      "role": "LEADING",
+      "interpretation": "Upstream 3-12M liquidity/money regime signal. Leading means empirically forward-oriented relative to the other GMLI layers; it is not a structural-causality claim.",
+      "basis": {
+        "promoted_fixed_transmission_gate": "6/6 relationships retained under Money V2 transfer without retuning",
+        "directional_test_valid_stationary_assets": 3,
+        "market_to_money_reverse_dominance_assets": 0,
+        "money_to_market_precedence_assets": 1,
+        "SPY_forward_12m_pearson": 0.452471,
+        "SPY_trailing_12m_pearson": 0.014747,
+        "QQQ_forward_12m_pearson": 0.414301,
+        "QQQ_trailing_12m_pearson": 0.21637,
+        "GLD_forward_12m_pearson": 0.099651,
+        "GLD_trailing_12m_pearson": 0.403163,
+        "DBC_forward_12m_pearson": 0.589586,
+        "DBC_trailing_12m_pearson": 0.397018,
+        "DBC_granger_excluded": "USD Money level failed the fixed 5% ADF stationarity check (p=0.098466), so its Granger p-values are descriptive only."
+      },
+      "guardrail": "Do not interpret LEADING as proof of structural causality or as uniform short-horizon timing across every promoted asset."
+    },
+    "funding_v2": {
+      "role": "REACTIVE_CONFIRMATION",
+      "interpretation": "Current financial-conditions/friction overlay. Equity/volatility stress tends to precede changes in Funding; Funding is more useful for confirming how restrictive/supportive conditions are than as an independent equity-leading forecast.",
+      "basis": {
+        "full_market_to_funding_holm_significant": "6/6 SPY/QQQ x 1/3/6M",
+        "full_funding_to_market_holm_significant": "0/6",
+        "exclude_pandemic_market_to_funding_holm_significant": "6/6",
+        "exclude_pandemic_funding_to_market_holm_significant": "0/6",
+        "SPY_joint_lags_p_own_only": 0.001106,
+        "SPY_joint_lags_p_plus_VIX": 0.061445,
+        "SPY_joint_lags_p_plus_VIX_UNRATE": 0.052497,
+        "interpretation_of_controls": "VIX absorbs most incremental SPY information, consistent with a shared financial-stress channel."
+      },
+      "guardrail": "Funding remains a promoted bounded OVERLAY. Existing DBC 6M/12M usefulness is an association, not upgraded to a causal claim."
+    },
+    "fiscal_v2": {
+      "role": "MIXED",
+      "interpretation": "Fiscal has a positive fixed SPY 12M usefulness relationship but weak/regime-dependent temporal precedence and some reverse market-to-Fiscal evidence. Treat primarily as policy/confirmation context, not a clean leading factor.",
+      "basis": {
+        "fixed_SPY_12m_usefulness": "PASS",
+        "full_SPY_to_Fiscal_lag3_holm_p": 0.035562,
+        "exclude_pandemic_market_to_fiscal_significant_tests": 0,
+        "SPY_lags_with_VIX_UNRATE_p": 0.770931,
+        "SPY_forward_12m_pearson": 0.176287,
+        "SPY_trailing_12m_pearson": 0.34308
+      },
+      "guardrail": "Fiscal automatic global conviction weight remains 0."
+    },
+    "market_confirmation": {
+      "role": "REACTIVE_CONFIRMATION",
+      "interpretation": "Completed-month price turn is confirmation by construction; it validates or conflicts with the upstream Money regime rather than creating the macro regime."
+    }
+  },
+  "funding_market_confirmation_overlap": {
+    "conclusion": "LOW_DIRECT_SCORE_OVERLAP",
+    "n": 222,
+    "funding_raw_vs_market_score_pearson": 0.232399,
+    "funding_raw_vs_market_score_spearman": 0.079969,
+    "funding_rubric_vs_market_score_pearson": 0.128075,
+    "funding_rubric_vs_market_score_spearman": 0.086631,
+    "exact_0_2_score_agreement_rate": 0.22973,
+    "forward_SPY_12m_incremental_r2_adding_funding": 0.084856,
+    "funding_HAC_p_after_market_score": 0.316078,
+    "interpretation": "Funding and market confirmation are both reactive but are not the same state variable. Funding is dominated by financial-conditions/volatility channels; market confirmation is cross-asset price-trend confirmation. The overlap diagnostic does not justify changing the frozen 10-point rubric."
+  },
+  "practical_hierarchy": [
+    "Money Core [LEADING] sets the baseline 3-12M regime.",
+    "Asset Transmission maps that upstream Money signal to the few promoted asset relationships.",
+    "Funding V2 [REACTIVE_CONFIRMATION] describes current financial friction and adjusts confidence, not the baseline regime.",
+    "Fiscal V2 [MIXED] supplies policy/fiscal context with zero automatic weight.",
+    "Market Confirmation [REACTIVE_CONFIRMATION] validates or contradicts the macro thesis using completed-month price action."
+  ],
+  "production_guardrail": "No score, threshold, promoted relationship, evidence tier or 10-point conviction weight changed. Any future de-duplication or role-based weighting requires a separately frozen versioned decision-engine candidate.",
+  "audit": {
+    "money_taxonomy_workflow_run_id": 32832061878,
+    "money_taxonomy_artifact_id": 9557142627,
+    "money_taxonomy_artifact_digest": "sha256:be6f03a92d798bc83576566b9757a99aeb8c661c238e5895e1db575ab58d5772",
+    "overlap_workflow_run_id": 32832333431,
+    "overlap_artifact_id": 9557246636,
+    "overlap_artifact_digest": "sha256:c694236c2af00ce00c3b1564f5fe8e0eaaaa17c5bd63353ed50e9600462615ed",
+    "reverse_overlay_result": "research/reverse-overlay-mechanism/RESULT_SUMMARY.json"
+  }
+}

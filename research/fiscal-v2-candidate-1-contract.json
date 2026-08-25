@@ -1,0 +1,107 @@
+{
+  "candidate_version": "GMLI_FISCAL_V2_CANDIDATE_1",
+  "status": "FROZEN_RESEARCH_CANDIDATE",
+  "evidence_tier": "RESEARCH",
+  "target_role": "FISCAL_CONVICTION_OVERLAY_CANDIDATE",
+  "production_replacement_allowed": false,
+  "money_core_modified": false,
+  "funding_v2_modified": false,
+  "legacy_fiscal_modified": false,
+  "reason_for_new_version": "The preserved July-2026 STRICT_ACTUAL_RELEASE Fiscal baseline cannot be reproduced without guesswork because the exact historical release-time runner/vintages were not recovered. Candidate 1 is therefore an explicit new version rather than a silent legacy reconstruction.",
+  "frequency": "MONTHLY",
+  "score_availability_rule": "Fiscal observation month t becomes eligible at calendar month-end t+1 after the monthly Treasury balance release; GDP uses only a quarter whose conservative availability date is quarter-start plus three calendar months, month-end.",
+  "scoring_sources": [
+    {
+      "id": "MTSDS133FMS",
+      "source": "Federal Reserve Bank of St. Louis / FRED",
+      "role": "monthly federal surplus/deficit",
+      "units_contract": "millions of USD; negative values are deficits",
+      "availability_rule": "observation month t available at calendar month-end t+1"
+    },
+    {
+      "id": "GDP",
+      "source": "U.S. Bureau of Economic Analysis via FRED",
+      "role": "nominal GDP denominator",
+      "units_contract": "billions of USD, seasonally adjusted annual rate",
+      "availability_rule": "quarter-start q available at calendar month-end q+3"
+    }
+  ],
+  "transforms": {
+    "ttm_deficit_billions": "-sum(MTSDS133FMS over current and prior 11 months) / 1000",
+    "deficit_pct_gdp": "100 * ttm_deficit_billions / latest GDP eligible under the frozen GDP availability rule",
+    "fiscal_impulse_pp": "deficit_pct_gdp - deficit_pct_gdp from 12 months earlier",
+    "supportive_direction": "higher deficit_pct_gdp and higher fiscal_impulse_pp are more supportive fiscal impulse for this overlay"
+  },
+  "standardization": {
+    "method": "rolling z-score computed only from observations available up to each signal month",
+    "window_months": 120,
+    "minimum_months": 24,
+    "ddof": 0,
+    "component_z_clip": [-3.0, 3.0],
+    "signed_direction": "positive z means more fiscally supportive",
+    "z_to_score": "clip(50 + (50/3) * z, 0, 100)"
+  },
+  "aggregation": {
+    "components": [
+      {"id": "DEFICIT_LEVEL_Z", "weight": 0.5},
+      {"id": "FISCAL_IMPULSE_Z", "weight": 0.5}
+    ],
+    "composite_z": "0.5 * DEFICIT_LEVEL_Z + 0.5 * FISCAL_IMPULSE_Z",
+    "fiscal_score": "z_to_score(composite_z)",
+    "economic_rule": "The score rewards both a large current fiscal injection and acceleration in that injection. Equal weighting is frozen to prevent parameter search and avoids adding multiple highly collinear fiscal-flow measures."
+  },
+  "regimes": {
+    "RESTRICTIVE": "fiscal_score < 40",
+    "NEUTRAL": "40 <= fiscal_score <= 60",
+    "SUPPORTIVE": "fiscal_score > 60"
+  },
+  "diagnostics_not_in_score": [
+    {
+      "id": "GFDEBTN",
+      "role": "federal debt stock / debt-growth context"
+    },
+    {
+      "id": "A091RC1Q027SBEA",
+      "role": "federal interest-payment burden/context"
+    },
+    {
+      "id": "FGRECPT",
+      "role": "federal current receipts context"
+    },
+    {
+      "id": "FGEXPND",
+      "role": "federal current expenditures context"
+    }
+  ],
+  "fixed_initial_gates": {
+    "legacy_reproduction_decision": "STOP_LEGACY_REVERSE_ENGINEERING_BUILD_VERSIONED_V2",
+    "pandemic_support_sanity": {
+      "observation_month": "2020-06",
+      "expected_regime": "SUPPORTIVE"
+    },
+    "legacy_current_comparator": "Report Candidate 1 versus preserved July-2026 legacy Fiscal score 52.539556447652046 / NEUTRAL, but do not retune to force a match.",
+    "usefulness": "A separate usefulness gate must be frozen before any asset-return test. Candidate 1 cannot be promoted from construction or sanity checks alone."
+  },
+  "historical_data_semantics": {
+    "research_backtest": "Current/revised FRED history with conservative publication-lag rules; it is not represented as exact point-in-time historical releases.",
+    "prospective_production_path": "Future promotion requires raw prospective bytes/hashes and fail-closed date/source/contract checks from the existing fiscal-prospective archive."
+  },
+  "no_search": {
+    "component_search": false,
+    "weight_search": false,
+    "lag_search": false,
+    "window_search": false,
+    "threshold_search": false,
+    "asset_search": false,
+    "horizon_search": false,
+    "fdr_claim": false
+  },
+  "guardrails": [
+    "Fiscal remains an OVERLAY/conviction modifier and cannot overwrite Money Core.",
+    "Funding V2 is unchanged and remains a separate bounded OVERLAY.",
+    "The legacy July-2026 Fiscal baseline remains historical production reference until a new version passes explicit promotion guards.",
+    "Do not change sources, weights, z-score window, publication lags or regime thresholds after seeing empirical results; a materially better construction requires Candidate 2.",
+    "Do not treat current revised FRED history as exact historical release-time data.",
+    "Do not add debt, interest, receipts or expenditures to the score merely because they improve a backtest; they are diagnostics in Candidate 1."
+  ]
+}

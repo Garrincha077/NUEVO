@@ -1,0 +1,106 @@
+name: GMLI Fiscal V2 research and promotion gate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/fiscal-v2-candidate-1-contract.json'
+      - 'research/fiscal-v2-usefulness-gate.json'
+      - 'research/fiscal-v2/**'
+      - 'scripts/build-fiscal-v2.py'
+      - 'scripts/test-fiscal-v2-usefulness.py'
+      - 'scripts/refresh-fiscal-v2.py'
+      - 'lib/fiscal-v2-active.js'
+      - 'lib/state.js'
+      - 'lib/overlay-refresh-status.js'
+      - 'lib/decision-engine.js'
+      - 'lib/freshness-health.js'
+      - 'api/report.js'
+      - '.github/workflows/gmli-fiscal-v2-research.yml'
+      - '.github/workflows/gmli-fiscal-prospective-capture.yml'
+  workflow_dispatch:
+
+jobs:
+  fiscal-v2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Guard frozen contracts and promotion boundary
+        run: |
+          python - <<'PY'
+          import json
+          c=json.load(open('research/fiscal-v2-candidate-1-contract.json'))
+          g=json.load(open('research/fiscal-v2-usefulness-gate.json'))
+          r=json.load(open('research/fiscal-v2/CANDIDATE_1_RESULT.json'))
+          u=json.load(open('research/fiscal-v2/USEFULNESS_RESULT.json'))
+          p=json.load(open('research/fiscal-v2/promotion.lock.json'))
+          assert c['candidate_version']=='GMLI_FISCAL_V2_CANDIDATE_1'
+          assert c['aggregation']['components']==[{'id':'DEFICIT_LEVEL_Z','weight':0.5},{'id':'FISCAL_IMPULSE_Z','weight':0.5}]
+          assert all(v is False for v in c['no_search'].values())
+          assert g['status']=='FROZEN_BEFORE_EMPIRICAL_RUN'
+          assert [x['id'] for x in g['primary_fixed_relations']]==['SPY_FISCAL_V2_12M']
+          assert all(v is False for v in g['no_search'].values())
+          assert r['decision']=='PASS_FIXED_CONSTRUCTION_SANITY'
+          assert r['pandemic_support_sanity']['pass'] is True
+          assert u['decision']=='PASS_NARROW_FISCAL_USEFULNESS'
+          assert u['primary_passed']==1 and u['primary_total']==1
+          assert u['primary_results'][0]['direction_pass'] is True
+          assert p['status']=='PASS_FISCAL_V2_PRODUCTION_PROMOTION'
+          assert p['promoted_version']=='GMLI_FISCAL_V2_DEFICIT_IMPULSE'
+          assert p['global_conviction_rubric_modified'] is False
+          assert p['automatic_global_conviction_weight']==0
+          assert p['money_core_modified'] is False and p['funding_v2_modified'] is False
+          print('PASS_FISCAL_V2_FROZEN_PROMOTION_BOUNDARY')
+          PY
+
+      - name: Reproduce fixed Candidate 1 and usefulness result
+        shell: bash
+        run: |
+          python -m py_compile scripts/build-fiscal-v2.py scripts/test-fiscal-v2-usefulness.py scripts/refresh-fiscal-v2.py
+          python scripts/build-fiscal-v2.py --as-of 2026-08-25 > /tmp/fiscal-build.json
+          grep -q '"status": "PASS_FIXED_CONSTRUCTION_SANITY"' /tmp/fiscal-build.json
+          grep -q '"score": 45.90840618975137' /tmp/fiscal-build.json
+          grep -q '"regime": "NEUTRAL"' /tmp/fiscal-build.json
+          python scripts/test-fiscal-v2-usefulness.py --as-of 2026-08-25 > /tmp/fiscal-usefulness.json
+          grep -q '"status": "PASS_NARROW_FISCAL_USEFULNESS"' /tmp/fiscal-usefulness.json
+          grep -q '"primary_passed": 1' /tmp/fiscal-usefulness.json
+          grep -q '"primary_total": 1' /tmp/fiscal-usefulness.json
+
+      - name: Validate active last-good source archive and refresh guards
+        shell: bash
+        run: |
+          python scripts/refresh-fiscal-v2.py --as-of 2026-08-25 > /tmp/fiscal-refresh.json
+          cat /tmp/fiscal-refresh.json
+          grep -q '"status": "PASS_ACTIVE_FISCAL_V2_REFRESH_GUARDS"' /tmp/fiscal-refresh.json
+          grep -q '"new_available_date": "2026-07-31"' /tmp/fiscal-refresh.json
+          grep -q '"automatic_global_conviction_weight": 0' /tmp/fiscal-refresh.json
+          grep -q '"money_core_modified": false' /tmp/fiscal-refresh.json
+          grep -q '"funding_v2_modified": false' /tmp/fiscal-refresh.json
+          test -s research/fiscal-v2/latest/history.csv
+          test "$(find research/fiscal-v2/latest/raw -type f -name '*.csv' | wc -l)" -eq 6
+          grep -q '"status": "PASS_ACTIVE_FISCAL_V2_REFRESH_GUARDS"' research/fiscal-v2/latest/manifest.lock.json
+
+      - name: Guard active production separation
+        run: |
+          find api lib -name '*.js' -print0 | xargs -0 -n1 node --check
+          grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
+          grep -q "version: 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS'" lib/state.js
+          grep -q "version: 'GMLI_FISCAL_V2_DEFICIT_IMPULSE'" lib/state.js
+          grep -q "version: 'GMLI_FISCAL_V2_DEFICIT_IMPULSE'" lib/fiscal-v2-active.js
+          grep -q "score: 45.90840618975137" lib/fiscal-v2-active.js
+          grep -q "automatic_global_conviction_weight: 0" lib/state.js
+          grep -q "fiscal_v2_automatic_weight: 0" lib/decision-engine.js
+          grep -q "max: 10" lib/decision-engine.js
+          grep -q "status: 'PASS_FISCAL_V2_PRODUCTION_PROMOTION'" lib/state.js
+          grep -q "automation_status: 'ACTIVE_GUARDED_REFRESH'" lib/overlay-refresh-status.js
+          grep -q "fiscal_promotion_gate: FROZEN_STATE.fiscal.promotion_gate" api/report.js
+          grep -q "score: 52.539556447652046" lib/state.js
+          grep -q "mode: 'STRICT_ACTUAL_RELEASE'" lib/state.js
+          echo 'PASS: Fiscal V2 is an active OVERLAY; legacy Fiscal is historical; Money/Funding and 10-point rubric remain intact.'

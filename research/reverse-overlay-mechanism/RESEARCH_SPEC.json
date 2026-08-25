@@ -1,0 +1,69 @@
+{
+  "study_version": "GMLI_REVERSE_OVERLAY_MECHANISM_V1",
+  "status": "FROZEN_BEFORE_EMPIRICAL_RUN",
+  "evidence_tier": "RESEARCH",
+  "question": "Do equity markets systematically precede changes in Fiscal V2 and Funding V2, and is the apparent reverse/contrarian relationship robust enough to explain why these overlays correlate with later returns without implying direct causal leadership?",
+  "production_modified": false,
+  "money_core_modified": false,
+  "funding_v2_modified": false,
+  "fiscal_v2_modified": false,
+  "decision_engine_modified": false,
+  "automatic_weight_change": 0,
+  "primary_assets": ["SPY", "QQQ"],
+  "overlays": [
+    {"id": "FISCAL_V2", "series": "score", "analysis_transform": "first_difference", "history": "research/fiscal-v2/latest/history.csv"},
+    {"id": "FUNDING_V2", "series": "effective_score", "analysis_transform": "first_difference_if_needed_by_ADF; otherwise level and difference both reported", "history": "research/funding-v2/latest/history.csv"}
+  ],
+  "tests": {
+    "bidirectional_granger": {
+      "lags_months": [1, 3, 6],
+      "market_series": "monthly log return",
+      "overlay_series": "stationary transform selected mechanically by ADF: level if p<0.05 else first difference",
+      "directions": ["market_to_overlay", "overlay_to_market"],
+      "multiple_testing": "Holm correction separately within each direction across overlays/assets/lags",
+      "interpretation": "predictive precedence only, never structural causality"
+    },
+    "common_driver_regression": {
+      "lag_months": 3,
+      "target": "stationary overlay transform",
+      "market_predictors": "SPY monthly returns lags 1..3",
+      "controls": ["own overlay lags 1..3", "VIX monthly log change lags 1..3", "UNRATE monthly change lags 1..3"],
+      "inference": "joint F test for SPY lags with HAC/Newey-West covariance, maxlags=3"
+    },
+    "component_attribution": {
+      "lag_months": 3,
+      "funding_components": ["observed_conditions_score", "structural_support_score"],
+      "fiscal_components": ["deficit_pct_gdp", "fiscal_impulse_pp"],
+      "question": "Which overlay component, if any, carries market-to-overlay precedence?",
+      "multiple_testing": "Holm correction across fixed component family"
+    },
+    "pandemic_exclusion": {
+      "excluded_months": "2020-03..2021-12",
+      "repeat": "bidirectional Granger lags 1,3,6",
+      "purpose": "check whether the result is only a pandemic artifact"
+    },
+    "subperiod_stability": {
+      "funding_periods": ["2006-02..2012-12", "2013-01..2019-12", "2020-01+"],
+      "fiscal_periods": ["2018-01..2019-12", "2020-01+"],
+      "fixed_lag_months": 3,
+      "purpose": "directional stability, descriptive only"
+    },
+    "lead_lag_asymmetry": {
+      "horizon_months": 12,
+      "compare": ["overlay vs trailing 12M market return", "overlay vs forward 12M market return"],
+      "funding_variants": ["effective_score", "100-effective_score"],
+      "purpose": "separate reactive/contrarian behavior from true leading behavior"
+    }
+  },
+  "no_search": {
+    "asset_search": false,
+    "lag_search": false,
+    "horizon_search": false,
+    "transform_search": false,
+    "threshold_search": false,
+    "subperiod_search": false,
+    "component_search": false
+  },
+  "decision_rule": "No production PASS/FAIL gate. Classify the mechanism as MARKET_PRECEDENCE_SUPPORTED, MIXED_OR_REGIME_DEPENDENT, or NO_REVERSE_PRECEDENCE based on the predeclared diagnostics; production implication is always NONE.",
+  "guardrail": "This research cannot promote, demote, invert, reweight, or retune Fiscal V2 or Funding V2. Any later methodology change requires a separately versioned candidate and frozen gate."
+}
