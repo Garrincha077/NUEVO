@@ -1,0 +1,29 @@
+{
+  "study_version": "GMLI_FUNDING_MARKET_CONFIRMATION_OVERLAP_V1",
+  "status": "FROZEN_BEFORE_EMPIRICAL_RUN",
+  "evidence_tier": "RESEARCH",
+  "question": "Does the current 10-point rubric materially double-count the same reactive market-state information through Funding confirmation and completed-month market confirmation?",
+  "inputs": {
+    "funding": "Promoted Funding V2 effective_score, aligned by its frozen available month.",
+    "market_confirmation": "Exact current engine rule reconstructed monthly for SPY/QQQ/GLD/DBC: price > 10M MA OR 3M return > 0; score 2 if >=3/4 positive, 1 if 2/4, else 0."
+  },
+  "fixed_tests": [
+    "Pearson and Spearman association between Funding raw score and market-confirmation 0-2 score.",
+    "Pearson and Spearman association between Funding rubric 0-2 score and market-confirmation 0-2 score.",
+    "Exact-score agreement rate and contingency table.",
+    "Forward SPY 12M HAC regression: market confirmation only versus market confirmation + Funding raw score; Funding coefficient and incremental R-squared are descriptive only."
+  ],
+  "sample": "All aligned months from promoted Funding V2 history with four-asset market confirmation and fully observed SPY 12M forward return.",
+  "no_search": {
+    "asset_search": false,
+    "lag_search": false,
+    "horizon_search": false,
+    "threshold_search": false,
+    "transform_search": false,
+    "subperiod_search": false,
+    "weight_search": false
+  },
+  "production_modified": false,
+  "automatic_weight_change": 0,
+  "guardrail": "No rubric change may be made from this diagnostic. A material weighting/de-duplication change requires a separately frozen decision-engine candidate."
+}
