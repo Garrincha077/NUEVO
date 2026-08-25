@@ -1,0 +1,94 @@
+name: GMLI Funding V2 guarded refresh
+
+on:
+  schedule:
+    - cron: '41 6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-funding-v2.py'
+      - 'scripts/build-funding-v2.py'
+      - 'scripts/build-funding-v2-candidate2.py'
+      - 'research/funding-v2/promotion.lock.json'
+      - 'research/funding-v2/CANDIDATE_1_RESULT.json'
+      - 'research/funding-v2/USEFULNESS_RESULT.json'
+      - 'research/funding-v2-candidate-2-contract.json'
+      - '.github/workflows/gmli-funding-v2-refresh.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-funding-v2.py'
+      - 'scripts/build-funding-v2.py'
+      - 'scripts/build-funding-v2-candidate2.py'
+      - 'research/funding-v2/promotion.lock.json'
+      - 'research/funding-v2/CANDIDATE_1_RESULT.json'
+      - 'research/funding-v2/USEFULNESS_RESULT.json'
+      - 'research/funding-v2-candidate-2-contract.json'
+      - '.github/workflows/gmli-funding-v2-refresh.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gmli-funding-v2-refresh-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GMLI
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run guarded Funding V2 refresh
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/build-funding-v2.py scripts/build-funding-v2-candidate2.py scripts/refresh-funding-v2.py
+          python scripts/refresh-funding-v2.py --as-of 2026-08-25 --apply | tee /tmp/funding-v2-refresh.json
+          grep -q 'PASS_ACTIVE_FUNDING_V2_REFRESH_GUARDS' /tmp/funding-v2-refresh.json
+          grep -q 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS' /tmp/funding-v2-refresh.json
+          grep -q 'PASS_NARROW_FUNDING_USEFULNESS' /tmp/funding-v2-refresh.json
+          grep -q '"money_core_modified": false' /tmp/funding-v2-refresh.json
+          test -s research/funding-v2/latest/manifest.lock.json
+          test -s research/funding-v2/latest/history.csv
+          test -s research/funding-v2/latest/raw/ANFCI.csv
+          test -s research/funding-v2/latest/raw/DFII10.csv
+          test -s research/funding-v2/latest/raw/THREEFYTP10.csv
+          test -s research/funding-v2/latest/raw/WRESBAL.csv
+          node --check lib/funding-v2-active.js
+          grep -q "available_date: '2026-07-31'" lib/funding-v2-active.js
+          grep -q "regime: 'RESTRICTIVE'" lib/funding-v2-active.js
+
+      - name: Upload refresh audit snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-funding-v2-refresh
+          path: |
+            /tmp/funding-v2-refresh.json
+            research/funding-v2/latest
+            lib/funding-v2-active.js
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Commit guarded last-good snapshot when changed
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- lib/funding-v2-active.js research/funding-v2/latest; then
+            echo 'No eligible Funding V2 vintage change; last-good remains current.'
+            exit 0
+          fi
+          git config user.name 'gmli-funding-refresh-bot'
+          git config user.email 'gmli-funding-refresh-bot@users.noreply.github.com'
+          git add lib/funding-v2-active.js research/funding-v2/latest
+          git commit -m 'Refresh guarded GMLI Funding V2 snapshot'
+          git push origin HEAD:main
