@@ -1,0 +1,45 @@
+{
+  "candidate_version": "GMLI_FUNDING_V2_CANDIDATE_1",
+  "decision": "REJECTED_FOR_PROMOTION",
+  "evidence_tier": "RESEARCH",
+  "evaluated_at": "2026-08-25",
+  "workflow_run_id": 32818045169,
+  "workflow_conclusion": "success",
+  "artifact_id": 9552092155,
+  "artifact_sha256": "5de1a5b162fb01a8ee123e378071e4810a43ebe524db2790466543b7f1e52e0a",
+  "parameter_search": false,
+  "production_modified": false,
+  "current_comparison": {
+    "observation_month": "2026-06",
+    "available_date": "2026-07-31",
+    "candidate_score": 37.968440260099676,
+    "candidate_regime": "RESTRICTIVE",
+    "legacy_score": 36.035410932024234,
+    "legacy_regime": "RESTRICTIVE",
+    "direction_match": true
+  },
+  "fixed_stress_sanity": {
+    "2008-10": {
+      "expected": "RESTRICTIVE",
+      "actual": "RESTRICTIVE",
+      "score": 39.35977427426572,
+      "pass": true
+    },
+    "2020-03": {
+      "expected": "RESTRICTIVE",
+      "actual": "SUPPORTIVE",
+      "score": 63.52336539956949,
+      "pass": false,
+      "component_supportive_z": {
+        "ANFCI": -2.98514143,
+        "DFII10": 1.03434245,
+        "THREEFYTP10": 2.19640667,
+        "WRESBAL_3M_PCT": 3.0
+      }
+    }
+  },
+  "gate": "FAIL_FIXED_DIRECTIONAL_SANITY",
+  "diagnosis": "The equal-weight composite can let an emergency policy response overwhelm simultaneously severe observed financial stress. In March 2020 ANFCI was extremely restrictive while falling real yields, falling term premium and the reserve surge were strongly supportive. That makes Candidate 1 a useful policy-support indicator but not a sufficiently robust effective Funding/Conditions overlay.",
+  "next_version_rule": "Do not retune Candidate 1. Any correction must be an explicit Candidate 2 with a frozen structural rule that prevents broad observed financial conditions from being overridden by policy-support components during acute stress.",
+  "guardrail": "Money Core and legacy production Funding remain unchanged."
+}
