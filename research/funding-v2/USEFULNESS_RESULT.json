@@ -1,0 +1,65 @@
+{
+  "gate_version": "GMLI_FUNDING_V2_USEFULNESS_GATE_V1",
+  "candidate_version": "GMLI_FUNDING_V2_CANDIDATE_2",
+  "decision": "PASS_NARROW_FUNDING_USEFULNESS",
+  "evidence_tier": "RESEARCH",
+  "evaluated_at": "2026-08-25",
+  "workflow_run_id": 32818567139,
+  "artifact_id": 9552264485,
+  "artifact_sha256": "fd719409c6b98019c7d8b291b910317fae06e661bb2dbf8889c1897afaa75ad3",
+  "no_search": {
+    "asset_search": false,
+    "horizon_search": false,
+    "lag_search": false,
+    "parameter_search": false,
+    "threshold_search": false,
+    "fdr_claim": false
+  },
+  "primary_results": [
+    {
+      "id": "DBC_FUNDING_V2_6M",
+      "train_n": 96,
+      "train_pearson": 0.096982,
+      "oos_n": 37,
+      "oos_pearson": 0.341202,
+      "oos_spearman": 0.322191,
+      "direction_pass": true
+    },
+    {
+      "id": "DBC_FUNDING_V2_12M",
+      "train_n": 96,
+      "train_pearson": 0.011965,
+      "oos_n": 31,
+      "oos_pearson": 0.345475,
+      "oos_spearman": 0.390323,
+      "direction_pass": true
+    }
+  ],
+  "secondary_diagnostics_not_in_gate": [
+    {
+      "id": "SPY_FUNDING_V2_12M",
+      "train_pearson": -0.312162,
+      "oos_pearson": -0.432708,
+      "oos_spearman": -0.461694,
+      "direction_pass": false
+    },
+    {
+      "id": "QQQ_FUNDING_V2_12M",
+      "train_pearson": -0.327108,
+      "oos_pearson": -0.361255,
+      "oos_spearman": -0.377823,
+      "direction_pass": false
+    },
+    {
+      "id": "GLD_FUNDING_V2_12M",
+      "train_pearson": -0.137119,
+      "oos_pearson": 0.515471,
+      "oos_spearman": 0.560081,
+      "direction_pass": false
+    }
+  ],
+  "interpretation": "The predeclared commodity/funding transmission gate passes 2/2. Funding V2 has useful directional evidence for DBC 6M/12M, including positive OOS Pearson and Spearman. Secondary diagnostics explicitly reject treating Funding V2 as a universal positive forward-return signal for SPY, QQQ or GLD.",
+  "production_readiness_constraint": "If promoted, Funding V2 remains a bounded OVERLAY/conviction modifier. Its strongest empirically supported asset-transmission use is commodities/DBC. It must not replace Money Core, market confirmation or asset-specific transmission, and no universal equity-return claim may be made.",
+  "promotion_allowed_by_this_file": false,
+  "next_gate": "PRODUCTION_READINESS_REVIEW"
+}
