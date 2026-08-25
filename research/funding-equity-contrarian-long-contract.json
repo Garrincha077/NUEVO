@@ -1,0 +1,53 @@
+{
+  "test_version": "GMLI_FUNDING_EQUITY_CONTRARIAN_LONG_V1",
+  "status": "FROZEN_BEFORE_EMPIRICAL_RUN",
+  "evidence_tier": "RESEARCH",
+  "production_modified": false,
+  "money_core_modified": false,
+  "funding_core_modified": false,
+  "signal": {
+    "source": "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS",
+    "transform": "100 - effective_score",
+    "interpretation": "Higher values mean more restrictive Funding and are tested only as a contrarian equity research signal."
+  },
+  "assets": ["SPY", "QQQ"],
+  "horizon_months": 12,
+  "publication_lag_months": 1,
+  "sample_start": "2006-02",
+  "price_method": "Same exact-ticker Yahoo monthly adjusted-close helper used by the existing GMLI transmission/usefulness runner.",
+  "positive_market_drift_controls": {
+    "unconditional_benchmark": "Report conditional means/medians relative to the same evaluation-window unconditional 12M forward return.",
+    "tercile_spread": "Report high-minus-low inverted-Funding 12M return spread; common positive equity drift cancels in the spread.",
+    "known_drift_excess": "For each signal month, subtract the expanding mean 12M forward return from earlier observations whose return end month is no later than the current signal month; require at least 36 completed prior observations.",
+    "hac": "Newey-West/HAC regression with maxlags=12 because 12M forward returns overlap."
+  },
+  "fixed_subperiods": [
+    {"id": "EARLY", "start": "2006-02", "end": "2012-12"},
+    {"id": "MID", "start": "2013-01", "end": "2019-12"},
+    {"id": "RECENT", "start": "2020-01", "end": "9999-12"}
+  ],
+  "fixed_leaveout_episodes": [
+    {"id": "EX_GFC", "exclude_start": "2007-01", "exclude_end": "2009-12"},
+    {"id": "EX_COVID_2020", "exclude_start": "2020-01", "exclude_end": "2020-12"},
+    {"id": "EX_2022_TIGHTENING", "exclude_start": "2022-01", "exclude_end": "2022-12"}
+  ],
+  "research_robustness_gate_per_asset": {
+    "full_sample_raw": "Pearson > 0, Spearman > 0, HAC slope > 0 with p < 0.10.",
+    "terciles": "High-minus-low mean and median 12M forward return spreads > 0.",
+    "drift_adjusted": "Known-drift-excess Pearson > 0, Spearman > 0, and high-minus-low mean excess-return spread > 0.",
+    "episode_robustness": "Pearson remains > 0 in all three fixed leave-one-episode-out tests.",
+    "subperiod_robustness": "At least two of the three fixed subperiod Pearson correlations are > 0."
+  },
+  "overall_gate": "Both SPY and QQQ must pass the per-asset research robustness gate.",
+  "no_search": {
+    "asset_search": false,
+    "horizon_search": false,
+    "lag_search": false,
+    "signal_transform_search": false,
+    "threshold_search": false,
+    "parameter_search": false,
+    "fdr_claim": false
+  },
+  "promotion_allowed_by_this_test": false,
+  "frozen_on": "2026-08-25"
+}
