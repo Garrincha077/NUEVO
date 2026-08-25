@@ -126,6 +126,20 @@ jobs:
           grep -q "usd_score: 65.70290344348" lib/state.js
           grep -q "fxn_score: 43.01411281977772" lib/state.js
           grep -q "BLOCKED_MISSING_FROZEN_INPUT_BYTES" lib/state.js
+      - name: Guard promoted Funding V2 and preserved legacy Funding reference
+        run: |
+          node --check lib/funding-v2-active.js
+          grep -q "version: 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS'" lib/funding-v2-active.js
+          grep -q "source_manifest: 'research/funding-v2/latest/manifest.lock.json'" lib/funding-v2-active.js
+          grep -q "version: 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS'" lib/state.js
+          grep -q "status: 'PASS_FUNDING_V2_PRODUCTION_PROMOTION'" lib/state.js
+          grep -q "status: 'OVERLAY_HISTORICAL_REFERENCE'" lib/state.js
+          grep -q "score: 36.035410932024234" lib/state.js
+          grep -q "automation_status: 'ACTIVE_GUARDED_REFRESH'" lib/overlay-refresh-status.js
+          grep -q "refreshable: true" lib/overlay-refresh-status.js
+          grep -q "Funding V2 remains a bounded conviction overlay" lib/overlay-refresh-status.js
+          grep -q "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS" api/report.js
+          grep -q "Funding V2" lib/decision-engine.js
       - name: Verify legacy prospective capture still fails closed on old China contract
         shell: bash
         run: |
