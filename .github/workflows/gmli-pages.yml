@@ -11,6 +11,7 @@ on:
       - 'scripts/pages-money-ui.mjs'
       - 'scripts/pages-mobile-info.mjs'
       - 'research/global-money-v2/latest/**'
+      - 'research/fiscal-v2/latest/**'
       - '.github/workflows/gmli-pages.yml'
   pull_request:
     branches: [main]
@@ -22,6 +23,7 @@ on:
       - 'scripts/pages-money-ui.mjs'
       - 'scripts/pages-mobile-info.mjs'
       - 'research/global-money-v2/latest/**'
+      - 'research/fiscal-v2/latest/**'
       - '.github/workflows/gmli-pages.yml'
   schedule:
     - cron: '20 6 * * *'
@@ -54,17 +56,32 @@ jobs:
           node scripts/build-pages-snapshot.mjs | tee /tmp/gmli-pages.json
           grep -q 'PASS_GITHUB_PAGES_SNAPSHOT' /tmp/gmli-pages.json
           grep -q 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL' /tmp/gmli-pages.json
+          grep -q 'GMLI_FISCAL_V2_DEFICIT_IMPULSE' /tmp/gmli-pages.json
+          grep -q 'GMLI_SIGNAL_ROLE_TAXONOMY_V1' /tmp/gmli-pages.json
+          grep -q '"signal_role_scoring_effect": "NONE"' /tmp/gmli-pages.json
+          grep -q '"fiscal_automatic_weight": 0' /tmp/gmli-pages.json
+          grep -q '"report_schema": "gmli-report-v1.6"' /tmp/gmli-pages.json
           grep -q '2026-07-31' /tmp/gmli-pages.json
           grep -q '"history_rows"' /tmp/gmli-pages.json
+          grep -q '"static_api_files": 9' /tmp/gmli-pages.json
           test -s .pages/index.html
-          test -s .pages/api/report.json
-          test -s .pages/api/radar.json
-          test -s .pages/api/history.json
+          for f in report radar history status decision current-market opportunity positioning money-nowcast; do
+            test -s ".pages/api/${f}.json"
+          done
+          grep -q 'GMLI_FISCAL_V2_DEFICIT_IMPULSE' .pages/api/report.json
+          grep -q 'GMLI_SIGNAL_ROLE_TAXONOMY_V1' .pages/api/report.json
+          grep -q '"scoring_effect": "NONE"' .pages/api/report.json
+          grep -q '"automatic_global_conviction_weight": 0' .pages/api/status.json
+          grep -q '"fiscal_v2_automatic_weight": 0' .pages/api/decision.json
           grep -q 'Global Money Trend' .pages/index.html
           grep -q 'moneyScoreChart' .pages/index.html
           grep -q 'moneyYoyChart' .pages/index.html
           grep -q 'infoPopover' .pages/index.html
           grep -q 'Više informacija' .pages/index.html
+          if grep -q 'gmli-fred-dashboard.vercel.app/api/' .pages/index.html; then
+            echo 'Pages still depends on Vercel API links' >&2
+            exit 1
+          fi
 
       - name: Publish verified static snapshot to gh-pages branch
         if: github.event_name != 'pull_request'

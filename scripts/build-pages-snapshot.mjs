@@ -42,17 +42,25 @@ function assertRoundedScore(a, b, label) {
   }
 }
 
+function writeJson(name, value) {
+  return fs.writeFile(path.join(API_OUT, name), JSON.stringify(value, null, 2) + '\n');
+}
+
 async function main() {
   await fs.rm(OUT, { recursive: true, force: true });
   await fs.mkdir(API_OUT, { recursive: true });
 
-  const [report, radar, history] = await Promise.all([
+  const [report, radar, history, status, moneyNowcast] = await Promise.all([
     invoke('api/report.js'),
     invoke('api/radar.js'),
-    invoke('api/history.js')
+    invoke('api/history.js'),
+    invoke('api/status.js'),
+    invoke('api/money-nowcast.js')
   ]);
 
   const core = report?.regime?.engine_fact?.money;
+  const fiscal = report?.regime?.current_research_inference?.fiscal;
+  const roles = report?.signal_role_taxonomy;
   if (core?.version !== 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL') {
     throw new Error('Pages snapshot is not using promoted Money V2');
   }
@@ -61,6 +69,21 @@ async function main() {
   }
   if (core?.available_date !== '2026-07-31') {
     throw new Error(`Unexpected active Money date ${core?.available_date}`);
+  }
+  if (fiscal?.version !== 'GMLI_FISCAL_V2_DEFICIT_IMPULSE') {
+    throw new Error('Pages snapshot is not using promoted Fiscal V2');
+  }
+  if (report?.fiscal_promotion_gate?.status !== 'PASS_FISCAL_V2_PRODUCTION_PROMOTION') {
+    throw new Error('Fiscal V2 promotion gate is not PASS');
+  }
+  if (report?.regime?.conviction?.max !== 10 || report?.regime?.conviction?.fiscal_v2_automatic_weight !== 0) {
+    throw new Error('Frozen 10-point rubric or Fiscal zero-weight guard changed');
+  }
+  if (roles?.version !== 'GMLI_SIGNAL_ROLE_TAXONOMY_V1' || roles?.scoring_effect !== 'NONE' || roles?.automatic_weight_change !== 0) {
+    throw new Error('Signal Role Taxonomy v1 guard failed');
+  }
+  if (roles?.money_core?.role !== 'LEADING' || roles?.funding_v2?.role !== 'REACTIVE_CONFIRMATION' || roles?.fiscal_v2?.role !== 'MIXED' || roles?.market_confirmation?.role !== 'REACTIVE_CONFIRMATION') {
+    throw new Error('Signal Role Taxonomy role mapping changed');
   }
 
   const latest = history?.rows?.at(-1);
@@ -72,9 +95,50 @@ async function main() {
   assertRoundedScore(latest.usd_score, core.usd_score, 'USD score');
   assertRoundedScore(latest.fx_neutral_score, core.fx_neutral_score, 'FX-neutral score');
 
-  await fs.writeFile(path.join(API_OUT, 'report.json'), JSON.stringify(report, null, 2) + '\n');
-  await fs.writeFile(path.join(API_OUT, 'radar.json'), JSON.stringify(radar, null, 2) + '\n');
-  await fs.writeFile(path.join(API_OUT, 'history.json'), JSON.stringify(history, null, 2) + '\n');
+  const decisionSnapshot = {
+    schema_version: 'gmli-pages-decision-snapshot-v1',
+    source: 'DERIVED_FROM_CANONICAL_REPORT_SNAPSHOT',
+    generated_at: report.generated_at,
+    methodology: report.methodology,
+    signal_role_taxonomy: roles,
+    money: report.regime.engine_fact.money,
+    money_nowcast: report.regime.current_research_inference.money_nowcast,
+    funding: report.regime.current_research_inference.funding,
+    fiscal: report.regime.current_research_inference.fiscal,
+    market_confirmation: report.regime.current_research_inference.structural_market_confirmation,
+    current_market_confirmation: report.current_market_confirmation,
+    conviction: report.regime.conviction,
+    freshness: report.regime.freshness,
+    money_promotion_gate: report.money_promotion_gate,
+    funding_promotion_gate: report.funding_promotion_gate,
+    fiscal_promotion_gate: report.fiscal_promotion_gate
+  };
+  const opportunitySnapshot = {
+    schema_version: 'gmli-pages-opportunity-snapshot-v1',
+    source: 'DERIVED_FROM_CANONICAL_REPORT_SNAPSHOT',
+    generated_at: report.generated_at,
+    summary: report.opportunity_summary,
+    assets: report.assets,
+    conflicts: report.conflicts
+  };
+  const positioningSnapshot = {
+    schema_version: 'gmli-pages-positioning-snapshot-v1',
+    source: 'DERIVED_FROM_CANONICAL_REPORT_SNAPSHOT',
+    generated_at: report.generated_at,
+    assets: Object.fromEntries(Object.entries(report.assets || {}).map(([asset, row]) => [asset, row.positioning || null]))
+  };
+
+  await Promise.all([
+    writeJson('report.json', report),
+    writeJson('radar.json', radar),
+    writeJson('history.json', history),
+    writeJson('status.json', status),
+    writeJson('money-nowcast.json', moneyNowcast),
+    writeJson('current-market.json', report.current_market_confirmation),
+    writeJson('decision.json', decisionSnapshot),
+    writeJson('opportunity.json', opportunitySnapshot),
+    writeJson('positioning.json', positioningSnapshot)
+  ]);
 
   let html = await fs.readFile(path.join(ROOT, 'index.html'), 'utf8');
   html = enhanceMobileInfo(enhancePagesHtml(html))
@@ -87,11 +151,10 @@ async function main() {
     .replace('<div class="tag">GMLI 2.5 · Pareto liquidity decision cockpit</div>', '<div class="tag">GMLI 2.5 · GitHub Pages resilient cockpit</div>')
     .replace('Loading /api/report + /api/radar…', 'Loading verified static engine snapshot…');
 
-  const apiBase = 'https://gmli-fred-dashboard.vercel.app';
   for (const endpoint of ['current-market','status','decision','opportunity','positioning','money-nowcast']) {
-    html = html.replaceAll(`href="/api/${endpoint}"`, `href="${apiBase}/api/${endpoint}"`);
+    html = html.replaceAll(`href="/api/${endpoint}"`, `href="./api/${endpoint}.json"`);
   }
-  html = html.replace('</main>', '<div class="footer"><b>GitHub Pages:</b> Core, Money history and Radar snapshots are built directly from the repository engine/history. Raw live endpoints may still point to Vercel.</div></main>');
+  html = html.replace('</main>', '<div class="footer"><b>GitHub Pages:</b> verified static Money Core, Funding, Fiscal V2, signal-role taxonomy, market confirmation, decision context, nowcast, history and Radar snapshots are built directly from the repository. Vercel is not required for the core fallback view.</div></main>');
   await fs.writeFile(path.join(OUT, 'index.html'), html);
   await fs.writeFile(path.join(OUT, '.nojekyll'), '');
 
@@ -99,12 +162,20 @@ async function main() {
     status: 'PASS_GITHUB_PAGES_SNAPSHOT',
     money_version: core.version,
     money_available_date: core.available_date,
+    fiscal_version: fiscal.version,
+    fiscal_available_date: fiscal.available_date,
+    fiscal_score: fiscal.score,
+    fiscal_regime: fiscal.regime,
+    fiscal_automatic_weight: report.regime.conviction.fiscal_v2_automatic_weight,
+    signal_role_taxonomy: roles.version,
+    signal_role_scoring_effect: roles.scoring_effect,
     usd_yoy_pct: core.usd_yoy_pct,
     fx_neutral_yoy_pct: core.fx_neutral_yoy_pct,
     history_start_month: history.start_month,
     history_latest_month: history.latest_month,
     history_rows: history.rows.length,
     report_schema: report.schema_version,
+    static_api_files: 9,
     radar_as_of: radar.as_of
   }, null, 2));
 }
