@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { enhancePagesHtml } from './pages-money-ui.mjs';
 import { enhanceMobileInfo } from './pages-mobile-info.mjs';
+import { enhanceSignalRoleUi } from './pages-signal-role-ui.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, '.pages');
@@ -141,7 +142,7 @@ async function main() {
   ]);
 
   let html = await fs.readFile(path.join(ROOT, 'index.html'), 'utf8');
-  html = enhanceMobileInfo(enhancePagesHtml(html))
+  html = enhanceSignalRoleUi(enhanceMobileInfo(enhancePagesHtml(html)))
     .replaceAll("fetch('/api/report')", "fetch('./api/report.json', {cache:'no-store'})")
     .replaceAll("fetch('/api/radar')", "fetch('./api/radar.json', {cache:'no-store'})")
     .replaceAll("fetch('/api/history')", "fetch('./api/history.json', {cache:'no-store'})")
@@ -176,6 +177,7 @@ async function main() {
     history_rows: history.rows.length,
     report_schema: report.schema_version,
     static_api_files: 9,
+    pages_context_ui: true,
     radar_as_of: radar.as_of
   }, null, 2));
 }
