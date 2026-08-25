@@ -6,6 +6,7 @@ on:
     paths:
       - 'research/reverse-overlay-mechanism/**'
       - 'scripts/test-reverse-overlay-mechanism.py'
+      - 'scripts/run-reverse-overlay-mechanism.py'
       - 'research/fiscal-v2/latest/history.csv'
       - 'research/funding-v2/latest/history.csv'
       - '.github/workflows/gmli-reverse-overlay-research.yml'
@@ -37,7 +38,7 @@ jobs:
           PY
       - name: Run fixed reverse mechanism diagnostics
         run: |
-          python scripts/test-reverse-overlay-mechanism.py --as-of 2026-08-25 --output /tmp/reverse-overlay-result.json
+          python scripts/run-reverse-overlay-mechanism.py --as-of 2026-08-25 --output /tmp/reverse-overlay-result.json
           grep -q '"status": "INFORMATIONAL_REVERSE_OVERLAY_RESEARCH_COMPLETE"' /tmp/reverse-overlay-result.json
           grep -q '"production_implication": "NONE"' /tmp/reverse-overlay-result.json
           grep -q '"automatic_weight_change": 0' /tmp/reverse-overlay-result.json
