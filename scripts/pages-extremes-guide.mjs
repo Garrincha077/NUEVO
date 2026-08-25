@@ -45,6 +45,7 @@ export function buildMoneyExtremes(history) {
     usd_yoy_pct: finite(r.usd_yoy_pct),
     fx_neutral_yoy_pct: finite(r.fx_neutral_yoy_pct)
   })).filter(r => /^\d{4}-\d{2}$/.test(String(r.month)));
+
   const byMonth = new Map(sourceRows.map(r => [r.month, r]));
   const raw = sourceRows.map(r => {
     const prior = byMonth.get(addMonths(r.month, -3));
@@ -77,6 +78,7 @@ export function buildMoneyExtremes(history) {
 
   const last = rows.at(-1);
   if (!last) throw new Error('Money Historical Extremes has insufficient history');
+
   const latest = {
     month: last.month,
     available_date: last.available_date,
@@ -130,24 +132,80 @@ export function buildMoneyExtremes(history) {
   };
 }
 
-const STYLE = `<style>
-.extHead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}.extSummary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.extCard{padding:13px 14px;border:1px solid #21384b;border-radius:12px;background:#08141e}.extCard .extValue{font-size:26px;font-weight:750;letter-spacing:-.02em;margin:5px 0}.extMeta{font-size:12px;color:#9db2c2;line-height:1.45}.extBand{display:inline-block;border:1px solid #39556c;border-radius:999px;padding:3px 7px;font-size:10px;margin-top:5px}.extChart{width:100%;height:270px;display:block;overflow:visible}.guideGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.guideCard{padding:15px;border:1px solid #21384b;border-radius:12px;background:#08141e;line-height:1.55}.guideCard h3{margin:0 0 8px;font-size:15px}.guideCard p,.guideCard li{font-size:13px;color:#b6c7d3}.guideCard ul{margin:8px 0 0;padding-left:19px}.guideFlow{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0}.guideFlow>div{padding:10px 8px;border:1px solid #274156;border-radius:10px;text-align:center;font-size:11px;color:#b8c9d5}.guideWarn{padding:13px 14px;border:1px solid #4d5963;border-radius:10px;background:#0a151d;font-size:12px;color:#b9c9d4;line-height:1.55}@media(max-width:900px){.extSummary{grid-template-columns:repeat(2,1fr)}.guideFlow{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.extSummary,.guideGrid{grid-template-columns:1fr}.guideFlow{grid-template-columns:repeat(2,1fr)}.extChart{height:240px}}
-</style>`;
+function fmtZ(v) {
+  return Number.isFinite(v) ? `${v >= 0 ? '+' : ''}${v.toFixed(2)}` : '—';
+}
 
-const EXTREMES_SECTION = `<section id="moneyExtremes" class="section">
-<div class="extHead"><div><h2>Money Historical Extremes <span class="info" title="RESEARCH diagnostic. Rolling 120M z-score i percentile koriste samo podatke dostupne do svakog mjeseca; ne mijenjaju Money Core ili conviction.">i</span></h2><p class="muted">Koliko su današnji Money level i 3M impuls neuobičajeni u odnosu na vlastitu povijest.</p></div><div class="rangeBtns"><button class="rangeBtn" data-ext-range="3Y">3Y</button><button class="rangeBtn active" data-ext-range="5Y">5Y</button><button class="rangeBtn" data-ext-range="MAX">MAX</button></div></div>
-<div class="extSummary">
-<div class="extCard"><div class="tag">USD LEVEL Z</div><div class="extValue" id="extUsdLevel">—</div><div class="extMeta" id="extUsdLevelMeta">Loading…</div></div>
-<div class="extCard"><div class="tag">FX-NEUTRAL LEVEL Z</div><div class="extValue" id="extFxnLevel">—</div><div class="extMeta" id="extFxnLevelMeta">Loading…</div></div>
-<div class="extCard"><div class="tag">USD ACCEL3 Z</div><div class="extValue" id="extUsdAccel">—</div><div class="extMeta" id="extUsdAccelMeta">Loading…</div></div>
-<div class="extCard"><div class="tag">FX-NEUTRAL ACCEL3 Z</div><div class="extValue" id="extFxnAccel">—</div><div class="extMeta" id="extFxnAccelMeta">Loading…</div></div>
-</div>
-<div class="chartGrid">
-<article class="card"><div class="tag">Money level z-score</div><div class="legend"><span style="--c:#64b5f6">USD YoY level</span><span style="--c:#81c784">FX-neutral YoY level</span></div><div class="chartBox"><svg class="extChart" id="moneyLevelZChart" viewBox="0 0 920 270" preserveAspectRatio="none"></svg><div class="chartTip" id="moneyLevelZTip"></div></div><div class="sourceNote">0 = trailing prosjek; ±1 = povišeno odstupanje; ±2 = povijesno neuobičajeno. Z-score nije forecast prinosa.</div></article>
-<article class="card"><div class="tag">Money accel3 z-score</div><div class="legend"><span style="--c:#64b5f6">USD accel3</span><span style="--c:#81c784">FX-neutral accel3</span></div><div class="chartBox"><svg class="extChart" id="moneyAccelZChart" viewBox="0 0 920 270" preserveAspectRatio="none"></svg><div class="chartTip" id="moneyAccelZTip"></div></div><div class="sourceNote">Accel3 = promjena YoY rasta u 3 mjeseca. Pozitivan ekstrem znači snažno ubrzavanje, negativan snažno usporavanje.</div></article>
-</div>
-<div class="sourceNote">Method: trailing 120M, minimum 36M, population SD (ddof=0), bez clippinga i bez look-aheada. Percentile je mid-rank unutar istog trailing prozora. Evidence tier: RESEARCH_DIAGNOSTIC; scoring effect: NONE.</div>
-</section>`;
+function fmtPct(v) {
+  return Number.isFinite(v) ? `${v.toFixed(0)}th pct` : '—';
+}
+
+function fmtValue(v, unit) {
+  return Number.isFinite(v) ? `${v >= 0 ? '+' : ''}${v.toFixed(2)}${unit}` : '—';
+}
+
+function bandHr(v) {
+  const map = {
+    EXTREME_HIGH: 'ekstremno visoko',
+    ELEVATED_HIGH: 'povišeno visoko',
+    NORMAL: 'normalno područje',
+    ELEVATED_LOW: 'povišeno nisko',
+    EXTREME_LOW: 'ekstremno nisko',
+    INSUFFICIENT_HISTORY: 'nedovoljno povijesti'
+  };
+  return map[v] || String(v || '—');
+}
+
+function fmtMonth(month) {
+  const [y, m] = String(month).split('-');
+  return `${m}/${y}`;
+}
+
+function zChart(rows, specs, id) {
+  const rr = rows.slice(-60);
+  const W = 920, H = 270, p = { l: 48, r: 18, t: 16, b: 32 };
+  const pw = W - p.l - p.r, ph = H - p.t - p.b;
+  const vals = [];
+  for (const r of rr) for (const s of specs) if (Number.isFinite(r[s.key])) vals.push(r[s.key]);
+  let maxAbs = Math.max(2.5, ...vals.map(v => Math.abs(v)));
+  maxAbs = Math.ceil(maxAbs * 2) / 2;
+  const x = i => p.l + (rr.length === 1 ? 0 : i / (rr.length - 1) * pw);
+  const y = v => p.t + (maxAbs - v) / (2 * maxAbs) * ph;
+  let out = '';
+  for (const v of [-2, -1, 0, 1, 2]) {
+    if (Math.abs(v) > maxAbs) continue;
+    const yy = y(v);
+    out += `<line x1="${p.l}" y1="${yy}" x2="${W-p.r}" y2="${yy}" stroke="${v === 0 ? '#607789' : '#263d50'}" stroke-width="1" ${v === 0 ? '' : 'stroke-dasharray="5 5"'}/>`;
+    out += `<text x="${p.l-7}" y="${yy+4}" text-anchor="end" fill="#7890a2" font-size="11">${v > 0 ? '+' : ''}${v}</text>`;
+  }
+  const idxs = [0, Math.round((rr.length - 1) * .25), Math.round((rr.length - 1) * .5), Math.round((rr.length - 1) * .75), rr.length - 1];
+  for (const i of [...new Set(idxs)]) {
+    if (!rr[i]) continue;
+    out += `<text x="${x(i)}" y="${H-8}" text-anchor="middle" fill="#7890a2" font-size="11">${fmtMonth(rr[i].month)}</text>`;
+  }
+  for (const s of specs) {
+    let d = '', open = false;
+    rr.forEach((r, i) => {
+      const v = r[s.key];
+      if (Number.isFinite(v)) {
+        d += `${open ? ' L ' : ' M '}${x(i)} ${y(v)}`;
+        open = true;
+      } else {
+        open = false;
+      }
+    });
+    out += `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.3" vector-effect="non-scaling-stroke"/>`;
+  }
+  return `<svg class="extChart" id="${id}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-label="${id}">${out}</svg>`;
+}
+
+function summaryCard(tag, obj, raw, unit) {
+  return `<div class="extCard"><div class="tag">${tag}</div><div class="extValue">${fmtZ(obj?.z)}</div><div class="extMeta">${fmtPct(obj?.percentile)} · ${bandHr(obj?.band)}<br>${fmtValue(raw, unit)}</div></div>`;
+}
+
+const STYLE = `<style>
+.extHead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}.extSummary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.extCard{padding:13px 14px;border:1px solid #21384b;border-radius:12px;background:#08141e}.extCard .extValue{font-size:26px;font-weight:750;letter-spacing:-.02em;margin:5px 0}.extMeta{font-size:12px;color:#9db2c2;line-height:1.45}.extChart{width:100%;height:270px;display:block;overflow:visible}.guideGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.guideCard{padding:15px;border:1px solid #21384b;border-radius:12px;background:#08141e;line-height:1.55}.guideCard h3{margin:0 0 8px;font-size:15px}.guideCard p,.guideCard li{font-size:13px;color:#b6c7d3}.guideCard ul{margin:8px 0 0;padding-left:19px}.guideFlow{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0}.guideFlow>div{padding:10px 8px;border:1px solid #274156;border-radius:10px;text-align:center;font-size:11px;color:#b8c9d5}.guideWarn{padding:13px 14px;border:1px solid #4d5963;border-radius:10px;background:#0a151d;font-size:12px;color:#b9c9d4;line-height:1.55}@media(max-width:900px){.extSummary{grid-template-columns:repeat(2,1fr)}.guideFlow{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.extSummary,.guideGrid{grid-template-columns:1fr}.guideFlow{grid-template-columns:repeat(2,1fr)}.extChart{height:240px}}
+</style>`;
 
 const GUIDE = `<section id="investorGuide" class="section">
 <h2>Kako čitati GMLI — vodič za investitore</h2>
@@ -166,31 +224,33 @@ const GUIDE = `<section id="investorGuide" class="section">
 <div class="guideWarn"><b>Praktični redoslijed:</b> prvo Money režim → zatim promovirani asset transmission → Funding/Fiscal kontekst → market confirmation → Historical Extremes kao kontekst → Radar za entry asymmetry. Time se izbjegava da zanimljiv sekundarni indikator nadglasa frozen Core.</div>
 </section>`;
 
-const SCRIPT = `<script>
-(()=>{let extData=null,extRange='5Y';
-const f=n=>Number.isFinite(n);const zfmt=n=>f(n)?((n>=0?'+':'')+n.toFixed(2)):'—';const pfmt=n=>f(n)?n.toFixed(0)+'th pct':'—';
-function bandText(s){return String(s||'').replaceAll('_',' ').toLowerCase()}
-function setCard(id,metaId,obj,raw,unit){const el=document.getElementById(id),m=document.getElementById(metaId);if(!el||!m)return;el.textContent=zfmt(obj?.z);m.innerHTML=pfmt(obj?.percentile)+' · '+bandText(obj?.band)+'<br>'+raw+unit+' · available '+(extData?.latest?.available_date||'—')}
-function rows(){const r=extData?.rows||[];if(extRange==='MAX')return r;return r.slice(-(extRange==='3Y'?36:60))}
-function fmtM(s){const [y,m]=s.split('-');return new Date(Date.UTC(+y,+m-1,1)).toLocaleDateString('hr-HR',{month:'short',year:'numeric',timeZone:'UTC'})}
-function draw(id,tipId,series){const svg=document.getElementById(id),tip=document.getElementById(tipId),rr=rows();if(!svg||!tip||!rr.length)return;const W=920,H=270,p={l:48,r:18,t:16,b:32},pw=W-p.l-p.r,ph=H-p.t-p.b;const vals=[];rr.forEach(r=>series.forEach(s=>{if(f(r[s.key]))vals.push(r[s.key])}));let maxAbs=Math.max(2.5,...vals.map(v=>Math.abs(v)));maxAbs=Math.ceil(maxAbs*2)/2;const x=i=>p.l+(rr.length===1?0:i/(rr.length-1)*pw),y=v=>p.t+(maxAbs-v)/(2*maxAbs)*ph;let out='';[-2,-1,0,1,2].forEach(v=>{if(Math.abs(v)<=maxAbs){const yy=y(v);out+=`<line x1="${p.l}" y1="${yy}" x2="${W-p.r}" y2="${yy}" stroke="${v===0?'#607789':'#263d50'}" stroke-width="1" ${v===0?'':'stroke-dasharray="5 5"'}/><text x="${p.l-7}" y="${yy+4}" text-anchor="end" fill="#7890a2" font-size="11">${v>0?'+':''}${v}</text>`}});const idxs=[0,Math.round((rr.length-1)*.25),Math.round((rr.length-1)*.5),Math.round((rr.length-1)*.75),rr.length-1];[...new Set(idxs)].forEach(i=>out+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle" fill="#7890a2" font-size="11">${fmtM(rr[i].month)}</text>`);series.forEach(s=>{let d='',open=false;rr.forEach((r,i)=>{const v=r[s.key];if(f(v)){d+=(open?' L ':' M ')+x(i)+' '+y(v);open=true}else open=false});out+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.3" vector-effect="non-scaling-stroke"/>`});out+=`<line id="${id}Hover" x1="0" y1="${p.t}" x2="0" y2="${H-p.b}" stroke="#d7e5ef" stroke-width="1" opacity="0"/><rect x="${p.l}" y="${p.t}" width="${pw}" height="${ph}" fill="transparent"/>`;svg.innerHTML=out;svg.onpointermove=e=>{const box=svg.getBoundingClientRect(),sx=(e.clientX-box.left)/box.width*W,i=Math.max(0,Math.min(rr.length-1,Math.round((sx-p.l)/pw*(rr.length-1)))),r=rr[i],xx=x(i),line=document.getElementById(id+'Hover');line.setAttribute('x1',xx);line.setAttribute('x2',xx);line.setAttribute('opacity','.55');let h=`<b>${fmtM(r.month)}</b><br><span class="muted">available ${r.available_date}</span>`;series.forEach(s=>h+=`<br><span style="color:${s.color}">●</span> ${s.label}: <b>${zfmt(r[s.key])}</b> · ${pfmt(r[s.pct])}`);tip.innerHTML=h;tip.style.display='block';tip.style.left=Math.min(Math.max(e.clientX-box.left+12,6),box.width-205)+'px';tip.style.top=Math.max(e.clientY-box.top-70,4)+'px'};svg.onpointerleave=()=>{tip.style.display='none';const line=document.getElementById(id+'Hover');if(line)line.setAttribute('opacity','0')}}
-function render(){if(!extData)return;const l=extData.latest;setCard('extUsdLevel','extUsdLevelMeta',l.usd_level,(l.usd_level.value_pct>=0?'+':'')+l.usd_level.value_pct.toFixed(2),'% YoY');setCard('extFxnLevel','extFxnLevelMeta',l.fx_neutral_level,(l.fx_neutral_level.value_pct>=0?'+':'')+l.fx_neutral_level.value_pct.toFixed(2),'% YoY');setCard('extUsdAccel','extUsdAccelMeta',l.usd_accel3,(l.usd_accel3.value_pp>=0?'+':'')+l.usd_accel3.value_pp.toFixed(2),' pp / 3M');setCard('extFxnAccel','extFxnAccelMeta',l.fx_neutral_accel3,(l.fx_neutral_accel3.value_pp>=0?'+':'')+l.fx_neutral_accel3.value_pp.toFixed(2),' pp / 3M');draw('moneyLevelZChart','moneyLevelZTip',[{key:'usd_level_z',pct:'usd_level_percentile',label:'USD level z',color:'#64b5f6'},{key:'fx_neutral_level_z',pct:'fx_neutral_level_percentile',label:'FXN level z',color:'#81c784'}]);draw('moneyAccelZChart','moneyAccelZTip',[{key:'usd_accel3_z',pct:'usd_accel3_percentile',label:'USD accel3 z',color:'#64b5f6'},{key:'fx_neutral_accel3_z',pct:'fx_neutral_accel3_percentile',label:'FXN accel3 z',color:'#81c784'}])}
-document.querySelectorAll('[data-ext-range]').forEach(b=>b.onclick=()=>{extRange=b.dataset.extRange;document.querySelectorAll('[data-ext-range]').forEach(x=>x.classList.toggle('active',x===b));render()});fetch('./api/money-extremes.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('money-extremes '+r.status);return r.json()}).then(d=>{extData=d;render()}).catch(e=>{console.error(e);['extUsdLevelMeta','extFxnLevelMeta','extUsdAccelMeta','extFxnAccelMeta'].forEach(id=>{const x=document.getElementById(id);if(x)x.textContent='Diagnostic unavailable'})});
-})();
-</script>`;
-
 function req(html, old, replacement, label) {
   if (!html.includes(old)) throw new Error(`Pages extremes/guide marker missing: ${label}`);
   return html.replace(old, replacement);
 }
 
-export function enhanceExtremesGuide(input) {
+export function enhanceExtremesGuide(input, data) {
+  const l = data.latest;
+  const levelChart = zChart(data.rows, [
+    { key: 'usd_level_z', color: '#64b5f6' },
+    { key: 'fx_neutral_level_z', color: '#81c784' }
+  ], 'moneyLevelZChart');
+  const accelChart = zChart(data.rows, [
+    { key: 'usd_accel3_z', color: '#64b5f6' },
+    { key: 'fx_neutral_accel3_z', color: '#81c784' }
+  ], 'moneyAccelZChart');
+  const section = `<section id="moneyExtremes" class="section">
+<div class="extHead"><div><h2>Money Historical Extremes <span class="info" title="RESEARCH diagnostic. Rolling 120M z-score i percentile koriste samo podatke dostupne do svakog mjeseca; ne mijenjaju Money Core ili conviction.">i</span></h2><p class="muted">Koliko su današnji Money level i 3M impuls neuobičajeni u odnosu na vlastitu povijest.</p></div><div class="tag">LATEST ${l.month} · available ${l.available_date}</div></div>
+<div class="extSummary">${summaryCard('USD LEVEL Z', l.usd_level, l.usd_level.value_pct, '% YoY')}${summaryCard('FX-NEUTRAL LEVEL Z', l.fx_neutral_level, l.fx_neutral_level.value_pct, '% YoY')}${summaryCard('USD ACCEL3 Z', l.usd_accel3, l.usd_accel3.value_pp, ' pp / 3M')}${summaryCard('FX-NEUTRAL ACCEL3 Z', l.fx_neutral_accel3, l.fx_neutral_accel3.value_pp, ' pp / 3M')}</div>
+<div class="chartGrid"><article class="card"><div class="tag">Money level z-score · zadnjih 5Y</div><div class="legend"><span style="--c:#64b5f6">USD YoY level</span><span style="--c:#81c784">FX-neutral YoY level</span></div><div class="chartBox">${levelChart}</div><div class="sourceNote">0 = trailing prosjek; ±1 = povišeno odstupanje; ±2 = povijesno neuobičajeno. Z-score nije forecast prinosa.</div></article><article class="card"><div class="tag">Money accel3 z-score · zadnjih 5Y</div><div class="legend"><span style="--c:#64b5f6">USD accel3</span><span style="--c:#81c784">FX-neutral accel3</span></div><div class="chartBox">${accelChart}</div><div class="sourceNote">Accel3 = promjena YoY rasta u 3 mjeseca. Pozitivan ekstrem znači snažno ubrzavanje, negativan snažno usporavanje.</div></article></div>
+<div class="sourceNote">Method: trailing 120M, minimum 36M, population SD (ddof=0), bez clippinga i bez look-aheada. Percentile je mid-rank unutar istog trailing prozora. Evidence tier: RESEARCH_DIAGNOSTIC; scoring effect: NONE. <a href="./api/money-extremes.json">Full diagnostic history</a>.</div>
+</section>`;
+
   let html = input;
   html = req(html, '</head>', `${STYLE}\n</head>`, 'head');
   html = req(html, '<a href="#moneyTrend">MONEY TREND</a>', '<a href="#moneyTrend">MONEY TREND</a><a href="#moneyExtremes">EXTREMES</a>', 'money nav');
   html = req(html, '</nav>', '<a href="#investorGuide">GUIDE</a></nav>', 'guide nav');
-  html = req(html, '<section id="market"', `${EXTREMES_SECTION}\n<section id="market"`, 'extremes section');
+  html = req(html, '<section id="market"', `${section}\n<section id="market"`, 'extremes section');
   html = req(html, '</main>', `${GUIDE}\n</main>`, 'investor guide');
-  html = req(html, '</body>', `${SCRIPT}\n</body>`, 'script');
   return html;
 }
