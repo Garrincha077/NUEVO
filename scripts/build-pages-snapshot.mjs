@@ -10,6 +10,7 @@ import { buildContextHistory } from './pages-context-history.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, '.pages');
 const API_OUT = path.join(OUT, 'api');
+const MIN_PROMOTED_MONEY_DATE = '2026-07-31';
 
 async function invoke(modulePath) {
   const mod = await import(path.join(ROOT, modulePath));
@@ -44,14 +45,32 @@ function assertRoundedScore(a, b, label) {
   }
 }
 
+function validIsoDate(value) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(String(value || ''));
+}
+
 function writeJson(name, value) {
   return fs.writeFile(path.join(API_OUT, name), JSON.stringify(value, null, 2) + '\n');
+}
+
+async function readRefreshStatus() {
+  try {
+    return JSON.parse(await fs.readFile(path.join(ROOT, 'audit/pages-refresh-status.json'), 'utf8'));
+  } catch {
+    return {
+      schema_version: 'gmli-pages-refresh-v1',
+      status: 'NOT_RUN_IN_THIS_BUILD',
+      policy: 'PR_OR_LOCAL_SNAPSHOT_BUILD',
+      current_market: { status: 'LIVE_DURING_REPORT_BUILD' }
+    };
+  }
 }
 
 async function main() {
   await fs.rm(OUT, { recursive: true, force: true });
   await fs.mkdir(API_OUT, { recursive: true });
 
+  const refreshStatus = await readRefreshStatus();
   const [report, radar, history, status, moneyNowcast] = await Promise.all([
     invoke('api/report.js'),
     invoke('api/radar.js'),
@@ -71,8 +90,8 @@ async function main() {
   if (report?.money_promotion_gate?.status !== 'PASS_MONEY_V2_PRODUCTION_PROMOTION') {
     throw new Error('Money V2 promotion gate is not PASS');
   }
-  if (core?.available_date !== '2026-07-31') {
-    throw new Error(`Unexpected active Money date ${core?.available_date}`);
+  if (!validIsoDate(core?.available_date) || core.available_date < MIN_PROMOTED_MONEY_DATE) {
+    throw new Error(`Active Money date regressed or is malformed: ${core?.available_date}`);
   }
   if (fiscal?.version !== 'GMLI_FISCAL_V2_DEFICIT_IMPULSE') {
     throw new Error('Pages snapshot is not using promoted Fiscal V2');
@@ -161,7 +180,8 @@ async function main() {
     writeJson('decision.json', decisionSnapshot),
     writeJson('opportunity.json', opportunitySnapshot),
     writeJson('positioning.json', positioningSnapshot),
-    writeJson('context-history.json', contextHistory)
+    writeJson('context-history.json', contextHistory),
+    writeJson('refresh-status.json', refreshStatus)
   ]);
 
   let html = await fs.readFile(path.join(ROOT, 'index.html'), 'utf8');
@@ -172,18 +192,19 @@ async function main() {
     .replaceAll('href="/api/report"', 'href="./api/report.json"')
     .replaceAll('href="/api/radar"', 'href="./api/radar.json"')
     .replaceAll('href="/api/history"', 'href="./api/history.json"')
-    .replace('<div class="tag">GMLI 2.5 · Pareto liquidity decision cockpit</div>', '<div class="tag">GMLI 2.5 · GitHub Pages resilient cockpit</div>')
-    .replace('Loading /api/report + /api/radar…', 'Loading verified static engine snapshot…');
+    .replace('<div class="tag">GMLI 2.5 · Pareto liquidity decision cockpit</div>', '<div class="tag">GMLI 2.5 · GitHub Pages fetch-first resilient cockpit</div>')
+    .replace('Loading /api/report + /api/radar…', 'Refreshing sources, then loading verified static engine snapshot…');
 
   for (const endpoint of ['current-market','status','decision','opportunity','positioning','money-nowcast']) {
     html = html.replaceAll(`href="/api/${endpoint}"`, `href="./api/${endpoint}.json"`);
   }
-  html = html.replace('</main>', '<div class="footer"><b>GitHub Pages:</b> verified static Money Core, Funding/Fiscal/Market history, signal-role taxonomy, market confirmation, decision context, nowcast, Money history and Radar snapshots are built directly from the repository. Vercel is not required for the core fallback view.</div></main>');
+  html = html.replace('</main>', '<div class="footer"><b>GitHub Pages:</b> production runs first attempt guarded Money/Nowcast/Funding/Fiscal refreshes, then rebuild current market + verified static snapshots. Any failed upstream refresh reverts only that layer to checked-in last-good before publication. <a href="./api/refresh-status.json">Refresh audit</a>.</div></main>');
   await fs.writeFile(path.join(OUT, 'index.html'), html);
   await fs.writeFile(path.join(OUT, '.nojekyll'), '');
 
   console.log(JSON.stringify({
     status: 'PASS_GITHUB_PAGES_SNAPSHOT',
+    refresh_status: refreshStatus.status,
     money_version: core.version,
     money_available_date: core.available_date,
     fiscal_version: fiscal.version,
@@ -203,7 +224,7 @@ async function main() {
     context_market_history_rows: contextHistory.market_confirmation.rows.length,
     context_market_latest_month: latestMarketHistory.month,
     report_schema: report.schema_version,
-    static_api_files: 10,
+    static_api_files: 11,
     pages_context_ui: true,
     pages_context_history_ui: true,
     radar_as_of: radar.as_of
