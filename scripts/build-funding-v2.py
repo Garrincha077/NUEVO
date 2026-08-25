@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 import argparse
 import csv
+import hashlib
 import io
 import json
 import math
+import time
+import urllib.parse
 import urllib.request
 from collections import defaultdict
 from datetime import date, timedelta
@@ -11,6 +14,7 @@ from pathlib import Path
 
 VERSION = 'GMLI_FUNDING_V2_CANDIDATE_1'
 DEFAULT_AS_OF = date.today()
+SOURCE_START = '2002-01-01'  # WRESBAL begins in 2002; earlier rows cannot enter the 4-component composite.
 
 SERIES = {
     'ANFCI': {'aggregation': 'mean', 'sign': -1.0, 'role': 'broad_financial_conditions'},
@@ -46,11 +50,28 @@ def available_date_for_observation_month(m):
     return first_after - timedelta(days=1)
 
 
-def fetch_series(series_id):
-    url = f'https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}'
-    req = urllib.request.Request(url, headers={'User-Agent': 'gmli-funding-v2/1.0'})
-    with urllib.request.urlopen(req, timeout=45) as response:
-        raw = response.read()
+def fetch_series(series_id, as_of, attempts=3):
+    params = urllib.parse.urlencode({
+        'id': series_id,
+        'cosd': SOURCE_START,
+        'coed': as_of.isoformat(),
+    })
+    url = f'https://fred.stlouisfed.org/graph/fredgraph.csv?{params}'
+    last_error = None
+    raw = None
+    for attempt in range(1, attempts + 1):
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'gmli-funding-v2/1.0'})
+            with urllib.request.urlopen(req, timeout=90) as response:
+                raw = response.read()
+            break
+        except Exception as exc:
+            last_error = exc
+            if attempt < attempts:
+                time.sleep(2 * attempt)
+    if raw is None:
+        raise RuntimeError(f'FRED fetch failed for {series_id} after {attempts} attempts: {last_error}')
+
     text = raw.decode('utf-8-sig')
     reader = csv.DictReader(io.StringIO(text))
     rows = []
@@ -113,10 +134,11 @@ def build(as_of):
     monthly = {}
     source_meta = {}
     for sid, spec in SERIES.items():
-        url, raw, rows = fetch_series(sid)
+        url, raw, rows = fetch_series(sid, as_of)
         monthly[sid] = aggregate_monthly(rows, spec['aggregation'])
         source_meta[sid] = {
             'url': url,
+            'sha256': hashlib.sha256(raw).hexdigest(),
             'bytes': len(raw),
             'first_observation': rows[0][0].isoformat(),
             'last_observation': rows[-1][0].isoformat(),
