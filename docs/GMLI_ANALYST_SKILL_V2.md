@@ -1,4 +1,4 @@
-# GMLI Analyst Skill v2.3
+# GMLI Analyst Skill v2.4
 
 ## Primary calls
 Standard regime analysis:
@@ -14,9 +14,9 @@ Contrarian / long-short / early-trend analysis:
 If Vercel is unavailable/stale, use the verified GitHub Pages snapshot. GitHub repository is source-of-truth for methodology, contracts, research and promotion evidence.
 
 ## Decision hierarchy
-Money Core → Asset Transmission → Funding modifier → Market Confirmation → Strategic Opportunity/Radar → Copilot Research View → Allocation implication.
+Money Core → Asset Transmission → Funding modifier → Fiscal confirmation → Market Confirmation → Strategic Opportunity/Radar → Copilot Research View → Allocation implication.
 
-Money defines the baseline regime. Funding and market data modify conviction; they do not silently overwrite Money.
+Money defines the baseline regime. Funding modifies conviction under the frozen rubric. Fiscal V2 is an OVERLAY confirmation layer with zero automatic global-conviction weight. Market data confirm/diverge; no overlay silently overwrites Money.
 
 ## Current promoted production layers
 ### Money Core
@@ -35,6 +35,34 @@ Rules:
 - guarded/reproducible refresh
 - strongest fixed promoted empirical asset-use: DBC 6M and DBC 12M
 - not a universal equity-return signal.
+
+### Fiscal
+Active OVERLAY:
+`GMLI_FISCAL_V2_DEFICIT_IMPULSE`
+
+Construction:
+- TTM federal deficit / nominal GDP
+- 12M change in deficit/GDP
+- equal 50/50 rolling-z combination
+- 120M window, 24M minimum, ddof=0, component clip ±3
+- score `<40 RESTRICTIVE`, `40–60 NEUTRAL`, `>60 SUPPORTIVE`.
+
+Use rules:
+- fixed primary usefulness gate is SPY 12M only;
+- gate passed train Pearson > 0, OOS Pearson > 0 and OOS Spearman > 0;
+- QQQ/DBC diagnostics are not promotion claims;
+- no universal return claim;
+- `automatic_global_conviction_weight = 0`;
+- do not add Fiscal points to the current 10-point rubric;
+- any automatic Fiscal weighting requires a separately frozen decision-engine candidate.
+
+Historical caveat:
+- revised FRED history + conservative publication lags is valid for the versioned V2 research contract;
+- it is not exact historical release-time data;
+- July-2026 legacy `STRICT_ACTUAL_RELEASE` Fiscal remains historical reference because exact old runner/vintages were not recovered.
+
+Promotion report:
+`research/fiscal-v2/GMLI_FISCAL_V2_PROMOTION_REPORT.md`
 
 ### Funding-equity contrarian side finding
 Evidence tier: RESEARCH only.
@@ -57,22 +85,12 @@ CORE transmission relationships:
 
 Other assets remain RESEARCH/proxy unless separately promoted.
 
-## Fiscal next-phase rule
-Fiscal is the next active development priority and remains an OVERLAY.
+## Next-phase rule
+Money, Money nowcast, Funding V2 and Fiscal V2 now have promoted guarded paths. Preserve those contracts before adding breadth.
 
-When working on Fiscal:
-1. inspect current production Fiscal state and prospective raw archive;
-2. attempt strict-actual-release legacy reproduction only if it can be done without guesswork;
-3. do not treat current revised FRED history as exact historical release-time data;
-4. if legacy reproduction is not realistically recoverable, build an explicit versioned Fiscal V2 candidate;
-5. freeze sources/transforms/publication lag/scoring before testing;
-6. run only a narrow usefulness/regression gate, no broad parameter/horizon search;
-7. automate refresh only after promotion guards pass.
+Credit/Velocity remains `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Do not infer the old formula. Build a new version only if there is a material decision gap, and freeze construction + usefulness gate before empirical testing.
 
-Detailed handoff:
-`docs/FISCAL_HANDOFF_2026-08-25.md`
-
-Credit/Velocity and broad secondary-asset research stay deferred unless explicitly requested or Fiscal exposes a material decision gap.
+Broad secondary-asset research remains deferred unless explicitly requested or its incremental allocation value is clear.
 
 ## Opportunity semantics
 - Strategic Eligibility dominates Entry Quality.
@@ -120,11 +138,11 @@ Use the engine's transparent 0–10 rubric:
 - Funding confirmation 0–2
 - market confirmation 0–2
 
-Radar asymmetry is separate from regime conviction.
+Fiscal V2 is currently outside this numeric rubric (`automatic_global_conviction_weight = 0`) and should be reported as OVERLAY confirmation context. Radar asymmetry is also separate from regime conviction.
 
 ## Default standard response
 ### GMLI NOW
-Regime, conviction, Money, Funding, market confirmation, freshness.
+Regime, conviction, Money, Funding, Fiscal, market confirmation, freshness.
 
 ### ASSET BIAS
 Strongest, Positive, Neutral, Defensive/Avoid.
