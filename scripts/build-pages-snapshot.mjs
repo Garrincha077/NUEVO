@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { enhancePagesHtml } from './pages-money-ui.mjs';
 import { enhanceMobileInfo } from './pages-mobile-info.mjs';
 import { enhanceSignalRoleUi } from './pages-signal-role-ui.mjs';
+import { buildContextHistory } from './pages-context-history.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, '.pages');
@@ -60,7 +61,9 @@ async function main() {
   ]);
 
   const core = report?.regime?.engine_fact?.money;
+  const funding = report?.regime?.current_research_inference?.funding;
   const fiscal = report?.regime?.current_research_inference?.fiscal;
+  const structuralMarket = report?.regime?.current_research_inference?.structural_market_confirmation;
   const roles = report?.signal_role_taxonomy;
   if (core?.version !== 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL') {
     throw new Error('Pages snapshot is not using promoted Money V2');
@@ -95,6 +98,25 @@ async function main() {
   assertClose(latest.fx_neutral_yoy_pct, core.fx_neutral_yoy_pct, 'FX-neutral YoY');
   assertRoundedScore(latest.usd_score, core.usd_score, 'USD score');
   assertRoundedScore(latest.fx_neutral_score, core.fx_neutral_score, 'FX-neutral score');
+
+  const contextHistory = await buildContextHistory(ROOT, report);
+  const latestFundingHistory = contextHistory?.funding?.rows?.at(-1);
+  const latestFiscalHistory = contextHistory?.fiscal?.rows?.at(-1);
+  const latestMarketHistory = contextHistory?.market_confirmation?.rows?.at(-1);
+  if (!latestFundingHistory || !latestFiscalHistory || !latestMarketHistory) {
+    throw new Error('Context history is incomplete');
+  }
+  assertRoundedScore(latestFundingHistory.score, funding?.score, 'Funding V2');
+  assertRoundedScore(latestFiscalHistory.score, fiscal?.score, 'Fiscal V2');
+  if (latestFundingHistory.available_date !== funding?.available_date) {
+    throw new Error(`Funding context history date mismatch: ${latestFundingHistory.available_date} vs ${funding?.available_date}`);
+  }
+  if (latestFiscalHistory.available_date !== fiscal?.available_date) {
+    throw new Error(`Fiscal context history date mismatch: ${latestFiscalHistory.available_date} vs ${fiscal?.available_date}`);
+  }
+  if (latestMarketHistory.positive !== structuralMarket?.positive || latestMarketHistory.score_0_2 !== structuralMarket?.score_0_2) {
+    throw new Error(`Market context history latest mismatch: ${latestMarketHistory.positive}/${latestMarketHistory.score_0_2} vs ${structuralMarket?.positive}/${structuralMarket?.score_0_2}`);
+  }
 
   const decisionSnapshot = {
     schema_version: 'gmli-pages-decision-snapshot-v1',
@@ -138,7 +160,8 @@ async function main() {
     writeJson('current-market.json', report.current_market_confirmation),
     writeJson('decision.json', decisionSnapshot),
     writeJson('opportunity.json', opportunitySnapshot),
-    writeJson('positioning.json', positioningSnapshot)
+    writeJson('positioning.json', positioningSnapshot),
+    writeJson('context-history.json', contextHistory)
   ]);
 
   let html = await fs.readFile(path.join(ROOT, 'index.html'), 'utf8');
@@ -155,7 +178,7 @@ async function main() {
   for (const endpoint of ['current-market','status','decision','opportunity','positioning','money-nowcast']) {
     html = html.replaceAll(`href="/api/${endpoint}"`, `href="./api/${endpoint}.json"`);
   }
-  html = html.replace('</main>', '<div class="footer"><b>GitHub Pages:</b> verified static Money Core, Funding, Fiscal V2, signal-role taxonomy, market confirmation, decision context, nowcast, history and Radar snapshots are built directly from the repository. Vercel is not required for the core fallback view.</div></main>');
+  html = html.replace('</main>', '<div class="footer"><b>GitHub Pages:</b> verified static Money Core, Funding/Fiscal/Market history, signal-role taxonomy, market confirmation, decision context, nowcast, Money history and Radar snapshots are built directly from the repository. Vercel is not required for the core fallback view.</div></main>');
   await fs.writeFile(path.join(OUT, 'index.html'), html);
   await fs.writeFile(path.join(OUT, '.nojekyll'), '');
 
@@ -175,9 +198,14 @@ async function main() {
     history_start_month: history.start_month,
     history_latest_month: history.latest_month,
     history_rows: history.rows.length,
+    context_funding_history_rows: contextHistory.funding.rows.length,
+    context_fiscal_history_rows: contextHistory.fiscal.rows.length,
+    context_market_history_rows: contextHistory.market_confirmation.rows.length,
+    context_market_latest_month: latestMarketHistory.month,
     report_schema: report.schema_version,
-    static_api_files: 9,
+    static_api_files: 10,
     pages_context_ui: true,
+    pages_context_history_ui: true,
     radar_as_of: radar.as_of
   }, null, 2));
 }
