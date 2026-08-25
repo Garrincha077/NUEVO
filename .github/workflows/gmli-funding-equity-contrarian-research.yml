@@ -1,0 +1,39 @@
+name: GMLI Funding Equity Contrarian Research
+
+on:
+  pull_request:
+    paths:
+      - 'research/funding-equity-contrarian-long-contract.json'
+      - 'scripts/test-funding-equity-contrarian-long.py'
+      - '.github/workflows/gmli-funding-equity-contrarian-research.yml'
+      - 'research/funding-v2/latest/history.csv'
+      - 'scripts/test-global-money-v2-transmission.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  long-horizon-research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install research dependencies
+        run: python -m pip install --disable-pip-version-check numpy scipy statsmodels
+      - name: Run frozen long-horizon contrarian Funding test
+        run: |
+          python scripts/test-funding-equity-contrarian-long.py \
+            --as-of 2026-08-25 \
+            --build-full \
+            --output-dir research/funding-equity-contrarian-long/latest
+      - name: Show report
+        run: cat research/funding-equity-contrarian-long/latest/REPORT.md
+      - name: Upload research artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: funding-equity-contrarian-long
+          path: research/funding-equity-contrarian-long/latest/
+          if-no-files-found: error
