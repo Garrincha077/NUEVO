@@ -24,28 +24,26 @@ function round(value, digits = 4) {
 
 async function loadFunding(root) {
   const file = path.join(root, 'research/funding-v2/latest/history.csv');
-  const rows = parseCsv(await fs.readFile(file, 'utf8')).map(r => ({
+  return parseCsv(await fs.readFile(file, 'utf8')).map(r => ({
     observation_month: r.observation_month,
     available_date: r.available_date,
     score: finite(r.effective_score),
     regime: r.regime,
     structural_support_score: finite(r.structural_support_score),
     observed_conditions_score: finite(r.observed_conditions_score)
-  })).filter(r => r.observation_month && r.score != null);
-  return rows;
+  })).filter(r => r.observation_month && r.available_date && r.score != null);
 }
 
 async function loadFiscal(root) {
   const file = path.join(root, 'research/fiscal-v2/latest/history.csv');
-  const rows = parseCsv(await fs.readFile(file, 'utf8')).map(r => ({
+  return parseCsv(await fs.readFile(file, 'utf8')).map(r => ({
     observation_month: r.observation_month,
     available_date: r.available_date,
     score: finite(r.score),
     regime: r.regime,
     deficit_pct_gdp: finite(r.deficit_pct_gdp),
     fiscal_impulse_pp: finite(r.fiscal_impulse_pp)
-  })).filter(r => r.observation_month && r.score != null);
-  return rows;
+  })).filter(r => r.observation_month && r.available_date && r.score != null);
 }
 
 async function loadArchivedMonthlyPrice(root, asset) {
@@ -102,30 +100,47 @@ function buildMarketRows(prices, cutoffMonth) {
 }
 
 export async function buildContextHistory(root, report) {
-  const [fundingRows, fiscalRows, pricePairs] = await Promise.all([
+  const funding = report?.regime?.current_research_inference?.funding || {};
+  const fiscal = report?.regime?.current_research_inference?.fiscal || {};
+  const roles = report?.signal_role_taxonomy || {};
+  const fundingCutoff = funding.available_date || null;
+  const fiscalCutoff = fiscal.available_date || null;
+
+  const [allFundingRows, allFiscalRows, pricePairs] = await Promise.all([
     loadFunding(root),
     loadFiscal(root),
     Promise.all(ASSETS.map(async asset => [asset, await loadArchivedMonthlyPrice(root, asset)]))
   ]);
+
+  if (!fundingCutoff || !fiscalCutoff) {
+    throw new Error('Context history requires active Funding and Fiscal available_date cutoffs from canonical report');
+  }
+
+  // History files may contain research rows whose declared availability is still
+  // in the future relative to the active production vintage. Pages must never
+  // surface those rows as if they were live. Filter fail-closed to the current
+  // canonical report cutoff to prevent look-ahead.
+  const fundingRows = allFundingRows.filter(r => r.available_date <= fundingCutoff);
+  const fiscalRows = allFiscalRows.filter(r => r.available_date <= fiscalCutoff);
+
   const prices = Object.fromEntries(pricePairs);
   const marketHealth = report?.data_health?.items?.find(x => x.key === 'market_structure');
   const marketCutoff = String(marketHealth?.available_date || '').slice(0, 7) || null;
   const marketRows = buildMarketRows(prices, marketCutoff);
-
-  const funding = report?.regime?.current_research_inference?.funding || {};
-  const fiscal = report?.regime?.current_research_inference?.fiscal || {};
-  const roles = report?.signal_role_taxonomy || {};
 
   return {
     schema_version: 'gmli-pages-context-history-v1',
     generated_at: report?.generated_at || new Date().toISOString(),
     source: 'VERIFIED_REPOSITORY_HISTORY_AND_ARCHIVED_MONTHLY_PRICE_INPUTS',
     scoring_effect: 'NONE',
+    availability_policy: 'ONLY_ROWS_AVAILABLE_ON_OR_BEFORE_ACTIVE_CANONICAL_REPORT_VINTAGE',
     funding: {
       evidence_tier: 'OVERLAY',
       version: funding.version,
       role: roles?.funding_v2?.role || 'REACTIVE_CONFIRMATION',
+      active_available_date: fundingCutoff,
       source_file: 'research/funding-v2/latest/history.csv',
+      excluded_future_rows: allFundingRows.length - fundingRows.length,
       rows: fundingRows.map(r => ({
         ...r,
         score: round(r.score),
@@ -137,7 +152,9 @@ export async function buildContextHistory(root, report) {
       evidence_tier: 'OVERLAY',
       version: fiscal.version,
       role: roles?.fiscal_v2?.role || 'MIXED',
+      active_available_date: fiscalCutoff,
       source_file: 'research/fiscal-v2/latest/history.csv',
+      excluded_future_rows: allFiscalRows.length - fiscalRows.length,
       historical_caveat: 'Revised FRED history with frozen conservative publication lags; not exact historical release-time vintages.',
       rows: fiscalRows.map(r => ({
         ...r,
