@@ -22,6 +22,8 @@ Current promoted vintage at this roadmap update:
 - FX-neutral Money score: 44.4880 — NEUTRAL
 - fixed transmission transfer gate: 6/6 PASS
 
+Signal role taxonomy: **LEADING**. This is an interpretation label, not a new score or causal claim.
+
 The 2026-02-28 Core remains HISTORICAL REFERENCE only. Historical v1.8b remains `BLOCKED_MISSING_FROZEN_INPUT_BYTES` as audit context only.
 
 ### Money nowcast — DONE / ACTIVE
@@ -40,6 +42,8 @@ Current promoted vintage:
 
 Funding V2 is reproducible, guarded and scheduled. It is a bounded OVERLAY and never overrides Money Core.
 
+Signal role taxonomy: **REACTIVE_CONFIRMATION**.
+
 Promotion evidence:
 - Candidate 1 rejected without retuning after 2020 stress failure.
 - Candidate 2 fixed stress gate passed 2008-10, 2020-03 and current state.
@@ -48,6 +52,8 @@ Promotion evidence:
 
 ### Fiscal V2 — PROMOTION READY / ACTIVE INTEGRATION
 `GMLI_FISCAL_V2_DEFICIT_IMPULSE`
+
+Signal role taxonomy: **MIXED**.
 
 Legacy reproduction decision:
 - exact July-2026 `STRICT_ACTUAL_RELEASE` historical runner/vintages were not recovered without guesswork;
@@ -97,6 +103,40 @@ CI production-readiness generation and fail-closed refresh test: PASS. Final def
 ### Market confirmation — DONE / ACTIVE
 Completed-month structural confirmation remains separate from current/live SPY/QQQ/GLD/DBC confirmation and divergence flags.
 
+Signal role taxonomy: **REACTIVE_CONFIRMATION** by construction.
+
+### Signal Role Taxonomy v1 — DONE / INTERPRETATION-ONLY
+Canonical standard:
+- `docs/GMLI_SIGNAL_ROLE_TAXONOMY_V1.md`
+- `research/signal-role-taxonomy/RESULT_SUMMARY.json`
+
+Fixed findings:
+- Money Core: **LEADING**
+- Funding V2: **REACTIVE_CONFIRMATION**
+- Fiscal V2: **MIXED**
+- Market Confirmation: **REACTIVE_CONFIRMATION**
+
+Money role test:
+- promoted Money V2 transmission remains 6/6;
+- no robust market→Money dominance across stationary promoted transforms;
+- SPY Money accel3 12M forward Pearson +0.452 vs trailing +0.015;
+- QQQ +0.414 vs +0.216;
+- QQQ fixed ex-pandemic 3M Money→QQQ p=0.0475; reverse p=0.696;
+- DBC Money-level Granger excluded from role count because ADF p=0.0985.
+
+Reverse overlay finding:
+- Funding: SPY/QQQ→Funding 6/6 Holm-significant fixed 1/3/6M tests; Funding→equities 0/6; same 6/6 vs 0/6 ex-pandemic; VIX absorbs most incremental SPY information.
+- Fiscal: fixed SPY 12M usefulness remains, but reverse precedence is regime/control sensitive and not robust ex-pandemic.
+
+Funding vs Market Confirmation overlap:
+- aligned n=222 months;
+- Funding rubric vs market score Pearson +0.128, Spearman +0.087;
+- exact 0–2 score agreement ~23%.
+
+Conclusion: Funding and Market Confirmation are both reactive but are not materially the same signal. No frozen conviction-weight change is justified by this diagnostic.
+
+Scoring effect of taxonomy: **NONE**. Any role-based reweighting/de-duplication requires a separately frozen versioned decision-engine candidate.
+
 ### Production resilience / observability — DONE
 - canonical Vercel production smoke covers `/api/status`, `/api/decision`, `/api/report`, `/api/money-nowcast`, `/api/current-market`, `/api/history`
 - GitHub Pages remains resilient snapshot
@@ -110,6 +150,7 @@ Completed-month structural confirmation remains separate from current/live SPY/Q
 - RESEARCH and OVERLAY signals never silently replace CORE.
 - Funding remains a bounded modifier and cannot overwrite Money Core.
 - Fiscal V2 remains an OVERLAY; automatic global conviction weight stays 0 unless a separately frozen decision-engine candidate is tested and promoted.
+- Signal Role Taxonomy is descriptive only and cannot silently change weights or evidence tiers.
 - Overlay refreshes fail closed and preserve last-good state on source/provenance/date-regression failures.
 - Do not broaden empirical search merely because an interesting secondary correlation appears.
 
@@ -166,6 +207,15 @@ Detailed evidence:
 - `research/fiscal-v2/promotion.lock.json`
 - `research/fiscal-v2/latest/manifest.lock.json`.
 
+### P1 — Signal Role Taxonomy v1 — DONE
+Completed:
+- [x] fixed Money direction test using only promoted transforms
+- [x] stationarity guard before Granger role counting
+- [x] reverse Funding/Fiscal mechanism research
+- [x] Funding vs Market Confirmation overlap diagnostic
+- [x] canonical role standard + API read-only metadata
+- [x] zero scoring/weight change guard.
+
 ### P2 — Credit / Velocity — DEFER
 Current status remains `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Do not infer the old formula. Build a new version only if the promoted Money + Funding + Fiscal stack still leaves a material decision gap, with construction/usefulness gates frozen before testing.
 
@@ -215,10 +265,19 @@ Do not expand broadly until incremental allocation value is clear. HYG/BTC/REIT/
 - [x] guarded refresh + provenance + Data Health/API integration
 - [ ] Vercel + Pages + API smoke after merge
 
+### Phase 6b — Signal Role Taxonomy — DONE
+- [x] Money = LEADING interpretation supported without reverse dominance
+- [x] Funding = REACTIVE_CONFIRMATION
+- [x] Fiscal = MIXED
+- [x] Market Confirmation = REACTIVE_CONFIRMATION
+- [x] overlap check does not justify frozen rubric changes
+- [x] canonical docs and report metadata updated
+
 ### Phase 7 — Optional gap-filling — DEFER
 - [ ] Credit/Velocity only if a material decision gap remains
 - [ ] selective asset expansion only if allocation value is clear
-- [ ] any automatic Fiscal conviction weighting only through a separate frozen decision-engine candidate.
+- [ ] any automatic Fiscal conviction weighting only through a separate frozen decision-engine candidate
+- [ ] any role-based Funding/market de-duplication only through a separate frozen decision-engine candidate.
 
 ## Definition of done
 GMLI core infrastructure is materially healthy when:
@@ -228,4 +287,5 @@ GMLI core infrastructure is materially healthy when:
 4. Current and structural market confirmation remain separate. **DONE.**
 5. Vercel and Pages expose a consistent production state with smoke guards. **DONE for pre-Fiscal stack.**
 6. Fiscal legacy ambiguity is explicitly superseded by versioned Fiscal V2 with frozen construction, narrow PASS and fail-closed refresh. **PROMOTION READY; LIVE SMOKE PENDING.**
-7. Historical frozen results and rejected research remain auditable without silently influencing production. **DONE.**
+7. Signal roles are explicitly separated without silently changing scoring. **DONE.**
+8. Historical frozen results and rejected research remain auditable without silently influencing production. **DONE.**
