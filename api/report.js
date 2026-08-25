@@ -3,6 +3,7 @@ import { buildDecision } from '../lib/decision-engine.js';
 import { buildFreshnessHealth } from '../lib/freshness-health.js';
 import { buildCurrentMarketConfirmation } from '../lib/current-market.js';
 import { FROZEN_STATE } from '../lib/state.js';
+import { SIGNAL_ROLE_TAXONOMY } from '../lib/signal-roles.js';
 
 function buckets(assets) {
   const accumulate = [], watch = [], dont_chase = [], limited = [];
@@ -51,7 +52,7 @@ export default async function handler(req, res) {
     ];
 
     return res.status(200).json({
-      schema_version:'gmli-report-v1.5',
+      schema_version:'gmli-report-v1.6',
       engine_version:'GMLI 2.4.0',
       generated_at:generatedAt.toISOString(),
       meta:{
@@ -60,6 +61,7 @@ export default async function handler(req, res) {
         raw_endpoints:['/api/status','/api/decision','/api/opportunity','/api/positioning','/api/money-nowcast','/api/current-market'],
         warnings:[
           `Money V2 is the active promoted Core (${FROZEN_STATE.money.version}), currently available ${FROZEN_STATE.money.available_date}.`,
+          `Signal Role Taxonomy ${SIGNAL_ROLE_TAXONOMY.version} is descriptive RESEARCH interpretation only: Money=LEADING, Funding=REACTIVE_CONFIRMATION, Fiscal=MIXED, Market Confirmation=REACTIVE_CONFIRMATION; scoring effect is NONE.`,
           `Funding V2 is the active promoted OVERLAY (${FROZEN_STATE.funding.version}), currently available ${FROZEN_STATE.funding.available_date}; it is a bounded conviction modifier and never overrides Money Core.`,
           'Funding V2 empirical promotion strength is narrow: fixed DBC 6M/12M relations passed; SPY/QQQ/GLD diagnostics are not universal return claims.',
           `Fiscal V2 is the active promoted OVERLAY (${FROZEN_STATE.fiscal.version}), currently available ${FROZEN_STATE.fiscal.available_date}; its fixed SPY 12M usefulness gate passed but its automatic global conviction weight is 0.`,
@@ -70,12 +72,14 @@ export default async function handler(req, res) {
       },
       data_health:dataHealth,
       methodology: decision.methodology,
+      signal_role_taxonomy:SIGNAL_ROLE_TAXONOMY,
       regime:{
         engine_fact:{ money:decision.money },
         current_research_inference:{
           label:decision.regime.label,
           tilt:decision.regime.tilt,
           provisional:decision.regime.provisional,
+          signal_roles:SIGNAL_ROLE_TAXONOMY,
           money_nowcast:decision.money_nowcast,
           funding:decision.funding,
           fiscal:decision.fiscal,
@@ -107,6 +111,7 @@ export default async function handler(req, res) {
       },
       research_gaps:[
         'Historical Money v1.8b exact rerun remains impossible without the original frozen Aug-15 bytes; this is closed as historical audit context and is not an active V2 blocker.',
+        'Signal Role Taxonomy v1 is interpretation-only: Money is treated as leading, Funding as reactive confirmation, Fiscal as mixed, and market confirmation as reactive confirmation. Any role-based reweighting requires a separately frozen decision-engine candidate.',
         'Funding V2 is promoted as a bounded OVERLAY, not a universal asset-return signal; its strongest fixed empirical usefulness is DBC 6M/12M.',
         'Fiscal V2 is promoted as a refreshable confirmation OVERLAY after the fixed SPY 12M gate passed; it carries zero automatic global conviction weight and is not a universal return signal.',
         'Credit/Velocity exact old construction provenance remains incomplete; do not infer the old formula.',
