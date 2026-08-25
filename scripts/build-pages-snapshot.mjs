@@ -6,6 +6,7 @@ import { enhancePagesHtml } from './pages-money-ui.mjs';
 import { enhanceMobileInfo } from './pages-mobile-info.mjs';
 import { enhanceSignalRoleUi } from './pages-signal-role-ui.mjs';
 import { buildContextHistory } from './pages-context-history.mjs';
+import { buildMoneyExtremes, enhanceExtremesGuide } from './pages-extremes-guide.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, '.pages');
@@ -118,6 +119,17 @@ async function main() {
   assertRoundedScore(latest.usd_score, core.usd_score, 'USD score');
   assertRoundedScore(latest.fx_neutral_score, core.fx_neutral_score, 'FX-neutral score');
 
+  const moneyExtremes = buildMoneyExtremes(history);
+  const latestMoneyExtreme = moneyExtremes?.latest;
+  if (moneyExtremes?.version !== 'GMLI_MONEY_HISTORICAL_EXTREMES_V1' || moneyExtremes?.scoring_effect !== 'NONE' || moneyExtremes?.automatic_weight_change !== 0) {
+    throw new Error('Money Historical Extremes diagnostic guard failed');
+  }
+  if (!latestMoneyExtreme || latestMoneyExtreme.available_date !== core.available_date || latestMoneyExtreme.month !== history.latest_month) {
+    throw new Error(`Money Historical Extremes latest mismatch: ${latestMoneyExtreme?.month}/${latestMoneyExtreme?.available_date} vs ${history.latest_month}/${core.available_date}`);
+  }
+  assertClose(latestMoneyExtreme.usd_level.value_pct, core.usd_yoy_pct, 'Money extremes USD level');
+  assertClose(latestMoneyExtreme.fx_neutral_level.value_pct, core.fx_neutral_yoy_pct, 'Money extremes FX-neutral level');
+
   const contextHistory = await buildContextHistory(ROOT, report);
   const latestFundingHistory = contextHistory?.funding?.rows?.at(-1);
   const latestFiscalHistory = contextHistory?.fiscal?.rows?.at(-1);
@@ -181,11 +193,12 @@ async function main() {
     writeJson('opportunity.json', opportunitySnapshot),
     writeJson('positioning.json', positioningSnapshot),
     writeJson('context-history.json', contextHistory),
-    writeJson('refresh-status.json', refreshStatus)
+    writeJson('refresh-status.json', refreshStatus),
+    writeJson('money-extremes.json', moneyExtremes)
   ]);
 
   let html = await fs.readFile(path.join(ROOT, 'index.html'), 'utf8');
-  html = enhanceSignalRoleUi(enhanceMobileInfo(enhancePagesHtml(html)))
+  html = enhanceExtremesGuide(enhanceSignalRoleUi(enhanceMobileInfo(enhancePagesHtml(html))), moneyExtremes)
     .replaceAll("fetch('/api/report')", "fetch('./api/report.json', {cache:'no-store'})")
     .replaceAll("fetch('/api/radar')", "fetch('./api/radar.json', {cache:'no-store'})")
     .replaceAll("fetch('/api/history')", "fetch('./api/history.json', {cache:'no-store'})")
@@ -207,6 +220,10 @@ async function main() {
     refresh_status: refreshStatus.status,
     money_version: core.version,
     money_available_date: core.available_date,
+    money_extremes_version: moneyExtremes.version,
+    money_extremes_latest_month: latestMoneyExtreme.month,
+    money_extremes_rows: moneyExtremes.rows.length,
+    money_extremes_scoring_effect: moneyExtremes.scoring_effect,
     fiscal_version: fiscal.version,
     fiscal_available_date: fiscal.available_date,
     fiscal_score: fiscal.score,
@@ -224,9 +241,11 @@ async function main() {
     context_market_history_rows: contextHistory.market_confirmation.rows.length,
     context_market_latest_month: latestMarketHistory.month,
     report_schema: report.schema_version,
-    static_api_files: 11,
+    static_api_files: 12,
     pages_context_ui: true,
     pages_context_history_ui: true,
+    pages_money_extremes_ui: true,
+    pages_investor_guide: true,
     radar_as_of: radar.as_of
   }, null, 2));
 }
