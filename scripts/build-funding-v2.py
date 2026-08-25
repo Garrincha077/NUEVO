@@ -9,6 +9,7 @@ import time
 import urllib.parse
 import urllib.request
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -50,7 +51,7 @@ def available_date_for_observation_month(m):
     return first_after - timedelta(days=1)
 
 
-def fetch_series(series_id, as_of, attempts=3):
+def fetch_series(series_id, as_of, attempts=2):
     params = urllib.parse.urlencode({
         'id': series_id,
         'cosd': SOURCE_START,
@@ -61,8 +62,11 @@ def fetch_series(series_id, as_of, attempts=3):
     raw = None
     for attempt in range(1, attempts + 1):
         try:
-            req = urllib.request.Request(url, headers={'User-Agent': 'gmli-funding-v2/1.0'})
-            with urllib.request.urlopen(req, timeout=90) as response:
+            req = urllib.request.Request(url, headers={
+                'User-Agent': 'GMLI-Research-Copilot/2.5 funding-v2',
+                'Accept': 'text/csv',
+            })
+            with urllib.request.urlopen(req, timeout=30) as response:
                 raw = response.read()
             break
         except Exception as exc:
@@ -86,7 +90,7 @@ def fetch_series(series_id, as_of, attempts=3):
             continue
     if not rows:
         raise RuntimeError(f'no usable observations for {series_id}')
-    return url, raw, rows
+    return series_id, url, raw, rows
 
 
 def aggregate_monthly(rows, method):
@@ -133,8 +137,15 @@ def regime(score):
 def build(as_of):
     monthly = {}
     source_meta = {}
+    fetched = {}
+    with ThreadPoolExecutor(max_workers=len(SERIES)) as pool:
+        futures = {pool.submit(fetch_series, sid, as_of): sid for sid in SERIES}
+        for future in as_completed(futures):
+            sid = futures[future]
+            fetched[sid] = future.result()
+
     for sid, spec in SERIES.items():
-        url, raw, rows = fetch_series(sid, as_of)
+        _, url, raw, rows = fetched[sid]
         monthly[sid] = aggregate_monthly(rows, spec['aggregation'])
         source_meta[sid] = {
             'url': url,
