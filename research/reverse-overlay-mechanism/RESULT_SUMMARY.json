@@ -1,0 +1,75 @@
+{
+  "status": "INFORMATIONAL_REVERSE_OVERLAY_RESEARCH_RECORDED",
+  "as_of": "2026-08-25",
+  "evidence_tier": "RESEARCH",
+  "production_implication": "NONE",
+  "causal_claim_allowed": false,
+  "automatic_weight_change": 0,
+  "overall_interpretation": "Funding V2 shows strong equity-market predictive precedence, concentrated in market-sensitive funding channels and especially the 2020+ / post-2022 regime. Fiscal V2 shows weaker, mixed and regime-dependent market precedence. Neither result is structural causality.",
+  "fiscal_v2": {
+    "classification": "MIXED_OR_REGIME_DEPENDENT",
+    "full_market_to_overlay_holm_significant_tests": 1,
+    "full_overlay_to_market_holm_significant_tests": 0,
+    "key_full_result": {"SPY_to_Fiscal_lag3_raw_p": 0.005927, "holm_p": 0.035562},
+    "exclude_pandemic_market_to_overlay_holm_significant_tests": 0,
+    "common_driver_SPY_lags_with_VIX_UNRATE_p": 0.770931,
+    "lead_lag": {
+      "SPY_trailing_12m_pearson": 0.34308,
+      "SPY_forward_12m_pearson": 0.176287,
+      "QQQ_trailing_12m_pearson": 0.592849,
+      "QQQ_forward_12m_pearson": 0.066215
+    },
+    "interpretation": "Fiscal appears more reactive/episodic than leading. Its reverse precedence does not survive pandemic exclusion or common-driver controls."
+  },
+  "funding_v2": {
+    "classification": "MARKET_PRECEDENCE_SUPPORTED_BUT_FINANCIAL_STRESS_MEDIATED_AND_REGIME_DEPENDENT",
+    "full_market_to_overlay_holm_significant_tests": 6,
+    "full_overlay_to_market_holm_significant_tests": 0,
+    "exclude_pandemic_market_to_overlay_holm_significant_tests": 6,
+    "exclude_pandemic_overlay_to_market_holm_significant_tests": 0,
+    "post_2022": {
+      "SPY_to_Funding_lag3_raw_p": 0.00875,
+      "SPY_to_Funding_holm_p": 0.0175,
+      "QQQ_to_Funding_lag3_raw_p": 0.018597,
+      "QQQ_to_Funding_holm_p": 0.018597,
+      "Funding_to_SPY_holm_p": 0.373622,
+      "Funding_to_QQQ_holm_p": 0.373622
+    },
+    "raw_input_attribution_lag3_holm": {
+      "SPY_to_ANFCI": 0.000536,
+      "QQQ_to_ANFCI": 0.000553,
+      "SPY_to_DFII10": 0.058578,
+      "QQQ_to_DFII10": 0.057291,
+      "SPY_to_term_premium": 0.040532,
+      "QQQ_to_term_premium": 0.058578,
+      "SPY_to_reserves_3m_pct": 0.001392,
+      "QQQ_to_reserves_3m_pct": 0.01331
+    },
+    "nested_common_driver_SPY_joint_p": {
+      "own_lags_only": 0.001106,
+      "plus_VIX": 0.061445,
+      "plus_UNRATE": 0.001111,
+      "plus_VIX_plus_UNRATE": 0.052497
+    },
+    "dbc_bidirectional_granger": {
+      "full_DBC_to_Funding_any_holm_significant": false,
+      "full_Funding_to_DBC_any_holm_significant": false,
+      "exclude_pandemic_DBC_to_Funding_any_holm_significant": false,
+      "exclude_pandemic_Funding_to_DBC_any_holm_significant": false
+    },
+    "lead_lag": {
+      "SPY_trailing_12m_pearson": 0.615528,
+      "SPY_forward_12m_pearson": 0.228137,
+      "QQQ_trailing_12m_pearson": 0.535224,
+      "QQQ_forward_12m_pearson": 0.121244
+    },
+    "interpretation": "Equities precede changes in Funding strongly, but VIX absorbs most incremental SPY information, indicating a shared financial-stress channel. ANFCI and reserve changes carry the clearest input-level precedence. Funding remains more suitable as a confirmation/conditions overlay than as an equity-leading signal. The pre-existing DBC 6M/12M usefulness evidence remains an association and is not upgraded to a causal claim."
+  },
+  "production_guardrail": "No change to Money Core, Funding V2, Fiscal V2, 10-point conviction rubric, thresholds or automatic weights. Any use of reverse behavior in production requires a separately frozen versioned decision-engine candidate.",
+  "audit": {
+    "workflow_run_id": 32831205376,
+    "artifact_id": 9556808081,
+    "artifact_digest": "sha256:b4fa10da912d30ef3a8b6995bfad11051ccf3f67d1d53817213f991fd78b4247",
+    "head_sha": "6cee0daf3614685afbf223a0856701d724c27cc0"
+  }
+}
