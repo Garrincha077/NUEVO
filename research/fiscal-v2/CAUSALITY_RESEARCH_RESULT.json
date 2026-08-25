@@ -1,0 +1,115 @@
+{
+  "status": "INFORMATIONAL_CAUSALITY_RESEARCH_COMPLETE",
+  "study_version": "GMLI_FISCAL_V2_CAUSALITY_RESEARCH_V1",
+  "evidence_tier": "RESEARCH",
+  "as_of": "2026-08-25",
+  "conclusion": "NO_PREDICTIVE_PRECEDENCE",
+  "causal_claim_allowed": false,
+  "production_implication": "NONE",
+  "automatic_global_conviction_weight_change": 0,
+  "production_modified": false,
+  "money_core_modified": false,
+  "funding_v2_modified": false,
+  "candidate_version": "GMLI_FISCAL_V2_CANDIDATE_1",
+  "candidate_latest_eligible": {
+    "observation_month": "2026-06",
+    "available_date": "2026-07-31",
+    "ttm_deficit_billions": 1804.50791533821,
+    "gdp_observation_month": "2026-04",
+    "gdp_available_date": "2026-07-31",
+    "gdp_billions_saar": 32475.21,
+    "deficit_pct_gdp": 5.556570428145684,
+    "fiscal_impulse_pp": -0.6669482002141303,
+    "deficit_level_z": -0.2686283744404287,
+    "fiscal_impulse_z": -0.22236288278940683,
+    "composite_z": -0.24549562861491775,
+    "score": 45.90840618975137,
+    "regime": "NEUTRAL"
+  },
+  "sample": {
+    "granger_first_month": "2018-01",
+    "granger_last_month": "2026-08",
+    "granger_n": 104,
+    "regression_first_signal_month": "2017-11",
+    "regression_last_signal_month": "2025-06",
+    "regression_n": 92
+  },
+  "stationarity": [
+    {
+      "series": "fiscal_score_level",
+      "n": 103,
+      "adf_stat": -1.903787,
+      "p_value": 0.330281,
+      "used_lag": 0,
+      "stationary_at_5pct": false,
+      "critical_5pct": -2.890037
+    },
+    {
+      "series": "delta_fiscal_score",
+      "n": 90,
+      "adf_stat": -3.941612,
+      "p_value": 0.001749,
+      "used_lag": 13,
+      "stationary_at_5pct": true,
+      "critical_5pct": -2.894232
+    },
+    {
+      "series": "spy_1m_log_return",
+      "n": 102,
+      "adf_stat": -8.794099,
+      "p_value": 0.0,
+      "used_lag": 1,
+      "stationary_at_5pct": true,
+      "critical_5pct": -2.890321
+    }
+  ],
+  "granger_fiscal_to_spy": {
+    "target": "spy_1m_return",
+    "predictor": "delta_fiscal_score",
+    "n": 104,
+    "tests": [
+      {"lag_months": 1, "raw_p_value": 0.895345, "holm_p_value": 0.895345, "significant_5pct_after_holm": false},
+      {"lag_months": 3, "raw_p_value": 0.350164, "holm_p_value": 0.700328, "significant_5pct_after_holm": false},
+      {"lag_months": 6, "raw_p_value": 0.150079, "holm_p_value": 0.450238, "significant_5pct_after_holm": false}
+    ],
+    "any_holm_significant_5pct": false
+  },
+  "granger_spy_to_fiscal": {
+    "target": "delta_fiscal_score",
+    "predictor": "spy_1m_return",
+    "n": 104,
+    "tests": [
+      {"lag_months": 1, "raw_p_value": 0.385227, "holm_p_value": 0.385227, "significant_5pct_after_holm": false},
+      {"lag_months": 3, "raw_p_value": 0.006211, "holm_p_value": 0.018633, "significant_5pct_after_holm": true},
+      {"lag_months": 6, "raw_p_value": 0.027433, "holm_p_value": 0.054867, "significant_5pct_after_holm": false}
+    ],
+    "any_holm_significant_5pct": true
+  },
+  "incremental_12m_hac_regression": {
+    "n": 92,
+    "fiscal_coef_per_score_point": 0.0020896,
+    "fiscal_coef_per_10_score_points_log_return": 0.020896,
+    "fiscal_hac_p_value": 0.102006,
+    "fiscal_positive": true,
+    "fiscal_significant_5pct": false,
+    "baseline_r_squared": 0.159845,
+    "full_r_squared": 0.250583,
+    "delta_r_squared": 0.090738,
+    "hac_maxlags": 12
+  },
+  "lead_lag_placebo": {
+    "n": 92,
+    "forward_12m_pearson": 0.176287,
+    "trailing_12m_pearson": 0.28194,
+    "forward_minus_trailing": -0.105653,
+    "forward_association_stronger": false
+  },
+  "interpretation_guardrail": "Granger causality means predictive precedence, not structural economic causality. HAC regression and lead/lag asymmetry are complementary diagnostics only. Revised FRED history and a short post-2017 sample limit inference.",
+  "audit": {
+    "workflow_run_id": 32829902846,
+    "workflow_conclusion": "success",
+    "artifact_id": 9556332920,
+    "artifact_digest": "sha256:ca2dc937c0d3c51aafe41d435688d13b74feaab544e354e085124f4e8ffd285a",
+    "head_sha": "273d0558bef9d5fc20c5145a722cd2a31f8352dd"
+  }
+}
