@@ -160,8 +160,6 @@ Samo SPY, QQQ, GLD i DBC imaju promovirani CORE Money transmission. Ostali radar
 
 Ne pokreći novi parameter search/FDR sweep radi Radara.
 
-Ne pokreći novi parameter search/FDR sweep radi Radara.
-
 ## Freshness
 Uvijek razdvoji:
 - ENGINE FACT
