@@ -13,6 +13,7 @@ on:
       - 'scripts/pages-money-ui.mjs'
       - 'scripts/pages-mobile-info.mjs'
       - 'scripts/pages-signal-role-ui.mjs'
+      - 'scripts/pages-extremes-guide.mjs'
       - 'research/china-m2-official-v2/latest/**'
       - 'research/global-money-v2/latest/**'
       - 'research/global-money-v2/transfer/latest/**'
@@ -31,6 +32,7 @@ on:
       - 'scripts/pages-money-ui.mjs'
       - 'scripts/pages-mobile-info.mjs'
       - 'scripts/pages-signal-role-ui.mjs'
+      - 'scripts/pages-extremes-guide.mjs'
       - 'research/china-m2-official-v2/latest/**'
       - 'research/global-money-v2/latest/**'
       - 'research/global-money-v2/transfer/latest/**'
@@ -89,20 +91,25 @@ jobs:
           grep -q 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL' /tmp/gmli-pages.json
           grep -q 'GMLI_FISCAL_V2_DEFICIT_IMPULSE' /tmp/gmli-pages.json
           grep -q 'GMLI_SIGNAL_ROLE_TAXONOMY_V1' /tmp/gmli-pages.json
+          grep -q 'GMLI_MONEY_HISTORICAL_EXTREMES_V1' /tmp/gmli-pages.json
           grep -q '"signal_role_scoring_effect": "NONE"' /tmp/gmli-pages.json
+          grep -q '"money_extremes_scoring_effect": "NONE"' /tmp/gmli-pages.json
           grep -q '"fiscal_automatic_weight": 0' /tmp/gmli-pages.json
           grep -q '"report_schema": "gmli-report-v1.6"' /tmp/gmli-pages.json
           grep -q '"pages_context_ui": true' /tmp/gmli-pages.json
           grep -q '"pages_context_history_ui": true' /tmp/gmli-pages.json
+          grep -q '"pages_money_extremes_ui": true' /tmp/gmli-pages.json
+          grep -q '"pages_investor_guide": true' /tmp/gmli-pages.json
           grep -q '"context_funding_history_rows"' /tmp/gmli-pages.json
           grep -q '"context_fiscal_history_rows"' /tmp/gmli-pages.json
           grep -q '"context_market_history_rows"' /tmp/gmli-pages.json
           grep -q '"money_available_date"' /tmp/gmli-pages.json
+          grep -q '"money_extremes_latest_month"' /tmp/gmli-pages.json
           grep -q '"fiscal_available_date"' /tmp/gmli-pages.json
           grep -q '"history_rows"' /tmp/gmli-pages.json
-          grep -q '"static_api_files": 11' /tmp/gmli-pages.json
+          grep -q '"static_api_files": 12' /tmp/gmli-pages.json
           test -s .pages/index.html
-          for f in report radar history status decision current-market opportunity positioning money-nowcast context-history refresh-status; do
+          for f in report radar history status decision current-market opportunity positioning money-nowcast context-history refresh-status money-extremes; do
             test -s ".pages/api/${f}.json"
           done
           grep -q 'GMLI_FISCAL_V2_DEFICIT_IMPULSE' .pages/api/report.json
@@ -116,7 +123,20 @@ jobs:
           grep -q 'research/fiscal-v2/latest/history.csv' .pages/api/context-history.json
           grep -q '"schema_version": "gmli-pages-refresh-v1"' .pages/api/refresh-status.json
           grep -q 'LIVE_DURING_REPORT_BUILD' .pages/api/refresh-status.json
+          grep -q '"schema_version": "gmli-money-extremes-v1"' .pages/api/money-extremes.json
+          grep -q '"version": "GMLI_MONEY_HISTORICAL_EXTREMES_V1"' .pages/api/money-extremes.json
+          grep -q '"evidence_tier": "RESEARCH_DIAGNOSTIC"' .pages/api/money-extremes.json
+          grep -q '"scoring_effect": "NONE"' .pages/api/money-extremes.json
+          grep -q '"automatic_weight_change": 0' .pages/api/money-extremes.json
+          grep -q '"rolling_window_months": 120' .pages/api/money-extremes.json
+          grep -q '"minimum_months": 36' .pages/api/money-extremes.json
+          grep -q '"lookahead": false' .pages/api/money-extremes.json
           grep -q 'Global Money Trend' .pages/index.html
+          grep -q 'Money Historical Extremes' .pages/index.html
+          grep -q 'moneyLevelZChart' .pages/index.html
+          grep -q 'moneyAccelZChart' .pages/index.html
+          grep -q 'Kako čitati GMLI — vodič za investitore' .pages/index.html
+          grep -q 'id="investorGuide"' .pages/index.html
           grep -q 'id="contextLayers"' .pages/index.html
           grep -q 'Context History' .pages/index.html
           grep -q 'contextFundingHistoryChart' .pages/index.html
@@ -125,6 +145,8 @@ jobs:
           grep -q 'FISCAL V2' .pages/index.html
           grep -q 'SIGNAL ROLE CHAIN' .pages/index.html
           grep -q 'CONTEXT</a>' .pages/index.html
+          grep -q 'EXTREMES</a>' .pages/index.html
+          grep -q 'GUIDE</a>' .pages/index.html
           grep -q 'moneyScoreChart' .pages/index.html
           grep -q 'moneyYoyChart' .pages/index.html
           grep -q 'infoPopover' .pages/index.html
