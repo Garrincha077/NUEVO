@@ -1,0 +1,58 @@
+{
+  "decision": "PASS_FIXED_CONSTRUCTION_SANITY",
+  "candidate_version": "GMLI_FISCAL_V2_CANDIDATE_1",
+  "evidence_tier": "RESEARCH",
+  "as_of": "2026-08-25",
+  "workflow_run_id": 32827643623,
+  "workflow_artifact_id": 9555498880,
+  "workflow_artifact_sha256": "71adc28797c001c2bec19b69d52d9aa4e19b35dfead674cacb2df190a896dc1d",
+  "legacy_reproduction_decision": "STOP_LEGACY_REVERSE_ENGINEERING_BUILD_VERSIONED_V2",
+  "latest_eligible": {
+    "observation_month": "2026-06",
+    "available_date": "2026-07-31",
+    "ttm_deficit_billions": 1804.50791533821,
+    "gdp_observation_month": "2026-04",
+    "gdp_available_date": "2026-07-31",
+    "gdp_billions_saar": 32475.21,
+    "deficit_pct_gdp": 5.556570428145684,
+    "fiscal_impulse_pp": -0.6669482002141303,
+    "deficit_level_z": -0.2686283744404287,
+    "fiscal_impulse_z": -0.22236288278940683,
+    "composite_z": -0.24549562861491775,
+    "score": 45.90840618975137,
+    "regime": "NEUTRAL"
+  },
+  "legacy_current_comparator": {
+    "available_date": "2026-07-31",
+    "score": 52.539556447652046,
+    "regime": "NEUTRAL",
+    "candidate_score": 45.90840618975137,
+    "candidate_regime": "NEUTRAL",
+    "regime_match": true,
+    "score_delta": -6.6311502579006785,
+    "forced_match_required": false
+  },
+  "pandemic_support_sanity": {
+    "observation_month": "2020-06",
+    "expected_regime": "SUPPORTIVE",
+    "actual_regime": "SUPPORTIVE",
+    "actual_score": 100.0,
+    "pass": true
+  },
+  "history_start": "2017-11",
+  "history_end": "2026-07",
+  "history_rows": 105,
+  "production_modified": false,
+  "money_core_modified": false,
+  "funding_v2_modified": false,
+  "no_search": {
+    "component_search": false,
+    "weight_search": false,
+    "lag_search": false,
+    "window_search": false,
+    "threshold_search": false,
+    "asset_search": false,
+    "horizon_search": false,
+    "fdr_claim": false
+  }
+}
