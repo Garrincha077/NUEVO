@@ -36,13 +36,22 @@ jobs:
         shell: bash
         run: |
           python -m py_compile scripts/build-funding-v2.py
-          python scripts/build-funding-v2.py --as-of 2026-08-25 --validate-only > /tmp/gmli-funding-v2.json
+          rm -rf /tmp/gmli-funding-v2-artifact
+          python scripts/build-funding-v2.py --as-of 2026-08-25 --build-full --output-dir /tmp/gmli-funding-v2-artifact > /tmp/gmli-funding-v2.json
           cat /tmp/gmli-funding-v2.json
           grep -q '"candidate_version": "GMLI_FUNDING_V2_CANDIDATE_1"' /tmp/gmli-funding-v2.json
           grep -q '"production_modified": false' /tmp/gmli-funding-v2.json
           grep -q '"parameter_search": false' /tmp/gmli-funding-v2.json
           grep -q '"available_date": "2026-07-31"' /tmp/gmli-funding-v2.json
           grep -q '"promotion_eligible": false' /tmp/gmli-funding-v2.json
+          test -s /tmp/gmli-funding-v2-artifact/summary.json
+          test -s /tmp/gmli-funding-v2-artifact/history.csv
+      - name: Upload Funding V2 research artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-funding-v2-candidate-1
+          path: /tmp/gmli-funding-v2-artifact
+          if-no-files-found: error
       - name: Guard production separation
         run: |
           grep -q "score: 36.035410932024234" lib/state.js
