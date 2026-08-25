@@ -1,0 +1,53 @@
+{
+  "gate_version": "GMLI_FISCAL_V2_USEFULNESS_GATE_V1",
+  "status": "FROZEN_BEFORE_EMPIRICAL_RUN",
+  "candidate_version": "GMLI_FISCAL_V2_CANDIDATE_1",
+  "evidence_tier": "RESEARCH",
+  "purpose": "Test whether the pre-frozen Fiscal V2 candidate has narrow incremental decision usefulness as a fiscal conviction overlay without asset, horizon, lag or parameter search.",
+  "signal_availability": {
+    "score_rule": "Fiscal observation month t is available at calendar month-end t+1.",
+    "price_start_rule": "Forward return starts from the exact-ticker monthly adjusted close in month t+2 so the fiscal score is fully available before the return window begins."
+  },
+  "sample_split": {
+    "train_signal_months": "candidate history through 2022-12",
+    "oos_signal_months": "2023-01+"
+  },
+  "primary_fixed_relations": [
+    {
+      "id": "SPY_FISCAL_V2_12M",
+      "asset": "SPY",
+      "horizon_months": 12,
+      "primary": true,
+      "expected_direction": "positive"
+    }
+  ],
+  "secondary_diagnostics_not_in_gate": [
+    {
+      "id": "QQQ_FISCAL_V2_12M",
+      "asset": "QQQ",
+      "horizon_months": 12,
+      "primary": false
+    },
+    {
+      "id": "DBC_FISCAL_V2_12M",
+      "asset": "DBC",
+      "horizon_months": 12,
+      "primary": false
+    }
+  ],
+  "primary_pass_rule": "SPY 12M must have positive train Pearson correlation, positive OOS Pearson correlation and positive OOS Spearman correlation between Fiscal V2 score and forward log total return.",
+  "interpretation": "PASS means Candidate 1 clears only a narrow usefulness gate suitable for a bounded conviction overlay readiness review. It does not make Fiscal a Core signal, does not prove causality and does not permit production promotion by itself.",
+  "no_search": {
+    "asset_search": false,
+    "horizon_search": false,
+    "lag_search": false,
+    "parameter_search": false,
+    "threshold_search": false,
+    "subperiod_search": false,
+    "fdr_claim": false
+  },
+  "failure_rule": "If the fixed primary relation fails, keep Candidate 1 as RESEARCH and do not retune it. Any materially different construction requires an explicit Candidate 2 contract.",
+  "production_modified": false,
+  "money_core_modified": false,
+  "funding_v2_modified": false
+}
