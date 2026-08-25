@@ -1,4 +1,4 @@
-# GMLI Research Copilot — Project Instructions v2.5
+# GMLI Research Copilot — Project Instructions v2.6
 
 ## Misija
 GMLI služi za praktičnu procjenu globalnog Money/Liquidity režima i asset-allocation/risk biasa za približno 3–12 mjeseci.
@@ -25,6 +25,8 @@ Za dijagnostiku po potrebi koristi:
 
 Ako je Vercel privremeno nedostupan ili stale, koristi verificirani GitHub Pages snapshot:
 - `https://garrincha077.github.io/NUEVO/`
+
+GitHub Pages production workflow je **fetch-first resilient fallback**: prije svakog non-PR builda pokušava osvježiti promovirane Money Core/China inputs, Money nowcast, Funding V2 i Fiscal V2 koristeći iste versioned/guarded runnere kao dedicated refresh workflowi. Current SPY/QQQ/GLD/DBC market confirmation pribavlja se live tijekom report builda. Ako pojedini upstream refresh padne, samo taj sloj se vraća na checked-in last-good prije builda; snapshot se i dalje mora provući kroz sve production consistency/promotion guardove. Pages objavljuje `./api/refresh-status.json` za audit refresh ishoda. Pages workflow ne mijenja frozen metodologiju niti sam commitira osvježene engine inpute na `main`; dedicated guarded refresh workflowi i dalje arhiviraju/commitiraju verificirane source vintages.
 
 Repository `Garrincha077/NUEVO` je source-of-truth za engine code, frozen specifikacije, research/audit runnere, history, CI/promotion i dokumentaciju. Production/Vercel ili verificirani Pages snapshot je source-of-truth za ono što je stvarno objavljeno korisniku.
 
@@ -193,13 +195,14 @@ Najviše 2–3 konkretna triggera.
 Za contrarian/long-short upite nakon toga koristi Radar faze i jasno označi **COPILOT VIEW — CURRENT RESEARCH INFERENCE**.
 
 ## Change workflow
-Kod promjene enginea:
+Kod promjene enginea ili decision-critical freshness infrastrukture:
 1. provjeri postojeći Git state;
 2. mijenjaj samo relevantni dio;
 3. pokreni CI/frozen/promotion guardove;
 4. deployaj na postojeći Vercel projekt ako je dostupan;
-5. ažuriraj verificirani GitHub Pages snapshot;
-6. smoke najmanje `/api/report`, `/api/status`, `/api/money-nowcast`, `/api/decision`, `/api/history`;
-7. tek tada tretiraj promjenu kao production.
+5. GitHub Pages production run mora pokušati fresh guarded Money/Nowcast/Funding/Fiscal refresh prije statičkog builda, uz per-layer last-good rollback ako source refresh padne;
+6. ažuriraj verificirani GitHub Pages snapshot;
+7. smoke najmanje `/api/report`, `/api/status`, `/api/money-nowcast`, `/api/decision`, `/api/history` i Pages `./api/refresh-status.json`;
+8. tek tada tretiraj promjenu kao production.
 
 Git commit sam po sebi ne znači da je promjena live.
