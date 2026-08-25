@@ -52,7 +52,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m py_compile scripts/build-funding-v2.py scripts/build-funding-v2-candidate2.py scripts/refresh-funding-v2.py
-          python scripts/refresh-funding-v2.py --as-of 2026-08-25 --apply | tee /tmp/funding-v2-refresh.json
+          python scripts/refresh-funding-v2.py --apply | tee /tmp/funding-v2-refresh.json
           grep -q 'PASS_ACTIVE_FUNDING_V2_REFRESH_GUARDS' /tmp/funding-v2-refresh.json
           grep -q 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS' /tmp/funding-v2-refresh.json
           grep -q 'PASS_NARROW_FUNDING_USEFULNESS' /tmp/funding-v2-refresh.json
@@ -64,8 +64,22 @@ jobs:
           test -s research/funding-v2/latest/raw/THREEFYTP10.csv
           test -s research/funding-v2/latest/raw/WRESBAL.csv
           node --check lib/funding-v2-active.js
-          grep -q "available_date: '2026-07-31'" lib/funding-v2-active.js
-          grep -q "regime: 'RESTRICTIVE'" lib/funding-v2-active.js
+          python - <<'PY'
+          import json, re
+          refresh = json.load(open('/tmp/funding-v2-refresh.json', encoding='utf-8'))
+          manifest = json.load(open('research/funding-v2/latest/manifest.lock.json', encoding='utf-8'))
+          active = open('lib/funding-v2-active.js', encoding='utf-8').read()
+          def field(name):
+              m = re.search(rf"{name}:\s*'([^']+)'", active)
+              return m.group(1) if m else None
+          assert manifest['status'] == 'PASS_ACTIVE_FUNDING_V2_REFRESH_GUARDS'
+          assert manifest['version'] == 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS'
+          assert manifest['latest_eligible']['available_date'] == refresh['new_available_date']
+          assert field('available_date') == refresh['new_available_date']
+          assert field('observation_month') == refresh['observation_month']
+          assert manifest['money_core_modified'] is False
+          print('PASS_FUNDING_V2_ACTIVE_ARCHIVE_CONSISTENCY')
+          PY
 
       - name: Upload refresh audit snapshot
         uses: actions/upload-artifact@v4
