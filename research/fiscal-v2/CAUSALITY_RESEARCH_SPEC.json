@@ -1,0 +1,51 @@
+{
+  "study_version": "GMLI_FISCAL_V2_CAUSALITY_RESEARCH_V1",
+  "status": "FROZEN_BEFORE_EXPLORATORY_RUN",
+  "evidence_tier": "RESEARCH",
+  "production_implication": "NONE",
+  "candidate_version": "GMLI_FISCAL_V2_DEFICIT_IMPULSE",
+  "purpose": "Informational predictive-precedence and incremental-predictive-content check. This is not structural causal identification and cannot alter Fiscal V2 scoring, promotion status, Money Core, Funding V2, or the 10-point conviction rubric.",
+  "data_alignment": {
+    "fiscal_observation_t_available": "month-end t+1",
+    "monthly_spy_return": "log adjusted-close return",
+    "investable_forward_12m_return_start": "month t+2",
+    "historical_fiscal_caveat": "Uses current/revised FRED history with frozen conservative availability lags; not exact point-in-time release vintages."
+  },
+  "stationarity": {
+    "adf_series": ["fiscal_score_level", "delta_fiscal_score", "spy_1m_log_return"],
+    "granger_fiscal_series": "delta_fiscal_score",
+    "reason": "Use a differenced Fiscal series for Granger to reduce spurious inference from persistence/non-stationarity."
+  },
+  "granger": {
+    "directions": ["delta_fiscal_score -> spy_1m_log_return", "spy_1m_log_return -> delta_fiscal_score"],
+    "fixed_lags_months": [1, 3, 6],
+    "test_statistic": "statsmodels ssr F-test",
+    "multiple_testing": "Holm correction within each direction across the three fixed lags",
+    "alpha": 0.05,
+    "interpretation": "Granger significance means predictive precedence conditional on own lags, not true economic causality."
+  },
+  "incremental_predictive_regression": {
+    "dependent_variable": "SPY forward 12M log return starting in t+2",
+    "predictors": ["fiscal_score_level", "SPY trailing 12M log return known by month-end t+1"],
+    "inference": "OLS with Newey-West/HAC covariance, maxlags=12",
+    "reported": ["fiscal coefficient", "HAC p-value", "R-squared", "baseline R-squared without fiscal", "delta R-squared"],
+    "interpretation": "Checks whether Fiscal score adds information beyond prior market momentum; it is not structural causal identification."
+  },
+  "lead_lag_placebo": {
+    "reported": ["corr(fiscal score, forward 12M SPY return)", "corr(fiscal score, trailing 12M SPY return)"],
+    "interpretation": "Forward association materially stronger than backward association is supportive but not causal proof."
+  },
+  "no_search": {
+    "asset_search": false,
+    "lag_search": false,
+    "horizon_search": false,
+    "threshold_search": false,
+    "subperiod_search": false,
+    "model_selection_search": false
+  },
+  "decision_rule": "No PASS/FAIL production gate. Report evidence as SUPPORTIVE_PREDICTIVE_PRECEDENCE, MIXED_OR_WEAK_PREDICTIVE_PRECEDENCE, or NO_PREDICTIVE_PRECEDENCE based on the frozen diagnostics, with explicit non-causal caveat.",
+  "automatic_global_conviction_weight_change": 0,
+  "production_modified": false,
+  "money_core_modified": false,
+  "funding_v2_modified": false
+}
