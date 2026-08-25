@@ -7,6 +7,7 @@ on:
       - 'research/reverse-overlay-mechanism/**'
       - 'scripts/test-reverse-overlay-mechanism.py'
       - 'scripts/run-reverse-overlay-mechanism.py'
+      - 'scripts/test-reverse-overlay-followup.py'
       - 'research/fiscal-v2/latest/history.csv'
       - 'research/funding-v2/latest/history.csv'
       - '.github/workflows/gmli-reverse-overlay-research.yml'
@@ -27,13 +28,19 @@ jobs:
           python - <<'PY'
           import json
           s=json.load(open('research/reverse-overlay-mechanism/RESEARCH_SPEC.json'))
+          f=json.load(open('research/reverse-overlay-mechanism/FOLLOWUP_SPEC.json'))
           assert s['study_version']=='GMLI_REVERSE_OVERLAY_MECHANISM_V1'
           assert s['status']=='FROZEN_BEFORE_EMPIRICAL_RUN'
           assert s['primary_assets']==['SPY','QQQ']
           assert s['tests']['bidirectional_granger']['lags_months']==[1,3,6]
           assert all(v is False for v in s['no_search'].values())
-          assert s['production_modified'] is False
-          assert s['automatic_weight_change']==0
+          assert f['study_version']=='GMLI_REVERSE_OVERLAY_MECHANISM_FOLLOWUP_V1'
+          assert f['status']=='FROZEN_BEFORE_FOLLOWUP_RUN'
+          assert f['tests']['raw_funding_input_attribution']['funding_inputs']==['anfci','dfii10','term_premium','reserves_3m_pct']
+          assert f['tests']['dbc_bidirectional_precedence']['lags_months']==[1,3,6]
+          assert all(v is False for v in f['no_search'].values())
+          assert s['production_modified'] is False and f['production_modified'] is False
+          assert s['automatic_weight_change']==0 and f['automatic_weight_change']==0
           print('PASS_REVERSE_RESEARCH_FROZEN_BOUNDARY')
           PY
       - name: Run fixed reverse mechanism diagnostics
@@ -42,6 +49,12 @@ jobs:
           grep -q '"status": "INFORMATIONAL_REVERSE_OVERLAY_RESEARCH_COMPLETE"' /tmp/reverse-overlay-result.json
           grep -q '"production_implication": "NONE"' /tmp/reverse-overlay-result.json
           grep -q '"automatic_weight_change": 0' /tmp/reverse-overlay-result.json
+      - name: Run frozen attribution follow-up
+        run: |
+          python scripts/test-reverse-overlay-followup.py --as-of 2026-08-25 --output /tmp/reverse-overlay-followup.json
+          grep -q '"status": "INFORMATIONAL_REVERSE_OVERLAY_FOLLOWUP_COMPLETE"' /tmp/reverse-overlay-followup.json
+          grep -q '"production_implication": "NONE"' /tmp/reverse-overlay-followup.json
+          grep -q '"automatic_weight_change": 0' /tmp/reverse-overlay-followup.json
       - name: Guard production separation
         run: |
           grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
@@ -53,6 +66,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: gmli-reverse-overlay-mechanism-research
-          path: /tmp/reverse-overlay-result.json
+          path: |
+            /tmp/reverse-overlay-result.json
+            /tmp/reverse-overlay-followup.json
           if-no-files-found: error
           retention-days: 90
