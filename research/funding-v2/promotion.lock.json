@@ -1,0 +1,45 @@
+{
+  "status": "PASS_FUNDING_V2_PRODUCTION_PROMOTION",
+  "promoted_version": "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS",
+  "candidate_version": "GMLI_FUNDING_V2_CANDIDATE_2",
+  "promotion_date": "2026-08-25",
+  "evidence_tier": "OVERLAY",
+  "money_core_modified": false,
+  "bounded_conviction_weight_unchanged": true,
+  "universal_asset_return_claim": false,
+  "candidate_1_audit": {
+    "decision": "REJECTED_FOR_PROMOTION",
+    "gate": "FAIL_FIXED_DIRECTIONAL_SANITY",
+    "file": "research/funding-v2/CANDIDATE_1_RESULT.json"
+  },
+  "candidate_2_directional_gate": {
+    "status": "PASS",
+    "current_direction_match": true,
+    "stress_2008_10": "PASS_RESTRICTIVE",
+    "stress_2020_03": "PASS_RESTRICTIVE",
+    "parameter_search": false
+  },
+  "narrow_usefulness_gate": {
+    "status": "PASS_2_OF_2",
+    "primary_relations": ["DBC_FUNDING_V2_6M", "DBC_FUNDING_V2_12M"],
+    "asset_search": false,
+    "horizon_search": false,
+    "lag_search": false,
+    "parameter_search": false,
+    "threshold_search": false,
+    "fdr_claim": false,
+    "result_file": "research/funding-v2/USEFULNESS_RESULT.json"
+  },
+  "initial_active_vintage": {
+    "observation_month": "2026-06",
+    "available_date": "2026-07-31",
+    "effective_z": -0.7218935843940193,
+    "effective_score": 37.968440260099676,
+    "regime": "RESTRICTIVE",
+    "structural_support_score": 37.968440260099676,
+    "observed_conditions_score": 59.099496149440164
+  },
+  "promotion_report": "research/funding-v2/GMLI_FUNDING_V2_PROMOTION_REPORT.md",
+  "refresh_rule": "New monthly vintages may advance only through the frozen Candidate 2 construction, non-regressing available date, exact source-byte/hash preservation, fixed directional sanity, frozen usefulness-promotion evidence and fail-closed last-good semantics.",
+  "interpretation_guardrail": "Funding V2 is an OVERLAY/conviction modifier. DBC 6M/12M are the strongest validated transmission use. Funding V2 cannot overwrite Money Core, market confirmation or asset-specific transmission."
+}

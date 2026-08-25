@@ -1,0 +1,67 @@
+name: GMLI Funding V2 usefulness gate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/funding-v2-usefulness-gate.json'
+      - 'research/funding-v2-candidate-2-contract.json'
+      - 'research/funding-v2/CANDIDATE_1_RESULT.json'
+      - 'scripts/build-funding-v2.py'
+      - 'scripts/build-funding-v2-candidate2.py'
+      - 'scripts/test-funding-v2-usefulness.py'
+      - '.github/workflows/gmli-funding-v2-usefulness.yml'
+  workflow_dispatch:
+
+jobs:
+  usefulness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Guard frozen no-search usefulness contract
+        run: |
+          python - <<'PY'
+          import json
+          g = json.load(open('research/funding-v2-usefulness-gate.json', encoding='utf-8'))
+          assert g['gate_version'] == 'GMLI_FUNDING_V2_USEFULNESS_GATE_V1'
+          assert g['status'] == 'FROZEN_BEFORE_EMPIRICAL_RUN'
+          assert g['candidate_version'] == 'GMLI_FUNDING_V2_CANDIDATE_2'
+          assert [x['id'] for x in g['primary_fixed_relations']] == ['DBC_FUNDING_V2_6M','DBC_FUNDING_V2_12M']
+          assert all(v is False for v in g['no_search'].values())
+          print('PASS_FUNDING_V2_USEFULNESS_CONTRACT')
+          PY
+      - name: Run narrow fixed DBC usefulness gate
+        shell: bash
+        run: |
+          python -m py_compile scripts/build-funding-v2.py scripts/build-funding-v2-candidate2.py scripts/test-funding-v2-usefulness.py
+          rm -rf /tmp/gmli-funding-v2-usefulness
+          set +e
+          python scripts/test-funding-v2-usefulness.py --as-of 2026-08-25 --build-full --output-dir /tmp/gmli-funding-v2-usefulness > /tmp/gmli-funding-v2-usefulness.json
+          code=$?
+          set -e
+          cat /tmp/gmli-funding-v2-usefulness.json
+          test "$code" -eq 0
+          grep -q '"status": "PASS_NARROW_FUNDING_USEFULNESS"' /tmp/gmli-funding-v2-usefulness.json
+          grep -q '"primary_passed": 2' /tmp/gmli-funding-v2-usefulness.json
+          grep -q '"primary_total": 2' /tmp/gmli-funding-v2-usefulness.json
+          grep -q '"asset_search": false' /tmp/gmli-funding-v2-usefulness.json
+          grep -q '"horizon_search": false' /tmp/gmli-funding-v2-usefulness.json
+          grep -q '"parameter_search": false' /tmp/gmli-funding-v2-usefulness.json
+          grep -q '"promotion_allowed": false' /tmp/gmli-funding-v2-usefulness.json
+          test -s /tmp/gmli-funding-v2-usefulness/result.json
+          test -s /tmp/gmli-funding-v2-usefulness/observations.csv
+      - name: Upload Funding V2 usefulness artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-funding-v2-usefulness-v1
+          path: /tmp/gmli-funding-v2-usefulness
+          if-no-files-found: error
+      - name: Guard production separation
+        run: |
+          grep -q "score: 36.035410932024234" lib/state.js
+          grep -q "BLOCKED_BASELINE_MISMATCH" lib/overlay-refresh-status.js
+          grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
+          echo 'Usefulness research cannot modify production Funding or Money Core.'

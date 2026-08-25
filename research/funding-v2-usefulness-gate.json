@@ -1,0 +1,33 @@
+{
+  "gate_version": "GMLI_FUNDING_V2_USEFULNESS_GATE_V1",
+  "status": "FROZEN_BEFORE_EMPIRICAL_RUN",
+  "candidate_version": "GMLI_FUNDING_V2_CANDIDATE_2",
+  "purpose": "Test whether Funding V2 adds practical asset-interpretation value without turning Funding into a new Money Core or running a broad research search.",
+  "signal": "Candidate 2 effective_funding_score",
+  "publication_lag_months": 1,
+  "train_signal_months": "2015-01..2022-12",
+  "oos_signal_months": "2023-01+",
+  "return_definition": "forward log total return from exact-ticker Yahoo monthly adjusted close, starting one month after the Funding observation month",
+  "primary_fixed_relations": [
+    {"id": "DBC_FUNDING_V2_6M", "asset": "DBC", "horizon_months": 6},
+    {"id": "DBC_FUNDING_V2_12M", "asset": "DBC", "horizon_months": 12}
+  ],
+  "secondary_diagnostics_not_in_gate": [
+    {"id": "SPY_FUNDING_V2_12M", "asset": "SPY", "horizon_months": 12},
+    {"id": "QQQ_FUNDING_V2_12M", "asset": "QQQ", "horizon_months": 12},
+    {"id": "GLD_FUNDING_V2_12M", "asset": "GLD", "horizon_months": 12}
+  ],
+  "per_relation_direction_pass": "train Pearson > 0 AND OOS Pearson > 0 AND OOS Spearman > 0",
+  "gate": "Both preselected DBC 6M and DBC 12M relations must pass direction. Secondary asset diagnostics are reported but cannot rescue or fail the gate.",
+  "no_search": {
+    "asset_search": false,
+    "horizon_search": false,
+    "lag_search": false,
+    "parameter_search": false,
+    "threshold_search": false,
+    "fdr_claim": false
+  },
+  "interpretation": "A PASS is evidence that the Funding overlay is directionally useful for the project’s pre-identified commodity/funding transmission channel. It is not a universal forecasting claim and does not by itself authorize promotion.",
+  "promotion_after_pass": "If the gate passes, archive the result and proceed to a production-readiness review: reproducibility/provenance, scheduled refresh, Data Health integration and explicit overlay promotion. Money Core remains untouched.",
+  "failure_rule": "If either primary relation fails, report the failure and do not retune Candidate 2 or search for a replacement horizon in this gate."
+}

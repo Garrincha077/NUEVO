@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       action:x.action,
       triggers:x.triggers,
       backtest:x.backtest,
-      freshness:{ money:FROZEN_STATE.money.available_date, price:x.price_as_of, positioning:x.entry_inputs.positioning?.as_of || null, current_market:currentMarket.assets?.[k]?.latest_completed_session || null }
+      freshness:{ money:FROZEN_STATE.money.available_date, funding:FROZEN_STATE.funding.available_date, price:x.price_as_of, positioning:x.entry_inputs.positioning?.as_of || null, current_market:currentMarket.assets?.[k]?.latest_completed_session || null }
     }]));
 
     const conflicts = [
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
     ];
 
     return res.status(200).json({
-      schema_version:'gmli-report-v1.4',
+      schema_version:'gmli-report-v1.5',
       engine_version:'GMLI 2.4.0',
       generated_at:generatedAt.toISOString(),
       meta:{
@@ -60,8 +60,10 @@ export default async function handler(req, res) {
         raw_endpoints:['/api/status','/api/decision','/api/opportunity','/api/positioning','/api/money-nowcast','/api/current-market'],
         warnings:[
           `Money V2 is the active promoted Core (${FROZEN_STATE.money.version}), currently available ${FROZEN_STATE.money.available_date}.`,
-          'The 2026-02-28 pre-V2 Core is preserved only as a historical reference.',
-          'Historical v1.8b remains BLOCKED_MISSING_FROZEN_INPUT_BYTES as an audit fact; it does not block the separately versioned and promoted Money V2 contract.'
+          `Funding V2 is the active promoted OVERLAY (${FROZEN_STATE.funding.version}), currently available ${FROZEN_STATE.funding.available_date}; it is a bounded conviction modifier and never overrides Money Core.`,
+          'Funding V2 empirical promotion strength is narrow: fixed DBC 6M/12M relations passed; SPY/QQQ/GLD diagnostics are not universal return claims.',
+          'The 2026-02-28 pre-V2 Money Core and July-2026 legacy Funding reading are preserved only as historical references.',
+          'Historical Money v1.8b remains BLOCKED_MISSING_FROZEN_INPUT_BYTES as an audit fact; it does not block the separately versioned and promoted Money V2 contract.'
         ]
       },
       data_health:dataHealth,
@@ -82,19 +84,24 @@ export default async function handler(req, res) {
       },
       current_market_confirmation:currentMarket,
       money_promotion_gate: decision.promotion_gate,
+      funding_promotion_gate: FROZEN_STATE.funding.promotion_gate,
       money_history: decision.money_history,
+      funding_history: {
+        historical_reference:FROZEN_STATE.funding.historical_reference
+      },
       opportunity_summary:bs,
       assets,
       conflicts,
       historical_audit:{
         pre_v2_core_reference:FROZEN_STATE.money.historical_reference,
-        v18b_migration_candidate:FROZEN_STATE.money.historical_v18b_candidate
+        v18b_migration_candidate:FROZEN_STATE.money.historical_v18b_candidate,
+        legacy_funding_reference:FROZEN_STATE.funding.historical_reference
       },
       research_gaps:[
-        'Historical v1.8b exact rerun remains impossible without the original frozen Aug-15 bytes; this is closed as historical audit context and is not an active V2 blocker.',
-        'Funding exact production baseline mismatch remains unresolved; Funding stays an overlay and cannot override Money Core.',
+        'Historical Money v1.8b exact rerun remains impossible without the original frozen Aug-15 bytes; this is closed as historical audit context and is not an active V2 blocker.',
+        'Funding V2 is promoted as a bounded OVERLAY, not a universal asset-return signal; its strongest fixed empirical usefulness is DBC 6M/12M.',
         'Credit/Velocity exact old construction provenance remains incomplete; do not infer the old formula.',
-        'HYG, BTC and VNQ/VEA asset-specific models remain secondary to maintaining the promoted Money V2 refresh contract.'
+        'HYG, BTC and VNQ/VEA asset-specific models remain secondary to maintaining the promoted Money V2 and Funding V2 refresh contracts.'
       ]
     });
   } catch(e) {

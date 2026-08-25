@@ -1,0 +1,100 @@
+{
+  "candidate_version": "GMLI_FUNDING_V2_CANDIDATE_1",
+  "status": "FROZEN_RESEARCH_CANDIDATE",
+  "evidence_tier": "RESEARCH",
+  "role": "FUNDING_CONDITIONS_OVERLAY_CANDIDATE",
+  "production_replacement_allowed": false,
+  "money_core_modified": false,
+  "legacy_funding_modified": false,
+  "design_rule": "Pareto: a small equal-weight set of transparent funding/conditions inputs; no parameter, horizon or source search after this contract is frozen.",
+  "frequency": "MONTHLY",
+  "publication_lag_months": 1,
+  "availability_rule": "Observation month t becomes eligible at calendar month-end t+1. This makes the 2026-06 candidate directly comparable with the legacy Funding reading available 2026-07-31.",
+  "components": [
+    {
+      "id": "ANFCI",
+      "source": "Federal Reserve Bank of Chicago via FRED",
+      "source_url": "https://fred.stlouisfed.org/series/ANFCI",
+      "csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=ANFCI",
+      "frequency": "weekly",
+      "monthly_transform": "calendar-month mean",
+      "economic_role": "broad financial conditions adjusted for prevailing economic conditions",
+      "supportive_direction": "lower",
+      "weight": 0.25
+    },
+    {
+      "id": "DFII10",
+      "source": "Board of Governors of the Federal Reserve System via FRED",
+      "source_url": "https://fred.stlouisfed.org/series/DFII10",
+      "csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFII10",
+      "frequency": "daily",
+      "monthly_transform": "calendar-month mean",
+      "economic_role": "10Y real discount rate",
+      "supportive_direction": "lower",
+      "weight": 0.25
+    },
+    {
+      "id": "THREEFYTP10",
+      "source": "Board of Governors of the Federal Reserve System, Kim-Wright term-premium model, via FRED",
+      "source_url": "https://fred.stlouisfed.org/series/THREEFYTP10",
+      "csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=THREEFYTP10",
+      "frequency": "daily",
+      "monthly_transform": "calendar-month mean",
+      "economic_role": "10Y zero-coupon Treasury term premium",
+      "supportive_direction": "lower",
+      "weight": 0.25
+    },
+    {
+      "id": "WRESBAL",
+      "source": "Board of Governors of the Federal Reserve System H.4.1 via FRED",
+      "source_url": "https://fred.stlouisfed.org/series/WRESBAL",
+      "csv_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WRESBAL",
+      "frequency": "weekly",
+      "monthly_transform": "last observation in calendar month, then 3-month percent change",
+      "economic_role": "bank-reserve liquidity impulse",
+      "supportive_direction": "higher 3M change",
+      "weight": 0.25
+    }
+  ],
+  "standardization": {
+    "method": "rolling z-score",
+    "window_months": 120,
+    "minimum_months": 36,
+    "ddof": 0,
+    "component_z_clip": [-3.0, 3.0],
+    "direction": "all component z-scores are signed so positive means more supportive funding/conditions",
+    "composite": "equal-weight arithmetic mean of four signed component z-scores",
+    "score": "clip(50 + (50/3) * composite_supportive_z, 0, 100)"
+  },
+  "regimes": {
+    "RESTRICTIVE": "score < 40",
+    "NEUTRAL": "40 <= score <= 60",
+    "SUPPORTIVE": "score > 60"
+  },
+  "diagnostics_not_in_score": [
+    "SOFR minus IORB funding spread may be shown prospectively but is excluded from the score because the unified IORB history begins only in 2021.",
+    "Treasury plumbing may be added only in a future versioned candidate if it materially improves the decision gate."
+  ],
+  "fixed_initial_gates": {
+    "legacy_current_direction": "The latest candidate eligible at 2026-07-31 must be compared with the legacy Funding regime RESTRICTIVE; disagreement is reported, never tuned away.",
+    "stress_sanity": [
+      {"observation_month": "2008-10", "expected": "RESTRICTIVE"},
+      {"observation_month": "2020-03", "expected": "RESTRICTIVE"}
+    ],
+    "usefulness": "A separate narrow conviction/usefulness gate must pass before promotion. No broad parameter, horizon or asset search is allowed."
+  },
+  "legacy_comparator": {
+    "available_date": "2026-07-31",
+    "z": -0.8378753440785458,
+    "score": 36.035410932024234,
+    "regime": "RESTRICTIVE",
+    "status": "BLOCKED_BASELINE_MISMATCH",
+    "note": "Legacy baseline is preserved only as a comparator. Funding V2 is a separate versioned candidate and is not an attempt to reverse-engineer the missing legacy construction."
+  },
+  "guardrails": [
+    "Funding remains an OVERLAY and cannot overwrite Money Core.",
+    "Do not retune weights, windows, thresholds or transforms merely to match the legacy score or pass historical windows.",
+    "Current revised FRED history may be used for candidate construction and directional sanity checks, but is not represented as a point-in-time vintage backtest.",
+    "Promotion requires reproducible source provenance, a narrow usefulness gate, scheduled refresh and Data Health integration."
+  ]
+}
