@@ -1,0 +1,50 @@
+name: GMLI Funding V2 research gate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/funding-v2-contract.json'
+      - 'scripts/build-funding-v2.py'
+      - '.github/workflows/gmli-funding-v2-research.yml'
+  workflow_dispatch:
+
+jobs:
+  funding-v2-research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate frozen candidate contract
+        run: |
+          python - <<'PY'
+          import json
+          p = json.load(open('research/funding-v2-contract.json', encoding='utf-8'))
+          assert p['candidate_version'] == 'GMLI_FUNDING_V2_CANDIDATE_1'
+          assert p['status'] == 'FROZEN_RESEARCH_CANDIDATE'
+          assert p['production_replacement_allowed'] is False
+          assert p['money_core_modified'] is False
+          assert len(p['components']) == 4
+          assert abs(sum(x['weight'] for x in p['components']) - 1.0) < 1e-12
+          assert p['standardization']['window_months'] == 120
+          assert p['publication_lag_months'] == 1
+          print('PASS_FUNDING_V2_FROZEN_CANDIDATE_CONTRACT')
+          PY
+      - name: Run reproducible Funding V2 candidate history
+        shell: bash
+        run: |
+          python -m py_compile scripts/build-funding-v2.py
+          python scripts/build-funding-v2.py --as-of 2026-08-25 --validate-only > /tmp/gmli-funding-v2.json
+          cat /tmp/gmli-funding-v2.json
+          grep -q '"candidate_version": "GMLI_FUNDING_V2_CANDIDATE_1"' /tmp/gmli-funding-v2.json
+          grep -q '"production_modified": false' /tmp/gmli-funding-v2.json
+          grep -q '"parameter_search": false' /tmp/gmli-funding-v2.json
+          grep -q '"available_date": "2026-07-31"' /tmp/gmli-funding-v2.json
+          grep -q '"promotion_eligible": false' /tmp/gmli-funding-v2.json
+      - name: Guard production separation
+        run: |
+          grep -q "score: 36.035410932024234" lib/state.js
+          grep -q "BLOCKED_BASELINE_MISMATCH" lib/overlay-refresh-status.js
+          echo 'Funding V2 remains RESEARCH only; legacy production Funding and Money Core are unchanged.'
