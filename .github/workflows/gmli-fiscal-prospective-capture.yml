@@ -1,4 +1,4 @@
-name: GMLI prospective Fiscal source capture
+name: GMLI Fiscal V2 source capture and refresh
 
 on:
   schedule:
@@ -8,17 +8,23 @@ on:
     branches: [main]
     paths:
       - 'scripts/capture-prospective-fiscal-inputs.py'
+      - 'scripts/build-fiscal-v2.py'
+      - 'scripts/refresh-fiscal-v2.py'
+      - 'research/fiscal-v2-candidate-1-contract.json'
+      - 'research/fiscal-v2/CANDIDATE_1_RESULT.json'
+      - 'research/fiscal-v2/USEFULNESS_RESULT.json'
+      - 'research/fiscal-v2/promotion.lock.json'
       - '.github/workflows/gmli-fiscal-prospective-capture.yml'
 
 permissions:
   contents: write
 
 concurrency:
-  group: gmli-fiscal-prospective-capture
+  group: gmli-fiscal-v2-refresh
   cancel-in-progress: false
 
 jobs:
-  capture:
+  refresh:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout GMLI
@@ -34,37 +40,58 @@ jobs:
       - name: Capture prospective Fiscal raw sources
         run: python scripts/capture-prospective-fiscal-inputs.py
 
-      - name: Guard frozen production state
+      - name: Refresh active Fiscal V2 under frozen guards
+        shell: bash
         run: |
-          grep -q "available_date: '2026-02-28'" lib/state.js
-          grep -q "usd_score: 65.70290344348" lib/state.js
-          grep -q "fxn_score: 43.01411281977772" lib/state.js
-          grep -q "z: 0.1523733868591229" lib/state.js
-          grep -q "score: 52.539556447652046" lib/state.js
-          grep -q "mode: 'STRICT_ACTUAL_RELEASE'" lib/state.js
+          python scripts/refresh-fiscal-v2.py --apply | tee /tmp/gmli-fiscal-v2-refresh.json
+          grep -q '"status": "PASS_ACTIVE_FISCAL_V2_REFRESH_GUARDS"' /tmp/gmli-fiscal-v2-refresh.json
+          grep -q '"construction_gate": "PASS_FIXED_CONSTRUCTION_SANITY"' /tmp/gmli-fiscal-v2-refresh.json
+          grep -q '"usefulness_gate": "PASS_NARROW_FISCAL_USEFULNESS"' /tmp/gmli-fiscal-v2-refresh.json
+          grep -q '"automatic_global_conviction_weight": 0' /tmp/gmli-fiscal-v2-refresh.json
+          grep -q '"money_core_modified": false' /tmp/gmli-fiscal-v2-refresh.json
+          grep -q '"funding_v2_modified": false' /tmp/gmli-fiscal-v2-refresh.json
+
+      - name: Guard promoted production contracts
+        run: |
+          grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
+          grep -q "version: 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS'" lib/state.js
+          grep -q "version: 'GMLI_FISCAL_V2_DEFICIT_IMPULSE'" lib/state.js
+          grep -q "version: 'GMLI_FISCAL_V2_DEFICIT_IMPULSE'" lib/fiscal-v2-active.js
+          grep -q "automatic_global_conviction_weight: 0" lib/state.js
+          grep -q "ACTIVE_GUARDED_REFRESH" lib/overlay-refresh-status.js
+          grep -q '"status": "PASS_FISCAL_V2_PRODUCTION_PROMOTION"' research/fiscal-v2/promotion.lock.json
+          grep -q '"status": "PASS_ACTIVE_FISCAL_V2_REFRESH_GUARDS"' research/fiscal-v2/latest/manifest.lock.json
+          grep -q '"automatic_global_conviction_weight": 0' research/fiscal-v2/latest/manifest.lock.json
           grep -q '"production_state_modified": false' research/fiscal-prospective/latest/manifest.json
           grep -q '"strict_release_ready": false' research/fiscal-prospective/latest/manifest.json
+          grep -q "score: 52.539556447652046" lib/state.js
+          grep -q "mode: 'STRICT_ACTUAL_RELEASE'" lib/state.js
+          echo 'PASS: promoted Fiscal V2 is active; legacy July Fiscal remains preserved as historical reference.'
 
-      - name: Upload prospective Fiscal audit
+      - name: Upload Fiscal V2 refresh audit
         uses: actions/upload-artifact@v4
         with:
-          name: gmli-fiscal-prospective-capture
+          name: gmli-fiscal-v2-refresh
           path: |
+            /tmp/gmli-fiscal-v2-refresh.json
             audit/fiscal-prospective-capture.json
             research/fiscal-prospective/latest/
+            research/fiscal-v2/latest/
+            lib/fiscal-v2-active.js
           if-no-files-found: error
           retention-days: 90
 
-      - name: Commit source vintage only when bytes changed
+      - name: Commit validated Fiscal V2 vintage only when changed
         shell: bash
         run: |
           set -euo pipefail
-          if [ -z "$(git status --porcelain -- research/fiscal-prospective/latest)" ]; then
-            echo 'No prospective Fiscal source-byte change; no commit needed.'
+          paths=(research/fiscal-prospective/latest research/fiscal-v2/latest lib/fiscal-v2-active.js)
+          if [ -z "$(git status --porcelain -- "${paths[@]}")" ]; then
+            echo 'No validated Fiscal source/vintage change; no commit needed.'
             exit 0
           fi
           git config user.name 'gmli-refresh-bot'
           git config user.email 'gmli-refresh-bot@users.noreply.github.com'
-          git add research/fiscal-prospective/latest
-          git commit -m 'Capture prospective GMLI Fiscal source vintage'
+          git add "${paths[@]}"
+          git commit -m 'Refresh active GMLI Fiscal V2 vintage'
           git push origin HEAD:main
