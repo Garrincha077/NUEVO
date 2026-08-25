@@ -1,4 +1,4 @@
-name: GMLI GitHub Pages fallback
+name: GMLI GitHub Pages fetch-first fallback
 
 on:
   push:
@@ -8,10 +8,12 @@ on:
       - 'api/**'
       - 'lib/**'
       - 'scripts/build-pages-snapshot.mjs'
+      - 'scripts/refresh-pages-inputs.py'
       - 'scripts/pages-context-history.mjs'
       - 'scripts/pages-money-ui.mjs'
       - 'scripts/pages-mobile-info.mjs'
       - 'scripts/pages-signal-role-ui.mjs'
+      - 'research/china-m2-official-v2/latest/**'
       - 'research/global-money-v2/latest/**'
       - 'research/global-money-v2/transfer/latest/**'
       - 'research/funding-v2/latest/**'
@@ -24,10 +26,12 @@ on:
       - 'api/**'
       - 'lib/**'
       - 'scripts/build-pages-snapshot.mjs'
+      - 'scripts/refresh-pages-inputs.py'
       - 'scripts/pages-context-history.mjs'
       - 'scripts/pages-money-ui.mjs'
       - 'scripts/pages-mobile-info.mjs'
       - 'scripts/pages-signal-role-ui.mjs'
+      - 'research/china-m2-official-v2/latest/**'
       - 'research/global-money-v2/latest/**'
       - 'research/global-money-v2/transfer/latest/**'
       - 'research/funding-v2/latest/**'
@@ -52,11 +56,30 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node 24
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate fetch-first orchestrator
+        run: python -m py_compile scripts/refresh-pages-inputs.py
+
+      - name: Fetch and guarded-refresh Pages inputs
+        if: github.event_name != 'pull_request'
+        run: |
+          set -euo pipefail
+          python scripts/refresh-pages-inputs.py | tee /tmp/gmli-pages-refresh.json
+          grep -Eq '"status": "PASS_FETCH_FIRST"|"status": "PASS_WITH_LAST_GOOD_FALLBACK"' /tmp/gmli-pages-refresh.json
+          test -s audit/pages-refresh-status.json
+          grep -q 'FETCH_FIRST_WITH_PER_LAYER_LAST_GOOD_FALLBACK' audit/pages-refresh-status.json
 
       - name: Build verified static GMLI snapshot
         run: |
@@ -74,11 +97,12 @@ jobs:
           grep -q '"context_funding_history_rows"' /tmp/gmli-pages.json
           grep -q '"context_fiscal_history_rows"' /tmp/gmli-pages.json
           grep -q '"context_market_history_rows"' /tmp/gmli-pages.json
-          grep -q '2026-07-31' /tmp/gmli-pages.json
+          grep -q '"money_available_date"' /tmp/gmli-pages.json
+          grep -q '"fiscal_available_date"' /tmp/gmli-pages.json
           grep -q '"history_rows"' /tmp/gmli-pages.json
-          grep -q '"static_api_files": 10' /tmp/gmli-pages.json
+          grep -q '"static_api_files": 11' /tmp/gmli-pages.json
           test -s .pages/index.html
-          for f in report radar history status decision current-market opportunity positioning money-nowcast context-history; do
+          for f in report radar history status decision current-market opportunity positioning money-nowcast context-history refresh-status; do
             test -s ".pages/api/${f}.json"
           done
           grep -q 'GMLI_FISCAL_V2_DEFICIT_IMPULSE' .pages/api/report.json
@@ -90,6 +114,8 @@ jobs:
           grep -q '"historical_series": false' .pages/api/context-history.json
           grep -q 'research/funding-v2/latest/history.csv' .pages/api/context-history.json
           grep -q 'research/fiscal-v2/latest/history.csv' .pages/api/context-history.json
+          grep -q '"schema_version": "gmli-pages-refresh-v1"' .pages/api/refresh-status.json
+          grep -q 'LIVE_DURING_REPORT_BUILD' .pages/api/refresh-status.json
           grep -q 'Global Money Trend' .pages/index.html
           grep -q 'id="contextLayers"' .pages/index.html
           grep -q 'Context History' .pages/index.html
@@ -103,6 +129,7 @@ jobs:
           grep -q 'moneyYoyChart' .pages/index.html
           grep -q 'infoPopover' .pages/index.html
           grep -q 'Više informacija' .pages/index.html
+          grep -q 'Refresh audit' .pages/index.html
           if grep -q 'gmli-fred-dashboard.vercel.app/api/' .pages/index.html; then
             echo 'Pages still depends on Vercel API links' >&2
             exit 1
@@ -122,10 +149,10 @@ jobs:
           git config user.email 'gmli-pages-bot@users.noreply.github.com'
           git checkout -q -b gh-pages
           git add -A
-          git commit -q -m "Publish verified GMLI Pages snapshot ${GITHUB_SHA}"
+          git commit -q -m "Publish fetch-first verified GMLI Pages snapshot ${GITHUB_SHA}"
           git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push -q --force origin HEAD:gh-pages
-          echo "Static snapshot published to gh-pages branch."
+          echo "Fetch-first static snapshot published to gh-pages branch."
 
       - name: Configure Pages
         if: github.event_name != 'pull_request'
