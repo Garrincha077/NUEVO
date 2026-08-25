@@ -1,0 +1,91 @@
+{
+  "candidate_version": "GMLI_FUNDING_V2_CANDIDATE_2",
+  "status": "FROZEN_RESEARCH_CANDIDATE",
+  "evidence_tier": "RESEARCH",
+  "role": "EFFECTIVE_FUNDING_CONDITIONS_OVERLAY_CANDIDATE",
+  "supersedes_for_research": "GMLI_FUNDING_V2_CANDIDATE_1",
+  "production_replacement_allowed": false,
+  "money_core_modified": false,
+  "legacy_funding_modified": false,
+  "reason_for_new_version": "Candidate 1 failed its predeclared 2020-03 stress sanity because emergency policy-support components overwhelmed simultaneously severe observed financial conditions. Candidate 1 remains frozen and rejected; Candidate 2 changes the aggregation rule explicitly rather than retuning Candidate 1.",
+  "frequency": "MONTHLY",
+  "publication_lag_months": 1,
+  "availability_rule": "Observation month t becomes eligible at calendar month-end t+1.",
+  "components": [
+    {
+      "id": "ANFCI",
+      "source": "Federal Reserve Bank of Chicago via FRED",
+      "monthly_transform": "calendar-month mean",
+      "supportive_direction": "lower",
+      "role": "binding broad observed financial-conditions channel",
+      "structural_weight": 0.25
+    },
+    {
+      "id": "DFII10",
+      "source": "Board of Governors of the Federal Reserve System via FRED",
+      "monthly_transform": "calendar-month mean",
+      "supportive_direction": "lower",
+      "role": "real discount-rate channel",
+      "structural_weight": 0.25
+    },
+    {
+      "id": "THREEFYTP10",
+      "source": "Board of Governors of the Federal Reserve System, Kim-Wright term-premium model, via FRED",
+      "monthly_transform": "calendar-month mean",
+      "supportive_direction": "lower",
+      "role": "term-premium channel",
+      "structural_weight": 0.25
+    },
+    {
+      "id": "WRESBAL",
+      "source": "Board of Governors of the Federal Reserve System H.4.1 via FRED",
+      "monthly_transform": "last observation in calendar month, then 3-month percent change",
+      "supportive_direction": "higher",
+      "role": "reserve-liquidity policy/support impulse",
+      "structural_weight": 0.25
+    }
+  ],
+  "standardization": {
+    "method": "rolling z-score",
+    "window_months": 120,
+    "minimum_months": 36,
+    "ddof": 0,
+    "component_z_clip": [-3.0, 3.0],
+    "signed_direction": "positive z means more supportive",
+    "z_to_score": "clip(50 + (50/3) * z, 0, 100)"
+  },
+  "aggregation": {
+    "structural_support_z": "equal-weight arithmetic mean of the four signed component z-scores",
+    "structural_support_score": "z_to_score(structural_support_z)",
+    "observed_conditions_score": "z_to_score(signed ANFCI z)",
+    "effective_funding_score": "min(structural_support_score, observed_conditions_score)",
+    "economic_rule": "Broad observed financial conditions are a binding cap. Policy easing can improve the support backdrop, but cannot make effective Funding more supportive than the financial conditions actually being observed.",
+    "tuned_override_parameter": false
+  },
+  "regimes": {
+    "RESTRICTIVE": "effective_funding_score < 40",
+    "NEUTRAL": "40 <= effective_funding_score <= 60",
+    "SUPPORTIVE": "effective_funding_score > 60"
+  },
+  "fixed_initial_gates": {
+    "legacy_current_direction": "The latest candidate eligible at 2026-07-31 must be compared with the preserved legacy Funding regime RESTRICTIVE; disagreement is reported, never tuned away.",
+    "stress_sanity": [
+      {"observation_month": "2008-10", "expected": "RESTRICTIVE"},
+      {"observation_month": "2020-03", "expected": "RESTRICTIVE"}
+    ],
+    "candidate_1_regression": "Candidate 1 frozen history/result must remain unchanged and auditable.",
+    "usefulness": "Even a directional PASS does not permit promotion. Candidate 2 must next pass a separately frozen narrow usefulness/conviction gate without parameter, horizon or asset search."
+  },
+  "diagnostics_not_in_score": [
+    "Structural-support score is retained as a diagnostic beside the effective score.",
+    "SOFR minus IORB remains a prospective/live diagnostic and is not backfilled into the score.",
+    "Treasury plumbing remains deferred unless a later versioned test shows material incremental decision value."
+  ],
+  "guardrails": [
+    "Funding remains an OVERLAY and cannot overwrite Money Core.",
+    "Candidate 2 is a new version created after Candidate 1 failure; Candidate 1 is not rewritten.",
+    "Do not change weights, z-score window, publication lag, regime thresholds or the min-cap rule merely to improve validation results.",
+    "Current revised FRED history is research evidence, not a point-in-time vintage backtest.",
+    "Promotion requires reproducible provenance, the narrow usefulness gate, scheduled refresh and Data Health integration."
+  ]
+}
