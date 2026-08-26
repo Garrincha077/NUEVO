@@ -20,6 +20,20 @@ function assert(value, message) {
   if (!value) throw new Error(message);
 }
 
+function enhanceVerifiedPagesHtml(rawHtml) {
+  const contextLink = '<a href="#contextLayers">CONTEXT</a>';
+  const hadContextLink = rawHtml.includes(contextLink);
+  let prepared = hadContextLink ? rawHtml.replace(contextLink, '') : rawHtml;
+  let enhanced = enhanceDecisionDeltaUi(prepared);
+  if (hadContextLink) {
+    const marker = '<a href="#decisionBrief">DECISION</a><a href="#moneyTrend">MONEY TREND</a>';
+    const replacement = '<a href="#decisionBrief">DECISION</a><a href="#contextLayers">CONTEXT</a><a href="#moneyTrend">MONEY TREND</a>';
+    assert(enhanced.includes(marker), 'Decision Delta UI context-nav restore marker missing');
+    enhanced = enhanced.replace(marker, replacement);
+  }
+  return enhanced;
+}
+
 async function main() {
   const [report, history, contextHistory, decision] = await Promise.all([
     readJson('report.json'),
@@ -64,7 +78,7 @@ async function main() {
   ]);
 
   const htmlPath = path.join(OUT, 'index.html');
-  const html = enhanceDecisionDeltaUi(await fs.readFile(htmlPath, 'utf8'));
+  const html = enhanceVerifiedPagesHtml(await fs.readFile(htmlPath, 'utf8'));
   await fs.writeFile(htmlPath, html);
 
   console.log(JSON.stringify({
