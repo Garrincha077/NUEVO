@@ -1,9 +1,7 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import reportHandler from './report.js';
 import { buildContextHistory } from '../scripts/pages-context-history.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT = process.cwd();
 
 async function buildCanonicalReport() {
   let statusCode = 200;
