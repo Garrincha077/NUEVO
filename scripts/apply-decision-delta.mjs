@@ -25,12 +25,28 @@ function enhanceVerifiedPagesHtml(rawHtml) {
   const hadContextLink = rawHtml.includes(contextLink);
   let prepared = hadContextLink ? rawHtml.replace(contextLink, '') : rawHtml;
   let enhanced = enhanceDecisionDeltaUi(prepared);
+
   if (hadContextLink) {
     const marker = '<a href="#decisionBrief">DECISION</a><a href="#moneyTrend">MONEY TREND</a>';
     const replacement = '<a href="#decisionBrief">DECISION</a><a href="#contextLayers">CONTEXT</a><a href="#moneyTrend">MONEY TREND</a>';
     assert(enhanced.includes(marker), 'Decision Delta UI context-nav restore marker missing');
     enhanced = enhanced.replace(marker, replacement);
   }
+
+  // The base dashboard calls go() immediately. Keep Decision Brief initialization independent
+  // so the function cannot be referenced before its injected definition exists.
+  const unsafeCall = 'initMoneyCharts(h);renderDecisionBrief(r);marketGrid.innerHTML=marketCards(cm);';
+  const safeCall = 'initMoneyCharts(h);marketGrid.innerHTML=marketCards(cm);';
+  assert(enhanced.includes(unsafeCall), 'Decision Delta UI render-call marker missing');
+  enhanced = enhanced.replace(unsafeCall, safeCall);
+
+  const initMarker = '\n})();\n</script>\n<script src="/money-ui-live.js';
+  const initReplacement = `\n  fetch('./api/report.json',{cache:'no-store'})\n    .then(x=>x.json())\n    .then(r=>window.renderDecisionBrief(r))\n    .catch(e=>{const n=document.getElementById('decisionDeltaNote');if(n)n.textContent='Decision Brief unavailable: '+e.message;});\n})();\n</script>\n<script src="/money-ui-live.js`;
+  assert(enhanced.includes(initMarker), 'Decision Delta UI independent-init marker missing');
+  enhanced = enhanced.replace(initMarker, initReplacement);
+
+  assert(!enhanced.includes('initMoneyCharts(h);renderDecisionBrief(r);'), 'Decision Delta UI unsafe initialization order remains');
+  assert(enhanced.includes("Decision Brief unavailable: "), 'Decision Delta UI independent runtime fallback missing');
   return enhanced;
 }
 
@@ -94,7 +110,8 @@ async function main() {
     funding_delta: layer.decision_delta.funding.delta,
     fiscal_delta: layer.decision_delta.fiscal.delta,
     market_delta: layer.decision_delta.market_confirmation.delta_score_0_2,
-    pages_decision_brief_ui: true
+    pages_decision_brief_ui: true,
+    pages_decision_brief_runtime_order_safe: true
   }, null, 2));
 }
 
