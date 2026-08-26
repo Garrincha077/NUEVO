@@ -1,6 +1,6 @@
 import reportHandler from './report.js';
 
-const ROOT = process.cwd();
+const ASSETS = ['SPY','QQQ','GLD','DBC'];
 
 async function buildCanonicalReport() {
   let statusCode = 200;
@@ -19,15 +19,34 @@ async function buildCanonicalReport() {
   return body;
 }
 
+async function checkedFetch(url, type = 'text') {
+  const response = await fetch(url, { cache: 'no-store' });
+  if (!response.ok) throw new Error(`Static context input failed: ${response.status} ${url}`);
+  return type === 'json' ? response.json() : response.text();
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   try {
-    const [{ buildContextHistory }, report] = await Promise.all([
-      import('../scripts/pages-context-history.mjs'),
-      buildCanonicalReport()
+    const host = req?.headers?.['x-forwarded-host'] || req?.headers?.host || 'gmli-fred-dashboard.vercel.app';
+    const proto = req?.headers?.['x-forwarded-proto'] || 'https';
+    const base = `${proto}://${host}`;
+    const [{ buildContextHistoryFromInputs }, report, fundingCsv, fiscalCsv, pricePairs] = await Promise.all([
+      import('../scripts/context-history-core.mjs'),
+      buildCanonicalReport(),
+      checkedFetch(`${base}/research/funding-v2/latest/history.csv`),
+      checkedFetch(`${base}/research/fiscal-v2/latest/history.csv`),
+      Promise.all(ASSETS.map(async asset => [
+        asset,
+        await checkedFetch(`${base}/research/global-money-v2/transfer/latest/raw/${asset}-yahoo-monthly.json`, 'json')
+      ]))
     ]);
-    const history = await buildContextHistory(ROOT, report);
+    const history = buildContextHistoryFromInputs(report, {
+      funding_csv: fundingCsv,
+      fiscal_csv: fiscalCsv,
+      price_json: Object.fromEntries(pricePairs)
+    });
     return res.status(200).json(history);
   } catch (e) {
     return res.status(500).json({ error: e.message, endpoint: '/api/context-history' });
