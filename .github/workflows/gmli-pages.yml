@@ -8,6 +8,8 @@ on:
       - 'api/**'
       - 'lib/**'
       - 'scripts/build-pages-snapshot.mjs'
+      - 'scripts/apply-decision-delta.mjs'
+      - 'scripts/pages-decision-delta.mjs'
       - 'scripts/refresh-pages-inputs.py'
       - 'scripts/pages-context-history.mjs'
       - 'scripts/pages-money-ui.mjs'
@@ -27,6 +29,8 @@ on:
       - 'api/**'
       - 'lib/**'
       - 'scripts/build-pages-snapshot.mjs'
+      - 'scripts/apply-decision-delta.mjs'
+      - 'scripts/pages-decision-delta.mjs'
       - 'scripts/refresh-pages-inputs.py'
       - 'scripts/pages-context-history.mjs'
       - 'scripts/pages-money-ui.mjs'
@@ -87,7 +91,12 @@ jobs:
         run: |
           set -euo pipefail
           node scripts/build-pages-snapshot.mjs | tee /tmp/gmli-pages.json
+          node scripts/apply-decision-delta.mjs | tee /tmp/gmli-decision-delta.json
           grep -q 'PASS_GITHUB_PAGES_SNAPSHOT' /tmp/gmli-pages.json
+          grep -q 'PASS_GMLI_DECISION_DELTA' /tmp/gmli-decision-delta.json
+          grep -q '"scoring_effect": "NONE"' /tmp/gmli-decision-delta.json
+          grep -q '"automatic_weight_change": 0' /tmp/gmli-decision-delta.json
+          grep -q '"pages_decision_brief_ui": true' /tmp/gmli-decision-delta.json
           grep -q 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL' /tmp/gmli-pages.json
           grep -q 'GMLI_FISCAL_V2_DEFICIT_IMPULSE' /tmp/gmli-pages.json
           grep -q 'GMLI_SIGNAL_ROLE_TAXONOMY_V1' /tmp/gmli-pages.json
@@ -109,12 +118,14 @@ jobs:
           grep -q '"history_rows"' /tmp/gmli-pages.json
           grep -q '"static_api_files": 12' /tmp/gmli-pages.json
           test -s .pages/index.html
-          for f in report radar history status decision current-market opportunity positioning money-nowcast context-history refresh-status money-extremes; do
+          for f in report radar history status decision current-market opportunity positioning money-nowcast context-history refresh-status money-extremes decision-delta; do
             test -s ".pages/api/${f}.json"
           done
           grep -q 'GMLI_FISCAL_V2_DEFICIT_IMPULSE' .pages/api/report.json
           grep -q 'GMLI_SIGNAL_ROLE_TAXONOMY_V1' .pages/api/report.json
           grep -q '"scoring_effect": "NONE"' .pages/api/report.json
+          grep -q '"decision_delta"' .pages/api/report.json
+          grep -q '"decision_brief"' .pages/api/report.json
           grep -q '"automatic_global_conviction_weight": 0' .pages/api/status.json
           grep -q '"fiscal_v2_automatic_weight": 0' .pages/api/decision.json
           grep -q '"schema_version": "gmli-pages-context-history-v1"' .pages/api/context-history.json
@@ -131,12 +142,20 @@ jobs:
           grep -q '"rolling_window_months": 120' .pages/api/money-extremes.json
           grep -q '"minimum_months": 36' .pages/api/money-extremes.json
           grep -q '"lookahead": false' .pages/api/money-extremes.json
+          grep -q '"schema_version": "gmli-decision-delta-v1"' .pages/api/decision-delta.json
+          grep -q '"schema_version": "gmli-decision-brief-v1"' .pages/api/decision-delta.json
+          grep -q '"scoring_effect": "NONE"' .pages/api/decision-delta.json
+          grep -q '"automatic_weight_change": 0' .pages/api/decision-delta.json
+          grep -q 'RECONSTRUCTED_FIXED_RUBRIC_PROXY' .pages/api/decision-delta.json
           grep -q 'Global Money Trend' .pages/index.html
           grep -q 'Money Historical Extremes' .pages/index.html
           grep -q 'moneyLevelZChart' .pages/index.html
           grep -q 'moneyAccelZChart' .pages/index.html
           grep -q 'Kako čitati GMLI — vodič za investitore' .pages/index.html
           grep -q 'id="investorGuide"' .pages/index.html
+          grep -q 'id="decisionBrief"' .pages/index.html
+          grep -q 'WHAT CHANGED' .pages/index.html
+          grep -q 'DECISION</a>' .pages/index.html
           grep -q 'id="contextLayers"' .pages/index.html
           grep -q 'Context History' .pages/index.html
           grep -q 'contextFundingHistoryChart' .pages/index.html
