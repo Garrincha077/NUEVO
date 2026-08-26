@@ -1,12 +1,10 @@
-name: GMLI deploy to existing Vercel
+name: GMLI manual Vercel mirror deploy
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:
-  group: gmli-production
+  group: gmli-vercel-manual
   cancel-in-progress: false
 
 jobs:
@@ -16,9 +14,8 @@ jobs:
     env:
       VERCEL_ORG_ID: team_JWLznbfg7CaiWzanxHONivzH
       VERCEL_PROJECT_ID: prj_Q1wLBL4qYx7KkJzhr24xeGAl0X3m
-      PROD_BASE: https://gmli-fred-dashboard.vercel.app
     steps:
-      - name: Checkout GMLI only
+      - name: Checkout GMLI
         uses: actions/checkout@v4
 
       - name: Setup Node 24
@@ -26,64 +23,18 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Syntax and promoted-contract guard
-        shell: bash
-        run: |
-          set -euo pipefail
-          find api lib -name '*.js' -print0 | xargs -0 -n1 node --check
-          test ! -e makro-cockpit
-          node --input-type=module - <<'NODE'
-          import { FROZEN_STATE } from './lib/state.js';
-          import { SIGNAL_ROLE_TAXONOMY } from './lib/signal-roles.js';
-          const m = FROZEN_STATE.money;
-          const f = FROZEN_STATE.funding;
-          const fiscal = FROZEN_STATE.fiscal;
-          if (FROZEN_STATE.methodology?.status !== 'FROZEN_V2_SPEC') throw new Error('Frozen V2 methodology guard failed');
-          if (m?.version !== 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL') throw new Error('Money V2 is not active Core');
-          if (m?.promotion_gate?.status !== 'PASS_MONEY_V2_PRODUCTION_PROMOTION') throw new Error('Money V2 promotion gate not PASS');
-          if (!/^20\d{2}-\d{2}-\d{2}$/.test(m?.available_date || '')) throw new Error('Active Money date missing');
-          if (![m?.usd_score, m?.fxn_score].every(Number.isFinite)) throw new Error('Active Money scores missing');
-          if (m?.historical_reference?.status !== 'CORE_HISTORICAL_REFERENCE') throw new Error('Pre-V2 Core reference missing');
-          if (m?.historical_v18b_candidate?.promotion_gate?.status !== 'BLOCKED_MISSING_FROZEN_INPUT_BYTES') throw new Error('Historical v1.8b audit blocker changed');
-          if (f?.version !== 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS') throw new Error('Funding V2 is not active overlay');
-          if (f?.promotion_gate?.status !== 'PASS_FUNDING_V2_PRODUCTION_PROMOTION') throw new Error('Funding V2 promotion gate not PASS');
-          if (!Number.isFinite(f?.score) || !/^20\d{2}-\d{2}-\d{2}$/.test(f?.available_date || '')) throw new Error('Active Funding V2 snapshot incomplete');
-          if (f?.historical_reference?.status !== 'OVERLAY_HISTORICAL_REFERENCE') throw new Error('Legacy Funding reference missing');
-          if (fiscal?.version !== 'GMLI_FISCAL_V2_DEFICIT_IMPULSE') throw new Error('Fiscal V2 is not active overlay');
-          if (fiscal?.promotion_gate?.status !== 'PASS_FISCAL_V2_PRODUCTION_PROMOTION') throw new Error('Fiscal V2 promotion gate not PASS');
-          if (!Number.isFinite(fiscal?.score) || !/^20\d{2}-\d{2}-\d{2}$/.test(fiscal?.available_date || '')) throw new Error('Active Fiscal V2 snapshot incomplete');
-          if (fiscal?.promotion_gate?.automatic_global_conviction_weight !== 0) throw new Error('Fiscal automatic global conviction weight changed');
-          if (fiscal?.historical_reference?.score !== 52.539556447652046 || fiscal?.historical_reference?.mode !== 'STRICT_ACTUAL_RELEASE') throw new Error('Legacy Fiscal historical reference changed');
-          if (SIGNAL_ROLE_TAXONOMY?.version !== 'GMLI_SIGNAL_ROLE_TAXONOMY_V1') throw new Error('Signal Role Taxonomy version mismatch');
-          if (SIGNAL_ROLE_TAXONOMY?.scoring_effect !== 'NONE' || SIGNAL_ROLE_TAXONOMY?.automatic_weight_change !== 0) throw new Error('Signal Role Taxonomy changed scoring');
-          if (SIGNAL_ROLE_TAXONOMY?.money_core?.role !== 'LEADING') throw new Error('Money role taxonomy mismatch');
-          if (SIGNAL_ROLE_TAXONOMY?.funding_v2?.role !== 'REACTIVE_CONFIRMATION') throw new Error('Funding role taxonomy mismatch');
-          if (SIGNAL_ROLE_TAXONOMY?.fiscal_v2?.role !== 'MIXED') throw new Error('Fiscal role taxonomy mismatch');
-          if (SIGNAL_ROLE_TAXONOMY?.market_confirmation?.role !== 'REACTIVE_CONFIRMATION') throw new Error('Market confirmation role taxonomy mismatch');
-          console.log('Promoted Money V2 + Funding V2 + Fiscal V2 + signal-role source contract guard PASS.');
-          NODE
-
-      - name: Detect Vercel credential without exposing it
-        id: credential
+      - name: Require explicit Vercel credential
         shell: bash
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           set -euo pipefail
-          if [ -n "${VERCEL_TOKEN:-}" ]; then
-            echo "available=true" >> "$GITHUB_OUTPUT"
-            echo "Vercel credential available."
-          else
-            echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "No VERCEL_TOKEN secret. Explicit CLI deploy will be skipped; Git-linked deployment is still verified by the public canonical smoke below."
-          fi
+          test -n "${VERCEL_TOKEN:-}" || { echo "VERCEL_TOKEN missing; manual mirror deploy aborted." >&2; exit 1; }
 
       - name: Install Vercel CLI
-        if: steps.credential.outputs.available == 'true'
         run: npm install --global vercel@latest
 
-      - name: Bind exact existing GMLI project
-        if: steps.credential.outputs.available == 'true'
+      - name: Bind existing GMLI mirror project
         shell: bash
         run: |
           set -euo pipefail
@@ -91,100 +42,19 @@ jobs:
           printf '{"orgId":"%s","projectId":"%s"}\n' "$VERCEL_ORG_ID" "$VERCEL_PROJECT_ID" > .vercel/project.json
 
       - name: Pull production settings
-        if: steps.credential.outputs.available == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
 
-      - name: Build production artifact
-        if: steps.credential.outputs.available == 'true'
+      - name: Build mirror artifact
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel build --prod --token="$VERCEL_TOKEN"
 
-      - name: Deploy exact prebuilt artifact
-        if: steps.credential.outputs.available == 'true'
+      - name: Deploy mirror artifact
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
 
-      - name: Note Git-linked deployment path
-        if: steps.credential.outputs.available != 'true'
-        run: echo "Relying on the existing GitHub→Vercel production integration; canonical public smoke remains mandatory."
-
-      - name: Smoke-test canonical GMLI production
-        shell: bash
-        run: |
-          set -euo pipefail
-          node - <<'NODE'
-          const base = process.env.PROD_BASE;
-          const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-          async function json(path) {
-            let last;
-            for (let i = 0; i < 18; i++) {
-              try {
-                const r = await fetch(base + path, { cache: 'no-store' });
-                if (!r.ok) throw new Error(`${path} -> HTTP ${r.status}`);
-                const j = await r.json();
-                if (j?.error) throw new Error(`${path} -> ${j.error}`);
-                return j;
-              } catch (e) {
-                last = e;
-                await sleep(5000);
-              }
-            }
-            throw last;
-          }
-
-          const paths = ['/api/status','/api/decision','/api/report','/api/money-nowcast','/api/current-market','/api/history'];
-          const out = {};
-          for (const path of paths) {
-            out[path] = await json(path);
-            console.log('OK', path);
-          }
-
-          const s = out['/api/status'];
-          if (s?.methodology?.status !== 'FROZEN_V2_SPEC') throw new Error('Active frozen methodology is not V2');
-          if (s?.money?.version !== 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL') throw new Error('Money V2 is not active Core');
-          if (s?.money?.promotion_gate?.status !== 'PASS_MONEY_V2_PRODUCTION_PROMOTION') throw new Error('Money V2 promotion gate not PASS');
-          if (s?.funding?.version !== 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS') throw new Error('Funding V2 is not active overlay');
-          if (s?.funding?.promotion_gate?.status !== 'PASS_FUNDING_V2_PRODUCTION_PROMOTION') throw new Error('Funding V2 promotion gate not PASS');
-          if (s?.funding?.historical_reference?.status !== 'OVERLAY_HISTORICAL_REFERENCE') throw new Error('Legacy Funding reference missing');
-          if (s?.fiscal?.version !== 'GMLI_FISCAL_V2_DEFICIT_IMPULSE') throw new Error('Fiscal V2 is not active overlay');
-          if (s?.fiscal?.promotion_gate?.status !== 'PASS_FISCAL_V2_PRODUCTION_PROMOTION') throw new Error('Fiscal V2 promotion gate not PASS');
-          if (s?.fiscal?.promotion_gate?.automatic_global_conviction_weight !== 0) throw new Error('Fiscal automatic weight changed');
-          if (s?.fiscal?.historical_reference?.score !== 52.539556447652046 || s?.fiscal?.historical_reference?.mode !== 'STRICT_ACTUAL_RELEASE') throw new Error('Legacy Fiscal historical reference mismatch');
-
-          const d = out['/api/decision'];
-          if (d?.money?.version !== s.money.version || d?.money?.available_date !== s.money.available_date) throw new Error('Decision/Money status mismatch');
-          if (d?.funding?.version !== s.funding.version || d?.funding?.available_date !== s.funding.available_date) throw new Error('Decision/Funding status mismatch');
-          if (d?.fiscal?.version !== s.fiscal.version || d?.fiscal?.available_date !== s.fiscal.available_date) throw new Error('Decision/Fiscal status mismatch');
-          if (d?.funding?.guardrail !== 'Funding modifies conviction only and never overrides Money Core.') throw new Error('Funding overlay guardrail missing');
-          if (d?.conviction?.max !== 10 || d?.conviction?.fiscal_v2_automatic_weight !== 0) throw new Error('Frozen 10-point rubric changed');
-
-          const r = out['/api/report'];
-          if (r?.schema_version !== 'gmli-report-v1.6') throw new Error(`Canonical report schema unexpected: ${r?.schema_version}`);
-          if (r?.regime?.engine_fact?.money?.version !== s.money.version) throw new Error('Canonical report is not using active Money V2');
-          if (r?.funding_promotion_gate?.promoted_version !== s.funding.version) throw new Error('Canonical report Funding promotion mismatch');
-          if (r?.fiscal_promotion_gate?.promoted_version !== s.fiscal.version) throw new Error('Canonical report Fiscal promotion mismatch');
-          if (r?.signal_role_taxonomy?.version !== 'GMLI_SIGNAL_ROLE_TAXONOMY_V1') throw new Error('Signal Role Taxonomy missing from canonical report');
-          if (r?.signal_role_taxonomy?.scoring_effect !== 'NONE' || r?.signal_role_taxonomy?.automatic_weight_change !== 0) throw new Error('Signal Role Taxonomy changed scoring');
-          if (r?.signal_role_taxonomy?.money_core?.role !== 'LEADING') throw new Error('Money signal role mismatch');
-          if (r?.signal_role_taxonomy?.funding_v2?.role !== 'REACTIVE_CONFIRMATION') throw new Error('Funding signal role mismatch');
-          if (r?.signal_role_taxonomy?.fiscal_v2?.role !== 'MIXED') throw new Error('Fiscal signal role mismatch');
-          if (r?.signal_role_taxonomy?.market_confirmation?.role !== 'REACTIVE_CONFIRMATION') throw new Error('Market-confirmation role mismatch');
-
-          const n = out['/api/money-nowcast'];
-          if (n?.source_mode !== 'LAST_VERIFIED_REQUEST_SAFE') throw new Error(`Unexpected Money nowcast source mode ${n?.source_mode}`);
-          if (n?.validated_reference?.role !== 'HISTORICAL_COMPARISON_REFERENCE_ONLY') throw new Error('Money nowcast still presents the historical reference as active Core');
-          if (n?.validated_reference?.active_core_date !== s.money.available_date) throw new Error('Money nowcast active Core date mismatch');
-          if (!String(n?.interpretation?.engine_fact || '').includes('GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL')) throw new Error('Money nowcast engine_fact does not name active Money V2');
-
-          const h = out['/api/history'];
-          if (h?.engine_version !== s.money.version) throw new Error('History engine version mismatch');
-          if (h?.latest_available_date !== s.money.available_date) throw new Error(`History/Core date mismatch ${h?.latest_available_date} vs ${s.money.available_date}`);
-          if (!Array.isArray(h?.rows) || h.rows.length < 100) throw new Error('Money history unexpectedly short');
-
-          console.log('Canonical production smoke PASS: Money V2 + Funding V2 + Fiscal V2 + signal roles + nowcast semantics + history.');
-          NODE
+      - name: Note production policy
+        run: echo "Vercel is a manually invoked mirror only. GitHub Pages is the normal GMLI production/read path."
