@@ -3,7 +3,7 @@
 Status: ACTIVE
 Owner: GMLI project
 Started: 2026-08-24
-Last updated: 2026-08-25
+Last updated: 2026-08-26
 
 ## Goal
 Keep the decision-critical GMLI stack fresh, reproducible and auditable while preserving strict CORE / OVERLAY / RESEARCH separation.
@@ -15,11 +15,11 @@ Pareto rule: finish the few layers that can materially change the 3–12M alloca
 ### Money Core — DONE / ACTIVE
 `GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL`
 
-Current promoted vintage at this roadmap update:
+Current promoted GitHub Pages vintage at this roadmap update:
 - observation month: 2026-06
 - available date: 2026-07-31
-- USD Money score: 55.1121 — NEUTRAL
-- FX-neutral Money score: 44.4880 — NEUTRAL
+- USD Money score: 54.9994 — NEUTRAL
+- FX-neutral Money score: 44.2502 — NEUTRAL
 - fixed transmission transfer gate: 6/6 PASS
 
 Signal role taxonomy: **LEADING**. This is an interpretation label, not a new score or causal claim.
@@ -28,6 +28,14 @@ The 2026-02-28 Core remains HISTORICAL REFERENCE only. Historical v1.8b remains 
 
 ### Money nowcast — DONE / ACTIVE
 US, euro area, Japan and China are covered 4/4 through scheduled validated official-source refresh with last-good preservation.
+
+Latest verified Pages snapshot:
+- US: 2026-07
+- euro area: 2026-06
+- Japan: 2026-07
+- China: 2026-07
+- coverage: 4/4
+- directional tilt: SUPPORTIVE_MIXED.
 
 ### Funding V2 — DONE / ACTIVE OVERLAY
 `GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS`
@@ -50,7 +58,7 @@ Promotion evidence:
 - Narrow fixed usefulness gate passed 2/2 for DBC 6M/12M.
 - No universal equity-return claim.
 
-### Fiscal V2 — PROMOTION READY / ACTIVE INTEGRATION
+### Fiscal V2 — DONE / ACTIVE OVERLAY
 `GMLI_FISCAL_V2_DEFICIT_IMPULSE`
 
 Signal role taxonomy: **MIXED**.
@@ -71,7 +79,7 @@ Frozen Candidate 1:
 Fixed construction sanity:
 - 2020-06 expected SUPPORTIVE → actual SUPPORTIVE / score 100 — PASS.
 
-Current eligible Candidate 1 reading as of 2026-08-25:
+Current promoted reading in the verified Pages snapshot:
 - observation month: 2026-06
 - available date: 2026-07-31
 - TTM deficit: $1.805T
@@ -91,14 +99,24 @@ Pre-frozen narrow usefulness gate:
 QQQ/DBC 12M were diagnostics only. DBC OOS effect was weak and is not a promotion claim. No asset/horizon/lag/parameter/threshold/subperiod search and no FDR claim.
 
 Promotion boundary:
-- target evidence tier: OVERLAY
+- evidence tier: OVERLAY
 - guarded refresh with raw SHA-256 archive and date-regression protection
 - `automatic_global_conviction_weight = 0`
 - existing 10-point global conviction rubric unchanged
 - Money Core unchanged
 - Funding V2 unchanged.
 
-CI production-readiness generation and fail-closed refresh test: PASS. Final definition of live still requires merge/deployment + Vercel/Pages/API smoke.
+Production closeout:
+- promotion lock: `PASS_FISCAL_V2_PRODUCTION_PROMOTION`
+- guarded refresh: `PASS_ACTIVE_FISCAL_V2_REFRESH_GUARDS`
+- GitHub Pages fetch-first status: `PASS_FETCH_FIRST`
+- static snapshot build: `PASS_GITHUB_PAGES_SNAPSHOT`
+- Pages workflow run `32937776235`: build SUCCESS + deploy SUCCESS
+- verified static API set: report, status, decision, money-nowcast, current-market, history, radar, opportunity, positioning, context-history, refresh-status and money-extremes
+- `gh-pages/api/report.json` exposes Fiscal V2 as active promoted OVERLAY
+- Fiscal automatic global conviction weight remains 0.
+
+Vercel is no longer required for this definition of live. It is retained only as a manual secondary mirror to conserve deploy/token budget.
 
 ### Market confirmation — DONE / ACTIVE
 Completed-month structural confirmation remains separate from current/live SPY/QQQ/GLD/DBC confirmation and divergence flags.
@@ -138,10 +156,12 @@ Conclusion: Funding and Market Confirmation are both reactive but are not materi
 Scoring effect of taxonomy: **NONE**. Any role-based reweighting/de-duplication requires a separately frozen versioned decision-engine candidate.
 
 ### Production resilience / observability — DONE
-- canonical Vercel production smoke covers `/api/status`, `/api/decision`, `/api/report`, `/api/money-nowcast`, `/api/current-market`, `/api/history`
-- GitHub Pages remains resilient snapshot
-- `/api/history` is runtime-compatible and current
-- Data Health exposes active versions/freshness/guardrails.
+- GitHub Pages is the primary production/read path
+- Pages production workflow performs fetch-first guarded Money/Nowcast/Funding/Fiscal refresh with per-layer last-good fallback
+- verified Pages static APIs include `report.json`, `status.json`, `decision.json`, `money-nowcast.json`, `current-market.json`, `history.json` and `refresh-status.json`
+- `/api/history.json` is consistent with active Money V2 and current through 2026-06 / available 2026-07-31
+- Data Health exposes active versions/freshness/guardrails
+- Vercel workflow is manual-only secondary mirror and no longer runs on every `main` push.
 
 ## Guardrails
 - Never reconstruct missing frozen bytes from current revised public data and call it an exact rerun.
@@ -153,6 +173,7 @@ Scoring effect of taxonomy: **NONE**. Any role-based reweighting/de-duplication 
 - Signal Role Taxonomy is descriptive only and cannot silently change weights or evidence tiers.
 - Overlay refreshes fail closed and preserve last-good state on source/provenance/date-regression failures.
 - Do not broaden empirical search merely because an interesting secondary correlation appears.
+- GitHub Pages production status must be verified from the built/deployed snapshot; a `main` commit alone is not evidence that a change is live.
 
 ## Research note — Funding equity contrarian effect
 Status: **CLOSED / RESEARCH-ONLY / NOT PROMOTED**
@@ -190,7 +211,7 @@ Scheduled validated official-source refresh with last-good preservation.
 ### P1 — Funding V2 — DONE
 Completed promotion, active integration, guarded refresh, provenance archive and Data Health exposure.
 
-### P1 — Fiscal V2 — PROMOTION READY / LIVE SMOKE PENDING
+### P1 — Fiscal V2 — DONE
 Completed:
 - [x] inspect production Fiscal + prospective manifest
 - [x] stop unrecoverable legacy reverse-engineering without guessing
@@ -199,13 +220,15 @@ Completed:
 - [x] predeclared narrow SPY 12M usefulness gate
 - [x] promotion lock/report
 - [x] guarded refresh + raw source archive + last-good policy
-- [x] active state / Data Health / API integration on promotion branch
-- [ ] merge/deploy + Vercel/Pages/API smoke.
+- [x] active state / Data Health / API integration
+- [x] merge + GitHub Pages fetch-first refresh/build/deploy smoke
+- [x] verify `gh-pages` report/status/decision/nowcast/history/refresh-status snapshot.
 
 Detailed evidence:
 - `research/fiscal-v2/GMLI_FISCAL_V2_PROMOTION_REPORT.md`
 - `research/fiscal-v2/promotion.lock.json`
-- `research/fiscal-v2/latest/manifest.lock.json`.
+- `research/fiscal-v2/latest/manifest.lock.json`
+- GitHub Pages workflow run `32937776235`.
 
 ### P1 — Signal Role Taxonomy v1 — DONE
 Completed:
@@ -244,10 +267,11 @@ Do not expand broadly until incremental allocation value is clear. HYG/BTC/REIT/
 - [x] divergences surfaced
 
 ### Phase 4 — Production resilience / observability — DONE
-- [x] canonical Vercel deployment + smoke
-- [x] GitHub Pages resilient snapshot
+- [x] GitHub Pages primary production snapshot
+- [x] fetch-first guarded refresh with per-layer last-good fallback
 - [x] fail-closed history/core consistency
 - [x] Data Health / refresh status
+- [x] Vercel moved to manual-only secondary mirror.
 
 ### Phase 5 — Funding V2 — DONE
 - [x] freeze minimal candidate inputs/semantics
@@ -257,13 +281,14 @@ Do not expand broadly until incremental allocation value is clear. HYG/BTC/REIT/
 - [x] promotion without retuning
 - [x] guarded refresh + provenance + Data Health
 
-### Phase 6 — Fiscal V2 — PROMOTION READY
+### Phase 6 — Fiscal V2 — DONE
 - [x] legacy reproduction decision
 - [x] frozen candidate construction
 - [x] narrow usefulness gate
 - [x] promotion without retuning
 - [x] guarded refresh + provenance + Data Health/API integration
-- [ ] Vercel + Pages + API smoke after merge
+- [x] GitHub Pages fetch-first refresh + build + deploy + static API smoke
+- [x] `gh-pages` snapshot verified after deployment.
 
 ### Phase 6b — Signal Role Taxonomy — DONE
 - [x] Money = LEADING interpretation supported without reverse dominance
@@ -285,7 +310,9 @@ GMLI core infrastructure is materially healthy when:
 2. Money nowcast is verified 4/4 with last-good preservation. **DONE.**
 3. Funding is reproducible, fresh, versioned and bounded. **DONE.**
 4. Current and structural market confirmation remain separate. **DONE.**
-5. Vercel and Pages expose a consistent production state with smoke guards. **DONE for pre-Fiscal stack.**
-6. Fiscal legacy ambiguity is explicitly superseded by versioned Fiscal V2 with frozen construction, narrow PASS and fail-closed refresh. **PROMOTION READY; LIVE SMOKE PENDING.**
+5. GitHub Pages exposes a consistent, guarded production snapshot with fetch-first refresh and static API smoke. **DONE.**
+6. Fiscal legacy ambiguity is explicitly superseded by versioned Fiscal V2 with frozen construction, narrow PASS, fail-closed refresh and verified Pages deployment. **DONE.**
 7. Signal roles are explicitly separated without silently changing scoring. **DONE.**
 8. Historical frozen results and rejected research remain auditable without silently influencing production. **DONE.**
+
+Vercel is not part of the mandatory definition-of-done path; it is a manual secondary mirror only.
