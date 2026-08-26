@@ -1,5 +1,4 @@
 import reportHandler from './report.js';
-import { buildContextHistory } from '../scripts/pages-context-history.mjs';
 
 const ROOT = process.cwd();
 
@@ -24,7 +23,10 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   try {
-    const report = await buildCanonicalReport();
+    const [{ buildContextHistory }, report] = await Promise.all([
+      import('../scripts/pages-context-history.mjs'),
+      buildCanonicalReport()
+    ]);
     const history = await buildContextHistory(ROOT, report);
     return res.status(200).json(history);
   } catch (e) {
