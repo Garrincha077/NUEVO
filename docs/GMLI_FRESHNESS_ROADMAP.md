@@ -155,10 +155,42 @@ Conclusion: Funding and Market Confirmation are both reactive but are not materi
 
 Scoring effect of taxonomy: **NONE**. Any role-based reweighting/de-duplication requires a separately frozen versioned decision-engine candidate.
 
+### Decision Delta + Decision Brief — DONE / ACTIVE PRESENTATION LAYER
+GitHub Pages now exposes a compact usability layer derived only from already verified production components:
+- `gh-pages/api/decision-delta.json`
+- embedded `decision_delta` and `decision_brief` in `gh-pages/api/report.json` and `decision.json`
+- dashboard `DECISION` / `WHAT CHANGED` section.
+
+Decision Delta v1 compares each layer with its immediately previous verified component row:
+- Money USD and FX-neutral score/regime change
+- Funding V2 score/regime change
+- Fiscal V2 score/regime change
+- completed-month Market Confirmation change
+- current conviction versus an explicitly labeled `RECONSTRUCTED_FIXED_RUBRIC_PROXY` for the prior component rows.
+
+Guardrails:
+- evidence tier: `RESEARCH_DIAGNOSTIC`
+- `scoring_effect = NONE`
+- `automatic_weight_change = 0`
+- `methodology_effect = NONE`
+- no synthetic Money Core score
+- no new signal, threshold, weight or asset promotion
+- prior conviction proxy is not represented as an archived historical live decision
+- Fiscal automatic global conviction weight remains 0.
+
+Production closeout:
+- first integration attempt failed closed before deploy on a UI nav marker mismatch; existing live Pages remained unchanged
+- subsequent integration passed build/publish but live audit found a JS initialization-order issue
+- runtime-order-safe fix added and guarded in the postprocessor
+- GitHub Pages workflow run `32940549838` (#101): build SUCCESS + deploy SUCCESS
+- live `gh-pages` verifies independent Decision Brief initialization and no pre-definition `renderDecisionBrief()` call.
+
+This layer is intended to answer “što se promijenilo?” and compress the existing engine into a practical brief. It is not Phase 7 and does not justify engine expansion by itself.
+
 ### Production resilience / observability — DONE
 - GitHub Pages is the primary production/read path
 - Pages production workflow performs fetch-first guarded Money/Nowcast/Funding/Fiscal refresh with per-layer last-good fallback
-- verified Pages static APIs include `report.json`, `status.json`, `decision.json`, `money-nowcast.json`, `current-market.json`, `history.json` and `refresh-status.json`
+- verified Pages static APIs include `report.json`, `status.json`, `decision.json`, `money-nowcast.json`, `current-market.json`, `history.json`, `decision-delta.json` and `refresh-status.json`
 - `/api/history.json` is consistent with active Money V2 and current through 2026-06 / available 2026-07-31
 - Data Health exposes active versions/freshness/guardrails
 - Vercel workflow is manual-only secondary mirror and no longer runs on every `main` push.
@@ -171,6 +203,7 @@ Scoring effect of taxonomy: **NONE**. Any role-based reweighting/de-duplication 
 - Funding remains a bounded modifier and cannot overwrite Money Core.
 - Fiscal V2 remains an OVERLAY; automatic global conviction weight stays 0 unless a separately frozen decision-engine candidate is tested and promoted.
 - Signal Role Taxonomy is descriptive only and cannot silently change weights or evidence tiers.
+- Decision Delta / Decision Brief is a presentation/diagnostic layer only and cannot change scoring, weights, evidence tiers or methodology.
 - Overlay refreshes fail closed and preserve last-good state on source/provenance/date-regression failures.
 - Do not broaden empirical search merely because an interesting secondary correlation appears.
 - GitHub Pages production status must be verified from the built/deployed snapshot; a `main` commit alone is not evidence that a change is live.
@@ -239,6 +272,16 @@ Completed:
 - [x] canonical role standard + API read-only metadata
 - [x] zero scoring/weight change guard.
 
+### P1 — Decision Delta / Decision Brief — DONE
+Completed:
+- [x] current-vs-previous verified component deltas
+- [x] compact decision brief for regime / tilt / conviction / opportunity focus / main risk
+- [x] explicitly labeled prior conviction reconstruction rather than invented historical live state
+- [x] zero scoring/weight/methodology-effect guards
+- [x] fail-closed Pages integration
+- [x] runtime initialization-order fix and live audit
+- [x] GitHub Pages run `32940549838` build + deploy SUCCESS.
+
 ### P2 — Credit / Velocity — DEFER
 Current status remains `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Do not infer the old formula. Build a new version only if the promoted Money + Funding + Fiscal stack still leaves a material decision gap, with construction/usefulness gates frozen before testing.
 
@@ -298,6 +341,15 @@ Do not expand broadly until incremental allocation value is clear. HYG/BTC/REIT/
 - [x] overlap check does not justify frozen rubric changes
 - [x] canonical docs and report metadata updated
 
+### Phase 6c — Decision usability layer — DONE
+- [x] Decision Delta v1 derived from verified component histories
+- [x] Decision Brief v1 exposed in report/decision and dashboard UI
+- [x] prior conviction comparison explicitly labeled reconstructed proxy
+- [x] `scoring_effect = NONE`, `automatic_weight_change = 0`, `methodology_effect = NONE`
+- [x] GitHub Pages fail-closed integration
+- [x] live runtime-order audit
+- [x] run `32940549838` build + deploy SUCCESS.
+
 ### Phase 7 — Optional gap-filling — DEFER
 - [ ] Credit/Velocity only if a material decision gap remains
 - [ ] selective asset expansion only if allocation value is clear
@@ -314,5 +366,6 @@ GMLI core infrastructure is materially healthy when:
 6. Fiscal legacy ambiguity is explicitly superseded by versioned Fiscal V2 with frozen construction, narrow PASS, fail-closed refresh and verified Pages deployment. **DONE.**
 7. Signal roles are explicitly separated without silently changing scoring. **DONE.**
 8. Historical frozen results and rejected research remain auditable without silently influencing production. **DONE.**
+9. Decision Delta / Brief explains verified change without creating a new score or silently changing frozen logic. **DONE.**
 
 Vercel is not part of the mandatory definition-of-done path; it is a manual secondary mirror only.
