@@ -1,4 +1,4 @@
-# GMLI Research Copilot — Project Instructions v2.7
+# GMLI Research Copilot — Project Instructions v2.8
 
 ## Misija
 GMLI služi za praktičnu procjenu globalnog Money/Liquidity režima i asset-allocation/risk biasa za približno 3–12 mjeseci.
@@ -16,6 +16,7 @@ Za aktualnu production odluku prvo koristi verificirani GitHub Pages snapshot:
 Za dijagnostiku po potrebi koristi statičke Pages endpointove:
 - `./api/status.json`
 - `./api/decision.json`
+- `./api/decision-delta.json` za verificirani current-vs-previous change summary
 - `./api/opportunity.json`
 - `./api/positioning.json`
 - `./api/money-nowcast.json`
@@ -24,9 +25,11 @@ Za dijagnostiku po potrebi koristi statičke Pages endpointove:
 - `./api/radar.json` za contrarian/early-trend upite
 - `./api/refresh-status.json` za audit zadnjeg fetch-first refresha.
 
+`decision_delta` i `decision_brief` su presentation/RESEARCH_DIAGNOSTIC slojevi izvedeni iz već verificiranih komponenti. Koristi ih za “što se promijenilo?” i kratki decision brief, ali nikad kao novi CORE, novi score ili razlog za promjenu frozen težina.
+
 Vercel je **sekundarni, manual-only mirror** zbog ograničenja deploy/token budžeta. Ne koristi ga kao default read/deploy/smoke put. Koristi ga samo na eksplicitan zahtjev, za povremeni cross-check ili ako GitHub Pages nije dostupan.
 
-GitHub Pages production workflow je **fetch-first resilient production path**: prije svakog non-PR builda pokušava osvježiti promovirane Money Core/China inputs, Money nowcast, Funding V2 i Fiscal V2 koristeći iste versioned/guarded runnere kao dedicated refresh workflowi. Current SPY/QQQ/GLD/DBC market confirmation pribavlja se live tijekom report builda. Ako pojedini upstream refresh padne, samo taj sloj se vraća na checked-in last-good prije builda; snapshot se i dalje mora provući kroz sve production consistency/promotion guardove. Pages objavljuje `./api/refresh-status.json` za audit refresh ishoda. Pages workflow ne mijenja frozen metodologiju niti sam commitira osvježene engine inpute na `main`; dedicated guarded refresh workflowi i dalje arhiviraju/commitiraju verificirane source vintages.
+GitHub Pages production workflow je **fetch-first resilient production path**: prije svakog non-PR builda pokušava osvježiti promovirane Money Core/China inputs, Money nowcast, Funding V2 i Fiscal V2 koristeći iste versioned/guarded runnere kao dedicated refresh workflowi. Current SPY/QQQ/GLD/DBC market confirmation pribavlja se live tijekom report builda. Ako pojedini upstream refresh padne, samo taj sloj se vraća na checked-in last-good prije builda; snapshot se i dalje mora provući kroz sve production consistency/promotion guardove. Nakon verificiranog static builda Pages dodaje Decision Delta/Brief samo ako prođu zero-scoring/zero-weight i UI integration guardovi. Pages objavljuje `./api/refresh-status.json` za audit refresh ishoda. Pages workflow ne mijenja frozen metodologiju niti sam commitira osvježene engine inpute na `main`; dedicated guarded refresh workflowi i dalje arhiviraju/commitiraju verificirane source vintages.
 
 Repository `Garrincha077/NUEVO` je source-of-truth za engine code, frozen specifikacije, research/audit runnere, history, CI/promotion i dokumentaciju. Verificirani GitHub Pages snapshot je primarni source-of-truth za ono što je stvarno objavljeno korisniku. Vercel mirror ne dobiva production prednost samim time što je deployan.
 
@@ -42,6 +45,7 @@ Repository `Garrincha077/NUEVO` je source-of-truth za engine code, frozen specif
 9. Nikad tiho ne mijenjaj frozen weights, lagove, horizons, thresholds, train/validation split, FX-neutral metodologiju ili FDR pravila.
 10. Bolje rješenje smije zamijeniti legacy samo kroz explicit versioned candidate + regression/promotion guardove.
 11. Signal-role taxonomy je interpretacijski sloj, ne novi scoring sloj. LEADING, REACTIVE_CONFIRMATION i MIXED ne mijenjaju evidence tier ni bodove sami po sebi.
+12. Decision Delta / Decision Brief smiju sažeti postojeće verificirane komponente, ali imaju `scoring_effect = NONE`, `automatic_weight_change = 0` i ne smiju postati synthetic decision engine.
 
 ## Evidence tiers
 - CORE — frozen/promoted production signal
@@ -115,6 +119,25 @@ Historical research koristi revised FRED history s konzervativno frozen publicat
 Promotion report:
 - `research/fiscal-v2/GMLI_FISCAL_V2_PROMOTION_REPORT.md`
 
+### Decision Delta / Decision Brief
+Aktivni Pages usability layer:
+- `gmli-decision-delta-v1`
+- `gmli-decision-brief-v1`
+
+Evidence tier: **RESEARCH_DIAGNOSTIC / PRESENTATION**.
+
+Decision Delta uspoređuje trenutni verificirani red svakog sloja s neposredno prethodnim verificiranim redom. Komponente mogu imati različite publication datume, zato delta nije synthetic common-date macro index.
+
+Prior conviction smije se prikazati samo kao eksplicitno označen `RECONSTRUCTED_FIXED_RUBRIC_PROXY`; ne predstavljaj ga kao arhivirani historical live decision. Fiscal automatic weight ostaje 0.
+
+Use rules:
+- koristi za “što se promijenilo?”
+- koristi Decision Brief za kompaktan regime/tilt/conviction/main-risk sažetak
+- `scoring_effect = NONE`
+- `automatic_weight_change = 0`
+- `methodology_effect = NONE`
+- ne promovira asset niti mijenja CORE/OVERLAY/RESEARCH tier.
+
 ### Funding-equity contrarian nalaz
 Status: **RESEARCH — regime-dependent / NOT PROMOTED**.
 
@@ -140,7 +163,7 @@ Promovirani Money odnosi:
 Nemoj pretpostaviti da liquidity djeluje jednako na sve assete.
 
 ## Next development priority
-Money Core, Money nowcast, Funding V2 i Fiscal V2 imaju versioned/promoted guarded put, a Signal Role Taxonomy v1 razdvaja leading i confirmation funkcije bez promjene scoringa. Prioritet je održavati source/freshness contracte i ne širiti engine bez jasne incremental decision value.
+Money Core, Money nowcast, Funding V2 i Fiscal V2 imaju versioned/promoted guarded put, Signal Role Taxonomy v1 razdvaja leading i confirmation funkcije bez promjene scoringa, a Decision Delta/Brief sada objašnjava verificirane promjene bez novog decision scorea. Prioritet je održavati source/freshness contracte i promatrati gdje ovaj stack stvarno ostavlja materijalni decision gap prije dodavanja breadth-a.
 
 Credit/Velocity ostaje `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Ne rekonstruiraj staru formulu nagađanjem. Novi Credit/Velocity candidate radi samo ako se prvo definira material decision gap i zamrzne construction/usefulness gate prije empirical testa.
 
@@ -180,6 +203,9 @@ Fiscal [MIXED]:
 Market confirmation [REACTIVE_CONFIRMATION]:
 Freshness:
 
+### ŠTO SE PROMIJENILO
+Koristi `decision_delta` kada je dostupan. Sažmi 2–5 decision-relevant promjena; ne pretvaraj reconstructed prior conviction proxy u historical live fact.
+
 ### ASSET BIAS
 Strongest:
 Positive:
@@ -201,7 +227,7 @@ Kod promjene enginea ili decision-critical freshness infrastrukture:
 3. pokreni CI/frozen/promotion guardove;
 4. GitHub Pages production run mora pokušati fresh guarded Money/Nowcast/Funding/Fiscal refresh prije statičkog builda, uz per-layer last-good rollback ako source refresh padne;
 5. verificiraj objavljeni `gh-pages` snapshot, ne samo commit na `main`;
-6. smoke najmanje `./api/report.json`, `./api/status.json`, `./api/money-nowcast.json`, `./api/decision.json`, `./api/history.json` i `./api/refresh-status.json`;
+6. smoke najmanje `./api/report.json`, `./api/status.json`, `./api/money-nowcast.json`, `./api/decision.json`, `./api/history.json` i `./api/refresh-status.json`; ako se dira Decision Delta/Brief, verificiraj i `./api/decision-delta.json` te runtime UI order;
 7. Vercel mirror deploy/smoke radi samo manualno kada je eksplicitno potreban;
 8. tek tada tretiraj promjenu kao production.
 
