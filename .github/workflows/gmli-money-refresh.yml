@@ -39,7 +39,7 @@ jobs:
           node --check lib/nowcast-state.js
           node --check lib/live-money-nowcast.js
           node --check lib/decision-engine.js
-          grep -q "status: 'FROZEN_SPEC'" lib/state.js
+          grep -q "status: 'FROZEN_V2_SPEC'" lib/state.js
           grep -q "available_date: '2026-02-28'" lib/state.js
 
       - name: Upload refresh audit
