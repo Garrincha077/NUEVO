@@ -2,7 +2,7 @@
   "status": "PASS_FIXED_TRANSMISSION_DIRECTION_TRANSFER",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-08-25T07:59:00Z",
+  "built_at": "2026-08-26T08:00:26Z",
   "core_modified": false,
   "parameter_search": false,
   "lag_search": false,
@@ -21,7 +21,7 @@
   },
   "money_source": {
     "file": "research/global-money-v2/latest/global_money_v2.csv",
-    "sha256": "1cb6ab522dc5e6f538e08ab80a812779459156ba771f8a1a4f72413c950ffe39",
+    "sha256": "5e88fc7b03bac3bc7ad51b700852b773ba08c48289530aee9f74d1070c2443a0",
     "first_month": "2015-01",
     "last_month": "2026-06",
     "months": 138
@@ -30,8 +30,8 @@
     "DBC": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/DBC?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/DBC?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "58c2944d0868644f9d67f83205c2fa7ee705cc495249e4ec5b3b9367dcce3804",
-      "bytes": 28276,
+      "sha256": "eda2905bd37168d6b7246a03fadc4de6ccfe87f7d8f51582771d351f52278469",
+      "bytes": 28280,
       "months": 246,
       "first_month": "2006-03",
       "last_month": "2026-08"
@@ -39,7 +39,7 @@
     "GLD": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "1448bc08a8e72146155627a804d8e8cd3ae1b70c708a82f0bff257e42b564be8",
+      "sha256": "e78a013505804d80332075f76ca1e32d3aba0d3ada5e5df6a6cf0ae7c3737ad2",
       "bytes": 30056,
       "months": 261,
       "first_month": "2004-12",
@@ -48,8 +48,8 @@
     "QQQ": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "6b18676269094db9fc983a34bdeeb677f07c1b4e27b69aadec8cfd90da857da8",
-      "bytes": 36631,
+      "sha256": "d95f736f5b7e048ee078ac63c28d6b47cb98630280f073b72e695dadb672d60f",
+      "bytes": 36601,
       "months": 329,
       "first_month": "1999-04",
       "last_month": "2026-08"
@@ -57,8 +57,8 @@
     "SPY": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "9301efb41c9319755aaf08d21558b90336389592444509d0f579dc25a7f983e2",
-      "bytes": 42317,
+      "sha256": "29ffaa75438624a88e370df74de990f74edcd6e990c46166aa0d490f3f292c42",
+      "bytes": 42271,
       "months": 403,
       "first_month": "1993-02",
       "last_month": "2026-08"
@@ -79,14 +79,14 @@
         "n": 93,
         "first_signal_month": "2015-04",
         "last_signal_month": "2022-12",
-        "pearson_r": 0.447331,
+        "pearson_r": 0.447305,
         "spearman_rho": 0.433962
       },
       "oos": {
         "n": 31,
         "first_signal_month": "2023-01",
         "last_signal_month": "2025-07",
-        "pearson_r": 0.360598,
+        "pearson_r": 0.361389,
         "spearman_rho": 0.335887
       },
       "direction_transfer_pass": true,
@@ -108,14 +108,14 @@
         "n": 93,
         "first_signal_month": "2015-04",
         "last_signal_month": "2022-12",
-        "pearson_r": 0.389688,
+        "pearson_r": 0.389657,
         "spearman_rho": 0.331309
       },
       "oos": {
         "n": 31,
         "first_signal_month": "2023-01",
         "last_signal_month": "2025-07",
-        "pearson_r": 0.564533,
+        "pearson_r": 0.565669,
         "spearman_rho": 0.559274
       },
       "direction_transfer_pass": true,
@@ -137,15 +137,15 @@
         "n": 93,
         "first_signal_month": "2015-04",
         "last_signal_month": "2022-12",
-        "pearson_r": 0.087184,
-        "spearman_rho": 0.265256
+        "pearson_r": 0.087129,
+        "spearman_rho": 0.265674
       },
       "oos": {
         "n": 31,
         "first_signal_month": "2023-01",
         "last_signal_month": "2025-07",
-        "pearson_r": 0.592268,
-        "spearman_rho": 0.571371
+        "pearson_r": 0.593165,
+        "spearman_rho": 0.574194
       },
       "direction_transfer_pass": true,
       "legacy_reference": {
@@ -166,14 +166,14 @@
         "n": 96,
         "first_signal_month": "2015-01",
         "last_signal_month": "2022-12",
-        "pearson_r": 0.589183,
+        "pearson_r": 0.58919,
         "spearman_rho": 0.593353
       },
       "oos": {
         "n": 37,
         "first_signal_month": "2023-01",
         "last_signal_month": "2026-01",
-        "pearson_r": 0.628546,
+        "pearson_r": 0.621883,
         "spearman_rho": 0.543148
       },
       "direction_transfer_pass": true,
@@ -195,14 +195,14 @@
         "n": 96,
         "first_signal_month": "2015-01",
         "last_signal_month": "2022-12",
-        "pearson_r": 0.634025,
+        "pearson_r": 0.634019,
         "spearman_rho": 0.54433
       },
       "oos": {
         "n": 31,
         "first_signal_month": "2023-01",
         "last_signal_month": "2025-07",
-        "pearson_r": 0.632532,
+        "pearson_r": 0.629208,
         "spearman_rho": 0.593548
       },
       "direction_transfer_pass": true,
@@ -224,14 +224,14 @@
         "n": 96,
         "first_signal_month": "2015-01",
         "last_signal_month": "2022-12",
-        "pearson_r": 0.627034,
+        "pearson_r": 0.627073,
         "spearman_rho": 0.616956
       },
       "oos": {
         "n": 37,
         "first_signal_month": "2023-01",
         "last_signal_month": "2026-01",
-        "pearson_r": 0.706657,
+        "pearson_r": 0.704151,
         "spearman_rho": 0.684922
       },
       "direction_transfer_pass": true,
