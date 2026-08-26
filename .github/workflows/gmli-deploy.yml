@@ -52,7 +52,7 @@ jobs:
           if (fiscal?.version !== 'GMLI_FISCAL_V2_DEFICIT_IMPULSE') throw new Error('Fiscal V2 is not active overlay');
           if (fiscal?.promotion_gate?.status !== 'PASS_FISCAL_V2_PRODUCTION_PROMOTION') throw new Error('Fiscal V2 promotion gate not PASS');
           if (!Number.isFinite(fiscal?.score) || !/^20\d{2}-\d{2}-\d{2}$/.test(fiscal?.available_date || '')) throw new Error('Active Fiscal V2 snapshot incomplete');
-          if (fiscal?.automatic_global_conviction_weight !== 0) throw new Error('Fiscal automatic global conviction weight changed');
+          if (fiscal?.promotion_gate?.automatic_global_conviction_weight !== 0) throw new Error('Fiscal automatic global conviction weight changed');
           if (fiscal?.historical_reference?.score !== 52.539556447652046 || fiscal?.historical_reference?.mode !== 'STRICT_ACTUAL_RELEASE') throw new Error('Legacy Fiscal historical reference changed');
           if (SIGNAL_ROLE_TAXONOMY?.version !== 'GMLI_SIGNAL_ROLE_TAXONOMY_V1') throw new Error('Signal Role Taxonomy version mismatch');
           if (SIGNAL_ROLE_TAXONOMY?.scoring_effect !== 'NONE' || SIGNAL_ROLE_TAXONOMY?.automatic_weight_change !== 0) throw new Error('Signal Role Taxonomy changed scoring');
@@ -153,7 +153,7 @@ jobs:
           if (s?.funding?.historical_reference?.status !== 'OVERLAY_HISTORICAL_REFERENCE') throw new Error('Legacy Funding reference missing');
           if (s?.fiscal?.version !== 'GMLI_FISCAL_V2_DEFICIT_IMPULSE') throw new Error('Fiscal V2 is not active overlay');
           if (s?.fiscal?.promotion_gate?.status !== 'PASS_FISCAL_V2_PRODUCTION_PROMOTION') throw new Error('Fiscal V2 promotion gate not PASS');
-          if (s?.fiscal?.automatic_global_conviction_weight !== 0) throw new Error('Fiscal automatic weight changed');
+          if (s?.fiscal?.promotion_gate?.automatic_global_conviction_weight !== 0) throw new Error('Fiscal automatic weight changed');
           if (s?.fiscal?.historical_reference?.score !== 52.539556447652046 || s?.fiscal?.historical_reference?.mode !== 'STRICT_ACTUAL_RELEASE') throw new Error('Legacy Fiscal historical reference mismatch');
 
           const d = out['/api/decision'];
