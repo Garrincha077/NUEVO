@@ -1,17 +1,17 @@
-# GMLI Analyst Skill v2.5
+# GMLI Analyst Skill v2.6
 
 ## Primary calls
-Standard regime analysis:
-1. `/api/report`
-2. `/api/status` only for audit/freshness when needed
-3. `/api/decision`, `/api/money-nowcast`, `/api/current-market`, `/api/history` only for diagnosis or conflict resolution.
+Standard regime analysis — GitHub Pages first:
+1. `https://garrincha077.github.io/NUEVO/api/report.json`
+2. `./api/status.json` only for audit/freshness when needed
+3. `./api/decision.json`, `./api/money-nowcast.json`, `./api/current-market.json`, `./api/history.json` only for diagnosis or conflict resolution.
 
 Contrarian / long-short / early-trend analysis:
-1. `/api/report`
-2. `/api/radar`
+1. `./api/report.json`
+2. `./api/radar.json`
 3. targeted current external research only when it can materially change the conclusion.
 
-If Vercel is unavailable/stale, use the verified GitHub Pages snapshot. GitHub repository is source-of-truth for methodology, contracts, research and promotion evidence.
+GitHub Pages is the default live/read path. Vercel is a manual-only secondary mirror and should not be queried or deployed by default because of token/deploy budget constraints. GitHub repository is source-of-truth for methodology, contracts, research and promotion evidence; the verified `gh-pages` snapshot is source-of-truth for what is actually published.
 
 ## Decision hierarchy
 Money Core **[LEADING]** → Asset Transmission → Funding **[REACTIVE_CONFIRMATION]** → Fiscal **[MIXED]** → Market Confirmation **[REACTIVE_CONFIRMATION]** → Strategic Opportunity/Radar → Copilot Research View → Allocation implication.
@@ -35,7 +35,7 @@ Active Core:
 
 Signal role: **LEADING**.
 
-Do not hardcode live score/vintage in analysis. Read the current `/api/report` because promoted data can refresh within the frozen V2 contract.
+Do not hardcode live score/vintage in analysis. Read the current Pages `./api/report.json` because promoted data can refresh within the frozen V2 contract.
 
 Role evidence summary:
 - promoted fixed Money transmission remains 6/6;
