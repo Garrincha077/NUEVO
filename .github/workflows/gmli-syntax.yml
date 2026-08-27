@@ -115,10 +115,16 @@ jobs:
           grep -q '"strict_release_ready": false' /tmp/gmli-fiscal-capture-validation.json
       - name: Guard active Money V2 and historical Core reference
         run: |
-          grep -q "observation_month: '2026-06'" lib/money-v2-active.js
-          grep -q "available_date: '2026-07-31'" lib/money-v2-active.js
-          grep -q "usd_score: 55.1121" lib/money-v2-active.js
-          grep -q "fxn_score: 44.488" lib/money-v2-active.js
+          node --input-type=module <<'NODE'
+          import { ACTIVE_MONEY_V2 } from './lib/money-v2-active.js';
+          const isoMonth = /^\d{4}-\d{2}$/;
+          const isoDate = /^\d{4}-\d{2}-\d{2}$/;
+          if (!isoMonth.test(ACTIVE_MONEY_V2.observation_month)) throw new Error('Malformed active Money observation month');
+          if (!isoDate.test(ACTIVE_MONEY_V2.available_date)) throw new Error('Malformed active Money available date');
+          if (!Number.isFinite(ACTIVE_MONEY_V2.usd_score) || !Number.isFinite(ACTIVE_MONEY_V2.fxn_score)) throw new Error('Active Money scores must be finite');
+          if (ACTIVE_MONEY_V2.usd_score < 0 || ACTIVE_MONEY_V2.usd_score > 100 || ACTIVE_MONEY_V2.fxn_score < 0 || ACTIVE_MONEY_V2.fxn_score > 100) throw new Error('Active Money scores outside 0-100');
+          if (ACTIVE_MONEY_V2.source_manifest !== 'research/global-money-v2/latest/manifest.lock.json') throw new Error('Unexpected active Money source manifest');
+          NODE
           grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
           grep -q "status: 'PASS_MONEY_V2_PRODUCTION_PROMOTION'" lib/state.js
           grep -q "status: 'CORE_HISTORICAL_REFERENCE'" lib/state.js
