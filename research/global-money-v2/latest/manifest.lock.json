@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-08-26T08:00:25Z",
+  "built_at": "2026-08-27T18:17:30Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -88,9 +88,9 @@
       },
       {
         "label": "local_EA_yoy_pct",
-        "actual": 2.99623,
+        "actual": 2.994083,
         "expected": 3.2,
-        "delta": -0.20377,
+        "delta": -0.205917,
         "tolerance": 0.65,
         "pass": true
       },
@@ -200,17 +200,17 @@
       },
       {
         "label": "gbm_usd_yoy_pct",
-        "actual": 9.301013,
+        "actual": 9.300625,
         "expected": 9.3258,
-        "delta": -0.024787,
+        "delta": -0.025175,
         "tolerance": 1.0,
         "pass": true
       },
       {
         "label": "gbm_fxn_yoy_pct",
-        "actual": 6.112563,
+        "actual": 6.112189,
         "expected": 6.1275,
-        "delta": -0.014937,
+        "delta": -0.015311,
         "tolerance": 0.7,
         "pass": true
       }
@@ -219,13 +219,13 @@
   "latest_eligible": {
     "month": "2026-06",
     "available_date": "2026-07-31",
-    "gbm_usd_yoy_pct": 7.918334,
-    "gbm_fxn_yoy_pct": 5.907634,
-    "fx_effect_pp": 2.0107,
-    "usd_z": 0.299961,
-    "usd_score": 54.9994,
-    "fxn_z": -0.34499,
-    "fxn_score": 44.2502,
+    "gbm_usd_yoy_pct": 7.924327,
+    "gbm_fxn_yoy_pct": 5.913637,
+    "fx_effect_pp": 2.01069,
+    "usd_z": 0.301056,
+    "usd_score": 55.0176,
+    "fxn_z": -0.342682,
+    "fxn_score": 44.2886,
     "weights_pct": {
       "US": 21.2545,
       "CN": 44.5559,
@@ -238,7 +238,7 @@
     "local_yoy_pct": {
       "US": 5.3439,
       "CN": 8.0003,
-      "EA": 3.2245,
+      "EA": 3.2586,
       "JP": 2.2078,
       "GB": 4.9229,
       "CA": 4.4262,
@@ -257,13 +257,13 @@
   "latest_source_preview": {
     "month": "2026-06",
     "available_date": "2026-07-31",
-    "gbm_usd_yoy_pct": 7.918334,
-    "gbm_fxn_yoy_pct": 5.907634,
-    "fx_effect_pp": 2.0107,
-    "usd_z": 0.299961,
-    "usd_score": 54.9994,
-    "fxn_z": -0.34499,
-    "fxn_score": 44.2502,
+    "gbm_usd_yoy_pct": 7.924327,
+    "gbm_fxn_yoy_pct": 5.913637,
+    "fx_effect_pp": 2.01069,
+    "usd_z": 0.301056,
+    "usd_score": 55.0176,
+    "fxn_z": -0.342682,
+    "fxn_score": 44.2886,
     "weights_pct": {
       "US": 21.2545,
       "CN": 44.5559,
@@ -276,7 +276,7 @@
     "local_yoy_pct": {
       "US": 5.3439,
       "CN": 8.0003,
-      "EA": 3.2245,
+      "EA": 3.2586,
       "JP": 2.2078,
       "GB": 4.9229,
       "CA": 4.4262,
@@ -310,14 +310,14 @@
     },
     {
       "filename": "raw/ea-ecb-m2.csv",
-      "bytes": 78212,
-      "sha256": "07b396af310a4549bf8306bd28955ca0e088422dbe7f47aa3424151290541cd2",
+      "bytes": 78731,
+      "sha256": "56bb54c7270c511b91762260bc2aa492a6a98bb04398a23f0b8fb34abbd4a458",
       "source_url": "https://data-api.ecb.europa.eu/service/data/BSI/M.U2.Y.V.M20.X.1.U2.2300.Z01.E?startPeriod=2014-01&format=csvdata"
     },
     {
       "filename": "raw/jp-boj-m2.json",
       "bytes": 2878,
-      "sha256": "02f5a3e55d6bdb07d7995dc237efbf20276375730b3e9c9b83c87437f5e2b66d",
+      "sha256": "114821aacc76347d8b15c3ff4b3960205296df5bb799a458dc469ed95d6f4c21",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
