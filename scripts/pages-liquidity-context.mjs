@@ -143,7 +143,7 @@ async function fetchTreasuryRows() {
     try {
       const payload = await fetchJson(url);
       const rows = Array.isArray(payload?.data) ? payload.data : [];
-      const usable = rows.filter(row => String(row.security_type_desc || '').toLowerCase().includes('marketable') && treasuryClassKey(row.security_class_desc));
+      const usable = rows.filter(row => String(row.security_type_desc || '').trim().toLowerCase() === 'marketable' && treasuryClassKey(row.security_class_desc));
       if (usable.length) return usable;
       lastError = new Error(`No usable MSPD marketable rows from ${url}`);
     } catch (error) {
