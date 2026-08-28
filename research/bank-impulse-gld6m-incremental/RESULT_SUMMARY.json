@@ -1,0 +1,68 @@
+{
+  "schema_version": "gmli-bank-impulse-gld6m-incremental-v1",
+  "status": "STOP_RESEARCH_DIAGNOSTIC",
+  "evidence_tier": "RESEARCH_DIAGNOSTIC",
+  "scoring_effect": "NONE",
+  "automatic_weight_change": 0,
+  "methodology_effect": "NONE",
+  "core_modified": false,
+  "parameter_search": false,
+  "asset_search": false,
+  "horizon_search": false,
+  "lag_search": false,
+  "workflow_run_id": 33196142937,
+  "workflow_conclusion": "success",
+  "target": "GLD_6M_FORWARD_LOG_ADJUSTED_RETURN",
+  "baseline": "Money_FXN_accel3",
+  "candidate_addition": "Bank_Impulse_13W_minus_prior13W",
+  "train_n": 93,
+  "oos_n": 36,
+  "train_money_signal_start": "2015-04",
+  "train_money_signal_end": "2022-12",
+  "oos_money_signal_start": "2023-01",
+  "oos_money_signal_end": "2025-12",
+  "candidate_train": {
+    "bank_beta_standardized": 0.027352370618371806,
+    "bank_hac_pvalue": 0.00009942801013260669,
+    "hac_maxlags": 5,
+    "candidate_r2": 0.0979579767884331,
+    "baseline_r2": 0.007702178743348442
+  },
+  "oos": {
+    "rmse_baseline": 0.1540834163081637,
+    "rmse_candidate": 0.15333530672632797,
+    "incremental_r2_vs_baseline": 0.00968687584585215,
+    "prediction_pearson_baseline": 0.5814887697057921,
+    "prediction_pearson_candidate": 0.38470025626105003
+  },
+  "nonoverlap_phase_robustness": {
+    "phase_wins_candidate": 3,
+    "phase_total": 6,
+    "median_incremental_r2": 0.007392391864470049,
+    "phases": [
+      {"phase": 0, "n": 6, "incremental_r2": 0.017572451232523267, "candidate_better": true},
+      {"phase": 1, "n": 6, "incremental_r2": 0.02336451205123058, "candidate_better": true},
+      {"phase": 2, "n": 6, "incremental_r2": 0.026317812885565117, "candidate_better": true},
+      {"phase": 3, "n": 6, "incremental_r2": -0.027604426073015276, "candidate_better": false},
+      {"phase": 4, "n": 6, "incremental_r2": -0.008726094733228607, "candidate_better": false},
+      {"phase": 5, "n": 6, "incremental_r2": -0.002787667503583169, "candidate_better": false}
+    ]
+  },
+  "gate_checks": {
+    "bank_train_beta_positive": true,
+    "bank_hac_p_lt_0_10": true,
+    "oos_incremental_r2_positive": true,
+    "oos_prediction_corr_not_worse": false,
+    "phase_robustness_4of6_and_median_positive": false
+  },
+  "source_provenance": {
+    "bank_h8_ddp_series": "B1151NCBA",
+    "bank_sha256": "38216735617c7663c34cbd28f1e023ce8aa50d7dc27711d39d7647f2ea845599",
+    "money_file": "research/global-money-v2/latest/global_money_v2.csv",
+    "money_sha256": "f61197059f228ab011f2c3d520d369bffe43caaa0ee301e877787e18e2db1596",
+    "gld_source": "Yahoo Finance monthly adjusted close",
+    "gld_sha256": "41fc81f9f36986136ccd85d07cd9c405aeb65206821818cb6f13205afbd47392"
+  },
+  "conclusion": "Bank Impulse is not promoted. It slightly improves aggregate OOS RMSE/SSE and has a positive HAC-significant train coefficient, but it materially worsens OOS prediction correlation versus the Money-only baseline and wins only 3 of 6 fixed non-overlapping phases. The predeclared all-check gate therefore fails closed.",
+  "next_action": "STOP. Keep Bank Impulse informational in Liquidity Context with automatic weight 0. Do not optimize this relation further without a new explicitly frozen research question."
+}
