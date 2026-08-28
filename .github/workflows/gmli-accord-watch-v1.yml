@@ -27,6 +27,22 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Inspect source shapes
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          const sources = [
+            ['H41', 'https://www.federalreserve.gov/datadownload/Output.aspx?filetype=csv&from=&label=include&lastobs=&layout=seriescolumn&rel=H41&series=bf254044496631c2a1c54617dd265a95&to=&type=package'],
+            ['TERM', 'https://www.federalreserve.gov/data/yield-curve-tables/feds200533.csv']
+          ];
+          for (const [name, url] of sources) {
+            const res = await fetch(url, {headers:{'user-agent':'GMLI-accord-watch-debug/1.0'}, signal:AbortSignal.timeout(30000)});
+            const text = await res.text();
+            console.log(`SOURCE ${name} status=${res.status} bytes=${text.length}`);
+            console.log(text.split(/\r?\n/).slice(0, 16).join('\n'));
+          }
+          NODE
+
       - name: Build frozen Accord Watch snapshot
         run: |
           set -euo pipefail
