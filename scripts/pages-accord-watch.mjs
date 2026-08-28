@@ -1,5 +1,6 @@
 import { buildLiquidityContext } from './pages-liquidity-context.mjs';
 
+const H41_TOTAL_ASSETS_URL = 'https://www.federalreserve.gov/datadownload/Output.aspx?filetype=csv&from=&label=include&lastobs=&layout=seriescolumn&rel=H41&series=17398fbf71bc6a47df150bceebdea2bc&to=&type=package';
 const H41_TABLE1_URL = 'https://www.federalreserve.gov/datadownload/Output.aspx?filetype=csv&from=&label=include&lastobs=&layout=seriescolumn&rel=H41&series=bf254044496631c2a1c54617dd265a95&to=&type=package';
 const TREASURY_REAL_YIELD_BASE = 'https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml?data=daily_treasury_real_yield_curve&field_tdr_date_value=';
 const FED_TERM_PREMIUM_URL = 'https://www.federalreserve.gov/data/yield-curve-tables/feds200533.csv';
@@ -103,10 +104,10 @@ async function buildTreasurySupplyBlock() {
 function parseH41Series(csv, wanted) {
   const lines = csv.split(/\r?\n/).filter(Boolean);
   const rows = lines.map(parseCsvRow);
-  const headerIndex = rows.findIndex(row => String(row[0] || '').toLowerCase() === 'time period');
+  const headerIndex = rows.findIndex(row => String(row[0] || '').trim().toLowerCase() === 'time period');
   if (headerIndex < 0) throw new Error('H.4.1 header not found');
-  const header = rows[headerIndex];
-  const idx = header.findIndex(x => String(x).replace(/^H41\/H41\//, '') === wanted || String(x).includes(wanted));
+  const header = rows[headerIndex].map(x => String(x).trim().replace(/^H41\/H41\//, ''));
+  const idx = header.findIndex(x => x === wanted || x.endsWith(`/${wanted}`));
   if (idx < 0) throw new Error(`H.4.1 series ${wanted} not found`);
   const out = [];
   for (const row of rows.slice(headerIndex + 1)) {
@@ -121,9 +122,12 @@ function parseH41Series(csv, wanted) {
 
 async function buildFedReserveBlock() {
   try {
-    const csv = await fetchText(H41_TABLE1_URL, 30000);
-    const assets = parseH41Series(csv, 'RESPPA_N.WW');
-    const reserves = parseH41Series(csv, 'RESH4R_N.WW');
+    const [assetsCsv, reservesCsv] = await Promise.all([
+      fetchText(H41_TOTAL_ASSETS_URL, 30000),
+      fetchText(H41_TABLE1_URL, 30000)
+    ]);
+    const assets = parseH41Series(assetsCsv, 'RESPPA_N.WW');
+    const reserves = parseH41Series(reservesCsv, 'RESH4R_N.WW');
     const latestDate = [assets.at(-1)?.date, reserves.at(-1)?.date].filter(Boolean).sort().at(0);
     if (!latestDate) throw new Error('No aligned H.4.1 latest date');
     const target = dateMinusDays(latestDate, 91);
@@ -146,6 +150,8 @@ async function buildFedReserveBlock() {
       status: 'AVAILABLE',
       label: 'Fed / reserve support',
       source: 'Federal Reserve H.4.1 Data Download Program',
+      total_assets_series: 'RESPPA_N.WW',
+      reserve_balances_series: 'RESH4R_N.WW',
       latest_date: latestDate,
       total_assets_13w_pct: round(asset13w),
       reserve_balances_13w_pct: round(reserve13w),
@@ -168,7 +174,7 @@ async function buildFedReserveBlock() {
 }
 
 function parseRealYieldXml(xml) {
-  const entries = xml.match(/<entry[\s\S]*?<\/entry>/g) || [];
+  const entries = xml.match(/<entry[\s\S]*?<\/entry>/gi) || [];
   const out = [];
   for (const entry of entries) {
     const dm = entry.match(/<d:NEW_DATE[^>]*>([^<]+)<\/d:NEW_DATE>/i);
@@ -194,11 +200,13 @@ async function fetchRealYieldRows() {
 
 function parseTermPremiumCsv(csv) {
   const rows = csv.split(/\r?\n/).filter(Boolean).map(parseCsvRow);
-  const headerIndex = rows.findIndex(row => row.some(x => String(x).trim().toUpperCase() === 'TP10'));
-  if (headerIndex < 0) throw new Error('TP10 column not found in Fed term-premium CSV');
+  const candidates = ['THREEFYTP1000.B', 'THREEFYTP10', 'TP10'];
+  const headerIndex = rows.findIndex(row => row.some(x => candidates.includes(String(x).trim().toUpperCase())));
+  if (headerIndex < 0) throw new Error('10Y term-premium column not found in Fed CSV');
   const header = rows[headerIndex].map(x => String(x).trim().toUpperCase());
-  const tpIdx = header.indexOf('TP10');
-  const dateIdx = Math.max(0, header.findIndex(x => x === 'DATE'));
+  const tpIdx = candidates.map(x => header.indexOf(x)).find(x => x >= 0);
+  const dateIdx = header.indexOf('DATE');
+  if (tpIdx == null || tpIdx < 0 || dateIdx < 0) throw new Error('Fed term-premium date/value columns unresolved');
   const out = [];
   for (const row of rows.slice(headerIndex + 1)) {
     const date = parseDate(row[dateIdx]);
@@ -206,7 +214,7 @@ function parseTermPremiumCsv(csv) {
     if (date && Number.isFinite(value)) out.push({ date, value });
   }
   out.sort((a, b) => a.date.localeCompare(b.date));
-  if (out.length < 100) throw new Error(`Insufficient TP10 history: ${out.length}`);
+  if (out.length < 100) throw new Error(`Insufficient 10Y term-premium history: ${out.length}`);
   return out;
 }
 
@@ -237,6 +245,7 @@ async function buildMarketVerdictBlock() {
       latest_date: latestDate,
       treasury_real_yield_source: 'U.S. Treasury Daily Treasury Par Real Yield Curve Rates',
       term_premium_source: 'Federal Reserve Board three-factor nominal term-structure model (staff research product)',
+      term_premium_series: 'THREEFYTP1000.B',
       real_yield_10y_pct: round(real0.value),
       real_yield_10y_change_3m_pp: round(realChange),
       term_premium_10y_pct: round(term0.value),
