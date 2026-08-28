@@ -31,7 +31,7 @@ jobs:
       - name: Run fixed backtest
         run: |
           set -euo pipefail
-          python research/liquidity-context-backtest/run_backtest_v3.py | tee /tmp/liquidity-context-backtest.log
+          python research/liquidity-context-backtest/run_backtest_v4.py | tee /tmp/liquidity-context-backtest.log
           test -s research/liquidity-context-backtest/out/RESULTS.csv
           test -s research/liquidity-context-backtest/out/RESULT_SUMMARY.json
           test -s research/liquidity-context-backtest/out/RESULT_SUMMARY.md
