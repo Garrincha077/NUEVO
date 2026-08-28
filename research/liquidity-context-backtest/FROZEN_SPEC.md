@@ -1,4 +1,4 @@
-# GMLI Liquidity Context backtest — frozen research specification v1
+# GMLI Liquidity Context backtest — frozen research specification v1.1
 
 Status: RESEARCH ONLY / NOT PROMOTED
 
@@ -8,7 +8,7 @@ Test whether the two existing `GMLI_LIQUIDITY_CONTEXT_V1` diagnostics contain st
 ## Indicators — frozen before results
 
 ### 1. Bank balance-sheet impulse
-Source: Federal Reserve H.8 / FRED `TLAACBW027SBOG`.
+Source: Federal Reserve H.8. Production identifies the FRED series `TLAACBW027SBOG`; the historical runner uses the Federal Reserve Data Download Program equivalent series `B1151NCBA` (Total Assets, All Commercial Banks, seasonally adjusted) because the FRED CSV endpoint timed out in GitHub Actions before any empirical result was produced.
 
 For each monthly endpoint, use the latest weekly observation in that month and reproduce the production construction:
 - current 13W growth = pct change from approximately 91 days earlier;
@@ -40,7 +40,9 @@ Forward horizons: `3M`, `6M`, `12M` only.
 No secondary asset expansion, no lag search, no alternate window search, no threshold search, no sign flipping after results.
 
 ## Market data
-Primary research price source: Stooq monthly ETF closes. Price returns are used, not total returns. This is sufficient for a first-pass relationship test but is not a final promotion-grade return dataset.
+Primary research market source: Yahoo Finance chart API using monthly **adjusted closes**, consistent with the Yahoo source family already used by the canonical GMLI current-market implementation. Stooq monthly data was the initially specified source but returned no usable SPY data in GitHub Actions; this source substitution was frozen before any backtest result was produced and changes no asset, horizon, signal or evaluation rule.
+
+Adjusted-close forward returns are used. This is still a research return source and not a final promotion-grade independently archived return dataset.
 
 ## Evaluation — fixed
 For every indicator × asset × horizon:
@@ -61,8 +63,8 @@ This classification is directional robustness only; it is not a statistical prom
 The family contains 24 fixed tests (2 indicators × 4 assets × 3 horizons). Raw p-values are diagnostic only. Benjamini-Hochberg q-values over the 24 full-sample Pearson tests are reported to prevent cherry-picking, but no production promotion can occur from this exploratory run alone.
 
 ## Historical-data caveats
-- H.8/FRED history is current revised history, not exact historical real-time vintages.
+- H.8 history is current revised history, not exact historical real-time vintages.
 - MSPD history is official monthly history but the test uses a conservative fixed availability lag rather than exact historical release timestamps.
-- Stooq closes are a research market-data source and do not include ETF distributions in the return measure.
+- Yahoo adjusted closes are a research market-data source; exact provider adjustment history is not independently archived by this runner.
 
 Therefore this run is `RESEARCH_DIAGNOSTIC`, not CORE or OVERLAY promotion evidence.
