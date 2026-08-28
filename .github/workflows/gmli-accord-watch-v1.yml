@@ -46,11 +46,30 @@ jobs:
           grep -Eq '"state": "(HYPOTHESIS_ONLY|SETUP|EMERGING|REPRESSION)"' /tmp/accord-watch-result.json
           grep -q '"duration_price_support"' /tmp/accord-watch-result.json
           grep -q '"real_bond_value"' /tmp/accord-watch-result.json
-          grep -q '"status": "AVAILABLE"' /tmp/accord-watch-result.json
+          grep -q '"data_complete": true' /tmp/accord-watch-result.json
+
+      - name: Validate static Pages integration
+        run: |
+          set -euo pipefail
+          node scripts/build-pages-snapshot.mjs >/tmp/gmli-pages.json
+          node scripts/apply-decision-delta.mjs >/tmp/gmli-decision-delta.json
+          node scripts/apply-liquidity-context.mjs >/tmp/gmli-liquidity-context.json
+          node scripts/apply-accord-watch.mjs | tee /tmp/gmli-accord-watch-pages.json
+          grep -q 'PASS_GMLI_ACCORD_WATCH_V1' /tmp/gmli-accord-watch-pages.json
+          test -s .pages/api/accord-watch.json
+          grep -q '"version": "GMLI_ACCORD_WATCH_V1"' .pages/api/accord-watch.json
+          grep -q '"scoring_effect": "NONE"' .pages/api/accord-watch.json
+          grep -q '"automatic_weight_change": 0' .pages/api/accord-watch.json
+          grep -q 'id="accordWatch"' .pages/index.html
+          grep -q 'id="accordWatchGuide"' .pages/index.html
+          grep -q 'accord-watch.json' .pages/index.html
+          grep -q 'ACCORD WATCH v1' .pages/index.html
 
       - name: Upload Accord Watch artifact
         uses: actions/upload-artifact@v4
         with:
           name: gmli-accord-watch-v1
-          path: /tmp/accord-watch-result.json
+          path: |
+            /tmp/accord-watch-result.json
+            .pages/api/accord-watch.json
           if-no-files-found: error
