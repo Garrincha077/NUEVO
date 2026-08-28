@@ -21,9 +21,12 @@ async function main() {
 
   const htmlPath = path.join(PAGES, 'index.html');
   const html = await fs.readFile(htmlPath, 'utf8');
-  const enhanced = enhanceLiquidityContext(html);
+  const enhanced = enhanceLiquidityContext(html, context);
   if (!enhanced.includes('id="liquidityContext"') || !enhanced.includes('liquidity-context.json')) {
     throw new Error('Liquidity context UI integration failed');
+  }
+  if (enhanced.includes('id="bankImpulseDirection">Loading') || enhanced.includes('Loading liquidity context')) {
+    throw new Error('Liquidity context must be statically rendered in the published snapshot');
   }
   await fs.writeFile(htmlPath, enhanced);
 
@@ -39,7 +42,8 @@ async function main() {
     bank_latest_date: context.bank_balance_sheet_impulse.latest_date || null,
     treasury_status: context.treasury_duration_mix.status,
     treasury_latest_date: context.treasury_duration_mix.latest_date || null,
-    pages_liquidity_context_ui: true
+    pages_liquidity_context_ui: true,
+    pages_liquidity_context_static_render: true
   }, null, 2));
 }
 
