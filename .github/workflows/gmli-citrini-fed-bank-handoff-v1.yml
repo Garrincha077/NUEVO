@@ -31,7 +31,7 @@ jobs:
       - name: Run frozen handoff gate
         run: |
           set -euo pipefail
-          python research/citrini-fed-bank-handoff-v1/run_gate.py | tee /tmp/citrini-fed-bank-handoff.log
+          python research/citrini-fed-bank-handoff-v1/run_gate_ci.py | tee /tmp/citrini-fed-bank-handoff.log
           test -s research/citrini-fed-bank-handoff-v1/out/HANDOFF_STATES.csv
           test -s research/citrini-fed-bank-handoff-v1/out/RELATION_RESULTS.csv
           test -s research/citrini-fed-bank-handoff-v1/out/PHASE_RESULTS.csv
