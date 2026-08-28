@@ -1,0 +1,66 @@
+{
+  "schema_version": "gmli-citrini-fed-bank-handoff-v1",
+  "status": "STOP_RESEARCH_DIAGNOSTIC",
+  "evidence_tier": "RESEARCH_DIAGNOSTIC",
+  "scoring_effect": "NONE",
+  "automatic_weight_change": 0,
+  "methodology_effect": "NONE",
+  "core_modified": false,
+  "parameter_search": false,
+  "asset_search": false,
+  "horizon_search": false,
+  "lag_search": false,
+  "threshold_search": false,
+  "sign_search": false,
+  "successful_workflow_run": 33198182785,
+  "candidate": "PRIVATE_HANDOFF = Fed 13W < 0 AND Bank 13W > 0",
+  "train_signal_months": "2015-01..2022-12",
+  "oos_signal_months": "2023-01+",
+  "state_counts": {
+    "full": {"BROAD_EASING": 143, "PRIVATE_HANDOFF": 96, "TRUE_TIGHTENING": 25, "FED_OFFSET": 18},
+    "train": {"PRIVATE_HANDOFF": 41, "BROAD_EASING": 40, "TRUE_TIGHTENING": 10, "FED_OFFSET": 5},
+    "oos": {"PRIVATE_HANDOFF": 25, "BROAD_EASING": 10, "TRUE_TIGHTENING": 7, "FED_OFFSET": 2}
+  },
+  "sources": {
+    "fed": {
+      "source": "Federal Reserve H.4.1 Data Download Program",
+      "series": "RESPPA_N.WW",
+      "description": "Assets: Total Assets: Total assets: Wednesday level",
+      "first_observation": "2002-12-18",
+      "last_observation": "2026-08-26",
+      "sha256": "7bced79dec3e6b9ae34465c2994506a12c22f4b0245aff846283fc59dce7d568"
+    },
+    "bank": {
+      "source": "Federal Reserve H8 Data Download Program",
+      "series": "B1151NCBA",
+      "first_observation": "1973-01-03",
+      "last_observation": "2026-08-12",
+      "sha256": "38216735617c7663c34cbd28f1e023ce8aa50d7dc27711d39d7647f2ea845599"
+    },
+    "money": {
+      "file": "research/global-money-v2/latest/global_money_v2.csv",
+      "first_month": "2015-01",
+      "last_month": "2026-06",
+      "sha256": "f61197059f228ab011f2c3d520d369bffe43caaa0ee301e877787e18e2db1596"
+    },
+    "prices": "checked-in Yahoo monthly adjusted-close snapshots from promoted Money transmission research"
+  },
+  "gate": {
+    "positive_train_beta_relations": 4,
+    "positive_oos_incremental_r2_relations": 3,
+    "median_oos_incremental_r2": 0.004957416452777086,
+    "corr_not_worse_relations": 0,
+    "phase_wins": 25,
+    "phase_total": 60,
+    "median_phase_incremental_r2": -0.025912471643540602,
+    "checks": {
+      "positive_train_beta_at_least_4of6": true,
+      "positive_oos_incremental_r2_at_least_4of6": false,
+      "median_oos_incremental_r2_positive": true,
+      "prediction_corr_not_worse_at_least_4of6": false,
+      "nonoverlap_phase_majority_and_median_positive": false
+    },
+    "pass": false
+  },
+  "guardrail": "STOP forbids rescue retuning. No production score, weight, tier or methodology change."
+}
