@@ -7,7 +7,6 @@ on:
     paths:
       - 'docs/GMLI_ACCORD_WATCH_V1.md'
       - 'scripts/pages-accord-watch.mjs'
-      - 'scripts/apply-accord-watch.mjs'
       - 'scripts/apply-liquidity-context.mjs'
       - '.github/workflows/gmli-accord-watch-v1.yml'
   workflow_dispatch:
