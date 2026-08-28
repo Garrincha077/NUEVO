@@ -1,0 +1,47 @@
+name: GMLI Bank Impulse GLD 6M incremental gate
+
+on:
+  push:
+    branches:
+      - research/bank-impulse-gld6m-incremental
+    paths:
+      - 'research/bank-impulse-gld6m-incremental/**'
+      - '.github/workflows/gmli-bank-impulse-gld6m-incremental.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  robustness-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install research dependencies
+        run: python -m pip install --disable-pip-version-check pandas numpy requests statsmodels
+
+      - name: Run frozen incremental gate
+        run: |
+          set -euo pipefail
+          python research/bank-impulse-gld6m-incremental/run_gate.py | tee /tmp/bank-impulse-gld6m.log
+          test -s research/bank-impulse-gld6m-incremental/out/ALIGNED_DATA.csv
+          test -s research/bank-impulse-gld6m-incremental/out/RESULT_SUMMARY.json
+          test -s research/bank-impulse-gld6m-incremental/out/RESULT_SUMMARY.md
+          grep -q 'RESEARCH_DIAGNOSTIC' research/bank-impulse-gld6m-incremental/out/RESULT_SUMMARY.json
+          grep -q '"scoring_effect": "NONE"' research/bank-impulse-gld6m-incremental/out/RESULT_SUMMARY.json
+          grep -q '"automatic_weight_change": 0' research/bank-impulse-gld6m-incremental/out/RESULT_SUMMARY.json
+
+      - name: Upload research artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bank-impulse-gld6m-incremental-v1
+          path: research/bank-impulse-gld6m-incremental/out/
+          if-no-files-found: error
