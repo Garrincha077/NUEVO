@@ -1,4 +1,4 @@
-# GMLI Analyst Skill v2.6
+# GMLI Analyst Skill v2.7
 
 ## Primary calls
 Standard regime analysis — GitHub Pages first:
@@ -10,6 +10,14 @@ Contrarian / long-short / early-trend analysis:
 1. `./api/report.json`
 2. `./api/radar.json`
 3. targeted current external research only when it can materially change the conclusion.
+
+Accord / Citrini / financial-repression scenario analysis:
+1. `./api/report.json` for the actual GMLI Core/Overlay context
+2. `./api/accord-watch-v2.json` for the current 0–100 closeness gauge and four raw blocks
+3. `./api/accord-watch-history.json` when the user asks whether the scenario is moving closer or farther away
+4. `./api/accord-watch.json` only for the frozen v1 audit/state-machine comparison.
+
+The Accord Watch v2 number is a **RESEARCH_DIAGNOSTIC presentation score**, not probability, not the GMLI regime/conviction score and not an allocation weight. Always label it separately from CORE/OVERLAY.
 
 GitHub Pages is the default live/read path. Vercel is a manual-only secondary mirror and should not be queried or deployed by default because of token/deploy budget constraints. GitHub repository is source-of-truth for methodology, contracts, research and promotion evidence; the verified `gh-pages` snapshot is source-of-truth for what is actually published.
 
@@ -102,6 +110,48 @@ Signal role: **REACTIVE_CONFIRMATION**.
 
 Completed-month price turn confirms/diverges from the upstream Money thesis. It does not create the macro regime and should be described as confirmation evidence, not as an independent macro leading factor.
 
+### Accord Watch v2 — Citrini / Treasury–Fed Accord scenario tracker
+Evidence tier: **RESEARCH_DIAGNOSTIC / PRESENTATION**.
+
+Canonical construction:
+- `docs/GMLI_ACCORD_WATCH_V2.md`
+- analyst handoff: `docs/GMLI_ACCORD_WATCH_HANDOFF.md`
+
+Purpose: simplify the hypothesized Accord / financial-repression setup into a transparent 0–100 **closeness gauge** while preserving the raw mechanisms.
+
+Four equal 25-point blocks:
+1. Treasury duration pressure
+2. Fed/reserve support
+3. descriptive Fed→Bank handoff
+4. market yield suppression.
+
+Treasury block is split 12.5/12.5 between the frozen V1 3M composition check and a monthly net-outstanding-change supply proxy.
+
+Bands:
+- 0–24 DISTANT
+- 25–49 SETUP
+- 50–69 DEVELOPING
+- 70–84 EMERGING
+- 85–100 ACCORD_LIKE.
+
+A separate `REPRESSION_RISK` flag requires score >=85 plus negative 10Y real yield.
+
+Hard use rules:
+- presentation score only; never call it probability;
+- `scoring_effect = NONE`, `automatic_weight_change = 0`, `methodology_effect = NONE`;
+- it never overwrites Money/Funding/Fiscal/Market Confirmation;
+- policy/regulatory headlines do not directly add points;
+- read 1M/3M delta and history to answer whether the scenario is moving closer/farther away;
+- bond interpretation must separate tactical `DURATION_PRICE_SUPPORT` from `REAL_BOND_VALUE`;
+- asset map is scenario interpretation, not empirical promotion.
+
+Fed→Bank predictive boundary:
+- the prior frozen incremental predictive family gate remains `STOP_RESEARCH_DIAGNOSTIC`;
+- v2 reuses the state only descriptively;
+- do not optimize lags, windows, thresholds, assets or subperiods to rescue it.
+
+Frozen v1 remains preserved at `./api/accord-watch.json` and must not be silently rewritten.
+
 ### Funding-equity contrarian side finding
 Evidence tier: RESEARCH only.
 
@@ -125,6 +175,8 @@ Other assets remain RESEARCH/proxy unless separately promoted.
 
 ## Next-phase rule
 Money, Money nowcast, Funding V2 and Fiscal V2 have promoted guarded paths, and Signal Role Taxonomy v1 now separates leading from confirmation functions without changing scoring. Preserve those contracts before adding breadth.
+
+Accord Watch v2 is a user-facing scenario compression layer, not a new production decision engine. Maintain its equal-weight/fail-closed construction and trend history; do not calibrate it to returns unless a separately frozen research question is explicitly approved.
 
 Credit/Velocity remains `BLOCKED_MISSING_FROZEN_CONSTRUCTION_PROVENANCE`. Do not infer the old formula. Build a new version only if there is a material decision gap, and freeze construction + usefulness gate before empirical testing.
 
@@ -176,7 +228,7 @@ Use the engine's transparent 0–10 rubric:
 - Funding confirmation 0–2
 - market confirmation 0–2
 
-Fiscal V2 is currently outside this numeric rubric (`automatic_global_conviction_weight = 0`) and should be reported as OVERLAY confirmation context. Radar asymmetry is also separate from regime conviction.
+Fiscal V2 is currently outside this numeric rubric (`automatic_global_conviction_weight = 0`) and should be reported as OVERLAY confirmation context. Radar asymmetry is also separate from regime conviction. Accord Watch v2 is also outside this rubric and must never be added to the 10-point conviction score.
 
 Signal roles are descriptive labels only. Do not add/subtract points merely because a layer is LEADING, REACTIVE_CONFIRMATION or MIXED.
 
@@ -192,6 +244,13 @@ Strongest, Positive, Neutral, Defensive/Avoid.
 
 ### ŠTO BI PROMIJENILO MIŠLJENJE
 2–3 concrete triggers.
+
+For Accord/Citrini questions, add a compact separate line or section:
+- Accord gauge /100 + band
+- 1M and 3M direction
+- strongest supporting block
+- strongest rejecting/conflicting block
+- bond implication and conditional asset beneficiaries.
 
 ## Default contrarian extension
 ### EARLY LONG
