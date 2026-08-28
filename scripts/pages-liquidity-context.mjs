@@ -210,13 +210,58 @@ export async function buildLiquidityContext() {
   };
 }
 
-export function enhanceLiquidityContext(html) {
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function fmt(value) {
+  return value == null || !Number.isFinite(Number(value)) ? 'n/a' : Number(value).toFixed(2);
+}
+
+function signed(value) {
+  if (value == null || !Number.isFinite(Number(value))) return 'n/a';
+  const number = Number(value);
+  return `${number > 0 ? '+' : ''}${number.toFixed(2)}`;
+}
+
+function scoreClass(direction, positive, negative) {
+  if (direction === positive) return 'good';
+  if (direction === negative) return 'wait';
+  return 'neutral';
+}
+
+export function enhanceLiquidityContext(html, context = null) {
   if (html.includes('id="liquidityContext"')) return html;
-  const section = `\n<section id="liquidityContext" class="section"><h2>Liquidity Context · Informational</h2><p class="muted">RESEARCH_DIAGNOSTIC · scoring effect NONE · automatic weight 0. Bank balance-sheet impulse and Treasury duration mix add context only; they do not change the GMLI regime or conviction.</p><div class="liquidityContextGrid"><article class="card"><div class="tag">BANK BALANCE-SHEET IMPULSE · H.8</div><div class="score" id="bankImpulseDirection">Loading…</div><div class="marketMeta" id="bankImpulseMeta"></div></article><article class="card"><div class="tag">TREASURY DURATION MIX · MSPD</div><div class="score" id="treasuryMixDirection">Loading…</div><div class="marketMeta" id="treasuryMixMeta"></div></article></div><div class="audit" id="liquidityContextAudit" style="margin-top:12px">Loading liquidity context…</div></section>\n`;
-  const script = `\n<script>\n(function(){\n  const fmt=v=>v==null?'n/a':Number(v).toFixed(2);\n  const sign=v=>v==null?'':Number(v)>0?'+':'';\n  const byId=id=>document.getElementById(id);\n  const render=()=>{\n    const bankDirection=byId('bankImpulseDirection');\n    const bankMeta=byId('bankImpulseMeta');\n    const treasuryDirection=byId('treasuryMixDirection');\n    const treasuryMeta=byId('treasuryMixMeta');\n    const audit=byId('liquidityContextAudit');\n    if(!bankDirection||!bankMeta||!treasuryDirection||!treasuryMeta||!audit) return;\n    const url=new URL('./api/liquidity-context.json',document.baseURI);\n    fetch(url,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(x=>{\n      const b=x.bank_balance_sheet_impulse||{};\n      const t=x.treasury_duration_mix||{};\n      bankDirection.textContent=b.status==='AVAILABLE'?b.direction:'UNAVAILABLE';\n      bankDirection.className='score '+(b.direction==='ACCELERATING'?'good':b.direction==='DECELERATING'?'wait':'neutral');\n      bankMeta.innerHTML=b.status==='AVAILABLE'?('As of '+b.latest_date+' · assets $'+Number(b.latest_assets_bn).toLocaleString()+'bn<br>13W '+sign(b.change_13w_pct)+fmt(b.change_13w_pct)+'% · prior 13W '+sign(b.prior_13w_change_pct)+fmt(b.prior_13w_change_pct)+'%<br><b>Impulse '+sign(b.impulse_acceleration_pp)+fmt(b.impulse_acceleration_pp)+' pp</b> · YoY '+sign(b.yoy_pct)+fmt(b.yoy_pct)+'%'):('Source unavailable · '+(b.error||''));\n      treasuryDirection.textContent=t.status==='AVAILABLE'?t.direction:'UNAVAILABLE';\n      treasuryDirection.className='score '+(t.direction==='MORE_SHORT_OR_FLOATING'?'good':t.direction==='MORE_FIXED_DURATION'?'wait':'neutral');\n      const l=t.latest||{};\n      treasuryMeta.innerHTML=t.status==='AVAILABLE'?('As of '+t.latest_date+' · vs '+t.comparison_date+'<br>Bills '+fmt(l.bills_share_pct)+'% · FRNs '+fmt(l.frns_share_pct)+'%<br><b>Short/floating '+fmt(l.short_or_floating_share_pct)+'%</b> · fixed duration '+fmt(l.fixed_duration_share_pct)+'%<br>3M shift '+sign(t.short_or_floating_share_change_3m_pp)+fmt(t.short_or_floating_share_change_3m_pp)+' pp'):('Source unavailable · '+(t.error||''));\n      audit.textContent='Guardrail: '+x.guardrail+'\\nBank: '+(b.interpretation||'')+'\\nTreasury: '+(t.interpretation||'');\n    }).catch(e=>{\n      bankDirection.textContent='UNAVAILABLE';\n      bankDirection.className='score neutral';\n      treasuryDirection.textContent='UNAVAILABLE';\n      treasuryDirection.className='score neutral';\n      audit.textContent='Liquidity context unavailable: '+e.message;\n    });\n  };\n  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render,{once:true});else render();\n})();\n</script>\n`;
+
+  const x = context || {};
+  const b = x.bank_balance_sheet_impulse || {};
+  const t = x.treasury_duration_mix || {};
+  const l = t.latest || {};
+
+  const bankAvailable = b.status === 'AVAILABLE';
+  const treasuryAvailable = t.status === 'AVAILABLE';
+  const bankDirection = bankAvailable ? (b.direction || 'UNAVAILABLE') : 'UNAVAILABLE';
+  const treasuryDirection = treasuryAvailable ? (t.direction || 'UNAVAILABLE') : 'UNAVAILABLE';
+
+  const bankMeta = bankAvailable
+    ? `As of ${escapeHtml(b.latest_date)} · assets $${escapeHtml(Number(b.latest_assets_bn).toLocaleString('en-US'))}bn<br>13W ${escapeHtml(signed(b.change_13w_pct))}% · prior 13W ${escapeHtml(signed(b.prior_13w_change_pct))}%<br><b>Impulse ${escapeHtml(signed(b.impulse_acceleration_pp))} pp</b> · YoY ${escapeHtml(signed(b.yoy_pct))}%`
+    : `Source unavailable · ${escapeHtml(b.error || 'No verified bank snapshot in this build')}`;
+
+  const treasuryMeta = treasuryAvailable
+    ? `As of ${escapeHtml(t.latest_date)} · vs ${escapeHtml(t.comparison_date)}<br>Bills ${escapeHtml(fmt(l.bills_share_pct))}% · FRNs ${escapeHtml(fmt(l.frns_share_pct))}%<br><b>Short/floating ${escapeHtml(fmt(l.short_or_floating_share_pct))}%</b> · fixed duration ${escapeHtml(fmt(l.fixed_duration_share_pct))}%<br>3M shift ${escapeHtml(signed(t.short_or_floating_share_change_3m_pp))} pp`
+    : `Source unavailable · ${escapeHtml(t.error || 'No verified Treasury snapshot in this build')}`;
+
+  const audit = `Guardrail: ${escapeHtml(x.guardrail || 'Display-only research diagnostic; no GMLI score impact.')}\nBank: ${escapeHtml(b.interpretation || 'Informational diagnostic only.')}\nTreasury: ${escapeHtml(t.interpretation || 'Informational diagnostic only.')}`;
+
+  const section = `\n<section id="liquidityContext" class="section"><h2>Liquidity Context · Informational</h2><p class="muted">RESEARCH_DIAGNOSTIC · scoring effect NONE · automatic weight 0. Bank balance-sheet impulse and Treasury duration mix add context only; they do not change the GMLI regime or conviction.</p><div class="liquidityContextGrid"><article class="card"><div class="tag">BANK BALANCE-SHEET IMPULSE · H.8</div><div class="score ${scoreClass(bankDirection, 'ACCELERATING', 'DECELERATING')}" id="bankImpulseDirection">${escapeHtml(bankDirection)}</div><div class="marketMeta" id="bankImpulseMeta">${bankMeta}</div></article><article class="card"><div class="tag">TREASURY DURATION MIX · MSPD</div><div class="score ${scoreClass(treasuryDirection, 'MORE_SHORT_OR_FLOATING', 'MORE_FIXED_DURATION')}" id="treasuryMixDirection">${escapeHtml(treasuryDirection)}</div><div class="marketMeta" id="treasuryMixMeta">${treasuryMeta}</div></article></div><div class="audit" id="liquidityContextAudit" style="margin-top:12px">${audit}</div><div class="small muted" style="margin-top:8px">Verified static source: <a href="./api/liquidity-context.json">liquidity-context.json</a></div></section>\n`;
+
   return html
     .replace('</style>', '.liquidityContextGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media(max-width:700px){.liquidityContextGrid{grid-template-columns:1fr}}</style>')
     .replace('</nav>', '<a href="#liquidityContext">LIQUIDITY CONTEXT</a></nav>')
-    .replace('<section id="research"', `${section}<section id="research"`)
-    .replace('</body>', `${script}</body>`);
+    .replace('<section id="research"', `${section}<section id="research"`);
 }
