@@ -1,0 +1,21 @@
+{
+  "schema_version": "gmli-liquidity-context-backtest-v1",
+  "evidence_tier": "RESEARCH_DIAGNOSTIC",
+  "scoring_effect": "NONE",
+  "methodology_effect": "NONE",
+  "automatic_weight_change": 0,
+  "fixed_tests": 24,
+  "classification_counts": {
+    "PASS_WEAK": 12,
+    "PASS_STRONG": 7,
+    "FAIL": 5
+  },
+  "full_sample_bh_q_le_0_05": 0,
+  "oos_pearson_positive_tests": 20,
+  "oos_conditional_diff_positive_tests": 19,
+  "bank_signal_start": "1973-08-08",
+  "bank_signal_end": "2026-08-26",
+  "treasury_signal_start": "2001-05-07",
+  "treasury_signal_end": "2026-08-07",
+  "guardrail": "Research only. No production scoring, weight, tier or methodology change is permitted from this run."
+}
