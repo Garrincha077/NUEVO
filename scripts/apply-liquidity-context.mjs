@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildLiquidityContext, enhanceLiquidityContext } from './pages-liquidity-context.mjs';
+import { enhanceLiquidityGuide } from './pages-liquidity-guide.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAGES = path.join(ROOT, '.pages');
@@ -21,9 +22,12 @@ async function main() {
 
   const htmlPath = path.join(PAGES, 'index.html');
   const html = await fs.readFile(htmlPath, 'utf8');
-  const enhanced = enhanceLiquidityContext(html, context);
+  const enhanced = enhanceLiquidityGuide(enhanceLiquidityContext(html, context));
   if (!enhanced.includes('id="liquidityContext"') || !enhanced.includes('liquidity-context.json')) {
     throw new Error('Liquidity context UI integration failed');
+  }
+  if (!enhanced.includes('id="liquidityContextGuide"') || !enhanced.includes('Bank balance-sheet impulse — izračun i rezultati') || !enhanced.includes('Treasury duration mix — izračun i rezultati')) {
+    throw new Error('Liquidity context investor guide integration failed');
   }
   if (enhanced.includes('id="bankImpulseDirection">Loading') || enhanced.includes('Loading liquidity context')) {
     throw new Error('Liquidity context must be statically rendered in the published snapshot');
@@ -43,7 +47,8 @@ async function main() {
     treasury_status: context.treasury_duration_mix.status,
     treasury_latest_date: context.treasury_duration_mix.latest_date || null,
     pages_liquidity_context_ui: true,
-    pages_liquidity_context_static_render: true
+    pages_liquidity_context_static_render: true,
+    pages_liquidity_context_guide: true
   }, null, 2));
 }
 
