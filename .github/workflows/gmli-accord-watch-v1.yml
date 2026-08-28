@@ -1,0 +1,55 @@
+name: GMLI Accord Watch v1
+
+on:
+  push:
+    branches:
+      - feature/accord-watch-v1
+    paths:
+      - 'docs/GMLI_ACCORD_WATCH_V1.md'
+      - 'scripts/pages-accord-watch.mjs'
+      - 'scripts/apply-accord-watch.mjs'
+      - '.github/workflows/gmli-accord-watch-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  accord-watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Build frozen Accord Watch snapshot
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE' | tee /tmp/accord-watch.json
+          import fs from 'node:fs/promises';
+          import { buildAccordWatch } from './scripts/pages-accord-watch.mjs';
+          const x = await buildAccordWatch();
+          await fs.writeFile('/tmp/accord-watch-result.json', JSON.stringify(x, null, 2) + '\n');
+          console.log(JSON.stringify(x, null, 2));
+          NODE
+          test -s /tmp/accord-watch-result.json
+          grep -q '"version": "GMLI_ACCORD_WATCH_V1"' /tmp/accord-watch-result.json
+          grep -q '"evidence_tier": "RESEARCH_DIAGNOSTIC"' /tmp/accord-watch-result.json
+          grep -q '"scoring_effect": "NONE"' /tmp/accord-watch-result.json
+          grep -q '"automatic_weight_change": 0' /tmp/accord-watch-result.json
+          grep -q '"methodology_effect": "NONE"' /tmp/accord-watch-result.json
+          grep -Eq '"state": "(HYPOTHESIS_ONLY|SETUP|EMERGING|REPRESSION)"' /tmp/accord-watch-result.json
+          grep -q '"duration_price_support"' /tmp/accord-watch-result.json
+          grep -q '"real_bond_value"' /tmp/accord-watch-result.json
+
+      - name: Upload Accord Watch artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-accord-watch-v1
+          path: /tmp/accord-watch-result.json
+          if-no-files-found: error
