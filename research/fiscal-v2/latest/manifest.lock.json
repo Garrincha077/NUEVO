@@ -2,22 +2,22 @@
   "status": "PASS_ACTIVE_FISCAL_V2_REFRESH_GUARDS",
   "version": "GMLI_FISCAL_V2_DEFICIT_IMPULSE",
   "candidate_version": "GMLI_FISCAL_V2_CANDIDATE_1",
-  "built_at": "2026-08-25T08:43:27Z",
-  "as_of": "2026-08-25",
+  "built_at": "2026-08-31T15:14:39Z",
+  "as_of": "2026-08-31",
   "previous_available_date": "2026-07-31",
   "latest_eligible": {
-    "observation_month": "2026-06",
-    "available_date": "2026-07-31",
-    "ttm_deficit_billions": 1804.50791533821,
+    "observation_month": "2026-07",
+    "available_date": "2026-08-31",
+    "ttm_deficit_billions": 1945.67312967202,
     "gdp_observation_month": "2026-04",
     "gdp_available_date": "2026-07-31",
-    "gdp_billions_saar": 32475.21,
-    "deficit_pct_gdp": 5.556570428145684,
-    "fiscal_impulse_pp": -0.6669482002141303,
-    "deficit_level_z": -0.2686283744404287,
-    "fiscal_impulse_z": -0.22236288278940683,
-    "composite_z": -0.24549562861491775,
-    "score": 45.90840618975137,
+    "gdp_billions_saar": 32486.066,
+    "deficit_pct_gdp": 5.989254376544147,
+    "fiscal_impulse_pp": -0.38975199819772044,
+    "deficit_level_z": -0.15728018534248006,
+    "fiscal_impulse_z": -0.15819596592559382,
+    "composite_z": -0.15773807563403694,
+    "score": 47.37103207276605,
     "regime": "NEUTRAL"
   },
   "candidate_construction_gate": "PASS_FIXED_CONSTRUCTION_SANITY",
@@ -29,20 +29,86 @@
   "automatic_global_conviction_weight": 0,
   "methodology_modified": false,
   "sources": {
-    "MTSDS133FMS": {"file": "research/fiscal-prospective/latest/MTSDS133FMS.csv", "raw_sha256": "72e5f91feac304a26b270a33c986b9dbb5f0de00faf999ed9301e0da6bd8c821", "bytes": 4170, "latest_observation_date": "2026-07-01", "retrieved_at": "2026-08-24T08:51:52Z", "role": "monthly_federal_surplus_deficit"},
-    "GDP": {"file": "research/fiscal-prospective/latest/GDP.csv", "raw_sha256": "9695688ef15cf23101c55a4d5e14f7d6dc96e5d894955a16e68e32ac179c2c5b", "bytes": 1071, "latest_observation_date": "2026-04-01", "retrieved_at": "2026-08-24T08:51:52Z", "role": "nominal_gdp"},
-    "GFDEBTN": {"file": "research/fiscal-prospective/latest/GFDEBTN.csv", "raw_sha256": "1df415170b08b93f309a64b5d85269e07ba998a8ae4fedb0c46b7b79376798a2", "bytes": 1495, "latest_observation_date": "2026-01-01", "retrieved_at": "2026-08-24T08:51:52Z", "role": "federal_debt_total"},
-    "A091RC1Q027SBEA": {"file": "research/fiscal-prospective/latest/A091RC1Q027SBEA.csv", "raw_sha256": "564de3c682a4ef4c345fee5ff68fc83b145e37fbd1800c95fba971c60594bda0", "bytes": 994, "latest_observation_date": "2026-04-01", "retrieved_at": "2026-08-24T08:51:52Z", "role": "federal_interest_payments"},
-    "FGRECPT": {"file": "research/fiscal-prospective/latest/FGRECPT.csv", "raw_sha256": "0c55a980faea6454d3aa3591c758e0c55e54a09c10167b6be8815a23a20164d7", "bytes": 1005, "latest_observation_date": "2026-01-01", "retrieved_at": "2026-08-24T08:51:52Z", "role": "federal_government_current_receipts"},
-    "FGEXPND": {"file": "research/fiscal-prospective/latest/FGEXPND.csv", "raw_sha256": "6eb8dd485cd16825f00a38ad4f574983a4bb5ac1ad44d2f0141eb29cbd4a5a60", "bytes": 1025, "latest_observation_date": "2026-04-01", "retrieved_at": "2026-08-24T08:51:52Z", "role": "federal_government_current_expenditures"}
+    "MTSDS133FMS": {
+      "file": "research/fiscal-prospective/latest/MTSDS133FMS.csv",
+      "raw_sha256": "72e5f91feac304a26b270a33c986b9dbb5f0de00faf999ed9301e0da6bd8c821",
+      "bytes": 4170,
+      "latest_observation_date": "2026-07-01",
+      "retrieved_at": "2026-08-31T15:14:36Z",
+      "role": "monthly_federal_surplus_deficit"
+    },
+    "GDP": {
+      "file": "research/fiscal-prospective/latest/GDP.csv",
+      "raw_sha256": "bd5b85c261d04b3fa944684a40e760d90da401be54bdb2445329b824c0cf2b85",
+      "bytes": 1071,
+      "latest_observation_date": "2026-04-01",
+      "retrieved_at": "2026-08-31T15:14:36Z",
+      "role": "nominal_gdp"
+    },
+    "GFDEBTN": {
+      "file": "research/fiscal-prospective/latest/GFDEBTN.csv",
+      "raw_sha256": "1df415170b08b93f309a64b5d85269e07ba998a8ae4fedb0c46b7b79376798a2",
+      "bytes": 1495,
+      "latest_observation_date": "2026-01-01",
+      "retrieved_at": "2026-08-31T15:14:36Z",
+      "role": "federal_debt_total"
+    },
+    "A091RC1Q027SBEA": {
+      "file": "research/fiscal-prospective/latest/A091RC1Q027SBEA.csv",
+      "raw_sha256": "564de3c682a4ef4c345fee5ff68fc83b145e37fbd1800c95fba971c60594bda0",
+      "bytes": 994,
+      "latest_observation_date": "2026-04-01",
+      "retrieved_at": "2026-08-31T15:14:36Z",
+      "role": "federal_interest_payments"
+    },
+    "FGRECPT": {
+      "file": "research/fiscal-prospective/latest/FGRECPT.csv",
+      "raw_sha256": "1b02d4c6329cf1ca97e6a6856ab63f2e5b82f9bd386d60a45a0f73af55fe0475",
+      "bytes": 1025,
+      "latest_observation_date": "2026-04-01",
+      "retrieved_at": "2026-08-31T15:14:36Z",
+      "role": "federal_government_current_receipts"
+    },
+    "FGEXPND": {
+      "file": "research/fiscal-prospective/latest/FGEXPND.csv",
+      "raw_sha256": "aa946ad88f6f380a464785d633ab6aa5fc7a5cff97514458c79978edb2507941",
+      "bytes": 1025,
+      "latest_observation_date": "2026-04-01",
+      "retrieved_at": "2026-08-31T15:14:36Z",
+      "role": "federal_government_current_expenditures"
+    }
   },
   "raw_archive": {
-    "MTSDS133FMS": {"file": "raw/MTSDS133FMS.csv", "sha256": "72e5f91feac304a26b270a33c986b9dbb5f0de00faf999ed9301e0da6bd8c821", "bytes": 4170},
-    "GDP": {"file": "raw/GDP.csv", "sha256": "9695688ef15cf23101c55a4d5e14f7d6dc96e5d894955a16e68e32ac179c2c5b", "bytes": 1071},
-    "GFDEBTN": {"file": "raw/GFDEBTN.csv", "sha256": "1df415170b08b93f309a64b5d85269e07ba998a8ae4fedb0c46b7b79376798a2", "bytes": 1495},
-    "A091RC1Q027SBEA": {"file": "raw/A091RC1Q027SBEA.csv", "sha256": "564de3c682a4ef4c345fee5ff68fc83b145e37fbd1800c95fba971c60594bda0", "bytes": 994},
-    "FGRECPT": {"file": "raw/FGRECPT.csv", "sha256": "0c55a980faea6454d3aa3591c758e0c55e54a09c10167b6be8815a23a20164d7", "bytes": 1005},
-    "FGEXPND": {"file": "raw/FGEXPND.csv", "sha256": "6eb8dd485cd16825f00a38ad4f574983a4bb5ac1ad44d2f0141eb29cbd4a5a60", "bytes": 1025}
+    "MTSDS133FMS": {
+      "file": "raw/MTSDS133FMS.csv",
+      "sha256": "72e5f91feac304a26b270a33c986b9dbb5f0de00faf999ed9301e0da6bd8c821",
+      "bytes": 4170
+    },
+    "GDP": {
+      "file": "raw/GDP.csv",
+      "sha256": "bd5b85c261d04b3fa944684a40e760d90da401be54bdb2445329b824c0cf2b85",
+      "bytes": 1071
+    },
+    "GFDEBTN": {
+      "file": "raw/GFDEBTN.csv",
+      "sha256": "1df415170b08b93f309a64b5d85269e07ba998a8ae4fedb0c46b7b79376798a2",
+      "bytes": 1495
+    },
+    "A091RC1Q027SBEA": {
+      "file": "raw/A091RC1Q027SBEA.csv",
+      "sha256": "564de3c682a4ef4c345fee5ff68fc83b145e37fbd1800c95fba971c60594bda0",
+      "bytes": 994
+    },
+    "FGRECPT": {
+      "file": "raw/FGRECPT.csv",
+      "sha256": "1b02d4c6329cf1ca97e6a6856ab63f2e5b82f9bd386d60a45a0f73af55fe0475",
+      "bytes": 1025
+    },
+    "FGEXPND": {
+      "file": "raw/FGEXPND.csv",
+      "sha256": "aa946ad88f6f380a464785d633ab6aa5fc7a5cff97514458c79978edb2507941",
+      "bytes": 1025
+    }
   },
   "history_rows": 105,
   "history_start": "2017-11",
