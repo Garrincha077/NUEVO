@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-09-01T12:34:39Z",
+  "built_at": "2026-09-02T12:06:55Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -317,7 +317,7 @@
     {
       "filename": "raw/jp-boj-m2.json",
       "bytes": 2878,
-      "sha256": "e03e9966930bff7c1770d71ad2800ac833b3026c87c669edf9ab96f9f5911b9d",
+      "sha256": "651d903d72222cb0f1101926fbd3967dfd83827a9ece8ea201d314763f6bdfb2",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
@@ -346,38 +346,38 @@
     },
     {
       "filename": "raw/fx-1.csv",
-      "bytes": 2742,
-      "sha256": "34a542ab5fbfa86390975fecbfbb433493e12688eb966f04ebb0e80787811785",
+      "bytes": 2760,
+      "sha256": "f4ff9a1faa0c5a082965a7ce4c987a81582dde614754d0b1371531c4557c5a21",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXCHUS&cosd=2014-01-01"
     },
     {
       "filename": "raw/fx-2.csv",
-      "bytes": 2742,
-      "sha256": "4f051481a2a2448ec0464760802ba71e4f5b0ee946b35840157936f8bf2a3f32",
+      "bytes": 2760,
+      "sha256": "75f60d2d4cd2784429a0875627f29f36e9a7bfa1f7fd250887f51db36793879b",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXUSEU&cosd=2014-01-01"
     },
     {
       "filename": "raw/fx-3.csv",
-      "bytes": 3044,
-      "sha256": "2a15af01db94f585803793fac0ef1d69a775ddf1fa56919b3057387a7d93e455",
+      "bytes": 3064,
+      "sha256": "cda27e2957a86619cea73b3584af10863a85af0958143bf7525c7ab5ee2f2215",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXJPUS&cosd=2014-01-01"
     },
     {
       "filename": "raw/fx-4.csv",
-      "bytes": 2742,
-      "sha256": "d13291ede06a1fedcfaf954b8c3244c15c38201e583eca3a059afeadd86efa2f",
+      "bytes": 2760,
+      "sha256": "19ea70b44ec239521413407ad986c634716a82534ec0bcd4af6582081bfd9176",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXUSUK&cosd=2014-01-01"
     },
     {
       "filename": "raw/fx-5.csv",
-      "bytes": 2742,
-      "sha256": "0016009c499aad93c092c1dd446180ee471c6d2bda9c5e5108d4a8b46721e006",
+      "bytes": 2760,
+      "sha256": "bb062c4f1c205101bd2ea7e2d90f98a88d5ef8a8a65ee7ad354973c5028fd092",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXCAUS&cosd=2014-01-01"
     },
     {
       "filename": "raw/fx-6.csv",
-      "bytes": 2742,
-      "sha256": "13990a26f367c7a09f1bc3950d7f8956b889849d8b4753a4120e06a785c71806",
+      "bytes": 2760,
+      "sha256": "e23036845c782bed9bacea24ef2a0c9196a92e31c2642b5acce9b09ad2575474",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXUSAL&cosd=2014-01-01"
     }
   ]
