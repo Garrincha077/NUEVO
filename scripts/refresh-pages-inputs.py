@@ -47,6 +47,11 @@ LAYERS = [
             ['python', 'scripts/refresh-fiscal-v2.py', '--apply'],
         ],
     },
+    {
+        'name': 'cftc_positioning',
+        'paths': ['research/cftc-positioning/latest'],
+        'commands': [['python', 'scripts/refresh-cftc-positioning.py', '--apply']],
+    },
 ]
 
 
