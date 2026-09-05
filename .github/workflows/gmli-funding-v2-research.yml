@@ -56,6 +56,17 @@ jobs:
           grep -q '"directional_gate_pass": true' /tmp/gmli-funding-v2-candidate2.json
           grep -q '"promotion_eligible": false' /tmp/gmli-funding-v2-candidate2.json
           grep -q '"promotion_blocker": "NARROW_USEFULNESS_CONVICTION_GATE_NOT_RUN"' /tmp/gmli-funding-v2-candidate2.json
+          python - <<'PY'
+          import json
+          result = json.load(open('/tmp/gmli-funding-v2-candidate2.json', encoding='utf-8'))
+          legacy = result['legacy_current_comparator']
+          assert legacy['gate_scope'] == 'FROZEN_INITIAL_PROMOTION_GATE'
+          assert legacy['available_date'] == '2026-07-31'
+          assert legacy['candidate_available_date'] == '2026-07-31'
+          assert legacy['candidate_regime'] == legacy['regime'] == 'RESTRICTIVE'
+          assert legacy['direction_match'] is True
+          print('PASS_FUNDING_V2_FIXED_INITIAL_LEGACY_GATE')
+          PY
           test -s /tmp/gmli-funding-v2-candidate2/summary.json
           test -s /tmp/gmli-funding-v2-candidate2/history.csv
       - name: Upload Candidate 2 research artifact
@@ -64,9 +75,13 @@ jobs:
           name: gmli-funding-v2-candidate-2
           path: /tmp/gmli-funding-v2-candidate2
           if-no-files-found: error
-      - name: Guard production separation
+      - name: Guard promoted production separation
         run: |
-          grep -q "score: 36.035410932024234" lib/state.js
-          grep -q "BLOCKED_BASELINE_MISMATCH" lib/overlay-refresh-status.js
+          grep -q "version: 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS'" lib/state.js
+          grep -q "status: 'OVERLAY'" lib/state.js
+          grep -q "historical_reference" lib/state.js
+          grep -q "version: 'GMLI_FUNDING_LEGACY_JULY_2026'" lib/state.js
           grep -q "version: 'GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL'" lib/state.js
-          echo 'Candidate 2 remains RESEARCH only; production Funding and Money Core are unchanged.'
+          grep -q "version: 'GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS'" lib/overlay-refresh-status.js
+          grep -q "automation_status: 'ACTIVE_GUARDED_REFRESH'" lib/overlay-refresh-status.js
+          echo 'Candidate 2 remains the promoted Funding OVERLAY; legacy Funding stays historical and Money Core is unchanged.'
