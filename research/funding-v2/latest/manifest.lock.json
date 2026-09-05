@@ -2,29 +2,29 @@
   "status": "PASS_ACTIVE_FUNDING_V2_REFRESH_GUARDS",
   "version": "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS",
   "candidate_version": "GMLI_FUNDING_V2_CANDIDATE_2",
-  "built_at": "2026-08-25T07:12:48Z",
-  "as_of": "2026-08-25",
+  "built_at": "2026-09-05T17:11:07Z",
+  "as_of": "2026-09-05",
   "previous_available_date": "2026-07-31",
   "latest_eligible": {
-    "observation_month": "2026-06",
-    "available_date": "2026-07-31",
-    "effective_score": 37.968440260099676,
+    "observation_month": "2026-07",
+    "available_date": "2026-08-31",
+    "effective_score": 38.439683722357074,
     "regime": "RESTRICTIVE",
-    "structural_support_score": 37.968440260099676,
-    "observed_conditions_score": 59.099496149440164,
-    "structural_support_z": -0.7218935843940193,
-    "observed_conditions_z": 0.5459697689664098,
+    "structural_support_score": 38.439683722357074,
+    "observed_conditions_score": 60.43592208206208,
+    "structural_support_z": -0.6936189766585756,
+    "observed_conditions_z": 0.6261553249237246,
     "component_supportive_z": {
-      "ANFCI": 0.5459697689664098,
-      "DFII10": -1.4075411335077272,
-      "THREEFYTP10": -1.8362835506147819,
-      "WRESBAL_3M_PCT": -0.18971942241997763
+      "ANFCI": 0.6261553249237246,
+      "DFII10": -1.5448325871774076,
+      "THREEFYTP10": -1.9048990353053943,
+      "WRESBAL_3M_PCT": 0.04910039092477489
     },
     "raw": {
-      "ANFCI": -0.56375,
-      "DFII10": 2.179047619047619,
-      "THREEFYTP10": 0.7529238095238096,
-      "WRESBAL_3M_PCT": -1.4208296383880215
+      "ANFCI": -0.5821999999999999,
+      "DFII10": 2.3531818181818185,
+      "THREEFYTP10": 0.792490909090909,
+      "WRESBAL_3M_PCT": 2.2603653328189255
     }
   },
   "directional_gate_pass": true,
@@ -34,58 +34,58 @@
   "methodology_modified": false,
   "sources": {
     "ANFCI": {
-      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=ANFCI&cosd=2002-01-01&coed=2026-08-25",
-      "sha256": "e9bb2227704ea6224a9605ec9472f8a9c21f27c0cb3a68843b24601f8a0b90b5",
-      "bytes": 23008,
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=ANFCI&cosd=2002-01-01&coed=2026-09-05",
+      "sha256": "4818df3aec3c88c5245ae2dcf2322d28dc3498eb46817b9b31e5baef8eac9b3b",
+      "bytes": 23039,
       "first_observation": "2002-01-04",
-      "last_observation": "2026-08-14",
-      "last_value": -0.587
+      "last_observation": "2026-08-28",
+      "last_value": -0.582
     },
     "DFII10": {
-      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFII10&cosd=2002-01-01&coed=2026-08-25",
-      "sha256": "b61ba38993d08f47b086ebd5cf268f15bc3b74627511edc1a41e6a3169e301d9",
-      "bytes": 98639,
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFII10&cosd=2002-01-01&coed=2026-09-05",
+      "sha256": "7cd2a6e9b68fe720db26833b1680190363d41deb6b938b2ffc68d4463b730eda",
+      "bytes": 98783,
       "first_observation": "2003-01-02",
-      "last_observation": "2026-08-21",
-      "last_value": 2.4
+      "last_observation": "2026-09-03",
+      "last_value": 2.42
     },
     "THREEFYTP10": {
-      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=THREEFYTP10&cosd=2002-01-01&coed=2026-08-25",
-      "sha256": "5f3e51d6b35176bf184cec44b6d02ebd4eff9b490155736d02e926cbb5eec956",
-      "bytes": 115243,
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=THREEFYTP10&cosd=2002-01-01&coed=2026-09-05",
+      "sha256": "6ee40a8405a999dcec0715eee765f7f2655f845318a6fd867adc55651414a1f0",
+      "bytes": 115423,
       "first_observation": "2002-01-02",
-      "last_observation": "2026-08-14",
-      "last_value": 0.8393
+      "last_observation": "2026-08-28",
+      "last_value": 0.8751
     },
     "WRESBAL": {
-      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WRESBAL&cosd=2002-01-01&coed=2026-08-25",
-      "sha256": "b10e207ffbe19ae510fb4e8a7606710f8f417fe619ca7151752dc628f348d523",
-      "bytes": 22708,
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WRESBAL&cosd=2002-01-01&coed=2026-09-05",
+      "sha256": "fc19f15702a4fb69632b561bb1deb35dc4e6645a1c1dd1fae25210f7478272a4",
+      "bytes": 22746,
       "first_observation": "2002-12-18",
-      "last_observation": "2026-08-19",
-      "last_value": 2935287.0
+      "last_observation": "2026-09-02",
+      "last_value": 2894531.0
     }
   },
   "raw_archive": {
     "ANFCI": {
       "file": "raw/ANFCI.csv",
-      "sha256": "e9bb2227704ea6224a9605ec9472f8a9c21f27c0cb3a68843b24601f8a0b90b5",
-      "bytes": 23008
-    },
-    "THREEFYTP10": {
-      "file": "raw/THREEFYTP10.csv",
-      "sha256": "5f3e51d6b35176bf184cec44b6d02ebd4eff9b490155736d02e926cbb5eec956",
-      "bytes": 115243
+      "sha256": "4818df3aec3c88c5245ae2dcf2322d28dc3498eb46817b9b31e5baef8eac9b3b",
+      "bytes": 23039
     },
     "WRESBAL": {
       "file": "raw/WRESBAL.csv",
-      "sha256": "b10e207ffbe19ae510fb4e8a7606710f8f417fe619ca7151752dc628f348d523",
-      "bytes": 22708
+      "sha256": "fc19f15702a4fb69632b561bb1deb35dc4e6645a1c1dd1fae25210f7478272a4",
+      "bytes": 22746
     },
     "DFII10": {
       "file": "raw/DFII10.csv",
-      "sha256": "b61ba38993d08f47b086ebd5cf268f15bc3b74627511edc1a41e6a3169e301d9",
-      "bytes": 98639
+      "sha256": "7cd2a6e9b68fe720db26833b1680190363d41deb6b938b2ffc68d4463b730eda",
+      "bytes": 98783
+    },
+    "THREEFYTP10": {
+      "file": "raw/THREEFYTP10.csv",
+      "sha256": "6ee40a8405a999dcec0715eee765f7f2655f845318a6fd867adc55651414a1f0",
+      "bytes": 115423
     }
   },
   "history_rows": 247,
