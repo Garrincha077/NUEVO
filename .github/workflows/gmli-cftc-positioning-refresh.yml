@@ -1,0 +1,103 @@
+name: GMLI CFTC positioning guarded refresh
+
+on:
+  schedule:
+    - cron: '15 23 * * 5'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-cftc-positioning.py'
+      - 'lib/cftc-positioning.js'
+      - '.github/workflows/gmli-cftc-positioning-refresh.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/refresh-cftc-positioning.py'
+      - 'lib/cftc-positioning.js'
+      - 'scripts/refresh-pages-inputs.py'
+      - '.github/workflows/gmli-cftc-positioning-refresh.yml'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: gmli-cftc-positioning-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GMLI
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run guarded official CFTC refresh
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/refresh-cftc-positioning.py
+          python scripts/refresh-cftc-positioning.py --apply | tee /tmp/gmli-cftc-positioning.json
+          grep -q 'PASS_CFTC_POSITIONING_REFRESH' /tmp/gmli-cftc-positioning.json
+          grep -q 'PASS_CFTC_POSITIONING_SOURCE_GUARDS' /tmp/gmli-cftc-positioning.json
+          grep -q 'PASS_SPY_QQQ_GLD_DBC' /tmp/gmli-cftc-positioning.json
+          grep -q '"methodology_changed": false' /tmp/gmli-cftc-positioning.json
+          grep -q '"scoring_effect": "NONE"' /tmp/gmli-cftc-positioning.json
+          test -s research/cftc-positioning/latest/positioning.json
+          test -s research/cftc-positioning/latest/manifest.lock.json
+          python - <<'PY'
+          import json
+          p=json.load(open('research/cftc-positioning/latest/positioning.json',encoding='utf-8'))
+          m=json.load(open('research/cftc-positioning/latest/manifest.lock.json',encoding='utf-8'))
+          assert p['status']=='PASS_CFTC_POSITIONING_REFRESH'
+          assert p['source_contract']=='CFTC_OFFICIAL_HISTORICAL_COMPRESSED_FUTURES_ONLY'
+          assert 0 <= p['latest_report_age_days'] <= 14
+          for k in ('SPY','QQQ','GLD','DBC'):
+              assert p['assets'][k]['available'] is True, (k,p['assets'][k])
+              assert p['assets'][k]['evidence_tier']=='RESEARCH'
+              assert p['assets'][k]['role']=='ENTRY_QUALITY_ONLY'
+          assert m['status']=='PASS_CFTC_POSITIONING_SOURCE_GUARDS'
+          assert m['methodology_changed'] is False
+          assert m['scoring_effect']=='NONE'
+          assert m['automatic_weight_change']==0
+          print('PASS_CFTC_POSITIONING_ARCHIVE_CONSISTENCY')
+          PY
+
+      - name: Upload CFTC refresh audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: gmli-cftc-positioning-refresh
+          path: |
+            /tmp/gmli-cftc-positioning.json
+            research/cftc-positioning/latest
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Commit guarded CFTC last-good snapshot when changed
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- research/cftc-positioning/latest && [ -z "$(git status --porcelain -- research/cftc-positioning/latest)" ]; then
+            echo 'No CFTC positioning snapshot change.'
+          else
+            git config user.name 'gmli-cftc-refresh-bot'
+            git config user.email 'gmli-cftc-refresh-bot@users.noreply.github.com'
+            git add research/cftc-positioning/latest
+            git commit -m 'Refresh guarded CFTC positioning snapshot'
+            git push origin HEAD:main
+          fi
+
+      - name: Dispatch verified Pages rebuild
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run gmli-pages.yml --repo "$GITHUB_REPOSITORY" --ref main
