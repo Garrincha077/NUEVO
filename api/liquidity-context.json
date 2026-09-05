@@ -1,0 +1,53 @@
+{
+  "schema_version": "gmli-liquidity-context-v1",
+  "version": "GMLI_LIQUIDITY_CONTEXT_V1",
+  "generated_at": "2026-09-05T17:32:40.184Z",
+  "evidence_tier": "RESEARCH_DIAGNOSTIC",
+  "scoring_effect": "NONE",
+  "automatic_weight_change": 0,
+  "methodology_effect": "NONE",
+  "purpose": "Informational context for bank balance-sheet expansion and U.S. Treasury maturity composition. It cannot override Money Core, Funding, Fiscal, Market Confirmation or the frozen 10-point conviction rubric.",
+  "bank_balance_sheet_impulse": {
+    "status": "AVAILABLE",
+    "label": "Bank balance-sheet impulse",
+    "source": "Federal Reserve H.8 via FRED",
+    "series_id": "TLAACBW027SBOG",
+    "series_name": "Total Assets, All Commercial Banks",
+    "frequency": "WEEKLY_SA",
+    "units": "USD billions",
+    "latest_date": "2026-08-26",
+    "latest_assets_bn": 25629.5,
+    "change_13w_pct": 0.51,
+    "prior_13w_change_pct": 2.08,
+    "impulse_acceleration_pp": -1.57,
+    "yoy_pct": 4.53,
+    "direction": "DECELERATING",
+    "interpretation": "Impulse = latest 13-week asset growth minus the preceding 13-week asset growth. Positive means bank balance-sheet expansion is accelerating; negative means it is decelerating. No GMLI score impact."
+  },
+  "treasury_duration_mix": {
+    "status": "AVAILABLE",
+    "label": "Treasury duration mix proxy",
+    "source": "U.S. Treasury Fiscal Data — Monthly Statement of the Public Debt, Table 1",
+    "latest_date": "2026-08-31",
+    "comparison_date": "2026-05-31",
+    "basis": "Debt held by the public; standard marketable classes only",
+    "latest": {
+      "date": "2026-08-31",
+      "bills_mil": 7247856,
+      "notes_mil": 16214682,
+      "bonds_mil": 5512729,
+      "tips_mil": 2151957,
+      "frns_mil": 679918,
+      "proxy_marketable_mil": 31807141,
+      "bills_share_pct": 22.79,
+      "frns_share_pct": 2.14,
+      "short_or_floating_share_pct": 24.92,
+      "fixed_duration_share_pct": 75.08
+    },
+    "short_or_floating_share_change_3m_pp": 0.85,
+    "direction": "MORE_SHORT_OR_FLOATING",
+    "interpretation": "Short/floating proxy = Bills + FRNs; fixed-duration proxy = Notes + Bonds + TIPS. This is a face-value composition proxy, not DV01, weighted-average maturity or an issuance-flow model. No GMLI score impact.",
+    "coverage_note": "Federal Financing Bank securities are excluded from this proxy."
+  },
+  "guardrail": "Display-only research diagnostic. Any future scoring use requires a separately frozen, versioned candidate and promotion gate."
+}

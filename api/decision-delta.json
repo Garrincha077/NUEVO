@@ -1,0 +1,144 @@
+{
+  "decision_delta": {
+    "schema_version": "gmli-decision-delta-v1",
+    "status": "AVAILABLE",
+    "evidence_tier": "RESEARCH_DIAGNOSTIC",
+    "scoring_effect": "NONE",
+    "automatic_weight_change": 0,
+    "methodology_effect": "NONE",
+    "generated_at": "2026-09-05T17:32:33.324Z",
+    "comparison_basis": "CURRENT_VERIFIED_COMPONENT_ROW_VS_IMMEDIATELY_PREVIOUS_VERIFIED_COMPONENT_ROW",
+    "caveat": "Component rows can have different publication dates. This layer summarizes change only; it does not create a synthetic Core score or modify frozen weights.",
+    "money": {
+      "evidence_tier": "CORE",
+      "role": "LEADING",
+      "current_available_date": "2026-07-31",
+      "previous_available_date": "2026-06-30",
+      "usd": {
+        "current": 55.01,
+        "previous": 59.26,
+        "delta": -4.25,
+        "direction": "DETERIORATING",
+        "arrow": "↓",
+        "current_regime": "NEUTRAL",
+        "previous_regime": "NEUTRAL",
+        "regime_changed": false
+      },
+      "fx_neutral": {
+        "current": 44.27,
+        "previous": 45.47,
+        "delta": -1.2,
+        "direction": "DETERIORATING",
+        "arrow": "↓",
+        "current_regime": "NEUTRAL",
+        "previous_regime": "NEUTRAL",
+        "regime_changed": false
+      }
+    },
+    "funding": {
+      "evidence_tier": "OVERLAY",
+      "role": "REACTIVE_CONFIRMATION",
+      "current": 38.44,
+      "previous": 37.88,
+      "delta": 0.56,
+      "direction": "IMPROVING",
+      "arrow": "↑",
+      "current_regime": "RESTRICTIVE",
+      "previous_regime": "RESTRICTIVE",
+      "regime_changed": false,
+      "current_available_date": "2026-08-31",
+      "previous_available_date": "2026-07-31"
+    },
+    "fiscal": {
+      "evidence_tier": "OVERLAY",
+      "role": "MIXED",
+      "current": 47.37,
+      "previous": 45.9,
+      "delta": 1.47,
+      "direction": "IMPROVING",
+      "arrow": "↑",
+      "current_regime": "NEUTRAL",
+      "previous_regime": "NEUTRAL",
+      "regime_changed": false,
+      "current_available_date": "2026-08-31",
+      "previous_available_date": "2026-07-31"
+    },
+    "market_confirmation": {
+      "evidence_tier": "RESEARCH",
+      "role": "REACTIVE_CONFIRMATION",
+      "current_month": "2026-08",
+      "previous_month": "2026-07",
+      "current_positive": 3,
+      "previous_positive": 3,
+      "current_score_0_2": 2,
+      "previous_score_0_2": 2,
+      "delta_score_0_2": 0,
+      "direction": "FLAT",
+      "arrow": "→"
+    },
+    "conviction": {
+      "current": 7,
+      "max": 10,
+      "previous_proxy": 8,
+      "delta_vs_previous_proxy": -1,
+      "direction": "DETERIORATING",
+      "arrow": "↓",
+      "previous_proxy_detail": {
+        "score": 8,
+        "max": 10,
+        "rubric": {
+          "money_freshness": 2,
+          "usd_fxn_agreement": 2,
+          "transmission_evidence": 2,
+          "funding_confirmation": 0,
+          "market_confirmation": 2
+        },
+        "status": "RECONSTRUCTED_FIXED_RUBRIC_PROXY",
+        "note": "Proxy uses the unchanged 10-point rubric at the previous verified component rows. Money freshness is fixed at 2 at the prior promoted available date. This is not an archived historical live decision."
+      },
+      "fiscal_v2_automatic_weight": 0
+    }
+  },
+  "decision_brief": {
+    "schema_version": "gmli-decision-brief-v1",
+    "status": "AVAILABLE",
+    "scoring_effect": "NONE",
+    "generated_at": "2026-09-05T17:32:33.324Z",
+    "regime": "NEUTRAL",
+    "tilt": "MILD_POSITIVE",
+    "conviction": "7/10",
+    "strongest_assets": [
+      {
+        "asset": "IWM",
+        "action": "WATCH ONLY",
+        "evidence_tier": "RESEARCH_ONLY",
+        "source_bucket": "WATCH"
+      },
+      {
+        "asset": "GLD",
+        "action": "WAIT",
+        "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+        "source_bucket": "WATCH"
+      },
+      {
+        "asset": "SLV",
+        "action": "WATCH ONLY",
+        "evidence_tier": "RESEARCH_ONLY",
+        "source_bucket": "WATCH"
+      }
+    ],
+    "main_risk": "Funding V2 remains RESTRICTIVE (38.4), capping a stronger risk-on conclusion.",
+    "what_changed": [
+      "Money USD ↓ -4.25 pts to 55.01 (NEUTRAL)",
+      "Money FX-neutral ↓ -1.2 pts to 44.27 (NEUTRAL)",
+      "Funding ↑ +0.56 pts to 38.44 (RESTRICTIVE)",
+      "Fiscal ↑ +1.47 pts to 47.37 (NEUTRAL)",
+      "Market confirmation → 3/4 → 3/4 positive",
+      "Conviction 8/10 proxy → 7/10 current"
+    ],
+    "action_note": "Current opportunity emphasis: IWM WATCH ONLY · GLD WAIT · SLV WATCH ONLY.",
+    "guardrail": "Decision Brief is a presentation layer only. CORE / OVERLAY / RESEARCH separation and the frozen 10-point rubric are unchanged."
+  },
+  "source": "DERIVED_FROM_VERIFIED_GITHUB_PAGES_SNAPSHOT",
+  "guardrail": "Presentation/research diagnostic only. Frozen Money/Funding/Fiscal methodology and the 10-point conviction rubric are unchanged."
+}

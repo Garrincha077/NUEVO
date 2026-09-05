@@ -1,0 +1,87 @@
+{
+  "schema_version": "gmli-accord-watch-v1",
+  "version": "GMLI_ACCORD_WATCH_V1",
+  "generated_at": "2026-09-05T17:32:40.942Z",
+  "evidence_tier": "RESEARCH_DIAGNOSTIC",
+  "scoring_effect": "NONE",
+  "automatic_weight_change": 0,
+  "methodology_effect": "NONE",
+  "state": "SETUP",
+  "hypothesis": "Treasury–Fed Accord 2.0 / financial-repression setup is a scenario to monitor, not an assumed current regime.",
+  "data_complete": true,
+  "market_conflict": true,
+  "blocks": {
+    "treasury_duration_supply": {
+      "status": "AVAILABLE",
+      "label": "Treasury duration-supply pressure proxy",
+      "source": "U.S. Treasury Fiscal Data — Monthly Statement of the Public Debt, Table 1",
+      "latest_date": "2026-08-31",
+      "comparison_date": "2026-05-31",
+      "fixed_duration_share_pct": 75.08,
+      "fixed_duration_share_change_3m_pp": -0.85,
+      "short_or_floating_share_pct": 24.92,
+      "direction": "SUPPORTIVE",
+      "interpretation": "Stock-change composition proxy only. Falling fixed-duration share is supportive for lower private duration pressure; this is not true net issuance, DV01, WAM or buyback flow."
+    },
+    "fed_reserve_support": {
+      "status": "AVAILABLE",
+      "label": "Fed / reserve support",
+      "source": "Federal Reserve H.4.1 Data Download Program",
+      "total_assets_series": "RESPPA_N.WW",
+      "reserve_balances_series": "RESH4R_N.WW",
+      "latest_date": "2026-09-02",
+      "total_assets_13w_pct": 0.38,
+      "reserve_balances_13w_pct": -3.82,
+      "total_assets_latest_mil": 6737204,
+      "reserve_balances_latest_mil": 2929285,
+      "direction": "MIXED",
+      "supportive_for_state": false,
+      "interpretation": "SUPPORTIVE requires non-shrinking Fed assets and reserves. RESERVE_CUSHION allows Fed assets to shrink while reserve balances are non-shrinking."
+    },
+    "market_yield_suppression": {
+      "status": "AVAILABLE",
+      "label": "Market yield-suppression verdict",
+      "latest_date": "2026-08-28",
+      "treasury_real_yield_source": "U.S. Treasury Daily Treasury Par Real Yield Curve Rates",
+      "term_premium_source": "Federal Reserve Board three-factor nominal term-structure model (staff research product)",
+      "term_premium_series": "THREEFYTP1000.B",
+      "real_yield_10y_pct": 2.42,
+      "real_yield_10y_change_3m_pp": 0.35,
+      "term_premium_10y_pct": 0.88,
+      "term_premium_10y_change_3m_pp": 0.12,
+      "direction": "REJECT",
+      "interpretation": "CONFIRM requires both 10Y real yield and 10Y term premium to be non-rising over approximately 3 months. REJECT requires both to rise."
+    }
+  },
+  "asset_map": {
+    "bond_read": {
+      "duration_price_support": "WATCH",
+      "real_bond_value": "POSITIVE_REAL_YIELD",
+      "note": "Tactical nominal-bond price support and structural real bond value are intentionally separate."
+    },
+    "assets": {
+      "GLD": "WATCH_POSITIVE",
+      "TIPS": "WATCH_POSITIVE",
+      "UST_2_5Y": "WATCH_POSITIVE",
+      "UST_10_30Y": "WATCH",
+      "QQQ": "WATCH_POSITIVE",
+      "SPY": "WATCH",
+      "BTC": "RESEARCH_WATCH",
+      "DBC": "NO_ACCORD_TILT",
+      "USD": "NO_ACCORD_TILT"
+    },
+    "interpretation_only": true,
+    "promoted_money_transmission_unchanged": [
+      "SPY",
+      "QQQ",
+      "GLD",
+      "DBC"
+    ],
+    "inputs": {
+      "treasury_direction": "SUPPORTIVE",
+      "fed_reserve_direction": "MIXED",
+      "market_direction": "REJECT"
+    }
+  },
+  "guardrail": "Research diagnostic only. No GMLI score, conviction points, automatic allocation weights or CORE/OVERLAY promotion. Treasury block is a stock-change proxy, not true issuance flow."
+}

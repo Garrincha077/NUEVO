@@ -1,0 +1,1641 @@
+{
+  "schema_version": "gmli-pages-opportunity-snapshot-v1",
+  "source": "DERIVED_FROM_CANONICAL_REPORT_SNAPSHOT",
+  "generated_at": "2026-09-05T17:32:33.324Z",
+  "summary": {
+    "accumulate": [],
+    "watch": [
+      {
+        "asset": "IWM",
+        "asset_class": "US SMALL CAPS",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WATCH ONLY",
+        "entry": "PARTIAL",
+        "action": "WATCH ONLY"
+      },
+      {
+        "asset": "GLD",
+        "asset_class": "GOLD",
+        "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+        "strategic": "MONEY NOT SUPPORTIVE",
+        "entry": "LOW",
+        "action": "WAIT"
+      },
+      {
+        "asset": "SLV",
+        "asset_class": "SILVER",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WATCH ONLY",
+        "entry": "LOW",
+        "action": "WATCH ONLY"
+      },
+      {
+        "asset": "USO",
+        "asset_class": "WTI CRUDE OIL",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WATCH ONLY",
+        "entry": "PARTIAL",
+        "action": "WATCH ONLY"
+      },
+      {
+        "asset": "CPER",
+        "asset_class": "COPPER",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WATCH ONLY",
+        "entry": "PARTIAL",
+        "action": "WATCH ONLY"
+      },
+      {
+        "asset": "DBA",
+        "asset_class": "AGRICULTURE",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WATCH ONLY",
+        "entry": "PARTIAL",
+        "action": "WATCH ONLY"
+      },
+      {
+        "asset": "TLT",
+        "asset_class": "US LONG DURATION",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "PROVISIONAL STRATEGIC ZONE",
+        "entry": "LOW",
+        "action": "PROVISIONAL WATCH"
+      },
+      {
+        "asset": "FXY",
+        "asset_class": "JAPANESE YEN",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WATCH ONLY",
+        "entry": "PARTIAL",
+        "action": "WATCH ONLY"
+      },
+      {
+        "asset": "VNQ",
+        "asset_class": "US REITS",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WATCH ONLY",
+        "entry": "PARTIAL",
+        "action": "WATCH ONLY"
+      },
+      {
+        "asset": "VEA",
+        "asset_class": "DEVELOPED EX-US",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WATCH ONLY",
+        "entry": "PARTIAL",
+        "action": "WATCH ONLY"
+      }
+    ],
+    "dont_chase": [
+      {
+        "asset": "SPY",
+        "asset_class": "US EQUITY",
+        "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+        "strategic": "WAIT FOR DISLOCATION",
+        "entry": "PARTIAL",
+        "action": "WAIT — DO NOT CHASE"
+      },
+      {
+        "asset": "QQQ",
+        "asset_class": "US GROWTH",
+        "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+        "strategic": "WAIT FOR DISLOCATION",
+        "entry": "PARTIAL",
+        "action": "WAIT — DO NOT CHASE"
+      },
+      {
+        "asset": "DBC",
+        "asset_class": "BROAD COMMODITIES",
+        "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+        "strategic": "WAIT FOR DISLOCATION",
+        "entry": "PARTIAL",
+        "action": "WAIT — DO NOT CHASE"
+      },
+      {
+        "asset": "IEF",
+        "asset_class": "US INTERMEDIATE TREASURIES",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WAIT FOR YIELD DISLOCATION",
+        "entry": "LOW",
+        "action": "WAIT — DO NOT CHASE"
+      },
+      {
+        "asset": "EEM",
+        "asset_class": "EM EQUITY",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "WAIT FOR RELATIVE DISLOCATION",
+        "entry": "PARTIAL",
+        "action": "WAIT — DO NOT CHASE"
+      }
+    ],
+    "limited": [
+      {
+        "asset": "HYG",
+        "asset_class": "HIGH YIELD CREDIT",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "INSUFFICIENT HISTORY",
+        "entry": "PARTIAL",
+        "action": "INSUFFICIENT HISTORY"
+      },
+      {
+        "asset": "BTC",
+        "asset_class": "BITCOIN",
+        "evidence_tier": "RESEARCH_ONLY",
+        "strategic": "NO VALIDATED DISLOCATION MODEL",
+        "entry": "PARTIAL",
+        "action": "NO VALIDATED DISLOCATION MODEL"
+      }
+    ]
+  },
+  "assets": {
+    "SPY": {
+      "asset_class": "US EQUITY",
+      "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+      "transmission": {
+        "evidence_tier": "CORE",
+        "signal": "SPY 12M accel3"
+      },
+      "strategic_eligibility": {
+        "score": "1/2",
+        "eligible": false,
+        "label": "WAIT FOR DISLOCATION",
+        "reason": "Promoted transmission plus asset-specific dislocation.",
+        "cap": "NORMAL"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 1.83,
+        "as_of": "2026-08",
+        "rule": "60M log adjusted-price z <= -1"
+      },
+      "positioning": {
+        "available": true,
+        "pass": false,
+        "crowded": false,
+        "label": "S&P 500 leveraged money",
+        "as_of": "2026-09-01",
+        "net_spec_pct_oi": -10.38,
+        "percentile_3y": 36,
+        "z_3y": -0.38,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed TFF Futures Only / Leveraged Money",
+        "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "CONFIRMED_UP",
+        "price": 767.05,
+        "ma10": 710.7634,
+        "ma10_slope_3m_pct": 4.2,
+        "return_3m_pct": 1.7,
+        "return_6m_pct": 12.4,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": {
+        "latest_completed_session": "2026-09-04",
+        "price": 770.19,
+        "return_1m_pct": 0.21,
+        "ma50": 756.8572,
+        "ma200": 709.8686,
+        "trend": "BULLISH",
+        "structural_monthly_stage": "CONFIRMED_UP",
+        "divergence_vs_structural": "CONFIRMS",
+        "evidence_tier": "RESEARCH",
+        "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+      },
+      "entry_quality": {
+        "score": "1/2",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 2
+      },
+      "action": "WAIT — DO NOT CHASE",
+      "triggers": {
+        "upgrade": [
+          "Asset-specific dislocation reaches its pre-specified cheapness threshold while promoted Money remains supportive.",
+          "Asset-specific CFTC positioning washes out toward the contrarian <=25th percentile zone."
+        ],
+        "downgrade": [
+          "USD Money deteriorates materially.",
+          "Completed-month price turn rolls over."
+        ]
+      },
+      "backtest": {
+        "status": "SUPPORTED_BUT_FEW_EPISODES",
+        "episode_starts": 3,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": "2026-09-04"
+      }
+    },
+    "QQQ": {
+      "asset_class": "US GROWTH",
+      "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+      "transmission": {
+        "evidence_tier": "CORE",
+        "signal": "QQQ 12M accel3"
+      },
+      "strategic_eligibility": {
+        "score": "1/2",
+        "eligible": false,
+        "label": "WAIT FOR DISLOCATION",
+        "reason": "Promoted transmission plus asset-specific dislocation.",
+        "cap": "NORMAL"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 1.77,
+        "as_of": "2026-08",
+        "rule": "60M log adjusted-price z <= -1"
+      },
+      "positioning": {
+        "available": true,
+        "pass": false,
+        "crowded": false,
+        "label": "Nasdaq-100 leveraged money",
+        "as_of": "2026-09-01",
+        "net_spec_pct_oi": -10.99,
+        "percentile_3y": 59,
+        "z_3y": 0.33,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed TFF Futures Only / Leveraged Money",
+        "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "EARLY_DOWN",
+        "price": 716.76,
+        "ma10": 657.8327,
+        "ma10_slope_3m_pct": 5.6,
+        "return_3m_pct": -2.8,
+        "return_6m_pct": 18.3,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": {
+        "latest_completed_session": "2026-09-04",
+        "price": 718.96,
+        "return_1m_pct": 0.6,
+        "ma50": 711.085,
+        "ma200": 656.7821,
+        "trend": "BULLISH",
+        "structural_monthly_stage": "EARLY_DOWN",
+        "divergence_vs_structural": "POSITIVE_DIVERGENCE",
+        "evidence_tier": "RESEARCH",
+        "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+      },
+      "entry_quality": {
+        "score": "1/2",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 2
+      },
+      "action": "WAIT — DO NOT CHASE",
+      "triggers": {
+        "upgrade": [
+          "Asset-specific dislocation reaches its pre-specified cheapness threshold while promoted Money remains supportive.",
+          "Asset-specific CFTC positioning washes out toward the contrarian <=25th percentile zone."
+        ],
+        "downgrade": [
+          "USD Money deteriorates materially.",
+          "Completed-month price turn rolls over."
+        ]
+      },
+      "backtest": {
+        "status": "INSUFFICIENT_SAMPLE",
+        "episode_starts": 1,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": "2026-09-04"
+      }
+    },
+    "IWM": {
+      "asset_class": "US SMALL CAPS",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "Broad Money context; IWM-specific transmission not promoted"
+      },
+      "strategic_eligibility": {
+        "score": "context only",
+        "eligible": false,
+        "label": "WATCH ONLY",
+        "reason": "Research-only dislocation/positioning/trend context. It can surface Radar setups but cannot create a promoted strategic signal.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": -0.64,
+        "as_of": "2026-08",
+        "benchmark": "SPY",
+        "rule": "60M log relative-price z <= -1 versus SPY"
+      },
+      "positioning": {
+        "available": true,
+        "pass": false,
+        "crowded": false,
+        "label": "Russell 2000 leveraged money",
+        "as_of": "2026-09-01",
+        "net_spec_pct_oi": 13.1,
+        "percentile_3y": 64.9,
+        "z_3y": 0.49,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed TFF Futures Only / Leveraged Money",
+        "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "CONFIRMED_UP",
+        "price": 293.93,
+        "ma10": 271.0975,
+        "ma10_slope_3m_pct": 6.6,
+        "return_3m_pct": 1.4,
+        "return_6m_pct": 12.9,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/2",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 2
+      },
+      "action": "WATCH ONLY",
+      "triggers": {
+        "upgrade": [
+          "Research dislocation/positioning aligns with an early price and relative-strength turn.",
+          "Asset-specific CFTC positioning washes out toward the contrarian <=25th percentile zone."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks.",
+          "Completed-month price turn rolls over."
+        ]
+      },
+      "backtest": {
+        "status": "NOT_YET_VALIDATED",
+        "episode_starts": 0,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": null
+      }
+    },
+    "GLD": {
+      "asset_class": "GOLD",
+      "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+      "transmission": {
+        "evidence_tier": "CORE",
+        "signal": "GLD FX-neutral 12M"
+      },
+      "strategic_eligibility": {
+        "score": "0/1 core gate",
+        "eligible": false,
+        "label": "MONEY NOT SUPPORTIVE",
+        "reason": "Backtest did not support dislocation as an incremental hard gate; promoted Money signal remains primary.",
+        "cap": "NORMAL"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 1.72,
+        "as_of": "2026-08",
+        "cpi_as_of": "2026-07",
+        "rule": "60M log real-price z <= -1; CPI lagged one month for publication timing"
+      },
+      "positioning": {
+        "available": true,
+        "pass": false,
+        "crowded": false,
+        "label": "Gold managed money",
+        "as_of": "2026-09-01",
+        "net_spec_pct_oi": 27.61,
+        "percentile_3y": 62.7,
+        "z_3y": 0.35,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+        "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": false,
+        "stage": "EARLY_DOWN",
+        "price": 408.42,
+        "ma10": 413.23,
+        "ma10_slope_3m_pct": 2.7,
+        "return_3m_pct": -2.1,
+        "return_6m_pct": -15.6,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": {
+        "latest_completed_session": "2026-09-04",
+        "price": 406.77,
+        "return_1m_pct": 4.39,
+        "ma50": 388.8766,
+        "ma200": 415.4357,
+        "trend": "NEGATIVE_MIXED",
+        "structural_monthly_stage": "EARLY_DOWN",
+        "divergence_vs_structural": "CONFIRMS",
+        "evidence_tier": "RESEARCH",
+        "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+      },
+      "entry_quality": {
+        "score": "0/2",
+        "label": "LOW",
+        "passes": 0,
+        "known": 2
+      },
+      "action": "WAIT",
+      "triggers": {
+        "upgrade": [
+          "FX-neutral Money returns to a supportive regime.",
+          "Asset-specific CFTC positioning washes out toward the contrarian <=25th percentile zone.",
+          "Completed-month price turn turns positive."
+        ],
+        "downgrade": [
+          "FX-neutral Money deteriorates materially."
+        ]
+      },
+      "backtest": {
+        "status": "DISLOCATION_NOT_INCREMENTALLY_SUPPORTED",
+        "episode_starts": 3,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": "2026-09-04"
+      }
+    },
+    "SLV": {
+      "asset_class": "SILVER",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "FX-neutral Money proxy context; silver transmission not promoted"
+      },
+      "strategic_eligibility": {
+        "score": "context only",
+        "eligible": false,
+        "label": "WATCH ONLY",
+        "reason": "Research-only dislocation/positioning/trend context. It can surface Radar setups but cannot create a promoted strategic signal.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 1.83,
+        "as_of": "2026-08",
+        "cpi_as_of": "2026-07",
+        "rule": "60M log real-price z <= -1; CPI lagged one month for publication timing"
+      },
+      "positioning": {
+        "available": true,
+        "pass": false,
+        "crowded": false,
+        "label": "Silver managed money",
+        "as_of": "2026-09-01",
+        "net_spec_pct_oi": 12.07,
+        "percentile_3y": 37.9,
+        "z_3y": -0.32,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+        "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": false,
+        "stage": "EARLY_DOWN",
+        "price": 60.13,
+        "ma10": 64.515,
+        "ma10_slope_3m_pct": 7.2,
+        "return_3m_pct": -12,
+        "return_6m_pct": -29.3,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "0/2",
+        "label": "LOW",
+        "passes": 0,
+        "known": 2
+      },
+      "action": "WATCH ONLY",
+      "triggers": {
+        "upgrade": [
+          "Research dislocation/positioning aligns with an early price and relative-strength turn.",
+          "Asset-specific CFTC positioning washes out toward the contrarian <=25th percentile zone.",
+          "Completed-month price turn turns positive."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks."
+        ]
+      },
+      "backtest": {
+        "status": "NOT_YET_VALIDATED",
+        "episode_starts": 0,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": null
+      }
+    },
+    "DBC": {
+      "asset_class": "BROAD COMMODITIES",
+      "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+      "transmission": {
+        "evidence_tier": "CORE",
+        "signal": "DBC USD 6M/12M + FX-neutral 6M"
+      },
+      "strategic_eligibility": {
+        "score": "1/2",
+        "eligible": false,
+        "label": "WAIT FOR DISLOCATION",
+        "reason": "Promoted transmission plus asset-specific dislocation.",
+        "cap": "NORMAL"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 2.7,
+        "as_of": "2026-08",
+        "cpi_as_of": "2026-07",
+        "rule": "60M log real-price z <= -1; CPI lagged one month for publication timing"
+      },
+      "positioning": {
+        "available": true,
+        "pass": false,
+        "crowded": true,
+        "label": "Broad commodity managed-money proxy",
+        "as_of": "2026-09-01",
+        "percentile_3y": 85.6,
+        "components": [
+          {
+            "available": true,
+            "pass": false,
+            "crowded": false,
+            "label": "Crude",
+            "as_of": "2026-09-01",
+            "net_spec_pct_oi": 1.68,
+            "percentile_3y": 52.2,
+            "z_3y": -0.3,
+            "evidence_tier": "RESEARCH",
+            "role": "ENTRY_QUALITY_ONLY",
+            "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+            "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+          },
+          {
+            "available": true,
+            "pass": false,
+            "crowded": true,
+            "label": "Copper",
+            "as_of": "2026-09-01",
+            "net_spec_pct_oi": 25.79,
+            "percentile_3y": 90.1,
+            "z_3y": 1.26,
+            "evidence_tier": "RESEARCH",
+            "role": "ENTRY_QUALITY_ONLY",
+            "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+            "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+          },
+          {
+            "available": true,
+            "pass": false,
+            "crowded": true,
+            "label": "Corn",
+            "as_of": "2026-09-01",
+            "net_spec_pct_oi": 22.73,
+            "percentile_3y": 100,
+            "z_3y": 2.39,
+            "evidence_tier": "RESEARCH",
+            "role": "ENTRY_QUALITY_ONLY",
+            "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+            "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+          },
+          {
+            "available": true,
+            "pass": false,
+            "crowded": true,
+            "label": "Wheat",
+            "as_of": "2026-09-01",
+            "net_spec_pct_oi": 9.91,
+            "percentile_3y": 100,
+            "z_3y": 2.82,
+            "evidence_tier": "RESEARCH",
+            "role": "ENTRY_QUALITY_ONLY",
+            "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+            "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+          }
+        ],
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed / crude-copper-corn-wheat percentile average",
+        "rule": "<=25th percentile contrarian; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "CONFIRMED_UP",
+        "price": 31.3,
+        "ma10": 27.1139,
+        "ma10_slope_3m_pct": 8.8,
+        "return_3m_pct": 6.2,
+        "return_6m_pct": 24.7,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": {
+        "latest_completed_session": "2026-09-04",
+        "price": 31.9,
+        "return_1m_pct": 10.53,
+        "ma50": 29.3594,
+        "ma200": 27.1463,
+        "trend": "BULLISH",
+        "structural_monthly_stage": "CONFIRMED_UP",
+        "divergence_vs_structural": "CONFIRMS",
+        "evidence_tier": "RESEARCH",
+        "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+      },
+      "entry_quality": {
+        "score": "1/2",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 2
+      },
+      "action": "WAIT — DO NOT CHASE",
+      "triggers": {
+        "upgrade": [
+          "Asset-specific dislocation reaches its pre-specified cheapness threshold while promoted Money remains supportive.",
+          "Asset-specific CFTC positioning washes out toward the contrarian <=25th percentile zone."
+        ],
+        "downgrade": [
+          "USD Money deteriorates materially.",
+          "Positioning remains or becomes crowded while price loses confirmation."
+        ]
+      },
+      "backtest": {
+        "status": "MOST_PROMISING_CONTRARIAN_DISLOCATION",
+        "episode_starts": 5,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": "2026-09-04"
+      }
+    },
+    "USO": {
+      "asset_class": "WTI CRUDE OIL",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "DBC/commodity USD Money proxy context; crude-specific transmission not promoted"
+      },
+      "strategic_eligibility": {
+        "score": "context only",
+        "eligible": false,
+        "label": "WATCH ONLY",
+        "reason": "Research-only dislocation/positioning/trend context. It can surface Radar setups but cannot create a promoted strategic signal.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 2.7,
+        "as_of": "2026-08",
+        "cpi_as_of": "2026-07",
+        "rule": "60M log real-price z <= -1; CPI lagged one month for publication timing"
+      },
+      "positioning": {
+        "available": true,
+        "pass": false,
+        "crowded": false,
+        "label": "WTI crude managed money",
+        "as_of": "2026-09-01",
+        "net_spec_pct_oi": 1.68,
+        "percentile_3y": 52.2,
+        "z_3y": -0.3,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+        "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "CONFIRMED_UP",
+        "price": 133.7,
+        "ma10": 107.444,
+        "ma10_slope_3m_pct": 16,
+        "return_3m_pct": 3.6,
+        "return_6m_pct": 63.1,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/2",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 2
+      },
+      "action": "WATCH ONLY",
+      "triggers": {
+        "upgrade": [
+          "Research dislocation/positioning aligns with an early price and relative-strength turn.",
+          "Asset-specific CFTC positioning washes out toward the contrarian <=25th percentile zone."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks.",
+          "Completed-month price turn rolls over."
+        ]
+      },
+      "backtest": {
+        "status": "NOT_YET_VALIDATED",
+        "episode_starts": 0,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": null
+      }
+    },
+    "CPER": {
+      "asset_class": "COPPER",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "DBC/commodity USD Money proxy context; copper-specific transmission not promoted"
+      },
+      "strategic_eligibility": {
+        "score": "context only",
+        "eligible": false,
+        "label": "WATCH ONLY",
+        "reason": "Research-only dislocation/positioning/trend context. It can surface Radar setups but cannot create a promoted strategic signal.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 2.17,
+        "as_of": "2026-08",
+        "cpi_as_of": "2026-07",
+        "rule": "60M log real-price z <= -1; CPI lagged one month for publication timing"
+      },
+      "positioning": {
+        "available": true,
+        "pass": false,
+        "crowded": true,
+        "label": "Copper managed money",
+        "as_of": "2026-09-01",
+        "net_spec_pct_oi": 25.79,
+        "percentile_3y": 90.1,
+        "z_3y": 1.26,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+        "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "CONFIRMED_UP",
+        "price": 40,
+        "ma10": 36.766,
+        "ma10_slope_3m_pct": 8.1,
+        "return_3m_pct": 2.9,
+        "return_6m_pct": 8.5,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/2",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 2
+      },
+      "action": "WATCH ONLY",
+      "triggers": {
+        "upgrade": [
+          "Research dislocation/positioning aligns with an early price and relative-strength turn.",
+          "Asset-specific CFTC positioning washes out toward the contrarian <=25th percentile zone."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks.",
+          "Positioning remains or becomes crowded while price loses confirmation."
+        ]
+      },
+      "backtest": {
+        "status": "NOT_YET_VALIDATED",
+        "episode_starts": 0,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": null
+      }
+    },
+    "DBA": {
+      "asset_class": "AGRICULTURE",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "DBC/commodity USD Money proxy context; agriculture-specific transmission not promoted"
+      },
+      "strategic_eligibility": {
+        "score": "context only",
+        "eligible": false,
+        "label": "WATCH ONLY",
+        "reason": "Research-only dislocation/positioning/trend context. It can surface Radar setups but cannot create a promoted strategic signal.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 1.84,
+        "as_of": "2026-08",
+        "cpi_as_of": "2026-07",
+        "rule": "60M log real-price z <= -1; CPI lagged one month for publication timing"
+      },
+      "positioning": {
+        "available": true,
+        "pass": false,
+        "crowded": true,
+        "label": "Broad agriculture managed-money proxy",
+        "as_of": "2026-09-01",
+        "percentile_3y": 83.7,
+        "components": [
+          {
+            "available": true,
+            "pass": false,
+            "crowded": true,
+            "label": "Corn",
+            "as_of": "2026-09-01",
+            "net_spec_pct_oi": 22.73,
+            "percentile_3y": 100,
+            "z_3y": 2.39,
+            "evidence_tier": "RESEARCH",
+            "role": "ENTRY_QUALITY_ONLY",
+            "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+            "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+          },
+          {
+            "available": true,
+            "pass": false,
+            "crowded": true,
+            "label": "Wheat",
+            "as_of": "2026-09-01",
+            "net_spec_pct_oi": 9.91,
+            "percentile_3y": 100,
+            "z_3y": 2.82,
+            "evidence_tier": "RESEARCH",
+            "role": "ENTRY_QUALITY_ONLY",
+            "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+            "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+          },
+          {
+            "available": true,
+            "pass": false,
+            "crowded": true,
+            "label": "Soybeans",
+            "as_of": "2026-09-01",
+            "net_spec_pct_oi": 21.26,
+            "percentile_3y": 99.4,
+            "z_3y": 2.15,
+            "evidence_tier": "RESEARCH",
+            "role": "ENTRY_QUALITY_ONLY",
+            "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+            "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+          },
+          {
+            "available": true,
+            "pass": false,
+            "crowded": true,
+            "label": "Sugar",
+            "as_of": "2026-09-01",
+            "net_spec_pct_oi": 18.33,
+            "percentile_3y": 91.9,
+            "z_3y": 1.51,
+            "evidence_tier": "RESEARCH",
+            "role": "ENTRY_QUALITY_ONLY",
+            "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+            "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+          },
+          {
+            "available": true,
+            "pass": false,
+            "crowded": false,
+            "label": "Coffee",
+            "as_of": "2026-09-01",
+            "net_spec_pct_oi": 17.21,
+            "percentile_3y": 27.3,
+            "z_3y": -0.27,
+            "evidence_tier": "RESEARCH",
+            "role": "ENTRY_QUALITY_ONLY",
+            "source": "CFTC official Historical Compressed Disaggregated Futures Only / Managed Money",
+            "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+          }
+        ],
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed / corn-wheat-soy-sugar-coffee percentile average",
+        "rule": "<=25th percentile contrarian; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "CONFIRMED_UP",
+        "price": 29.32,
+        "ma10": 26.88,
+        "ma10_slope_3m_pct": 2.1,
+        "return_3m_pct": 7.6,
+        "return_6m_pct": 12.7,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/2",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 2
+      },
+      "action": "WATCH ONLY",
+      "triggers": {
+        "upgrade": [
+          "Research dislocation/positioning aligns with an early price and relative-strength turn.",
+          "Asset-specific CFTC positioning washes out toward the contrarian <=25th percentile zone."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks.",
+          "Positioning remains or becomes crowded while price loses confirmation."
+        ]
+      },
+      "backtest": {
+        "status": "NOT_YET_VALIDATED",
+        "episode_starts": 0,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": null
+      }
+    },
+    "TLT": {
+      "asset_class": "US LONG DURATION",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "No promoted Money→TLT relation; broad Money is context only"
+      },
+      "strategic_eligibility": {
+        "score": "1/1 research gate",
+        "eligible": true,
+        "label": "PROVISIONAL STRATEGIC ZONE",
+        "reason": "Research-only duration thesis; real-yield dislocation is the primary gate and Money is context only.",
+        "cap": "PROVISIONAL"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": true,
+        "z60m": 1.06,
+        "level": 2.44,
+        "as_of": "2026-08",
+        "rule": "60M level z >= +1"
+      },
+      "positioning": {
+        "available": false,
+        "pass": false,
+        "crowded": false,
+        "label": "US long-duration Treasury leveraged money proxy",
+        "source": "CFTC official Historical Compressed TFF Futures Only / Leveraged Money",
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "error": "No matching CFTC rows"
+      },
+      "turn": {
+        "available": true,
+        "pass": false,
+        "stage": "CONFIRMED_DOWN",
+        "price": 82.205,
+        "ma10": 84.6804,
+        "ma10_slope_3m_pct": -0.6,
+        "return_3m_pct": -2.7,
+        "return_6m_pct": -7.1,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "0/1",
+        "label": "LOW",
+        "passes": 0,
+        "known": 1
+      },
+      "action": "PROVISIONAL WATCH",
+      "triggers": {
+        "upgrade": [
+          "Duration price turn becomes positive while real-yield dislocation remains elevated.",
+          "Completed-month price turn turns positive."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks."
+        ]
+      },
+      "backtest": {
+        "status": "MIXED_12M_POSITIVE_24_36M",
+        "episode_starts": 8,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": null,
+        "current_market": null
+      }
+    },
+    "IEF": {
+      "asset_class": "US INTERMEDIATE TREASURIES",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "No promoted Money→IEF relation; broad Money is context only"
+      },
+      "strategic_eligibility": {
+        "score": "0/1 research gate",
+        "eligible": false,
+        "label": "WAIT FOR YIELD DISLOCATION",
+        "reason": "Research-only duration thesis; real-yield dislocation is the primary gate and Money is context only.",
+        "cap": "PROVISIONAL"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 0.91,
+        "level": 2.18,
+        "as_of": "2026-08",
+        "rule": "60M level z >= +1"
+      },
+      "positioning": {
+        "available": false,
+        "pass": false,
+        "crowded": false,
+        "label": "US intermediate Treasury leveraged money proxy",
+        "source": "CFTC official Historical Compressed TFF Futures Only / Leveraged Money",
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "error": "No matching CFTC rows"
+      },
+      "turn": {
+        "available": true,
+        "pass": false,
+        "stage": "CONFIRMED_DOWN",
+        "price": 92.408,
+        "ma10": 93.5787,
+        "ma10_slope_3m_pct": 0,
+        "return_3m_pct": -1,
+        "return_6m_pct": -3.5,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "0/1",
+        "label": "LOW",
+        "passes": 0,
+        "known": 1
+      },
+      "action": "WAIT — DO NOT CHASE",
+      "triggers": {
+        "upgrade": [
+          "Relevant real-yield 60M z-score rises back above +1.",
+          "Completed-month price turn turns positive."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks."
+        ]
+      },
+      "backtest": {
+        "status": "NOT_YET_VALIDATED",
+        "episode_starts": 0,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": null,
+        "current_market": null
+      }
+    },
+    "FXY": {
+      "asset_class": "JAPANESE YEN",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "Broad Money/USD translation context; JPY transmission not promoted"
+      },
+      "strategic_eligibility": {
+        "score": "context only",
+        "eligible": false,
+        "label": "WATCH ONLY",
+        "reason": "Research-only dislocation/positioning/trend context. It can surface Radar setups but cannot create a promoted strategic signal.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": true,
+        "z60m": -1.16,
+        "as_of": "2026-08",
+        "rule": "60M log adjusted-price z <= -1"
+      },
+      "positioning": {
+        "available": true,
+        "pass": true,
+        "crowded": false,
+        "label": "Japanese Yen leveraged money",
+        "as_of": "2026-09-01",
+        "net_spec_pct_oi": -21.8,
+        "percentile_3y": 10.6,
+        "z_3y": -1.22,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "CFTC official Historical Compressed TFF Futures Only / Leveraged Money",
+        "rule": "<=25th percentile contrarian-friendly; >=75th crowded"
+      },
+      "turn": {
+        "available": true,
+        "pass": false,
+        "stage": "CONFIRMED_DOWN",
+        "price": 57.39,
+        "ma10": 58.146,
+        "ma10_slope_3m_pct": -2.2,
+        "return_3m_pct": -0.4,
+        "return_6m_pct": -2.4,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/2",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 2
+      },
+      "action": "WATCH ONLY",
+      "triggers": {
+        "upgrade": [
+          "Research dislocation/positioning aligns with an early price and relative-strength turn.",
+          "Completed-month price turn turns positive."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks."
+        ]
+      },
+      "backtest": {
+        "status": "NOT_YET_VALIDATED",
+        "episode_starts": 0,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": "2026-09-01",
+        "current_market": null
+      }
+    },
+    "HYG": {
+      "asset_class": "HIGH YIELD CREDIT",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "No promoted Money→HYG relation; broad Money/credit conditions are context only"
+      },
+      "strategic_eligibility": {
+        "score": "data incomplete",
+        "eligible": false,
+        "label": "INSUFFICIENT HISTORY",
+        "reason": "Public credit-spread history is insufficient for the pre-specified 60M backtest gate. No accumulation label allowed.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": false,
+        "pass": false,
+        "z60m": null,
+        "level": 2.63,
+        "as_of": "2026-08",
+        "rule": "60M level z >= +1"
+      },
+      "positioning": {
+        "available": false,
+        "pass": false,
+        "crowded": false,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "none",
+        "note": "No sufficiently direct asset-specific CFTC mapping in current GMLI."
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "CONFIRMED_UP",
+        "price": 79.375,
+        "ma10": 78.1574,
+        "ma10_slope_3m_pct": 1,
+        "return_3m_pct": 0.8,
+        "return_6m_pct": 1.8,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/1",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 1
+      },
+      "action": "INSUFFICIENT HISTORY",
+      "triggers": {
+        "upgrade": [
+          "A reproducible long-history credit-spread series becomes available and shows a genuinely wide-spread dislocation."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks.",
+          "Completed-month price turn rolls over."
+        ]
+      },
+      "backtest": {
+        "status": "INSUFFICIENT_PUBLIC_HISTORY",
+        "episode_starts": 0,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": null,
+        "current_market": null
+      }
+    },
+    "VNQ": {
+      "asset_class": "US REITS",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "No promoted Money→REIT relation; broad Money is context only"
+      },
+      "strategic_eligibility": {
+        "score": "context only",
+        "eligible": false,
+        "label": "WATCH ONLY",
+        "reason": "Research-only dislocation/positioning/trend context. It can surface Radar setups but cannot create a promoted strategic signal.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": true,
+        "z60m": -1.52,
+        "as_of": "2026-08",
+        "benchmark": "SPY",
+        "rule": "60M log relative-price z <= -1 versus SPY"
+      },
+      "positioning": {
+        "available": false,
+        "pass": false,
+        "crowded": false,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "none",
+        "note": "No sufficiently direct asset-specific CFTC mapping in current GMLI."
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "CONFIRMED_UP",
+        "price": 96.44,
+        "ma10": 92.8566,
+        "ma10_slope_3m_pct": 3.1,
+        "return_3m_pct": 1.7,
+        "return_6m_pct": 2.8,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/1",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 1
+      },
+      "action": "WATCH ONLY",
+      "triggers": {
+        "upgrade": [
+          "Research dislocation/positioning aligns with an early price and relative-strength turn."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks.",
+          "Completed-month price turn rolls over."
+        ]
+      },
+      "backtest": {
+        "status": "RELATIVE_DISLOCATION_NOT_SUPPORTED",
+        "episode_starts": 17,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": null,
+        "current_market": null
+      }
+    },
+    "EEM": {
+      "asset_class": "EM EQUITY",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "Global Money proxy — not promoted for EEM"
+      },
+      "strategic_eligibility": {
+        "score": "1/2 research",
+        "eligible": false,
+        "label": "WAIT FOR RELATIVE DISLOCATION",
+        "reason": "Research Money context plus backtest-supported relative dislocation; not promoted Core transmission.",
+        "cap": "PROVISIONAL"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 0.18,
+        "as_of": "2026-08",
+        "benchmark": "SPY",
+        "rule": "60M log relative-price z <= -1 versus SPY"
+      },
+      "positioning": {
+        "available": false,
+        "pass": false,
+        "crowded": false,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "none",
+        "note": "No sufficiently direct asset-specific CFTC mapping in current GMLI."
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "EARLY_DOWN",
+        "price": 67.02,
+        "ma10": 61.6675,
+        "ma10_slope_3m_pct": 7.7,
+        "return_3m_pct": -1.8,
+        "return_6m_pct": 7.7,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/1",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 1
+      },
+      "action": "WAIT — DO NOT CHASE",
+      "triggers": {
+        "upgrade": [
+          "EEM/SPY relative-price dislocation reaches z <= -1 while broad Money context stays supportive."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks.",
+          "Completed-month price turn rolls over."
+        ]
+      },
+      "backtest": {
+        "status": "SUPPORTED_12_24M_MIXED_36M",
+        "episode_starts": 19,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": null,
+        "current_market": null
+      }
+    },
+    "VEA": {
+      "asset_class": "DEVELOPED EX-US",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "Global Money proxy — not promoted for VEA"
+      },
+      "strategic_eligibility": {
+        "score": "context only",
+        "eligible": false,
+        "label": "WATCH ONLY",
+        "reason": "Research-only dislocation/positioning/trend context. It can surface Radar setups but cannot create a promoted strategic signal.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": true,
+        "pass": false,
+        "z60m": 0.05,
+        "as_of": "2026-08",
+        "benchmark": "SPY",
+        "rule": "60M log relative-price z <= -1 versus SPY"
+      },
+      "positioning": {
+        "available": false,
+        "pass": false,
+        "crowded": false,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "none",
+        "note": "No sufficiently direct asset-specific CFTC mapping in current GMLI."
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "CONFIRMED_UP",
+        "price": 72.92,
+        "ma10": 67.6027,
+        "ma10_slope_3m_pct": 6.2,
+        "return_3m_pct": 2.1,
+        "return_6m_pct": 4.5,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/1",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 1
+      },
+      "action": "WATCH ONLY",
+      "triggers": {
+        "upgrade": [
+          "Research dislocation/positioning aligns with an early price and relative-strength turn."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks.",
+          "Completed-month price turn rolls over."
+        ]
+      },
+      "backtest": {
+        "status": "RELATIVE_DISLOCATION_NOT_SUPPORTED",
+        "episode_starts": 17,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": null,
+        "current_market": null
+      }
+    },
+    "BTC": {
+      "asset_class": "BITCOIN",
+      "evidence_tier": "RESEARCH_ONLY",
+      "transmission": {
+        "evidence_tier": "RESEARCH",
+        "signal": "Global Money proxy — BTC transmission not promoted in frozen GMLI"
+      },
+      "strategic_eligibility": {
+        "score": "context only",
+        "eligible": false,
+        "label": "NO VALIDATED DISLOCATION MODEL",
+        "reason": "No comparable backtested strategic dislocation model is available. Money and trend are monitoring context only.",
+        "cap": "WATCH_ONLY"
+      },
+      "dislocation": {
+        "available": false,
+        "pass": false,
+        "rule": "No validated dislocation model"
+      },
+      "positioning": {
+        "available": false,
+        "pass": false,
+        "crowded": false,
+        "evidence_tier": "RESEARCH",
+        "role": "ENTRY_QUALITY_ONLY",
+        "source": "none",
+        "note": "No sufficiently direct asset-specific CFTC mapping in current GMLI."
+      },
+      "turn": {
+        "available": true,
+        "pass": true,
+        "stage": "EARLY_UP",
+        "price": 78548.6328,
+        "ma10": 74155.8676,
+        "ma10_slope_3m_pct": -15.1,
+        "return_3m_pct": 6.8,
+        "return_6m_pct": 17.2,
+        "as_of": "2026-08",
+        "rule": "completed-month adjusted price > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope"
+      },
+      "current_market": null,
+      "entry_quality": {
+        "score": "1/1",
+        "label": "PARTIAL",
+        "passes": 1,
+        "known": 1
+      },
+      "action": "NO VALIDATED DISLOCATION MODEL",
+      "triggers": {
+        "upgrade": [
+          "A robust BTC-specific dislocation model is validated and price turn stabilizes."
+        ],
+        "downgrade": [
+          "Broad Money freshness deteriorates across several major blocks.",
+          "Completed-month price turn rolls over."
+        ]
+      },
+      "backtest": {
+        "status": "NOT_TESTED_COMPARABLE_DATA",
+        "episode_starts": 0,
+        "note": "Backtest guides overlay design only; it does not alter frozen Money Core."
+      },
+      "freshness": {
+        "money": "2026-07-31",
+        "funding": "2026-08-31",
+        "fiscal": "2026-08-31",
+        "price": "2026-08",
+        "positioning": null,
+        "current_market": null
+      }
+    }
+  },
+  "conflicts": [
+    {
+      "type": "CURRENT_MARKET_DIVERGENCE",
+      "detail": "QQQ: POSITIVE_DIVERGENCE versus completed-month structure."
+    }
+  ]
+}

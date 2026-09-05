@@ -1,0 +1,143 @@
+{
+  "schema_version": "gmli-accord-watch-history-v1",
+  "version": "GMLI_ACCORD_WATCH_V2",
+  "generated_at": "2026-09-05T17:32:41.418Z",
+  "evidence_tier": "RESEARCH_DIAGNOSTIC",
+  "scoring_effect": "NONE",
+  "automatic_weight_change": 0,
+  "methodology_effect": "NONE",
+  "presentation_score": true,
+  "history": [
+    {
+      "date": "2025-09-30",
+      "score": 50,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 0,
+      "handoff_points": 25,
+      "market_points": 12.5
+    },
+    {
+      "date": "2025-10-31",
+      "score": 37.5,
+      "band": "SETUP",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 0,
+      "handoff_points": 0,
+      "market_points": 12.5
+    },
+    {
+      "date": "2025-11-30",
+      "score": 75,
+      "band": "EMERGING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 0,
+      "handoff_points": 25,
+      "market_points": 25
+    },
+    {
+      "date": "2025-12-31",
+      "score": 37.5,
+      "band": "SETUP",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 10,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-01-31",
+      "score": 52.5,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-02-28",
+      "score": 77.5,
+      "band": "EMERGING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 12.5
+    },
+    {
+      "date": "2026-03-31",
+      "score": 52.5,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-04-30",
+      "score": 40,
+      "band": "SETUP",
+      "available_blocks": 4,
+      "treasury_points": 0,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-05-31",
+      "score": 52.5,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-06-30",
+      "score": 25,
+      "band": "SETUP",
+      "available_blocks": 4,
+      "treasury_points": 0,
+      "fed_reserve_points": 10,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-07-31",
+      "score": 65,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-08-31",
+      "score": 50,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 10,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-09-05",
+      "score": 50,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 10,
+      "handoff_points": 15,
+      "market_points": 0
+    }
+  ],
+  "guardrail": "Historical presentation gauge only; not a probability, GMLI conviction history or asset-return model."
+}

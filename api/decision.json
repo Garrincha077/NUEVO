@@ -1,0 +1,427 @@
+{
+  "schema_version": "gmli-pages-decision-snapshot-v1",
+  "source": "DERIVED_FROM_CANONICAL_REPORT_SNAPSHOT",
+  "generated_at": "2026-09-05T17:32:33.324Z",
+  "methodology": {
+    "status": "FROZEN_V2_SPEC",
+    "note": "Money V2 methodology is frozen. Funding V2 and Fiscal V2 are separately promoted frozen OVERLAY contracts. New data vintages may advance only through their promoted fail-closed source contracts; Fiscal V2 has zero automatic weight in the existing 10-point conviction rubric."
+  },
+  "signal_role_taxonomy": {
+    "version": "GMLI_SIGNAL_ROLE_TAXONOMY_V1",
+    "evidence_tier": "RESEARCH",
+    "scoring_effect": "NONE",
+    "automatic_weight_change": 0,
+    "money_core": {
+      "role": "LEADING",
+      "interpretation": "Upstream 3-12M Money/liquidity regime signal; not a structural-causality or monthly-timing claim.",
+      "evidence": "Promoted fixed Money transmission remains 6/6; fixed directional follow-up shows no robust market-to-Money dominance across stationary promoted transforms."
+    },
+    "funding_v2": {
+      "role": "REACTIVE_CONFIRMATION",
+      "interpretation": "Financial-conditions/friction overlay. Market/volatility stress tends to precede changes in Funding, so use primarily as current-state confirmation and conviction context.",
+      "evidence": "SPY/QQQ -> Funding 6/6 Holm-significant fixed 1/3/6M tests; Funding -> equities 0/6; effect persists ex-pandemic and is largely VIX-mediated."
+    },
+    "fiscal_v2": {
+      "role": "MIXED",
+      "interpretation": "Fiscal/policy context with positive fixed SPY 12M usefulness but weak, regime-dependent temporal precedence; not a clean leading factor.",
+      "evidence": "Fixed SPY 12M usefulness PASS; reverse SPY -> Fiscal appears in full sample but disappears ex-pandemic/common-driver controls; automatic weight remains 0."
+    },
+    "market_confirmation": {
+      "role": "REACTIVE_CONFIRMATION",
+      "interpretation": "Completed-month cross-asset price-turn confirmation; validates or contradicts the upstream regime rather than creating it."
+    },
+    "overlap_note": {
+      "funding_vs_market_confirmation": "LOW_DIRECT_SCORE_OVERLAP",
+      "funding_rubric_market_pearson": 0.128075,
+      "funding_rubric_market_spearman": 0.086631,
+      "exact_score_agreement_rate": 0.22973,
+      "implication": "Both are reactive but measure materially different state channels; no frozen rubric change is justified by the overlap diagnostic."
+    },
+    "guardrail": "Interpretation metadata only. No score, threshold, promoted relationship, evidence tier or 10-point conviction weight is changed. Any role-based reweighting requires a separately frozen decision-engine candidate.",
+    "research": "research/signal-role-taxonomy/RESULT_SUMMARY.json"
+  },
+  "money": {
+    "status": "CORE",
+    "role": "ACTIVE_PROMOTED_MONEY_CORE_V2",
+    "version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
+    "methodology_status": "FROZEN_V2_SPEC",
+    "data_vintage_status": "VALIDATED_CORE_ACTIVE",
+    "observation_month": "2026-06",
+    "usd_yoy_pct": 7.921751,
+    "usd_score": 55,
+    "usd_regime": "NEUTRAL",
+    "fx_neutral_yoy_pct": 5.911268,
+    "fx_neutral_score": 44.3,
+    "fx_neutral_regime": "NEUTRAL",
+    "agreement": "AGREE",
+    "available_date": "2026-07-31",
+    "freshness": "AGING",
+    "age_days": 36,
+    "promotion_status": "PASS_MONEY_V2_PRODUCTION_PROMOTION"
+  },
+  "money_nowcast": {
+    "status": "RESEARCH",
+    "tilt": "SUPPORTIVE_MIXED",
+    "coverage": "4/4",
+    "accelerating": "3/4",
+    "expanding_yoy": "4/4",
+    "blocks": {
+      "us": "2026-07",
+      "euro_area": "2026-07",
+      "japan": "2026-07",
+      "china": "2026-07"
+    },
+    "details": "/api/money-nowcast",
+    "current_research_inference": "SUPPORTIVE_MIXED: verified monthly snapshots are US 2026-07, EA 2026-07, JP 2026-07, CN 2026-07. Request-time live parsing is disabled; scheduled validated refresh is the intended path."
+  },
+  "funding": {
+    "status": "OVERLAY",
+    "role": "ACTIVE_PROMOTED_FUNDING_V2",
+    "version": "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS",
+    "methodology_status": "FROZEN_V2_SPEC",
+    "data_vintage_status": "VALIDATED_OVERLAY_ACTIVE",
+    "observation_month": "2026-07",
+    "regime": "RESTRICTIVE",
+    "score": 38.4,
+    "structural_support_score": 38.4,
+    "observed_conditions_score": 60.4,
+    "available_date": "2026-08-31",
+    "promotion_status": "PASS_FUNDING_V2_PRODUCTION_PROMOTION",
+    "empirical_scope": "Fixed DBC 6M/12M usefulness gate passed; not a universal SPY/QQQ/GLD return signal.",
+    "guardrail": "Funding modifies conviction only and never overrides Money Core."
+  },
+  "fiscal": {
+    "status": "OVERLAY",
+    "role": "ACTIVE_PROMOTED_FISCAL_V2",
+    "version": "GMLI_FISCAL_V2_DEFICIT_IMPULSE",
+    "methodology_status": "FROZEN_V2_SPEC",
+    "data_vintage_status": "VALIDATED_OVERLAY_ACTIVE",
+    "observation_month": "2026-07",
+    "regime": "NEUTRAL",
+    "score": 47.4,
+    "deficit_pct_gdp": 5.99,
+    "fiscal_impulse_pp": -0.39,
+    "available_date": "2026-08-31",
+    "promotion_status": "PASS_FISCAL_V2_PRODUCTION_PROMOTION",
+    "empirical_scope": "Fixed SPY 12M train/OOS directional usefulness gate passed; QQQ/DBC diagnostics are not promotion claims.",
+    "automatic_global_conviction_weight": 0,
+    "guardrail": "Fiscal V2 is confirmation context only in the current engine; it never overrides Money Core and does not silently expand the 10-point conviction rubric."
+  },
+  "market_confirmation": {
+    "status": "RESEARCH",
+    "available": 4,
+    "positive": 3,
+    "total": 4,
+    "score_0_2": 2,
+    "basis": "completed-month price turn across SPY/QQQ/GLD/DBC"
+  },
+  "current_market_confirmation": {
+    "schema_version": "gmli-current-market-v1",
+    "status": "OK",
+    "evidence_tier": "RESEARCH",
+    "role": "CURRENT_MARKET_CONFIRMATION_ONLY",
+    "generated_at": "2026-09-05T17:32:39.082Z",
+    "coverage": "4/4",
+    "positive": 3,
+    "negative": 1,
+    "summary": "BROADLY_POSITIVE",
+    "divergences": [
+      {
+        "asset": "QQQ",
+        "type": "POSITIVE_DIVERGENCE"
+      }
+    ],
+    "assets": {
+      "SPY": {
+        "latest_completed_session": "2026-09-04",
+        "price": 770.19,
+        "return_1m_pct": 0.21,
+        "ma50": 756.8572,
+        "ma200": 709.8686,
+        "trend": "BULLISH",
+        "structural_monthly_stage": "CONFIRMED_UP",
+        "divergence_vs_structural": "CONFIRMS",
+        "evidence_tier": "RESEARCH",
+        "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+      },
+      "QQQ": {
+        "latest_completed_session": "2026-09-04",
+        "price": 718.96,
+        "return_1m_pct": 0.6,
+        "ma50": 711.085,
+        "ma200": 656.7821,
+        "trend": "BULLISH",
+        "structural_monthly_stage": "EARLY_DOWN",
+        "divergence_vs_structural": "POSITIVE_DIVERGENCE",
+        "evidence_tier": "RESEARCH",
+        "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+      },
+      "GLD": {
+        "latest_completed_session": "2026-09-04",
+        "price": 406.77,
+        "return_1m_pct": 4.39,
+        "ma50": 388.8766,
+        "ma200": 415.4357,
+        "trend": "NEGATIVE_MIXED",
+        "structural_monthly_stage": "EARLY_DOWN",
+        "divergence_vs_structural": "CONFIRMS",
+        "evidence_tier": "RESEARCH",
+        "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+      },
+      "DBC": {
+        "latest_completed_session": "2026-09-04",
+        "price": 31.9,
+        "return_1m_pct": 10.53,
+        "ma50": 29.3594,
+        "ma200": 27.1463,
+        "trend": "BULLISH",
+        "structural_monthly_stage": "CONFIRMED_UP",
+        "divergence_vs_structural": "CONFIRMS",
+        "evidence_tier": "RESEARCH",
+        "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+      }
+    },
+    "errors": [],
+    "note": "Current daily market confirmation can raise/lower conviction or highlight divergence; it never rewrites frozen Money Core or completed-month structural signals."
+  },
+  "conviction": {
+    "score": 7,
+    "max": 10,
+    "label": "7/10",
+    "rubric": {
+      "money_freshness": {
+        "score": 1,
+        "max": 2,
+        "reason": "Active Money V2 is aging (2026-07-31; 36d)."
+      },
+      "usd_fxn_agreement": {
+        "score": 2,
+        "max": 2,
+        "reason": "NEUTRAL vs NEUTRAL"
+      },
+      "transmission_evidence": {
+        "score": 2,
+        "max": 2,
+        "reason": "Money V2 passed the fixed 6/6 transfer gate on the six promoted relationships without retuning."
+      },
+      "funding_confirmation": {
+        "score": 0,
+        "max": 2,
+        "reason": "Funding V2 restrictive (38.4); bounded conviction overlay, strongest fixed empirical usefulness DBC 6M/12M."
+      },
+      "market_confirmation": {
+        "score": 2,
+        "max": 2,
+        "reason": "3/4 core assets have positive completed-month turn"
+      }
+    },
+    "fiscal_v2_automatic_weight": 0,
+    "fiscal_v2_note": "Fiscal V2 is not an additional rubric component; adding automatic Fiscal weight requires a separately frozen decision-engine candidate."
+  },
+  "freshness": {
+    "active_money_core": "2026-07-31",
+    "active_money_core_status": "AGING",
+    "active_money_core_age_days": 36,
+    "historical_core_reference": "2026-02-28",
+    "money_nowcast": "US 2026-07*; EA 2026-07*; JP 2026-07*; CN 2026-07*",
+    "overlays": "2026-08-31",
+    "funding_overlay": "2026-08-31",
+    "fiscal_overlay": "2026-08-31",
+    "warning": "Active Money V2 is current under the promoted official-source contract. Funding V2 is a bounded conviction overlay; Fiscal V2 is a zero-automatic-weight confirmation overlay. Historical legacy blockers do not block their separately versioned V2 contracts."
+  },
+  "money_promotion_gate": {
+    "status": "PASS_MONEY_V2_PRODUCTION_PROMOTION",
+    "core_replacement_allowed": true,
+    "promoted_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
+    "promotion_date": "2026-08-24",
+    "promotion_report": "research/global-money-v2/GMLI_GLOBAL_MONEY_V2_PROMOTION_REPORT.md",
+    "may_2026_bridge_regression": {
+      "status": "PASS",
+      "legacy_usd_yoy_pct": 9.3258,
+      "v2_usd_yoy_pct": 9.341915,
+      "usd_delta_pp": 0.016115,
+      "legacy_fxn_yoy_pct": 6.1275,
+      "v2_fxn_yoy_pct": 6.153468,
+      "fxn_delta_pp": 0.025968
+    },
+    "fixed_transmission_transfer": {
+      "status": "PASS_6_OF_6",
+      "asset_search": false,
+      "horizon_search": false,
+      "lag_search": false,
+      "parameter_search": false,
+      "new_fdr_claim": false
+    }
+  },
+  "funding_promotion_gate": {
+    "status": "PASS_FUNDING_V2_PRODUCTION_PROMOTION",
+    "overlay_replacement_allowed": true,
+    "promoted_version": "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS",
+    "promotion_date": "2026-08-25",
+    "promotion_report": "research/funding-v2/GMLI_FUNDING_V2_PROMOTION_REPORT.md",
+    "candidate_1": "REJECTED_FOR_PROMOTION",
+    "candidate_2_directional_gate": "PASS",
+    "narrow_usefulness_gate": "PASS_2_OF_2_DBC_6M_12M",
+    "asset_search": false,
+    "horizon_search": false,
+    "lag_search": false,
+    "parameter_search": false,
+    "fdr_claim": false
+  },
+  "fiscal_promotion_gate": {
+    "status": "PASS_FISCAL_V2_PRODUCTION_PROMOTION",
+    "overlay_replacement_allowed": true,
+    "promoted_version": "GMLI_FISCAL_V2_DEFICIT_IMPULSE",
+    "promotion_date": "2026-08-25",
+    "promotion_report": "research/fiscal-v2/GMLI_FISCAL_V2_PROMOTION_REPORT.md",
+    "candidate_1_construction_gate": "PASS_FIXED_CONSTRUCTION_SANITY",
+    "narrow_usefulness_gate": "PASS_1_OF_1_SPY_12M",
+    "global_conviction_rubric_modified": false,
+    "automatic_global_conviction_weight": 0,
+    "asset_search": false,
+    "horizon_search": false,
+    "lag_search": false,
+    "parameter_search": false,
+    "fdr_claim": false
+  },
+  "decision_delta": {
+    "schema_version": "gmli-decision-delta-v1",
+    "status": "AVAILABLE",
+    "evidence_tier": "RESEARCH_DIAGNOSTIC",
+    "scoring_effect": "NONE",
+    "automatic_weight_change": 0,
+    "methodology_effect": "NONE",
+    "generated_at": "2026-09-05T17:32:33.324Z",
+    "comparison_basis": "CURRENT_VERIFIED_COMPONENT_ROW_VS_IMMEDIATELY_PREVIOUS_VERIFIED_COMPONENT_ROW",
+    "caveat": "Component rows can have different publication dates. This layer summarizes change only; it does not create a synthetic Core score or modify frozen weights.",
+    "money": {
+      "evidence_tier": "CORE",
+      "role": "LEADING",
+      "current_available_date": "2026-07-31",
+      "previous_available_date": "2026-06-30",
+      "usd": {
+        "current": 55.01,
+        "previous": 59.26,
+        "delta": -4.25,
+        "direction": "DETERIORATING",
+        "arrow": "↓",
+        "current_regime": "NEUTRAL",
+        "previous_regime": "NEUTRAL",
+        "regime_changed": false
+      },
+      "fx_neutral": {
+        "current": 44.27,
+        "previous": 45.47,
+        "delta": -1.2,
+        "direction": "DETERIORATING",
+        "arrow": "↓",
+        "current_regime": "NEUTRAL",
+        "previous_regime": "NEUTRAL",
+        "regime_changed": false
+      }
+    },
+    "funding": {
+      "evidence_tier": "OVERLAY",
+      "role": "REACTIVE_CONFIRMATION",
+      "current": 38.44,
+      "previous": 37.88,
+      "delta": 0.56,
+      "direction": "IMPROVING",
+      "arrow": "↑",
+      "current_regime": "RESTRICTIVE",
+      "previous_regime": "RESTRICTIVE",
+      "regime_changed": false,
+      "current_available_date": "2026-08-31",
+      "previous_available_date": "2026-07-31"
+    },
+    "fiscal": {
+      "evidence_tier": "OVERLAY",
+      "role": "MIXED",
+      "current": 47.37,
+      "previous": 45.9,
+      "delta": 1.47,
+      "direction": "IMPROVING",
+      "arrow": "↑",
+      "current_regime": "NEUTRAL",
+      "previous_regime": "NEUTRAL",
+      "regime_changed": false,
+      "current_available_date": "2026-08-31",
+      "previous_available_date": "2026-07-31"
+    },
+    "market_confirmation": {
+      "evidence_tier": "RESEARCH",
+      "role": "REACTIVE_CONFIRMATION",
+      "current_month": "2026-08",
+      "previous_month": "2026-07",
+      "current_positive": 3,
+      "previous_positive": 3,
+      "current_score_0_2": 2,
+      "previous_score_0_2": 2,
+      "delta_score_0_2": 0,
+      "direction": "FLAT",
+      "arrow": "→"
+    },
+    "conviction": {
+      "current": 7,
+      "max": 10,
+      "previous_proxy": 8,
+      "delta_vs_previous_proxy": -1,
+      "direction": "DETERIORATING",
+      "arrow": "↓",
+      "previous_proxy_detail": {
+        "score": 8,
+        "max": 10,
+        "rubric": {
+          "money_freshness": 2,
+          "usd_fxn_agreement": 2,
+          "transmission_evidence": 2,
+          "funding_confirmation": 0,
+          "market_confirmation": 2
+        },
+        "status": "RECONSTRUCTED_FIXED_RUBRIC_PROXY",
+        "note": "Proxy uses the unchanged 10-point rubric at the previous verified component rows. Money freshness is fixed at 2 at the prior promoted available date. This is not an archived historical live decision."
+      },
+      "fiscal_v2_automatic_weight": 0
+    }
+  },
+  "decision_brief": {
+    "schema_version": "gmli-decision-brief-v1",
+    "status": "AVAILABLE",
+    "scoring_effect": "NONE",
+    "generated_at": "2026-09-05T17:32:33.324Z",
+    "regime": "NEUTRAL",
+    "tilt": "MILD_POSITIVE",
+    "conviction": "7/10",
+    "strongest_assets": [
+      {
+        "asset": "IWM",
+        "action": "WATCH ONLY",
+        "evidence_tier": "RESEARCH_ONLY",
+        "source_bucket": "WATCH"
+      },
+      {
+        "asset": "GLD",
+        "action": "WAIT",
+        "evidence_tier": "RESEARCH_DECISION_OVERLAY_WITH_CORE_TRANSMISSION",
+        "source_bucket": "WATCH"
+      },
+      {
+        "asset": "SLV",
+        "action": "WATCH ONLY",
+        "evidence_tier": "RESEARCH_ONLY",
+        "source_bucket": "WATCH"
+      }
+    ],
+    "main_risk": "Funding V2 remains RESTRICTIVE (38.4), capping a stronger risk-on conclusion.",
+    "what_changed": [
+      "Money USD ↓ -4.25 pts to 55.01 (NEUTRAL)",
+      "Money FX-neutral ↓ -1.2 pts to 44.27 (NEUTRAL)",
+      "Funding ↑ +0.56 pts to 38.44 (RESTRICTIVE)",
+      "Fiscal ↑ +1.47 pts to 47.37 (NEUTRAL)",
+      "Market confirmation → 3/4 → 3/4 positive",
+      "Conviction 8/10 proxy → 7/10 current"
+    ],
+    "action_note": "Current opportunity emphasis: IWM WATCH ONLY · GLD WAIT · SLV WATCH ONLY.",
+    "guardrail": "Decision Brief is a presentation layer only. CORE / OVERLAY / RESEARCH separation and the frozen 10-point rubric are unchanged."
+  }
+}

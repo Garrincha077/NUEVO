@@ -1,0 +1,1257 @@
+{
+  "schema_version": "gmli-money-history-v1.0",
+  "engine_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
+  "evidence_tier": "CORE_HISTORY",
+  "frequency": "monthly",
+  "source_of_truth": "research/global-money-v2/latest/global_money_v2.csv",
+  "source_note": "Same promoted official-source Global Money V2 pipeline used by the active Money Core; no separate database is required.",
+  "score_note": "Score is a normalized historical position, not a percentage return or forecast. Bands: 0-25 strong risk-off, 25-40 risk-off, 40-60 neutral, 60-75 risk-on, 75-100 strong risk-on.",
+  "yoy_note": "YoY is annual global broad-money growth. USD-translated includes currency translation; FX-neutral isolates underlying local-currency money growth as defined by the frozen V2 methodology.",
+  "start_month": "2015-01",
+  "latest_month": "2026-06",
+  "latest_available_date": "2026-07-31",
+  "rows": [
+    {
+      "month": "2015-01",
+      "available_date": "2015-02-28",
+      "usd_yoy_pct": -0.9236920538270481,
+      "fx_neutral_yoy_pct": 6.247735949987113,
+      "fx_effect_pp": -7.17142800381416,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-02",
+      "available_date": "2015-03-31",
+      "usd_yoy_pct": -1.2785581996348807,
+      "fx_neutral_yoy_pct": 6.84785037999235,
+      "fx_effect_pp": -8.126408579627231,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-03",
+      "available_date": "2015-04-30",
+      "usd_yoy_pct": -2.32968478853042,
+      "fx_neutral_yoy_pct": 6.726149175295854,
+      "fx_effect_pp": -9.055833963826274,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-04",
+      "available_date": "2015-05-31",
+      "usd_yoy_pct": -2.0904022750305002,
+      "fx_neutral_yoy_pct": 6.389616875958473,
+      "fx_effect_pp": -8.480019150988973,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-05",
+      "available_date": "2015-06-30",
+      "usd_yoy_pct": -1.1116851585737273,
+      "fx_neutral_yoy_pct": 6.619820542958753,
+      "fx_effect_pp": -7.73150570153248,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-06",
+      "available_date": "2015-07-31",
+      "usd_yoy_pct": -0.9037750002402779,
+      "fx_neutral_yoy_pct": 6.88306923177425,
+      "fx_effect_pp": -7.786844232014528,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-07",
+      "available_date": "2015-08-31",
+      "usd_yoy_pct": -1.0372132158328928,
+      "fx_neutral_yoy_pct": 7.510903001190775,
+      "fx_effect_pp": -8.548116217023669,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-08",
+      "available_date": "2015-09-30",
+      "usd_yoy_pct": -1.1764635915459047,
+      "fx_neutral_yoy_pct": 7.496850947419735,
+      "fx_effect_pp": -8.67331453896564,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-09",
+      "available_date": "2015-10-31",
+      "usd_yoy_pct": 0.26660412885169826,
+      "fx_neutral_yoy_pct": 7.411157078089951,
+      "fx_effect_pp": -7.1445529492382525,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-10",
+      "available_date": "2015-11-30",
+      "usd_yoy_pct": 1.1876774658450695,
+      "fx_neutral_yoy_pct": 7.634462631877927,
+      "fx_effect_pp": -6.446785166032857,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-11",
+      "available_date": "2015-12-31",
+      "usd_yoy_pct": 1.5267649666736252,
+      "fx_neutral_yoy_pct": 7.8276316066823215,
+      "fx_effect_pp": -6.300866640008696,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2015-12",
+      "available_date": "2016-01-31",
+      "usd_yoy_pct": 2.3031456212311423,
+      "fx_neutral_yoy_pct": 7.651884105029717,
+      "fx_effect_pp": -5.348738483798575,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-01",
+      "available_date": "2016-02-29",
+      "usd_yoy_pct": 3.617864022117213,
+      "fx_neutral_yoy_pct": 8.113988830445134,
+      "fx_effect_pp": -4.496124808327921,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-02",
+      "available_date": "2016-03-31",
+      "usd_yoy_pct": 5.268366069700941,
+      "fx_neutral_yoy_pct": 7.892943809407809,
+      "fx_effect_pp": -2.6245777397068677,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-03",
+      "available_date": "2016-04-30",
+      "usd_yoy_pct": 7.376248730825341,
+      "fx_neutral_yoy_pct": 8.008395040272685,
+      "fx_effect_pp": -0.6321463094473438,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-04",
+      "available_date": "2016-05-31",
+      "usd_yoy_pct": 7.9799798443587955,
+      "fx_neutral_yoy_pct": 7.854711312966243,
+      "fx_effect_pp": 0.12526853139255234,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-05",
+      "available_date": "2016-06-30",
+      "usd_yoy_pct": 6.632696962967448,
+      "fx_neutral_yoy_pct": 7.57420984264243,
+      "fx_effect_pp": -0.9415128796749821,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-06",
+      "available_date": "2016-07-31",
+      "usd_yoy_pct": 6.8761795885734704,
+      "fx_neutral_yoy_pct": 7.705125052971102,
+      "fx_effect_pp": -0.8289454643976315,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-07",
+      "available_date": "2016-08-31",
+      "usd_yoy_pct": 5.875060623844283,
+      "fx_neutral_yoy_pct": 7.176754632419156,
+      "fx_effect_pp": -1.3016940085748727,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-08",
+      "available_date": "2016-09-30",
+      "usd_yoy_pct": 7.927100686420999,
+      "fx_neutral_yoy_pct": 7.68793990348399,
+      "fx_effect_pp": 0.2391607829370095,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-09",
+      "available_date": "2016-10-31",
+      "usd_yoy_pct": 7.713217394452485,
+      "fx_neutral_yoy_pct": 7.804929166773525,
+      "fx_effect_pp": -0.09171177232104011,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-10",
+      "available_date": "2016-11-30",
+      "usd_yoy_pct": 6.196588236054387,
+      "fx_neutral_yoy_pct": 7.86029936752663,
+      "fx_effect_pp": -1.663711131472243,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-11",
+      "available_date": "2016-12-31",
+      "usd_yoy_pct": 5.854922694200315,
+      "fx_neutral_yoy_pct": 7.843674475392234,
+      "fx_effect_pp": -1.9887517811919189,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2016-12",
+      "available_date": "2017-01-31",
+      "usd_yoy_pct": 4.062673882575102,
+      "fx_neutral_yoy_pct": 7.726262107839703,
+      "fx_effect_pp": -3.6635882252646006,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-01",
+      "available_date": "2017-02-28",
+      "usd_yoy_pct": 5.453301805573172,
+      "fx_neutral_yoy_pct": 7.847594726968091,
+      "fx_effect_pp": -2.3942929213949187,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-02",
+      "available_date": "2017-03-31",
+      "usd_yoy_pct": 4.758955826412654,
+      "fx_neutral_yoy_pct": 7.6673041786753915,
+      "fx_effect_pp": -2.9083483522627374,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-03",
+      "available_date": "2017-04-30",
+      "usd_yoy_pct": 3.8432878237318895,
+      "fx_neutral_yoy_pct": 7.687337990997816,
+      "fx_effect_pp": -3.844050167265926,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-04",
+      "available_date": "2017-05-31",
+      "usd_yoy_pct": 3.1782248884572244,
+      "fx_neutral_yoy_pct": 7.583768050418913,
+      "fx_effect_pp": -4.405543161961688,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-05",
+      "available_date": "2017-06-30",
+      "usd_yoy_pct": 3.4875602725554984,
+      "fx_neutral_yoy_pct": 7.153928000437777,
+      "fx_effect_pp": -3.666367727882279,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-06",
+      "available_date": "2017-07-31",
+      "usd_yoy_pct": 4.467469410402457,
+      "fx_neutral_yoy_pct": 7.030724318775552,
+      "fx_effect_pp": -2.5632549083730947,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-07",
+      "available_date": "2017-08-31",
+      "usd_yoy_pct": 6.062212544198782,
+      "fx_neutral_yoy_pct": 6.775977642196233,
+      "fx_effect_pp": -0.7137650979974515,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-08",
+      "available_date": "2017-09-30",
+      "usd_yoy_pct": 6.511245247945349,
+      "fx_neutral_yoy_pct": 6.6682895538008,
+      "fx_effect_pp": -0.15704430585545026,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-09",
+      "available_date": "2017-10-31",
+      "usd_yoy_pct": 7.701013039284263,
+      "fx_neutral_yoy_pct": 6.766500919149318,
+      "fx_effect_pp": 0.9345121201349444,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-10",
+      "available_date": "2017-11-30",
+      "usd_yoy_pct": 7.874633698961217,
+      "fx_neutral_yoy_pct": 6.633473020154854,
+      "fx_effect_pp": 1.241160678806363,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-11",
+      "available_date": "2017-12-31",
+      "usd_yoy_pct": 9.533962718332084,
+      "fx_neutral_yoy_pct": 6.602867307905832,
+      "fx_effect_pp": 2.931095410426252,
+      "usd_score": null,
+      "fx_neutral_score": null
+    },
+    {
+      "month": "2017-12",
+      "available_date": "2018-01-31",
+      "usd_yoy_pct": 11.639657122854636,
+      "fx_neutral_yoy_pct": 6.309801381037776,
+      "fx_effect_pp": 5.329855741816861,
+      "usd_score": 84.83719591611595,
+      "fx_neutral_score": 19.244921176350807
+    },
+    {
+      "month": "2018-01",
+      "available_date": "2018-02-28",
+      "usd_yoy_pct": 13.237402311580118,
+      "fx_neutral_yoy_pct": 6.053479207996888,
+      "fx_effect_pp": 7.183923103583229,
+      "usd_score": 88.37630853951154,
+      "fx_neutral_score": 14.398826629074826
+    },
+    {
+      "month": "2018-02",
+      "available_date": "2018-03-31",
+      "usd_yoy_pct": 13.895395701512664,
+      "fx_neutral_yoy_pct": 5.913427337285352,
+      "fx_effect_pp": 7.981968364227312,
+      "usd_score": 87.72437620804166,
+      "fx_neutral_score": 13.480038036243187
+    },
+    {
+      "month": "2018-03",
+      "available_date": "2018-04-30",
+      "usd_yoy_pct": 13.784465598927758,
+      "fx_neutral_yoy_pct": 5.470139641008322,
+      "fx_effect_pp": 8.314325957919436,
+      "usd_score": 84.64245508626522,
+      "fx_neutral_score": 6.454188108677265
+    },
+    {
+      "month": "2018-04",
+      "available_date": "2018-05-31",
+      "usd_yoy_pct": 12.981572470783147,
+      "fx_neutral_yoy_pct": 5.380089295520939,
+      "fx_effect_pp": 7.601483175262208,
+      "usd_score": 79.8569709563835,
+      "fx_neutral_score": 8.509003299042377
+    },
+    {
+      "month": "2018-05",
+      "available_date": "2018-06-30",
+      "usd_yoy_pct": 10.757197543177737,
+      "fx_neutral_yoy_pct": 5.465157069131037,
+      "fx_effect_pp": 5.2920404740467,
+      "usd_score": 70.89438122436836,
+      "fx_neutral_score": 13.412254472100535
+    },
+    {
+      "month": "2018-06",
+      "available_date": "2018-07-31",
+      "usd_yoy_pct": 8.61837534139342,
+      "fx_neutral_yoy_pct": 5.401601381152453,
+      "fx_effect_pp": 3.2167739602409675,
+      "usd_score": 62.751179368784335,
+      "fx_neutral_score": 14.581703451856164
+    },
+    {
+      "month": "2018-07",
+      "available_date": "2018-08-31",
+      "usd_yoy_pct": 6.09113402900735,
+      "fx_neutral_yoy_pct": 5.523091869051126,
+      "fx_effect_pp": 0.5680421599562235,
+      "usd_score": 53.335281423387066,
+      "fx_neutral_score": 18.918765034176843
+    },
+    {
+      "month": "2018-08",
+      "available_date": "2018-09-30",
+      "usd_yoy_pct": 3.349300934992622,
+      "fx_neutral_yoy_pct": 5.288048722747152,
+      "fx_effect_pp": -1.9387477877545298,
+      "usd_score": 43.14195963586728,
+      "fx_neutral_score": 16.22950170570592
+    },
+    {
+      "month": "2018-09",
+      "available_date": "2018-10-31",
+      "usd_yoy_pct": 2.5361362591974417,
+      "fx_neutral_yoy_pct": 5.275462463495869,
+      "fx_effect_pp": -2.7393262042984277,
+      "usd_score": 40.21172383522486,
+      "fx_neutral_score": 17.817290287230612
+    },
+    {
+      "month": "2018-10",
+      "available_date": "2018-11-30",
+      "usd_yoy_pct": 2.598883392597551,
+      "fx_neutral_yoy_pct": 5.1098217008748135,
+      "fx_effect_pp": -2.5109383082772623,
+      "usd_score": 40.589001649205926,
+      "fx_neutral_score": 16.625003652902343
+    },
+    {
+      "month": "2018-11",
+      "available_date": "2018-12-31",
+      "usd_yoy_pct": 2.143071659668322,
+      "fx_neutral_yoy_pct": 5.023104069429754,
+      "fx_effect_pp": -2.8800324097614323,
+      "usd_score": 39.00870650011341,
+      "fx_neutral_score": 16.911774499747764
+    },
+    {
+      "month": "2018-12",
+      "available_date": "2019-01-31",
+      "usd_yoy_pct": 2.3131431573249,
+      "fx_neutral_yoy_pct": 5.257662307980323,
+      "fx_effect_pp": -2.944519150655423,
+      "usd_score": 39.81526376018148,
+      "fx_neutral_score": 22.260625759068343
+    },
+    {
+      "month": "2019-01",
+      "available_date": "2019-02-28",
+      "usd_yoy_pct": 1.3542608183321945,
+      "fx_neutral_yoy_pct": 5.361346240537732,
+      "fx_effect_pp": -4.007085422205538,
+      "usd_score": 36.322767635779904,
+      "fx_neutral_score": 24.95346048223444
+    },
+    {
+      "month": "2019-02",
+      "available_date": "2019-03-31",
+      "usd_yoy_pct": 0.1588407649015165,
+      "fx_neutral_yoy_pct": 5.345456500649078,
+      "fx_effect_pp": -5.186615735747561,
+      "usd_score": 32.05526729071721,
+      "fx_neutral_score": 25.492726906889807
+    },
+    {
+      "month": "2019-03",
+      "available_date": "2019-04-30",
+      "usd_yoy_pct": 0.3555240088805683,
+      "fx_neutral_yoy_pct": 5.728153734281364,
+      "fx_effect_pp": -5.372629725400796,
+      "usd_score": 33.16553243726297,
+      "fx_neutral_score": 32.39901115587319
+    },
+    {
+      "month": "2019-04",
+      "available_date": "2019-05-31",
+      "usd_yoy_pct": 0.32202341776392773,
+      "fx_neutral_yoy_pct": 5.8008521961167965,
+      "fx_effect_pp": -5.478828778352868,
+      "usd_score": 33.36385345942669,
+      "fx_neutral_score": 33.943882220059706
+    },
+    {
+      "month": "2019-05",
+      "available_date": "2019-06-30",
+      "usd_yoy_pct": 1.2745683192496355,
+      "fx_neutral_yoy_pct": 5.852760234602505,
+      "fx_effect_pp": -4.578191915352869,
+      "usd_score": 37.26896020712668,
+      "fx_neutral_score": 35.08869040961372
+    },
+    {
+      "month": "2019-06",
+      "available_date": "2019-07-31",
+      "usd_yoy_pct": 2.3697391273590735,
+      "fx_neutral_yoy_pct": 5.854641662391226,
+      "fx_effect_pp": -3.4849025350321527,
+      "usd_score": 41.65012516558784,
+      "fx_neutral_score": 35.36682681875118
+    },
+    {
+      "month": "2019-07",
+      "available_date": "2019-08-31",
+      "usd_yoy_pct": 4.051944241071216,
+      "fx_neutral_yoy_pct": 5.833720575908277,
+      "fx_effect_pp": -1.781776334837061,
+      "usd_score": 48.290444403548385,
+      "fx_neutral_score": 35.25379548662471
+    },
+    {
+      "month": "2019-08",
+      "available_date": "2019-09-30",
+      "usd_yoy_pct": 4.240231669117144,
+      "fx_neutral_yoy_pct": 6.111182853094274,
+      "fx_effect_pp": -1.8709511839771293,
+      "usd_score": 49.047317116929115,
+      "fx_neutral_score": 40.13182941514398
+    },
+    {
+      "month": "2019-09",
+      "available_date": "2019-10-31",
+      "usd_yoy_pct": 3.739353598039448,
+      "fx_neutral_yoy_pct": 6.2506568683002,
+      "fx_effect_pp": -2.511303270260752,
+      "usd_score": 47.06586014939104,
+      "fx_neutral_score": 42.615655447298806
+    },
+    {
+      "month": "2019-10",
+      "available_date": "2019-11-30",
+      "usd_yoy_pct": 4.928929742014956,
+      "fx_neutral_yoy_pct": 6.420457328372527,
+      "fx_effect_pp": -1.491527586357571,
+      "usd_score": 51.86028860858905,
+      "fx_neutral_score": 45.60563015599355
+    },
+    {
+      "month": "2019-11",
+      "available_date": "2019-12-31",
+      "usd_yoy_pct": 5.889924790263853,
+      "fx_neutral_yoy_pct": 6.540424425779276,
+      "fx_effect_pp": -0.6504996355154224,
+      "usd_score": 55.72522994623447,
+      "fx_neutral_score": 47.72587734825644
+    },
+    {
+      "month": "2019-12",
+      "available_date": "2020-01-31",
+      "usd_yoy_pct": 5.797544032065099,
+      "fx_neutral_yoy_pct": 6.5554213021857946,
+      "fx_effect_pp": -0.7578772701206953,
+      "usd_score": 55.29628254110229,
+      "fx_neutral_score": 48.00770697094202
+    },
+    {
+      "month": "2020-01",
+      "available_date": "2020-02-29",
+      "usd_yoy_pct": 5.079272139367105,
+      "fx_neutral_yoy_pct": 6.486221462188435,
+      "fx_effect_pp": -1.4069493228213297,
+      "usd_score": 52.302416862266824,
+      "fx_neutral_score": 46.803323922396196
+    },
+    {
+      "month": "2020-02",
+      "available_date": "2020-03-31",
+      "usd_yoy_pct": 4.212616723040112,
+      "fx_neutral_yoy_pct": 6.701828503337098,
+      "fx_effect_pp": -2.489211780296986,
+      "usd_score": 48.69507741142779,
+      "fx_neutral_score": 50.666790448125525
+    },
+    {
+      "month": "2020-03",
+      "available_date": "2020-04-30",
+      "usd_yoy_pct": 5.9738922609489915,
+      "fx_neutral_yoy_pct": 8.563537950465232,
+      "fx_effect_pp": -2.5896456895162405,
+      "usd_score": 56.0524768172365,
+      "fx_neutral_score": 82.97905159670428
+    },
+    {
+      "month": "2020-04",
+      "available_date": "2020-05-31",
+      "usd_yoy_pct": 7.767190627587912,
+      "fx_neutral_yoy_pct": 10.7263073054882,
+      "fx_effect_pp": -2.9591166779002886,
+      "usd_score": 63.47475801791826,
+      "fx_neutral_score": 112.28175634281698
+    },
+    {
+      "month": "2020-05",
+      "available_date": "2020-06-30",
+      "usd_yoy_pct": 10.10523346551307,
+      "fx_neutral_yoy_pct": 12.211800851133098,
+      "fx_effect_pp": -2.1065673856200284,
+      "usd_score": 72.88407098290372,
+      "fx_neutral_score": 121.63582442275793
+    },
+    {
+      "month": "2020-06",
+      "available_date": "2020-07-31",
+      "usd_yoy_pct": 11.620366764124272,
+      "fx_neutral_yoy_pct": 12.857761913289847,
+      "fx_effect_pp": -1.2373951491655752,
+      "usd_score": 78.3971382032307,
+      "fx_neutral_score": 118.51264950317103
+    },
+    {
+      "month": "2020-07",
+      "available_date": "2020-08-31",
+      "usd_yoy_pct": 13.055886926815884,
+      "fx_neutral_yoy_pct": 13.053433164447295,
+      "fx_effect_pp": 0.002453762368588741,
+      "usd_score": 83.07142653226822,
+      "fx_neutral_score": 112.3534742563227
+    },
+    {
+      "month": "2020-08",
+      "available_date": "2020-09-30",
+      "usd_yoy_pct": 15.605002898441652,
+      "fx_neutral_yoy_pct": 12.900048730421547,
+      "fx_effect_pp": 2.7049541680201052,
+      "usd_score": 91.09717325785738,
+      "fx_neutral_score": 105.1668376846857
+    },
+    {
+      "month": "2020-09",
+      "available_date": "2020-10-31",
+      "usd_yoy_pct": 17.38939989045199,
+      "fx_neutral_yoy_pct": 13.394491515839968,
+      "fx_effect_pp": 3.994908374612022,
+      "usd_score": 95.06849779574047,
+      "fx_neutral_score": 104.55866032425187
+    },
+    {
+      "month": "2020-10",
+      "available_date": "2020-11-30",
+      "usd_yoy_pct": 17.58063902783126,
+      "fx_neutral_yoy_pct": 13.27324432324259,
+      "fx_effect_pp": 4.3073947045886705,
+      "usd_score": 93.18255825030795,
+      "fx_neutral_score": 99.58401588644588
+    },
+    {
+      "month": "2020-11",
+      "available_date": "2020-12-31",
+      "usd_yoy_pct": 18.695575542960405,
+      "fx_neutral_yoy_pct": 13.623932330010954,
+      "fx_effect_pp": 5.071643212949452,
+      "usd_score": 94.37553682468348,
+      "fx_neutral_score": 98.82003431634007
+    },
+    {
+      "month": "2020-12",
+      "available_date": "2021-01-31",
+      "usd_yoy_pct": 19.838050691595367,
+      "fx_neutral_yoy_pct": 13.619789022328828,
+      "fx_effect_pp": 6.218261669266539,
+      "usd_score": 95.34662721960953,
+      "fx_neutral_score": 95.7989476979713
+    },
+    {
+      "month": "2021-01",
+      "available_date": "2021-02-28",
+      "usd_yoy_pct": 20.000095130011854,
+      "fx_neutral_yoy_pct": 13.651298813118196,
+      "fx_effect_pp": 6.348796316893658,
+      "usd_score": 93.36091837312628,
+      "fx_neutral_score": 93.50053447338232
+    },
+    {
+      "month": "2021-02",
+      "available_date": "2021-03-31",
+      "usd_yoy_pct": 21.563824790247857,
+      "fx_neutral_yoy_pct": 14.271363345171808,
+      "fx_effect_pp": 7.292461445076048,
+      "usd_score": 95.38111016593376,
+      "fx_neutral_score": 95.14127623601678
+    },
+    {
+      "month": "2021-03",
+      "available_date": "2021-04-30",
+      "usd_yoy_pct": 18.932141471571903,
+      "fx_neutral_yoy_pct": 12.818893884088844,
+      "fx_effect_pp": 6.113247587483059,
+      "usd_score": 86.1443346551908,
+      "fx_neutral_score": 84.01787344509503
+    },
+    {
+      "month": "2021-04",
+      "available_date": "2021-05-31",
+      "usd_yoy_pct": 17.39507133170447,
+      "fx_neutral_yoy_pct": 10.778579823013793,
+      "fx_effect_pp": 6.616491508690679,
+      "usd_score": 80.78381005584362,
+      "fx_neutral_score": 70.10160001711749
+    },
+    {
+      "month": "2021-05",
+      "available_date": "2021-06-30",
+      "usd_yoy_pct": 17.28723723990598,
+      "fx_neutral_yoy_pct": 9.639331773481109,
+      "fx_effect_pp": 7.647905466424872,
+      "usd_score": 79.64299102952691,
+      "fx_neutral_score": 62.41370814442006
+    },
+    {
+      "month": "2021-06",
+      "available_date": "2021-07-31",
+      "usd_yoy_pct": 15.332402053406774,
+      "fx_neutral_yoy_pct": 9.043985999401489,
+      "fx_effect_pp": 6.288416054005285,
+      "usd_score": 73.71407143236738,
+      "fx_neutral_score": 58.38316468483554
+    },
+    {
+      "month": "2021-07",
+      "available_date": "2021-08-31",
+      "usd_yoy_pct": 12.848482599590097,
+      "fx_neutral_yoy_pct": 8.71082515114341,
+      "fx_effect_pp": 4.137657448446687,
+      "usd_score": 66.61593759401785,
+      "fx_neutral_score": 56.11074148636944
+    },
+    {
+      "month": "2021-08",
+      "available_date": "2021-09-30",
+      "usd_yoy_pct": 11.380115933762802,
+      "fx_neutral_yoy_pct": 8.77812045843832,
+      "fx_effect_pp": 2.6019954753244825,
+      "usd_score": 62.42382427297494,
+      "fx_neutral_score": 56.51581397789258
+    },
+    {
+      "month": "2021-09",
+      "available_date": "2021-10-31",
+      "usd_yoy_pct": 10.660829336604134,
+      "fx_neutral_yoy_pct": 8.595569777394047,
+      "fx_effect_pp": 2.0652595592100873,
+      "usd_score": 60.335355809491936,
+      "fx_neutral_score": 55.245728603867526
+    },
+    {
+      "month": "2021-10",
+      "available_date": "2021-11-30",
+      "usd_yoy_pct": 9.990492466711313,
+      "fx_neutral_yoy_pct": 8.75062397410357,
+      "fx_effect_pp": 1.2398684926077426,
+      "usd_score": 58.40032942635744,
+      "fx_neutral_score": 56.25586801478352
+    },
+    {
+      "month": "2021-11",
+      "available_date": "2021-12-31",
+      "usd_yoy_pct": 8.22509134796182,
+      "fx_neutral_yoy_pct": 8.444052260506405,
+      "fx_effect_pp": -0.21896091254458483,
+      "usd_score": 53.4310881629566,
+      "fx_neutral_score": 54.13398100444784
+    },
+    {
+      "month": "2021-12",
+      "available_date": "2022-01-31",
+      "usd_yoy_pct": 6.931404778730165,
+      "fx_neutral_yoy_pct": 8.577876081990997,
+      "fx_effect_pp": -1.6464713032608316,
+      "usd_score": 49.785754835895325,
+      "fx_neutral_score": 55.02086497261553
+    },
+    {
+      "month": "2022-01",
+      "available_date": "2022-02-28",
+      "usd_yoy_pct": 6.640286961773566,
+      "fx_neutral_yoy_pct": 8.73990899754412,
+      "fx_effect_pp": -2.0996220357705537,
+      "usd_score": 48.96638751673747,
+      "fx_neutral_score": 56.09953549642932
+    },
+    {
+      "month": "2022-02",
+      "available_date": "2022-03-31",
+      "usd_yoy_pct": 6.414905126884734,
+      "fx_neutral_yoy_pct": 8.24095920595539,
+      "fx_effect_pp": -1.8260540790706559,
+      "usd_score": 48.333365635402984,
+      "fx_neutral_score": 52.61798864670366
+    },
+    {
+      "month": "2022-03",
+      "available_date": "2022-04-30",
+      "usd_yoy_pct": 6.465002359643289,
+      "fx_neutral_yoy_pct": 8.179354441244982,
+      "fx_effect_pp": -1.7143520816016933,
+      "usd_score": 48.48594657738437,
+      "fx_neutral_score": 52.17479752271842
+    },
+    {
+      "month": "2022-04",
+      "available_date": "2022-05-31",
+      "usd_yoy_pct": 4.536375399861854,
+      "fx_neutral_yoy_pct": 7.999367376685133,
+      "fx_effect_pp": -3.462991976823279,
+      "usd_score": 42.96838106750901,
+      "fx_neutral_score": 50.90505343975959
+    },
+    {
+      "month": "2022-05",
+      "available_date": "2022-06-30",
+      "usd_yoy_pct": 0.7116383735581907,
+      "fx_neutral_yoy_pct": 7.743828061375364,
+      "fx_effect_pp": -7.032189687817174,
+      "usd_score": 32.100660613746825,
+      "fx_neutral_score": 49.10453126940914
+    },
+    {
+      "month": "2022-06",
+      "available_date": "2022-07-31",
+      "usd_yoy_pct": 0.5967554720118746,
+      "fx_neutral_yoy_pct": 7.74504135022785,
+      "fx_effect_pp": -7.148285878215975,
+      "usd_score": 31.98883774426336,
+      "fx_neutral_score": 49.11810721954214
+    },
+    {
+      "month": "2022-07",
+      "available_date": "2022-08-31",
+      "usd_yoy_pct": 0.17466993231673095,
+      "fx_neutral_yoy_pct": 7.759889390238341,
+      "fx_effect_pp": -7.5852194579216095,
+      "usd_score": 31.0119585577732,
+      "fx_neutral_score": 49.228487386569945
+    },
+    {
+      "month": "2022-08",
+      "available_date": "2022-09-30",
+      "usd_yoy_pct": -0.1981842282235705,
+      "fx_neutral_yoy_pct": 7.620245411104087,
+      "fx_effect_pp": -7.8184296393276576,
+      "usd_score": 30.19971943448545,
+      "fx_neutral_score": 48.23492694803024
+    },
+    {
+      "month": "2022-09",
+      "available_date": "2022-10-31",
+      "usd_yoy_pct": -3.18035688632731,
+      "fx_neutral_yoy_pct": 7.266697202403669,
+      "fx_effect_pp": -10.44705408873098,
+      "usd_score": 22.18998303597613,
+      "fx_neutral_score": 45.70575619310052
+    },
+    {
+      "month": "2022-10",
+      "available_date": "2022-11-30",
+      "usd_yoy_pct": -4.868810419046072,
+      "fx_neutral_yoy_pct": 6.698282337806378,
+      "fx_effect_pp": -11.56709275685245,
+      "usd_score": 18.188761442993723,
+      "fx_neutral_score": 41.63507068941709
+    },
+    {
+      "month": "2022-11",
+      "available_date": "2022-12-31",
+      "usd_yoy_pct": -3.6860798316774863,
+      "fx_neutral_yoy_pct": 6.448377876606515,
+      "fx_effect_pp": -10.134457708284001,
+      "usd_score": 22.090297894333116,
+      "fx_neutral_score": 39.88701314833182
+    },
+    {
+      "month": "2022-12",
+      "available_date": "2023-01-31",
+      "usd_yoy_pct": -1.7056521226961951,
+      "fx_neutral_yoy_pct": 5.693016859914043,
+      "fx_effect_pp": -7.398668982610238,
+      "usd_score": 27.92743987592195,
+      "fx_neutral_score": 34.514950226096204
+    },
+    {
+      "month": "2023-01",
+      "available_date": "2023-02-28",
+      "usd_yoy_pct": 0.053691865800272555,
+      "fx_neutral_yoy_pct": 5.780966910410271,
+      "fx_effect_pp": -5.727275044609998,
+      "usd_score": 32.98749581024833,
+      "fx_neutral_score": 35.29531322438271
+    },
+    {
+      "month": "2023-02",
+      "available_date": "2023-03-31",
+      "usd_yoy_pct": -0.9612860563880482,
+      "fx_neutral_yoy_pct": 5.49815565557928,
+      "fx_effect_pp": -6.459441711967329,
+      "usd_score": 30.416342991061473,
+      "fx_neutral_score": 33.39463835562408
+    },
+    {
+      "month": "2023-03",
+      "available_date": "2023-04-30",
+      "usd_yoy_pct": -1.0825587425728278,
+      "fx_neutral_yoy_pct": 4.986829807636507,
+      "fx_effect_pp": -6.069388550209335,
+      "usd_score": 30.323166888434493,
+      "fx_neutral_score": 29.9021231787454
+    },
+    {
+      "month": "2023-04",
+      "available_date": "2023-05-31",
+      "usd_yoy_pct": 0.7003509466184572,
+      "fx_neutral_yoy_pct": 4.5649305116756205,
+      "fx_effect_pp": -3.8645795650571633,
+      "usd_score": 35.37607092569259,
+      "fx_neutral_score": 27.15450819020058
+    },
+    {
+      "month": "2023-05",
+      "available_date": "2023-06-30",
+      "usd_yoy_pct": 1.9888126893085232,
+      "fx_neutral_yoy_pct": 4.202324910864647,
+      "fx_effect_pp": -2.2135122215561234,
+      "usd_score": 39.01571634205612,
+      "fx_neutral_score": 24.931158591198493
+    },
+    {
+      "month": "2023-06",
+      "available_date": "2023-07-31",
+      "usd_yoy_pct": 0.9086549142568547,
+      "fx_neutral_yoy_pct": 4.070331736257325,
+      "fx_effect_pp": -3.1616768220004703,
+      "usd_score": 36.13861102780514,
+      "fx_neutral_score": 24.408871956309078
+    },
+    {
+      "month": "2023-07",
+      "available_date": "2023-08-31",
+      "usd_yoy_pct": 2.1547052420602415,
+      "fx_neutral_yoy_pct": 3.658667283843667,
+      "fx_effect_pp": -1.5039620417834256,
+      "usd_score": 39.66715748435905,
+      "fx_neutral_score": 21.98837116754019
+    },
+    {
+      "month": "2023-08",
+      "available_date": "2023-09-30",
+      "usd_yoy_pct": 1.2158701320344898,
+      "fx_neutral_yoy_pct": 3.432588421719677,
+      "fx_effect_pp": -2.216718289685187,
+      "usd_score": 37.15323266778841,
+      "fx_neutral_score": 20.960459056707435
+    },
+    {
+      "month": "2023-09",
+      "available_date": "2023-10-31",
+      "usd_yoy_pct": 2.7496714918556675,
+      "fx_neutral_yoy_pct": 3.2583630395875396,
+      "fx_effect_pp": -0.5086915477318721,
+      "usd_score": 41.48293063077746,
+      "fx_neutral_score": 20.34015789656486
+    },
+    {
+      "month": "2023-10",
+      "available_date": "2023-11-30",
+      "usd_yoy_pct": 3.873982574431453,
+      "fx_neutral_yoy_pct": 3.275014559092161,
+      "fx_effect_pp": 0.5989680153392918,
+      "usd_score": 44.657950470090896,
+      "fx_neutral_score": 21.022230323378768
+    },
+    {
+      "month": "2023-11",
+      "available_date": "2023-12-31",
+      "usd_yoy_pct": 3.8458158699936753,
+      "fx_neutral_yoy_pct": 3.353573926600856,
+      "fx_effect_pp": 0.49224194339281935,
+      "usd_score": 44.606832452335134,
+      "fx_neutral_score": 22.074712774825972
+    },
+    {
+      "month": "2023-12",
+      "available_date": "2024-01-31",
+      "usd_yoy_pct": 2.641050094910217,
+      "fx_neutral_yoy_pct": 3.661520500669205,
+      "fx_effect_pp": -1.0204704057589882,
+      "usd_score": 41.258070768866446,
+      "fx_neutral_score": 24.581477660247785
+    },
+    {
+      "month": "2024-01",
+      "available_date": "2024-02-29",
+      "usd_yoy_pct": 0.053748885053457124,
+      "fx_neutral_yoy_pct": 3.3508193564848168,
+      "fx_effect_pp": -3.2970704714313595,
+      "usd_score": 34.07166030154148,
+      "fx_neutral_score": 22.93321557298828
+    },
+    {
+      "month": "2024-02",
+      "available_date": "2024-03-31",
+      "usd_yoy_pct": 0.45224510906862425,
+      "fx_neutral_yoy_pct": 3.6436284177886384,
+      "fx_effect_pp": -3.191383308720014,
+      "usd_score": 35.32067854803016,
+      "fx_neutral_score": 25.275510495052206
+    },
+    {
+      "month": "2024-03",
+      "available_date": "2024-04-30",
+      "usd_yoy_pct": 1.3342984654757593,
+      "fx_neutral_yoy_pct": 3.9929024947330225,
+      "fx_effect_pp": -2.6586040292572632,
+      "usd_score": 37.90635942410981,
+      "fx_neutral_score": 27.89748059242955
+    },
+    {
+      "month": "2024-04",
+      "available_date": "2024-05-31",
+      "usd_yoy_pct": -0.21324423546253812,
+      "fx_neutral_yoy_pct": 3.7782695610718817,
+      "fx_effect_pp": -3.99151379653442,
+      "usd_score": 33.65301387349271,
+      "fx_neutral_score": 26.774497131334993
+    },
+    {
+      "month": "2024-05",
+      "available_date": "2024-06-30",
+      "usd_yoy_pct": 0.8857721154595006,
+      "fx_neutral_yoy_pct": 3.7032520813884453,
+      "fx_effect_pp": -2.8174799659289445,
+      "usd_score": 36.87220962815052,
+      "fx_neutral_score": 26.589577890635862
+    },
+    {
+      "month": "2024-06",
+      "available_date": "2024-07-31",
+      "usd_yoy_pct": 1.7956513455093746,
+      "fx_neutral_yoy_pct": 3.5569467472633742,
+      "fx_effect_pp": -1.7612954017539997,
+      "usd_score": 39.52759202000223,
+      "fx_neutral_score": 25.952316419788982
+    },
+    {
+      "month": "2024-07",
+      "available_date": "2024-08-31",
+      "usd_yoy_pct": 1.7380501044313625,
+      "fx_neutral_yoy_pct": 3.6688762482209794,
+      "fx_effect_pp": -1.9308261437896168,
+      "usd_score": 39.42819999285188,
+      "fx_neutral_score": 26.986528766867174
+    },
+    {
+      "month": "2024-08",
+      "available_date": "2024-09-30",
+      "usd_yoy_pct": 4.675648027315079,
+      "fx_neutral_yoy_pct": 3.8393197787190907,
+      "fx_effect_pp": 0.8363282485959882,
+      "usd_score": 47.846063321378224,
+      "fx_neutral_score": 28.360344402142875
+    },
+    {
+      "month": "2024-09",
+      "available_date": "2024-10-31",
+      "usd_yoy_pct": 7.2124702283077955,
+      "fx_neutral_yoy_pct": 4.344281636245914,
+      "fx_effect_pp": 2.8681885920618813,
+      "usd_score": 55.11416455632128,
+      "fx_neutral_score": 31.837236892363173
+    },
+    {
+      "month": "2024-10",
+      "available_date": "2024-11-30",
+      "usd_yoy_pct": 7.121343557014574,
+      "fx_neutral_yoy_pct": 4.750964667614885,
+      "fx_effect_pp": 2.3703788893996895,
+      "usd_score": 54.828865019415446,
+      "fx_neutral_score": 34.6185914397603
+    },
+    {
+      "month": "2024-11",
+      "available_date": "2024-12-31",
+      "usd_yoy_pct": 4.421095182776875,
+      "fx_neutral_yoy_pct": 4.8146736154355745,
+      "fx_effect_pp": -0.39357843265869974,
+      "usd_score": 47.019274772171926,
+      "fx_neutral_score": 35.14865415785836
+    },
+    {
+      "month": "2024-12",
+      "available_date": "2025-01-31",
+      "usd_yoy_pct": 2.3910974839103636,
+      "fx_neutral_yoy_pct": 4.84148337394317,
+      "fx_effect_pp": -2.4503858900328064,
+      "usd_score": 41.16188264474153,
+      "fx_neutral_score": 35.43247638221679
+    },
+    {
+      "month": "2025-01",
+      "available_date": "2025-02-28",
+      "usd_yoy_pct": 2.169737967757385,
+      "fx_neutral_yoy_pct": 4.83849068160064,
+      "fx_effect_pp": -2.668752713843255,
+      "usd_score": 40.40430230787579,
+      "fx_neutral_score": 35.529600093642486
+    },
+    {
+      "month": "2025-02",
+      "available_date": "2025-03-31",
+      "usd_yoy_pct": 3.3343714189689337,
+      "fx_neutral_yoy_pct": 4.808599200193855,
+      "fx_effect_pp": -1.4742277812249216,
+      "usd_score": 43.6691933230656,
+      "fx_neutral_score": 35.49131779089225
+    },
+    {
+      "month": "2025-03",
+      "available_date": "2025-04-30",
+      "usd_yoy_pct": 4.313447876377686,
+      "fx_neutral_yoy_pct": 4.811938561744283,
+      "fx_effect_pp": -0.4984906853665967,
+      "usd_score": 46.36034874539068,
+      "fx_neutral_score": 35.66093979996254
+    },
+    {
+      "month": "2025-04",
+      "available_date": "2025-05-31",
+      "usd_yoy_pct": 6.484152862295972,
+      "fx_neutral_yoy_pct": 5.352371045062477,
+      "fx_effect_pp": 1.1317818172334952,
+      "usd_score": 52.610049374558066,
+      "fx_neutral_score": 39.2439216189074
+    },
+    {
+      "month": "2025-05",
+      "available_date": "2025-06-30",
+      "usd_yoy_pct": 7.034079971961229,
+      "fx_neutral_yoy_pct": 5.3676008854439115,
+      "fx_effect_pp": 1.6664790865173176,
+      "usd_score": 54.07560292237361,
+      "fx_neutral_score": 39.4272859516483
+    },
+    {
+      "month": "2025-06",
+      "available_date": "2025-07-31",
+      "usd_yoy_pct": 8.304460746960656,
+      "fx_neutral_yoy_pct": 5.512486556042462,
+      "fx_effect_pp": 2.791974190918194,
+      "usd_score": 57.705324664206195,
+      "fx_neutral_score": 40.45263671636288
+    },
+    {
+      "month": "2025-07",
+      "available_date": "2025-08-31",
+      "usd_yoy_pct": 8.494968166815577,
+      "fx_neutral_yoy_pct": 5.8027068390260945,
+      "fx_effect_pp": 2.692261327789482,
+      "usd_score": 58.08495769349051,
+      "fx_neutral_score": 42.42685229219087
+    },
+    {
+      "month": "2025-08",
+      "available_date": "2025-09-30",
+      "usd_yoy_pct": 6.68523275662723,
+      "fx_neutral_yoy_pct": 5.818443846732453,
+      "fx_effect_pp": 0.866788909894777,
+      "usd_score": 52.400564661328204,
+      "fx_neutral_score": 42.62375086786506
+    },
+    {
+      "month": "2025-09",
+      "available_date": "2025-10-31",
+      "usd_yoy_pct": 5.992614946573353,
+      "fx_neutral_yoy_pct": 5.602797486567361,
+      "fx_effect_pp": 0.3898174600059914,
+      "usd_score": 50.13513169694533,
+      "fx_neutral_score": 41.33708567075769
+    },
+    {
+      "month": "2025-10",
+      "available_date": "2025-11-30",
+      "usd_yoy_pct": 6.538368140767629,
+      "fx_neutral_yoy_pct": 5.6145215394759465,
+      "fx_effect_pp": 0.9238466012916824,
+      "usd_score": 51.68144733874037,
+      "fx_neutral_score": 41.528009155453724
+    },
+    {
+      "month": "2025-11",
+      "available_date": "2025-12-31",
+      "usd_yoy_pct": 7.714277829719134,
+      "fx_neutral_yoy_pct": 5.469326731376478,
+      "fx_effect_pp": 2.244951098342656,
+      "usd_score": 55.162353807428865,
+      "fx_neutral_score": 40.72603142357323
+    },
+    {
+      "month": "2025-12",
+      "available_date": "2026-01-31",
+      "usd_yoy_pct": 9.775614682069898,
+      "fx_neutral_yoy_pct": 5.787093358640626,
+      "fx_effect_pp": 3.9885213234292722,
+      "usd_score": 61.344812480319234,
+      "fx_neutral_score": 42.87609439639439
+    },
+    {
+      "month": "2026-01",
+      "available_date": "2026-02-28",
+      "usd_yoy_pct": 11.220760403069814,
+      "fx_neutral_yoy_pct": 5.956216516988149,
+      "fx_effect_pp": 5.264543886081666,
+      "usd_score": 65.57450959534776,
+      "fx_neutral_score": 44.07846192969993
+    },
+    {
+      "month": "2026-02",
+      "available_date": "2026-03-31",
+      "usd_yoy_pct": 11.517595829829906,
+      "fx_neutral_yoy_pct": 6.086472880890944,
+      "fx_effect_pp": 5.431122948938962,
+      "usd_score": 66.265736311849,
+      "fx_neutral_score": 45.013124263094866
+    },
+    {
+      "month": "2026-03",
+      "available_date": "2026-04-30",
+      "usd_yoy_pct": 9.60585216543618,
+      "fx_neutral_yoy_pct": 5.916396480498724,
+      "fx_effect_pp": 3.6894556849374567,
+      "usd_score": 60.321340628298245,
+      "fx_neutral_score": 44.027869784262656
+    },
+    {
+      "month": "2026-04",
+      "available_date": "2026-05-31",
+      "usd_yoy_pct": 9.44611061892407,
+      "fx_neutral_yoy_pct": 5.905321274204861,
+      "fx_effect_pp": 3.540789344719209,
+      "usd_score": 59.78387739760599,
+      "fx_neutral_score": 44.06053823200071
+    },
+    {
+      "month": "2026-05",
+      "available_date": "2026-06-30",
+      "usd_yoy_pct": 9.300399495186133,
+      "fx_neutral_yoy_pct": 6.111970304725628,
+      "fx_effect_pp": 3.1884291904605044,
+      "usd_score": 59.25740759643958,
+      "fx_neutral_score": 45.47093971842119
+    },
+    {
+      "month": "2026-06",
+      "available_date": "2026-07-31",
+      "usd_yoy_pct": 7.921750898454443,
+      "fx_neutral_yoy_pct": 5.911268379693045,
+      "fx_effect_pp": 2.010482518761398,
+      "usd_score": 55.00980556258321,
+      "fx_neutral_score": 44.27352868060936
+    }
+  ]
+}

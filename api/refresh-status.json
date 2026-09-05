@@ -1,0 +1,110 @@
+{
+  "schema_version": "gmli-pages-refresh-v1",
+  "started_at": "2026-09-05T17:31:15.717133Z",
+  "policy": "FETCH_FIRST_WITH_PER_LAYER_LAST_GOOD_FALLBACK",
+  "production_state_commit": false,
+  "layers": {
+    "money_core": {
+      "status": "REFRESH_OK",
+      "working_tree_changed": true,
+      "paths": [
+        "research/china-m2-official-v2/latest",
+        "research/global-money-v2/latest",
+        "research/global-money-v2/transfer/latest",
+        "lib/money-v2-active.js"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/extend-pboc-m2-v2-2014.py --build-full",
+          "exit_code": 0,
+          "output_tail": "bf3b5ddae8b149b84e\",\n        \"hash_same_as_discovery\": true,\n        \"title_mode\": \"PERIOD_END\",\n        \"source_contract\": \"LOCKED_OFFICIAL_PBOC_URL_SEMANTICALLY_VALIDATED\"\n      },\n      {\n        \"seed_month\": \"2014-10\",\n        \"source_month\": \"2015-10\",\n        \"implied_comparable_base_100m\": 1199137.180617,\n        \"precision_current_level_100m\": 1361020.7,\n        \"published_yoy_pct\": 13.5,\n        \"reported_level_trn_cny\": 136.1,\n        \"article_url\": \"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/f8385792c6b44ab9b396737fdfead3ee/index.html\",\n        \"article_sha256\": \"efa45af65740ed62c33c9c5a72210ab55ac73d22eed89179643eb327dbf1ffd8\",\n        \"discovery_sha256\": \"efa45af65740ed62c33c9c5a72210ab55ac73d22eed89179643eb327dbf1ffd8\",\n        \"hash_same_as_discovery\": true,\n        \"title_mode\": \"EXACT_MONTH\",\n        \"source_contract\": \"LOCKED_OFFICIAL_PBOC_URL_SEMANTICALLY_VALIDATED\"\n      },\n      {\n        \"seed_month\": \"2014-11\",\n        \"source_month\": \"2015-11\",\n        \"implied_comparable_base_100m\": 1208404.582234,\n        \"precision_current_level_100m\": 1373956.01,\n        \"published_yoy_pct\": 13.7,\n        \"reported_level_trn_cny\": 137.4,\n        \"article_url\": \"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/eaa8c83b22bb4532b094b87341a94379/index.html\",\n        \"article_sha256\": \"9082622b971b03de7f266f47c9d01047d26b3004df0e0bd6d601136f379908ec\",\n        \"discovery_sha256\": \"9082622b971b03de7f266f47c9d01047d26b3004df0e0bd6d601136f379908ec\",\n        \"hash_same_as_discovery\": true,\n        \"title_mode\": \"EXACT_MONTH\",\n        \"source_contract\": \"LOCKED_OFFICIAL_PBOC_URL_SEMANTICALLY_VALIDATED\"\n      },\n      {\n        \"seed_month\": \"2014-12\",\n        \"source_month\": \"2015-12\",\n        \"implied_comparable_base_100m\": 1228842.109444,\n        \"precision_current_level_100m\": 1392278.11,\n        \"published_yoy_pct\": 13.3,\n        \"reported_level_trn_cny\": 139.23,\n        \"article_url\": \"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/97765ac732da497b842c87a46b880718/index.html\",\n        \"article_sha256\": \"4abd4b51f226d68b6cfd166664f6ff09fcbd85e6a9211544b8a522f5acde4160\",\n        \"discovery_sha256\": \"4abd4b51f226d68b6cfd166664f6ff09fcbd85e6a9211544b8a522f5acde4160\",\n        \"hash_same_as_discovery\": true,\n        \"title_mode\": \"PERIOD_END\",\n        \"source_contract\": \"LOCKED_OFFICIAL_PBOC_URL_SEMANTICALLY_VALIDATED\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "command": "python scripts/run-global-money-v2.py --build-full",
+          "exit_code": 0,
+          "output_tail": "//www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Jan/2014&Dateto=now&SeriesCodes=LPMAUYN&UsingCodes=Y&CSVF=TN&VPD=Y&VFD=N\"\n    },\n    {\n      \"filename\": \"raw/ca-boc-m2.csv\",\n      \"bytes\": 3817,\n      \"sha256\": \"e3593d90c2ccf5dd81fab40b0d068b1d5c5065871842bb3ce4b57c587e72c844\",\n      \"source_url\": \"https://www.bankofcanada.ca/valet/observations/V41552796/csv?start_date=2014-01-01\"\n    },\n    {\n      \"filename\": \"raw/au-rba-d3.csv\",\n      \"bytes\": 60591,\n      \"sha256\": \"511c4df6322db1e80f3f944d21558b895969d902d7761733d49dae767aa9c7d6\",\n      \"source_url\": \"https://www.rba.gov.au/statistics/tables/csv/d3-data.csv\"\n    },\n    {\n      \"filename\": \"raw/au-rba-d1.csv\",\n      \"bytes\": 59249,\n      \"sha256\": \"d51998798fa6172f52812dafbf66293f3d0661b522bc38fe07b534e1debb28a0\",\n      \"source_url\": \"https://www.rba.gov.au/statistics/tables/csv/d1-data.csv\"\n    },\n    {\n      \"filename\": \"raw/fx-1.csv\",\n      \"bytes\": 2760,\n      \"sha256\": \"f4ff9a1faa0c5a082965a7ce4c987a81582dde614754d0b1371531c4557c5a21\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXCHUS&cosd=2014-01-01\"\n    },\n    {\n      \"filename\": \"raw/fx-2.csv\",\n      \"bytes\": 2760,\n      \"sha256\": \"75f60d2d4cd2784429a0875627f29f36e9a7bfa1f7fd250887f51db36793879b\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXUSEU&cosd=2014-01-01\"\n    },\n    {\n      \"filename\": \"raw/fx-3.csv\",\n      \"bytes\": 3064,\n      \"sha256\": \"cda27e2957a86619cea73b3584af10863a85af0958143bf7525c7ab5ee2f2215\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXJPUS&cosd=2014-01-01\"\n    },\n    {\n      \"filename\": \"raw/fx-4.csv\",\n      \"bytes\": 2760,\n      \"sha256\": \"19ea70b44ec239521413407ad986c634716a82534ec0bcd4af6582081bfd9176\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXUSUK&cosd=2014-01-01\"\n    },\n    {\n      \"filename\": \"raw/fx-5.csv\",\n      \"bytes\": 2760,\n      \"sha256\": \"bb062c4f1c205101bd2ea7e2d90f98a88d5ef8a8a65ee7ad354973c5028fd092\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXCAUS&cosd=2014-01-01\"\n    },\n    {\n      \"filename\": \"raw/fx-6.csv\",\n      \"bytes\": 2760,\n      \"sha256\": \"e23036845c782bed9bacea24ef2a0c9196a92e31c2642b5acce9b09ad2575474\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=EXUSAL&cosd=2014-01-01\"\n    }\n  ]\n}"
+        },
+        {
+          "command": "python scripts/test-global-money-v2-transmission.py --build-full",
+          "exit_code": 0,
+          "output_tail": "\",\n      \"mode\": \"level\",\n      \"horizon_m\": 6,\n      \"legacy\": \"DBC USD 6M\",\n      \"effective_lag_m\": 1,\n      \"train\": {\n        \"n\": 96,\n        \"first_signal_month\": \"2015-01\",\n        \"last_signal_month\": \"2022-12\",\n        \"pearson_r\": 0.589193,\n        \"spearman_rho\": 0.593353\n      },\n      \"oos\": {\n        \"n\": 38,\n        \"first_signal_month\": \"2023-01\",\n        \"last_signal_month\": \"2026-02\",\n        \"pearson_r\": 0.610009,\n        \"spearman_rho\": 0.560783\n      },\n      \"direction_transfer_pass\": true,\n      \"legacy_reference\": {\n        \"train_pearson\": 0.561634,\n        \"oos_pearson\": 0.553945,\n        \"oos_spearman\": 0.487516\n      }\n    },\n    {\n      \"id\": \"DBC_USD_LEVEL_12M\",\n      \"asset\": \"DBC\",\n      \"channel\": \"usd\",\n      \"mode\": \"level\",\n      \"horizon_m\": 12,\n      \"legacy\": \"DBC USD 12M\",\n      \"effective_lag_m\": 1,\n      \"train\": {\n        \"n\": 96,\n        \"first_signal_month\": \"2015-01\",\n        \"last_signal_month\": \"2022-12\",\n        \"pearson_r\": 0.634021,\n        \"spearman_rho\": 0.54433\n      },\n      \"oos\": {\n        \"n\": 32,\n        \"first_signal_month\": \"2023-01\",\n        \"last_signal_month\": \"2025-08\",\n        \"pearson_r\": 0.66156,\n        \"spearman_rho\": 0.619135\n      },\n      \"direction_transfer_pass\": true,\n      \"legacy_reference\": {\n        \"train_pearson\": 0.62228,\n        \"oos_pearson\": 0.585314,\n        \"oos_spearman\": 0.585887\n      }\n    },\n    {\n      \"id\": \"DBC_FXN_LEVEL_6M\",\n      \"asset\": \"DBC\",\n      \"channel\": \"fxn\",\n      \"mode\": \"level\",\n      \"horizon_m\": 6,\n      \"legacy\": \"DBC FX-neutral 6M\",\n      \"effective_lag_m\": 1,\n      \"train\": {\n        \"n\": 96,\n        \"first_signal_month\": \"2015-01\",\n        \"last_signal_month\": \"2022-12\",\n        \"pearson_r\": 0.627078,\n        \"spearman_rho\": 0.616956\n      },\n      \"oos\": {\n        \"n\": 38,\n        \"first_signal_month\": \"2023-01\",\n        \"last_signal_month\": \"2026-02\",\n        \"pearson_r\": 0.697604,\n        \"spearman_rho\": 0.69384\n      },\n      \"direction_transfer_pass\": true,\n      \"legacy_reference\": {\n        \"historical_direction\": \"positive train and OOS; marginal FDR in v1.2, retained direction in v1.8b\"\n      }\n    }\n  ],\n  \"promotion_allowed\": false,\n  \"next_gate\": \"PROMOTION_REPORT_AND_PRODUCTION_INTEGRATION_REVIEW\",\n  \"note\": \"Direction transfer is deliberately narrower than historical FDR validation. Historical v1.8b audit status is unchanged.\"\n}"
+        },
+        {
+          "command": "python scripts/sync-active-money-v2.py --apply",
+          "exit_code": 0,
+          "output_tail": "{\n  \"status\": \"PASS_ACTIVE_MONEY_V2_SYNC_GUARDS\",\n  \"version\": \"GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL\",\n  \"previous_available_date\": \"2026-07-31\",\n  \"new_available_date\": \"2026-07-31\",\n  \"observation_month\": \"2026-06\",\n  \"usd_score\": 55.0098,\n  \"fxn_score\": 44.2735,\n  \"transfer_gate\": \"6/6\",\n  \"changed\": true,\n  \"applied\": true\n}"
+        }
+      ]
+    },
+    "money_nowcast": {
+      "status": "REFRESH_OK",
+      "working_tree_changed": true,
+      "paths": [
+        "lib/nowcast-state.js"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/refresh-money-nowcast.py",
+          "exit_code": 0,
+          "output_tail": "{\n  \"attempted_at\": \"2026-09-05T17:32:22Z\",\n  \"changed\": true,\n  \"results\": {\n    \"us\": {\n      \"status\": \"PASS\",\n      \"changed\": false\n    },\n    \"euro_area\": {\n      \"status\": \"PASS\",\n      \"changed\": false\n    },\n    \"japan\": {\n      \"status\": \"PASS\",\n      \"changed\": false\n    },\n    \"usd_translation\": {\n      \"status\": \"PASS\",\n      \"changed\": false\n    },\n    \"china\": {\n      \"status\": \"PASS\",\n      \"changed\": true,\n      \"report_month\": \"2026-07\",\n      \"level_trn_cny\": 355.51,\n      \"yoy_pct\": 7.7,\n      \"source_url\": \"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026081414193264304/index.html\",\n      \"source_article_sha256\": \"305f395510d16ae2d1ee39c07d71c3e9be3936b550520571d0823e7f97654e00\",\n      \"source_search_sha256\": \"9e88c649dd52a2f35e4a201631fa49f45cae52ae31fcdd01741dd3e629029b26\"\n    }\n  }\n}"
+        }
+      ]
+    },
+    "funding_v2": {
+      "status": "REFRESH_OK",
+      "working_tree_changed": false,
+      "paths": [
+        "research/funding-v2/latest",
+        "lib/funding-v2-active.js"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/refresh-funding-v2.py --apply",
+          "exit_code": 0,
+          "output_tail": "{\n  \"status\": \"PASS_ACTIVE_FUNDING_V2_REFRESH_GUARDS\",\n  \"version\": \"GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS\",\n  \"candidate_version\": \"GMLI_FUNDING_V2_CANDIDATE_2\",\n  \"previous_available_date\": \"2026-08-31\",\n  \"new_available_date\": \"2026-08-31\",\n  \"observation_month\": \"2026-07\",\n  \"score\": 38.439683722357074,\n  \"regime\": \"RESTRICTIVE\",\n  \"directional_gate\": \"PASS\",\n  \"usefulness_gate\": \"PASS_NARROW_FUNDING_USEFULNESS\",\n  \"changed\": false,\n  \"applied\": true,\n  \"money_core_modified\": false\n}"
+        }
+      ]
+    },
+    "fiscal_v2": {
+      "status": "REFRESH_OK",
+      "working_tree_changed": true,
+      "paths": [
+        "research/fiscal-prospective/latest",
+        "research/fiscal-v2/latest",
+        "lib/fiscal-v2-active.js"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/capture-prospective-fiscal-inputs.py",
+          "exit_code": 0,
+          "output_tail": "est_observation_date\": \"2026-04-01\",\n      \"latest_value\": 5980.631,\n      \"observation_count\": 50,\n      \"raw_bytes\": 1025,\n      \"raw_sha256\": \"1b02d4c6329cf1ca97e6a6856ab63f2e5b82f9bd386d60a45a0f73af55fe0475\",\n      \"retrieved_at\": \"2026-09-05T17:32:24Z\",\n      \"role\": \"federal_government_current_receipts\",\n      \"source\": \"Federal Reserve Bank of St. Louis / FRED\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=FGRECPT&cosd=2014-01-01\"\n    },\n    \"GDP\": {\n      \"content_type\": \"application/csv\",\n      \"first_observed_at\": \"2026-08-24T08:51:52Z\",\n      \"http_status\": 200,\n      \"latest_observation_date\": \"2026-04-01\",\n      \"latest_value\": 32486.066,\n      \"observation_count\": 50,\n      \"raw_bytes\": 1071,\n      \"raw_sha256\": \"bd5b85c261d04b3fa944684a40e760d90da401be54bdb2445329b824c0cf2b85\",\n      \"retrieved_at\": \"2026-09-05T17:32:24Z\",\n      \"role\": \"nominal_gdp\",\n      \"source\": \"Federal Reserve Bank of St. Louis / FRED\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=GDP&cosd=2014-01-01\"\n    },\n    \"GFDEBTN\": {\n      \"content_type\": \"application/csv\",\n      \"first_observed_at\": \"2026-08-24T08:51:52Z\",\n      \"http_status\": 200,\n      \"latest_observation_date\": \"2026-01-01\",\n      \"latest_value\": 39065421.0,\n      \"observation_count\": 49,\n      \"raw_bytes\": 1495,\n      \"raw_sha256\": \"1df415170b08b93f309a64b5d85269e07ba998a8ae4fedb0c46b7b79376798a2\",\n      \"retrieved_at\": \"2026-09-05T17:32:24Z\",\n      \"role\": \"federal_debt_total\",\n      \"source\": \"Federal Reserve Bank of St. Louis / FRED\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=GFDEBTN&cosd=2014-01-01\"\n    },\n    \"MTSDS133FMS\": {\n      \"content_type\": \"application/csv\",\n      \"first_observed_at\": \"2026-08-24T08:51:52Z\",\n      \"http_status\": 200,\n      \"latest_observation_date\": \"2026-07-01\",\n      \"latest_value\": -432307.87462148,\n      \"observation_count\": 151,\n      \"raw_bytes\": 4170,\n      \"raw_sha256\": \"72e5f91feac304a26b270a33c986b9dbb5f0de00faf999ed9301e0da6bd8c821\",\n      \"retrieved_at\": \"2026-09-05T17:32:24Z\",\n      \"role\": \"monthly_federal_surplus_deficit\",\n      \"source\": \"Federal Reserve Bank of St. Louis / FRED\",\n      \"source_url\": \"https://fred.stlouisfed.org/graph/fredgraph.csv?id=MTSDS133FMS&cosd=2014-01-01\"\n    }\n  },\n  \"source_start_date\": \"2014-01-01\",\n  \"status\": \"PASS\",\n  \"strict_release_ready\": false\n}"
+        },
+        {
+          "command": "python scripts/refresh-fiscal-v2.py --apply",
+          "exit_code": 0,
+          "output_tail": "{\n  \"status\": \"PASS_ACTIVE_FISCAL_V2_REFRESH_GUARDS\",\n  \"version\": \"GMLI_FISCAL_V2_DEFICIT_IMPULSE\",\n  \"candidate_version\": \"GMLI_FISCAL_V2_CANDIDATE_1\",\n  \"previous_available_date\": \"2026-08-31\",\n  \"new_available_date\": \"2026-08-31\",\n  \"observation_month\": \"2026-07\",\n  \"score\": 47.37103207276605,\n  \"regime\": \"NEUTRAL\",\n  \"construction_gate\": \"PASS_FIXED_CONSTRUCTION_SANITY\",\n  \"usefulness_gate\": \"PASS_NARROW_FISCAL_USEFULNESS\",\n  \"promotion_lock\": \"PASS_FISCAL_V2_PRODUCTION_PROMOTION\",\n  \"global_conviction_rubric_modified\": false,\n  \"automatic_global_conviction_weight\": 0,\n  \"changed\": false,\n  \"applied\": true,\n  \"money_core_modified\": false,\n  \"funding_v2_modified\": false\n}"
+        }
+      ]
+    },
+    "cftc_positioning": {
+      "status": "REFRESH_OK",
+      "working_tree_changed": true,
+      "paths": [
+        "research/cftc-positioning/latest"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/refresh-cftc-positioning.py --apply",
+          "exit_code": 0,
+          "output_tail": "{\n  \"status\": \"PASS_CFTC_POSITIONING_REFRESH\",\n  \"source_guard\": \"PASS_CFTC_POSITIONING_SOURCE_GUARDS\",\n  \"latest_report_date\": \"2026-09-01\",\n  \"latest_report_age_days\": 4,\n  \"window_start\": \"2023-08-05\",\n  \"core_mapping_guard\": \"PASS_SPY_QQQ_GLD_DBC\",\n  \"applied\": true,\n  \"methodology_changed\": false,\n  \"scoring_effect\": \"NONE\",\n  \"automatic_weight_change\": 0\n}"
+        }
+      ]
+    }
+  },
+  "current_market": {
+    "status": "LIVE_DURING_REPORT_BUILD",
+    "source": "Yahoo daily SPY/QQQ/GLD/DBC through lib/current-market.js"
+  },
+  "status": "PASS_FETCH_FIRST",
+  "completed_at": "2026-09-05T17:32:33.251031Z"
+}

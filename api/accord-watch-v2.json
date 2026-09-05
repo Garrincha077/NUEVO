@@ -1,0 +1,270 @@
+{
+  "schema_version": "gmli-accord-watch-v2",
+  "version": "GMLI_ACCORD_WATCH_V2",
+  "generated_at": "2026-09-05T17:32:41.418Z",
+  "evidence_tier": "RESEARCH_DIAGNOSTIC",
+  "presentation_score": true,
+  "scoring_effect": "NONE",
+  "automatic_weight_change": 0,
+  "methodology_effect": "NONE",
+  "purpose": "0–100 closeness gauge for the hypothesized Treasury–Fed Accord 2.0 / financial-repression setup. It is not a probability, GMLI regime score or allocation weight.",
+  "score": 50,
+  "band": "DEVELOPING",
+  "repression_risk": false,
+  "market_conflict": true,
+  "coverage": {
+    "available_blocks": 4,
+    "total_blocks": 4
+  },
+  "trend": {
+    "arrow": "→",
+    "delta_1m_points": 0,
+    "delta_3m_points": -2.5,
+    "score_1m_ago": 50,
+    "score_3m_ago": 52.5,
+    "interpretation": "UNCHANGED"
+  },
+  "blocks": {
+    "treasury_duration_pressure": {
+      "status": "AVAILABLE",
+      "source": "U.S. Treasury Fiscal Data — MSPD Table 1",
+      "latest_date": "2026-08-31",
+      "comparison_3m_date": "2026-05-31",
+      "previous_month_date": "2026-07-31",
+      "fixed_duration_share_pct": 75.08,
+      "fixed_duration_share_change_3m_pp": -0.85,
+      "short_or_floating_share_pct": 24.92,
+      "short_floating_net_change_bn": 287.6,
+      "fixed_duration_net_change_bn": 85.4,
+      "composition_supportive": true,
+      "flow_supportive": true,
+      "composition_points": 12.5,
+      "flow_points": 12.5,
+      "points": 25,
+      "max_points": 25,
+      "direction": "SUPPORTIVE",
+      "interpretation": "Treasury v2 combines the frozen V1 3M composition check with a monthly net-outstanding-change supply proxy. The flow proxy is not auction-level DV01/WAM/buyback accounting."
+    },
+    "fed_reserve_support": {
+      "status": "AVAILABLE",
+      "source": "Federal Reserve H.4.1 Data Download Program",
+      "latest_date": "2026-09-02",
+      "total_assets_13w_pct": 0.38,
+      "reserve_balances_13w_pct": -3.82,
+      "total_assets_latest_mil": 6737204,
+      "reserve_balances_latest_mil": 2929285,
+      "direction": "MIXED",
+      "points": 10,
+      "max_points": 25,
+      "interpretation": "Frozen V1 13W Fed-assets / reserve-balance state, mapped to transparent v2 presentation points."
+    },
+    "private_bank_handoff": {
+      "status": "AVAILABLE",
+      "source": "Federal Reserve H.4.1 + H.8 via FRED",
+      "latest_date": "2026-08-26",
+      "fed_total_assets_13w_pct": 0.38,
+      "bank_total_assets_13w_pct": 0.51,
+      "state": "BROAD_EASING",
+      "points": 15,
+      "max_points": 25,
+      "predictive_status": "STOP_RESEARCH_DIAGNOSTIC",
+      "interpretation": "Descriptive reuse only. The frozen predictive family gate failed and is not reopened or retuned."
+    },
+    "market_yield_suppression": {
+      "status": "AVAILABLE",
+      "latest_date": "2026-08-28",
+      "treasury_real_yield_source": "U.S. Treasury Daily Treasury Par Real Yield Curve Rates",
+      "term_premium_source": "Federal Reserve Board three-factor nominal term-structure model (staff research product)",
+      "real_yield_10y_pct": 2.42,
+      "real_yield_10y_change_3m_pp": 0.35,
+      "term_premium_10y_pct": 0.88,
+      "term_premium_10y_change_3m_pp": 0.12,
+      "direction": "REJECT",
+      "points": 0,
+      "max_points": 25,
+      "interpretation": "Frozen V1 market verdict mapped to v2 presentation points. REJECT remains an explicit conflict."
+    }
+  },
+  "asset_map": {
+    "band": "DEVELOPING",
+    "bond_read": {
+      "duration_price_support": "WATCH",
+      "real_bond_value": "POSITIVE_REAL_YIELD",
+      "long_duration_warning": "YIELD_PRESSURE_NOT_CONFIRMING",
+      "note": "Tactical nominal-bond price support and structural real bond value stay separate."
+    },
+    "assets": {
+      "GLD": "WATCH_POSITIVE",
+      "TIPS": "WATCH_POSITIVE",
+      "UST_2_5Y": "WATCH",
+      "UST_10_30Y": "CAUTION_YIELD_PRESSURE",
+      "QQQ": "WATCH",
+      "SPY": "WATCH",
+      "BTC": "RESEARCH_WATCH",
+      "DBC": "CONDITIONAL_REFLATION_REQUIRED",
+      "USD": "NO_ACCORD_TILT"
+    },
+    "interpretation_only": true,
+    "promoted_money_transmission_unchanged": [
+      "SPY",
+      "QQQ",
+      "GLD",
+      "DBC"
+    ]
+  },
+  "history": [
+    {
+      "date": "2025-09-30",
+      "score": 50,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 0,
+      "handoff_points": 25,
+      "market_points": 12.5
+    },
+    {
+      "date": "2025-10-31",
+      "score": 37.5,
+      "band": "SETUP",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 0,
+      "handoff_points": 0,
+      "market_points": 12.5
+    },
+    {
+      "date": "2025-11-30",
+      "score": 75,
+      "band": "EMERGING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 0,
+      "handoff_points": 25,
+      "market_points": 25
+    },
+    {
+      "date": "2025-12-31",
+      "score": 37.5,
+      "band": "SETUP",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 10,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-01-31",
+      "score": 52.5,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-02-28",
+      "score": 77.5,
+      "band": "EMERGING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 12.5
+    },
+    {
+      "date": "2026-03-31",
+      "score": 52.5,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-04-30",
+      "score": 40,
+      "band": "SETUP",
+      "available_blocks": 4,
+      "treasury_points": 0,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-05-31",
+      "score": 52.5,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 12.5,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-06-30",
+      "score": 25,
+      "band": "SETUP",
+      "available_blocks": 4,
+      "treasury_points": 0,
+      "fed_reserve_points": 10,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-07-31",
+      "score": 65,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 25,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-08-31",
+      "score": 50,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 10,
+      "handoff_points": 15,
+      "market_points": 0
+    },
+    {
+      "date": "2026-09-05",
+      "score": 50,
+      "band": "DEVELOPING",
+      "available_blocks": 4,
+      "treasury_points": 25,
+      "fed_reserve_points": 10,
+      "handoff_points": 15,
+      "market_points": 0
+    }
+  ],
+  "methodology": {
+    "weights": {
+      "treasury_duration_pressure": 25,
+      "fed_reserve_support": 25,
+      "private_bank_handoff": 25,
+      "market_yield_suppression": 25
+    },
+    "treasury_subweights": {
+      "composition": 12.5,
+      "net_supply_flow_proxy": 12.5
+    },
+    "bands": {
+      "DISTANT": "0-24",
+      "SETUP": "25-49",
+      "DEVELOPING": "50-69",
+      "EMERGING": "70-84",
+      "ACCORD_LIKE": "85-100"
+    },
+    "frozen_spec": "docs/GMLI_ACCORD_WATCH_V2.md",
+    "v1_preserved": true,
+    "handoff_predictive_status": "STOP_RESEARCH_DIAGNOSTIC"
+  },
+  "guardrail": "RESEARCH_DIAGNOSTIC / presentation score only. No GMLI conviction points, CORE/OVERLAY changes, automatic allocation weights or predictive rescue optimization."
+}
