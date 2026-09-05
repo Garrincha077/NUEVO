@@ -71,7 +71,25 @@ def build(as_of):
         raise RuntimeError('no eligible Candidate 2 history')
     latest = eligible[-1]
     by_month = {x['observation_month']: x for x in history}
-    current_match = latest['available_date'] == LEGACY['available_date'] and latest['regime'] == LEGACY['regime']
+
+    # The legacy direction comparison is a frozen INITIAL promotion gate at
+    # 2026-07-31. It must remain auditable after promotion, but it must not
+    # require every prospective refresh to keep the latest eligible date equal
+    # to the legacy date. Evaluate the historical gate on the row that was
+    # actually eligible at the frozen comparison date, then validate the newest
+    # row separately through refresh/date-regression guards.
+    legacy_gate_date = date.fromisoformat(LEGACY['available_date'])
+    legacy_gate_eligible = [
+        x for x in history
+        if date.fromisoformat(x['available_date']) <= legacy_gate_date
+    ]
+    legacy_gate_row = legacy_gate_eligible[-1] if legacy_gate_eligible else None
+    legacy_direction_match = bool(
+        legacy_gate_row
+        and legacy_gate_row['available_date'] == LEGACY['available_date']
+        and legacy_gate_row['regime'] == LEGACY['regime']
+    )
+
     stress = {}
     for m, expected in STRESS_WINDOWS.items():
         got = by_month.get(m)
@@ -83,7 +101,7 @@ def build(as_of):
             'observed_conditions_score': got['observed_conditions_score'] if got else None,
             'pass': bool(got and got['regime'] == expected),
         }
-    directional_gate_pass = current_match and all(x['pass'] for x in stress.values())
+    directional_gate_pass = legacy_direction_match and all(x['pass'] for x in stress.values())
 
     return {
         'candidate_version': VERSION,
@@ -97,7 +115,14 @@ def build(as_of):
         'parameter_search': False,
         'candidate1_frozen_decision': candidate1_audit['decision'],
         'latest_eligible': latest,
-        'legacy_current_comparator': {**LEGACY, 'direction_match': current_match},
+        'legacy_current_comparator': {
+            **LEGACY,
+            'gate_scope': 'FROZEN_INITIAL_PROMOTION_GATE',
+            'candidate_observation_month': legacy_gate_row['observation_month'] if legacy_gate_row else None,
+            'candidate_available_date': legacy_gate_row['available_date'] if legacy_gate_row else None,
+            'candidate_regime': legacy_gate_row['regime'] if legacy_gate_row else None,
+            'direction_match': legacy_direction_match,
+        },
         'stress_window_sanity': stress,
         'directional_gate_pass': directional_gate_pass,
         'promotion_eligible': False,
