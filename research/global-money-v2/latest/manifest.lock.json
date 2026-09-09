@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-09-07T13:30:39Z",
+  "built_at": "2026-09-09T12:20:32Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -32,9 +32,9 @@
     "checks": [
       {
         "label": "weight_US_pct",
-        "actual": 21.474687,
+        "actual": 21.474693,
         "expected": 20.99,
-        "delta": 0.484687,
+        "delta": 0.484693,
         "tolerance": 1.5,
         "pass": true
       },
@@ -56,9 +56,9 @@
       },
       {
         "label": "weight_CN_pct",
-        "actual": 44.396491,
+        "actual": 44.396503,
         "expected": 43.4,
-        "delta": 0.996491,
+        "delta": 0.996503,
         "tolerance": 1.5,
         "pass": true
       },
@@ -80,9 +80,9 @@
       },
       {
         "label": "weight_EA_pct",
-        "actual": 17.434008,
+        "actual": 17.434012,
         "expected": 18.32,
-        "delta": -0.885992,
+        "delta": -0.885988,
         "tolerance": 1.5,
         "pass": true
       },
@@ -104,17 +104,17 @@
       },
       {
         "label": "weight_JP_pct",
-        "actual": 8.600943,
+        "actual": 8.600918,
         "expected": 8.41,
-        "delta": 0.190943,
+        "delta": 0.190918,
         "tolerance": 1.5,
         "pass": true
       },
       {
         "label": "local_JP_yoy_pct",
-        "actual": 2.450359,
+        "actual": 2.450698,
         "expected": 2.45,
-        "delta": 0.000359,
+        "delta": 0.000698,
         "tolerance": 0.65,
         "pass": true
       },
@@ -128,9 +128,9 @@
       },
       {
         "label": "weight_GB_pct",
-        "actual": 4.132733,
+        "actual": 4.132734,
         "expected": 4.04,
-        "delta": 0.092733,
+        "delta": 0.092734,
         "tolerance": 1.5,
         "pass": true
       },
@@ -176,9 +176,9 @@
       },
       {
         "label": "weight_AU_pct",
-        "actual": 2.035876,
+        "actual": 2.035877,
         "expected": 2.18,
-        "delta": -0.144124,
+        "delta": -0.144123,
         "tolerance": 1.5,
         "pass": true
       },
@@ -200,17 +200,17 @@
       },
       {
         "label": "gbm_usd_yoy_pct",
-        "actual": 9.300399,
+        "actual": 9.30043,
         "expected": 9.3258,
-        "delta": -0.025401,
+        "delta": -0.02537,
         "tolerance": 1.0,
         "pass": true
       },
       {
         "label": "gbm_fxn_yoy_pct",
-        "actual": 6.11197,
+        "actual": 6.112,
         "expected": 6.1275,
-        "delta": -0.01553,
+        "delta": -0.0155,
         "tolerance": 0.7,
         "pass": true
       }
@@ -219,13 +219,13 @@
   "latest_eligible": {
     "month": "2026-06",
     "available_date": "2026-07-31",
-    "gbm_usd_yoy_pct": 7.921751,
-    "gbm_fxn_yoy_pct": 5.911268,
-    "fx_effect_pp": 2.010483,
-    "usd_z": 0.300588,
+    "gbm_usd_yoy_pct": 7.921729,
+    "gbm_fxn_yoy_pct": 5.911241,
+    "fx_effect_pp": 2.010489,
+    "usd_z": 0.300585,
     "usd_score": 55.0098,
-    "fxn_z": -0.343588,
-    "fxn_score": 44.2735,
+    "fxn_z": -0.343597,
+    "fxn_score": 44.2734,
     "weights_pct": {
       "US": 21.2548,
       "CN": 44.5565,
@@ -239,7 +239,7 @@
       "US": 5.3439,
       "CN": 8.0003,
       "EA": 3.2586,
-      "JP": 2.2078,
+      "JP": 2.2074,
       "GB": 4.9154,
       "CA": 4.4262,
       "AU": 7.9
@@ -257,13 +257,13 @@
   "latest_source_preview": {
     "month": "2026-06",
     "available_date": "2026-07-31",
-    "gbm_usd_yoy_pct": 7.921751,
-    "gbm_fxn_yoy_pct": 5.911268,
-    "fx_effect_pp": 2.010483,
-    "usd_z": 0.300588,
+    "gbm_usd_yoy_pct": 7.921729,
+    "gbm_fxn_yoy_pct": 5.911241,
+    "fx_effect_pp": 2.010489,
+    "usd_z": 0.300585,
     "usd_score": 55.0098,
-    "fxn_z": -0.343588,
-    "fxn_score": 44.2735,
+    "fxn_z": -0.343597,
+    "fxn_score": 44.2734,
     "weights_pct": {
       "US": 21.2548,
       "CN": 44.5565,
@@ -277,7 +277,7 @@
       "US": 5.3439,
       "CN": 8.0003,
       "EA": 3.2586,
-      "JP": 2.2078,
+      "JP": 2.2074,
       "GB": 4.9154,
       "CA": 4.4262,
       "AU": 7.9
@@ -316,8 +316,8 @@
     },
     {
       "filename": "raw/jp-boj-m2.json",
-      "bytes": 2878,
-      "sha256": "2d494ebed705eaa4595c242e21a971bcf79ed2ab644a4a83ed853879143dcb7b",
+      "bytes": 2894,
+      "sha256": "bcd1b6e1afe0bc716411d0fbb2b3cb1f7d91255d2eeec3f1652bdf03ec61f35a",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
