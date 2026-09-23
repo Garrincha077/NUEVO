@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-09-22T12:37:08Z",
+  "built_at": "2026-09-23T12:45:53Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -40,9 +40,9 @@
       },
       {
         "label": "local_US_yoy_pct",
-        "actual": 5.39382,
+        "actual": 5.392904,
         "expected": 5.58,
-        "delta": -0.18618,
+        "delta": -0.187096,
         "tolerance": 0.65,
         "pass": true
       },
@@ -200,17 +200,17 @@
       },
       {
         "label": "gbm_usd_yoy_pct",
-        "actual": 9.3002,
+        "actual": 9.300004,
         "expected": 9.3258,
-        "delta": -0.0256,
+        "delta": -0.025796,
         "tolerance": 1.0,
         "pass": true
       },
       {
         "label": "gbm_fxn_yoy_pct",
-        "actual": 6.111765,
+        "actual": 6.111568,
         "expected": 6.1275,
-        "delta": -0.015735,
+        "delta": -0.015932,
         "tolerance": 0.7,
         "pass": true
       }
@@ -219,24 +219,24 @@
   "latest_eligible": {
     "month": "2026-07",
     "available_date": "2026-08-31",
-    "gbm_usd_yoy_pct": 7.492563,
-    "gbm_fxn_yoy_pct": 5.80386,
-    "fx_effect_pp": 1.688703,
-    "usd_z": 0.219292,
-    "usd_score": 53.6549,
-    "fxn_z": -0.380502,
-    "fxn_score": 43.6583,
+    "gbm_usd_yoy_pct": 7.492362,
+    "gbm_fxn_yoy_pct": 5.803661,
+    "fx_effect_pp": 1.688701,
+    "usd_z": 0.219257,
+    "usd_score": 53.6543,
+    "fxn_z": -0.380576,
+    "fxn_score": 43.6571,
     "weights_pct": {
-      "US": 21.302,
-      "CN": 44.4802,
-      "EA": 17.7706,
-      "JP": 8.3417,
+      "US": 21.3021,
+      "CN": 44.4801,
+      "EA": 17.7705,
+      "JP": 8.3416,
       "GB": 4.1216,
       "CA": 1.922,
       "AU": 2.062
     },
     "local_yoy_pct": {
-      "US": 5.4142,
+      "US": 5.4132,
       "CN": 7.7483,
       "EA": 3.3363,
       "JP": 2.1292,
@@ -257,24 +257,24 @@
   "latest_source_preview": {
     "month": "2026-07",
     "available_date": "2026-08-31",
-    "gbm_usd_yoy_pct": 7.492563,
-    "gbm_fxn_yoy_pct": 5.80386,
-    "fx_effect_pp": 1.688703,
-    "usd_z": 0.219292,
-    "usd_score": 53.6549,
-    "fxn_z": -0.380502,
-    "fxn_score": 43.6583,
+    "gbm_usd_yoy_pct": 7.492362,
+    "gbm_fxn_yoy_pct": 5.803661,
+    "fx_effect_pp": 1.688701,
+    "usd_z": 0.219257,
+    "usd_score": 53.6543,
+    "fxn_z": -0.380576,
+    "fxn_score": 43.6571,
     "weights_pct": {
-      "US": 21.302,
-      "CN": 44.4802,
-      "EA": 17.7706,
-      "JP": 8.3417,
+      "US": 21.3021,
+      "CN": 44.4801,
+      "EA": 17.7705,
+      "JP": 8.3416,
       "GB": 4.1216,
       "CA": 1.922,
       "AU": 2.062
     },
     "local_yoy_pct": {
-      "US": 5.4142,
+      "US": 5.4132,
       "CN": 7.7483,
       "EA": 3.3363,
       "JP": 2.1292,
@@ -298,8 +298,8 @@
   "raw_sources": [
     {
       "filename": "raw/us-m2sl.csv",
-      "bytes": 2891,
-      "sha256": "7b51d462e24665a149f6da2b4b5ec28476e7a8c158e83227cb86812e8245f9d6",
+      "bytes": 2910,
+      "sha256": "8695f3389c800be2fa4a9d93acc331d167e60120bcb6734c8bcffb4fa51e661c",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=M2SL&cosd=2014-01-01"
     },
     {
@@ -317,7 +317,7 @@
     {
       "filename": "raw/jp-boj-m2.json",
       "bytes": 2894,
-      "sha256": "8281717637a988d2bf7159bf773fdd3ab03e83f83780199681e2efd0e3a5c3b7",
+      "sha256": "9b1cf0dc5291ebd0d792dd4c20ac97bfc705c6c08b23d42683f8f27975f5d23e",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
@@ -328,8 +328,8 @@
     },
     {
       "filename": "raw/ca-boc-m2.csv",
-      "bytes": 5082,
-      "sha256": "6497760d5b594fbf9c409ed3cc3fcaaba40c6a5a88e78afeea6e78984b7b6263",
+      "bytes": 3841,
+      "sha256": "35ea0d8ddbcaaed8f80afb2e5f75b1fd97419de0abc988b6d123f1f497818cbc",
       "source_url": "https://www.bankofcanada.ca/valet/observations/V41552796/csv?start_date=2014-01-01"
     },
     {
