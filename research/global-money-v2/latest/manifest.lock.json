@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-09-24T12:43:48Z",
+  "built_at": "2026-09-25T08:10:39Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -219,13 +219,13 @@
   "latest_eligible": {
     "month": "2026-07",
     "available_date": "2026-08-31",
-    "gbm_usd_yoy_pct": 7.492362,
-    "gbm_fxn_yoy_pct": 5.803661,
-    "fx_effect_pp": 1.688701,
-    "usd_z": 0.219257,
-    "usd_score": 53.6543,
-    "fxn_z": -0.380576,
-    "fxn_score": 43.6571,
+    "gbm_usd_yoy_pct": 7.490569,
+    "gbm_fxn_yoy_pct": 5.801828,
+    "fx_effect_pp": 1.68874,
+    "usd_z": 0.218931,
+    "usd_score": 53.6488,
+    "fxn_z": -0.381278,
+    "fxn_score": 43.6454,
     "weights_pct": {
       "US": 21.3021,
       "CN": 44.4801,
@@ -238,7 +238,7 @@
     "local_yoy_pct": {
       "US": 5.4132,
       "CN": 7.7483,
-      "EA": 3.3363,
+      "EA": 3.326,
       "JP": 2.1292,
       "GB": 4.4202,
       "CA": 4.8205,
@@ -257,13 +257,13 @@
   "latest_source_preview": {
     "month": "2026-07",
     "available_date": "2026-08-31",
-    "gbm_usd_yoy_pct": 7.492362,
-    "gbm_fxn_yoy_pct": 5.803661,
-    "fx_effect_pp": 1.688701,
-    "usd_z": 0.219257,
-    "usd_score": 53.6543,
-    "fxn_z": -0.380576,
-    "fxn_score": 43.6571,
+    "gbm_usd_yoy_pct": 7.490569,
+    "gbm_fxn_yoy_pct": 5.801828,
+    "fx_effect_pp": 1.68874,
+    "usd_z": 0.218931,
+    "usd_score": 53.6488,
+    "fxn_z": -0.381278,
+    "fxn_score": 43.6454,
     "weights_pct": {
       "US": 21.3021,
       "CN": 44.4801,
@@ -276,7 +276,7 @@
     "local_yoy_pct": {
       "US": 5.4132,
       "CN": 7.7483,
-      "EA": 3.3363,
+      "EA": 3.326,
       "JP": 2.1292,
       "GB": 4.4202,
       "CA": 4.8205,
@@ -310,14 +310,14 @@
     },
     {
       "filename": "raw/ea-ecb-m2.csv",
-      "bytes": 78731,
-      "sha256": "56bb54c7270c511b91762260bc2aa492a6a98bb04398a23f0b8fb34abbd4a458",
+      "bytes": 79250,
+      "sha256": "08925da583c2ff6ed4ae6a9d3e7d71188aa99d74a01f119d9044a6a7657d7453",
       "source_url": "https://data-api.ecb.europa.eu/service/data/BSI/M.U2.Y.V.M20.X.1.U2.2300.Z01.E?startPeriod=2014-01&format=csvdata"
     },
     {
       "filename": "raw/jp-boj-m2.json",
       "bytes": 2894,
-      "sha256": "17f10392b25ed6513173c83ea5356f4be309d03b84fecaee9c352382de48ffdd",
+      "sha256": "afcf2353e14a65ac5d5848a9316dcb99556e57d267a14e18cac539bf06a01c06",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
