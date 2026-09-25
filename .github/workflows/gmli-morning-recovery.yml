@@ -1,0 +1,150 @@
+name: GMLI Morning Recovery
+
+on:
+  workflow_dispatch:
+    inputs:
+      targets:
+        description: "Comma-separated recovery targets: money,funding,pboc,global,fiscal,pages"
+        required: true
+        default: "money,funding,pboc,global,fiscal,pages"
+        type: string
+  push:
+    branches: [main]
+    paths:
+      - ".github/recovery/gmli-morning.trigger"
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: gmli-morning-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve requested recovery targets
+        id: targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            targets="${{ inputs.targets }}"
+          else
+            targets="$(sed -n 's/^targets=//p' .github/recovery/gmli-morning.trigger | tail -n 1)"
+          fi
+          targets="${targets// /}"
+          if [ -z "$targets" ]; then targets="none"; fi
+          echo "targets=$targets" >> "$GITHUB_OUTPUT"
+          {
+            echo "## GMLI Morning Recovery"
+            echo
+            echo "- Trigger: `${{ github.event_name }}`"
+            echo "- Targets: `$targets`"
+            echo
+            echo "| Target | Run | Result | Published output |"
+            echo "|---|---|---|---|"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Dispatch requested workflows sequentially
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGETS: ${{ steps.targets.outputs.targets }}
+        run: |
+          set -uo pipefail
+          failed=0
+
+          selected() {
+            case ",$TARGETS," in
+              *",$1,"*) return 0 ;;
+              *) return 1 ;;
+            esac
+          }
+
+          row() {
+            printf '| %s | %s | %s | %s |\n' "$1" "$2" "$3" "$4" >> "$GITHUB_STEP_SUMMARY"
+          }
+
+          dispatch_and_wait() {
+            key="$1"
+            workflow="$2"
+            label="$3"
+
+            started="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            if ! gh api --method POST "repos/$GITHUB_REPOSITORY/actions/workflows/$workflow/dispatches" -f ref=main >/dev/null; then
+              row "$label" "-" "DISPATCH FAILED" "-"
+              failed=1
+              return
+            fi
+
+            run_id=""
+            for _ in $(seq 1 30); do
+              payload="$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/$workflow/runs?branch=main&event=workflow_dispatch&per_page=20")"
+              run_id="$(printf '%s' "$payload" | jq -r --arg t "$started" '[.workflow_runs[] | select(.created_at >= $t)] | sort_by(.created_at) | .[0].id // empty')"
+              [ -n "$run_id" ] && break
+              sleep 4
+            done
+
+            if [ -z "$run_id" ]; then
+              row "$label" "-" "RUN NOT FOUND" "-"
+              failed=1
+              return
+            fi
+
+            run_url="https://github.com/$GITHUB_REPOSITORY/actions/runs/$run_id"
+            conclusion=""
+            for _ in $(seq 1 120); do
+              state="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id")"
+              status="$(printf '%s' "$state" | jq -r '.status')"
+              conclusion="$(printf '%s' "$state" | jq -r '.conclusion // ""')"
+              [ "$status" = "completed" ] && break
+              sleep 10
+            done
+
+            if [ "$conclusion" != "success" ]; then
+              row "$label" "[run]($run_url)" "${conclusion:-TIMEOUT}" "-"
+              failed=1
+              return
+            fi
+
+            row "$label" "[run]($run_url)" "SUCCESS" "workflow output verified by workflow guards"
+          }
+
+          selected money   && dispatch_and_wait money   gmli-money-refresh.yml              "Money freshness"
+          selected funding && dispatch_and_wait funding gmli-funding-v2-refresh.yml         "Funding V2"
+          selected pboc    && dispatch_and_wait pboc    gmli-china-m2-v2-capture.yml        "PBoC M2 V2"
+          selected global  && dispatch_and_wait global  gmli-global-money-v2-capture.yml    "Global Money V2"
+          selected fiscal  && dispatch_and_wait fiscal  gmli-fiscal-prospective-capture.yml "Fiscal V2"
+          selected pages   && dispatch_and_wait pages   gmli-pages.yml                      "GitHub Pages"
+
+          if selected pages; then
+            published="not verified"
+            for _ in $(seq 1 30); do
+              if curl -fsS "https://garrincha077.github.io/NUEVO/api/report.json" -o /tmp/gmli-report.json \
+                && jq -e '.meta.canonical == true or .meta.canonical == "true"' /tmp/gmli-report.json >/dev/null 2>&1; then
+                published="report.json live"
+                break
+              fi
+              sleep 6
+            done
+            {
+              echo
+              echo "### Public output"
+              echo
+              echo "- GMLI Pages: **$published**"
+              echo "- Report: https://garrincha077.github.io/NUEVO/api/report.json"
+            } >> "$GITHUB_STEP_SUMMARY"
+            [ "$published" = "report.json live" ] || failed=1
+          fi
+
+          if [ "$TARGETS" = "none" ]; then
+            row "No recovery requested" "-" "NOOP" "-"
+          fi
+
+          exit "$failed"
