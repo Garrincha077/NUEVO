@@ -1,0 +1,69 @@
+{
+  "schema_version": "gmli-current-market-v1",
+  "status": "OK",
+  "evidence_tier": "RESEARCH",
+  "role": "CURRENT_MARKET_CONFIRMATION_ONLY",
+  "generated_at": "2026-09-26T11:47:11.904Z",
+  "coverage": "4/4",
+  "positive": 3,
+  "negative": 1,
+  "summary": "BROADLY_POSITIVE",
+  "divergences": [
+    {
+      "asset": "QQQ",
+      "type": "POSITIVE_DIVERGENCE"
+    }
+  ],
+  "assets": {
+    "SPY": {
+      "latest_completed_session": "2026-09-25",
+      "price": 771.35,
+      "return_1m_pct": 0.94,
+      "ma50": 759.908,
+      "ma200": 714.8377,
+      "trend": "BULLISH",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "QQQ": {
+      "latest_completed_session": "2026-09-25",
+      "price": 744.5,
+      "return_1m_pct": 4.77,
+      "ma50": 711.9891,
+      "ma200": 664.1446,
+      "trend": "BULLISH",
+      "structural_monthly_stage": "EARLY_DOWN",
+      "divergence_vs_structural": "POSITIVE_DIVERGENCE",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "GLD": {
+      "latest_completed_session": "2026-09-25",
+      "price": 393.41,
+      "return_1m_pct": -6.62,
+      "ma50": 395.431,
+      "ma200": 416.4373,
+      "trend": "BEARISH",
+      "structural_monthly_stage": "EARLY_DOWN",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "DBC": {
+      "latest_completed_session": "2026-09-25",
+      "price": 32.62,
+      "return_1m_pct": 6.95,
+      "ma50": 30.908,
+      "ma200": 27.9018,
+      "trend": "BULLISH",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    }
+  },
+  "errors": [],
+  "note": "Current daily market confirmation can raise/lower conviction or highlight divergence; it never rewrites frozen Money Core or completed-month structural signals."
+}

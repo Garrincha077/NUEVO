@@ -1,0 +1,111 @@
+{
+  "version": "GMLI Current Money Nowcast v1.3 VERIFIED",
+  "as_of": "2026-09-26T11:47:08.110Z",
+  "evidence_tier": "RESEARCH",
+  "role": "FRESHNESS_OVERLAY_ONLY",
+  "source_mode": "LAST_VERIFIED_REQUEST_SAFE",
+  "runtime_mode": "VALIDATED_SNAPSHOT",
+  "live_attempted": false,
+  "validated_reference": {
+    "date": "2026-02-28",
+    "role": "HISTORICAL_COMPARISON_REFERENCE_ONLY",
+    "active_core_date": "2026-08-31",
+    "active_core_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
+    "methodology_status": "FROZEN_V2_SPEC",
+    "guardrail": "Freshness data do not change country weights, FX-neutral methodology, lags, horizons, thresholds, train/validation split or FDR rules and never auto-promote or replace the Money Core."
+  },
+  "blocks": {
+    "us": {
+      "name": "United States",
+      "aggregate": "M2",
+      "latest_date": "2026-08",
+      "latest_yoy_pct": 5.6589,
+      "core_reference_date": "2026-02",
+      "core_reference_yoy_pct": 4.6887,
+      "direction_vs_core": "ACCELERATING",
+      "delta_vs_core_pp": 0.97,
+      "expanding_yoy": true,
+      "source": "Federal Reserve / FRED M2SL",
+      "source_url": "https://fred.stlouisfed.org/series/M2SL",
+      "status": "FALLBACK_LAST_VERIFIED",
+      "evidence_tier": "RESEARCH"
+    },
+    "euro_area": {
+      "name": "Euro area",
+      "aggregate": "M3",
+      "latest_date": "2026-08",
+      "latest_yoy_pct": 3.4896,
+      "core_reference_date": "2026-02",
+      "core_reference_yoy_pct": 2.82,
+      "direction_vs_core": "ACCELERATING",
+      "delta_vs_core_pp": 0.67,
+      "expanding_yoy": true,
+      "source": "ECB Data Portal BSI",
+      "source_url": "https://data.ecb.europa.eu/data/datasets/BSI/BSI.M.U2.Y.V.M30.X.I.U2.2300.Z01.A",
+      "status": "FALLBACK_LAST_VERIFIED",
+      "evidence_tier": "RESEARCH"
+    },
+    "japan": {
+      "name": "Japan",
+      "aggregate": "M2",
+      "latest_date": "2026-08",
+      "latest_yoy_pct": 2,
+      "core_reference_date": "2026-02",
+      "core_reference_yoy_pct": 1.7,
+      "direction_vs_core": "ACCELERATING",
+      "delta_vs_core_pp": 0.3,
+      "expanding_yoy": true,
+      "source": "Bank of Japan Time-Series Data Search API",
+      "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode",
+      "series_code": "MD02'MAM1YAM2M2MO",
+      "status": "FALLBACK_LAST_VERIFIED",
+      "evidence_tier": "RESEARCH"
+    },
+    "china": {
+      "name": "China",
+      "aggregate": "M2",
+      "latest_date": "2026-08",
+      "latest_yoy_pct": 7.5,
+      "core_reference_date": "2026-02",
+      "core_reference_yoy_pct": 9,
+      "direction_vs_core": "DECELERATING",
+      "delta_vs_core_pp": -1.5,
+      "expanding_yoy": true,
+      "source": "People's Bank of China Financial Statistics Report",
+      "status": "FALLBACK_LAST_VERIFIED",
+      "note": "Official central PBoC monthly Financial Statistics Report; scheduled parser validates report month, M2 balance and YoY before replacing last-good RESEARCH nowcast data.",
+      "source_url": "https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026091414593871200/index.html",
+      "latest_level_trn_cny": 356.81,
+      "source_article_sha256": "b47ceca8192ff24b28e56abd420f95988a42fb2362799c7be58e886dc8ce8f61",
+      "source_search_sha256": "30d8bf1e3238256ec94ba646c43d430f240e8241dbbf9afccc263ad325189f7b",
+      "evidence_tier": "RESEARCH"
+    }
+  },
+  "usd_translation": {
+    "status": "FALLBACK_LAST_VERIFIED",
+    "latest_verified": "2026-09-18",
+    "pct_change_since_core": 1.44,
+    "translation": "HEADWIND_STRONGER_USD",
+    "source": "Federal Reserve / FRED Broad Dollar Index DTWEXBGS",
+    "source_url": "https://fred.stlouisfed.org/series/DTWEXBGS",
+    "note": "Translation overlay only; not the frozen FX-neutral Money methodology.",
+    "evidence_tier": "RESEARCH"
+  },
+  "nowcast": {
+    "label": "BROADLY_EXPANDING_MIXED_ACCELERATION",
+    "tilt": "SUPPORTIVE_MIXED",
+    "score": null,
+    "score_status": "NOT_COMPUTED",
+    "coverage": "4/4",
+    "comparisons_available": "4/4",
+    "accelerating": 3,
+    "stable": 0,
+    "decelerating": 1,
+    "expanding_yoy": 4,
+    "methodology": "Unweighted directional freshness overlay versus the preserved February 2026 historical comparison reference. The active promoted Money Core is Money V2; this reference is used only for nowcast acceleration comparisons."
+  },
+  "interpretation": {
+    "engine_fact": "The active promoted Money Core is GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL, available 2026-08-31. The 2026-02-28 vintage is retained only as the historical reference for nowcast acceleration comparisons.",
+    "current_research_inference": "SUPPORTIVE_MIXED: verified monthly snapshots are US 2026-08, EA 2026-08, JP 2026-08, CN 2026-08. Request-time live parsing is disabled; scheduled validated refresh is the intended path."
+  }
+}
