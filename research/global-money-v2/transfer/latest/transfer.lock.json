@@ -2,7 +2,7 @@
   "status": "PASS_FIXED_TRANSMISSION_DIRECTION_TRANSFER",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-09-27T13:02:12Z",
+  "built_at": "2026-09-28T08:02:11Z",
   "core_modified": false,
   "parameter_search": false,
   "lag_search": false,
@@ -30,8 +30,8 @@
     "DBC": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/DBC?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/DBC?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "115a24b98baa9822f2e5d44a6bfbae9575a62f9d672bcf520a08aed685c45d23",
-      "bytes": 28513,
+      "sha256": "740d7153e8b557d2702ad9c4aa750106829b49cbc688f58256dad7a5843da631",
+      "bytes": 28499,
       "months": 247,
       "first_month": "2006-03",
       "last_month": "2026-09"
@@ -39,8 +39,8 @@
     "GLD": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "aefd923cffc5beac03005d2181801af83fcff33801adba4ead94e996c5b6f351",
-      "bytes": 30271,
+      "sha256": "ec3cfcc9fb773a147af5744b4474bbfb64dee95951d2e738cb28caa32e989998",
+      "bytes": 30275,
       "months": 262,
       "first_month": "2004-12",
       "last_month": "2026-09"
@@ -48,8 +48,8 @@
     "QQQ": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "f828785296d4f4ca8e7d1b6cf382202d48d3e1d106bf3fc7d84680931cba5955",
-      "bytes": 36798,
+      "sha256": "bf65a41c306c82e68edbce7476f13b38a39e910b3906053ebf51231be506f5a1",
+      "bytes": 36815,
       "months": 330,
       "first_month": "1999-04",
       "last_month": "2026-09"
@@ -57,8 +57,8 @@
     "SPY": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "c05a7c6bd67e54c7339f4f561a36931f8d06d591adb043716a203592db6d640d",
-      "bytes": 42532,
+      "sha256": "d28b30dcfabaa95c0f36f63f7a0dc930f5d711a6da9fcb320c038b1f467834d7",
+      "bytes": 42531,
       "months": 404,
       "first_month": "1993-02",
       "last_month": "2026-09"
@@ -108,14 +108,14 @@
         "n": 93,
         "first_signal_month": "2015-04",
         "last_signal_month": "2022-12",
-        "pearson_r": 0.38965,
+        "pearson_r": 0.389649,
         "spearman_rho": 0.331309
       },
       "oos": {
         "n": 32,
         "first_signal_month": "2023-01",
         "last_signal_month": "2025-08",
-        "pearson_r": 0.567405,
+        "pearson_r": 0.567404,
         "spearman_rho": 0.553886
       },
       "direction_transfer_pass": true,
