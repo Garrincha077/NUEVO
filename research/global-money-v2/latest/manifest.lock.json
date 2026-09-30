@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-09-29T14:04:51Z",
+  "built_at": "2026-09-30T13:44:17Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -32,9 +32,9 @@
     "checks": [
       {
         "label": "weight_US_pct",
-        "actual": 21.474788,
+        "actual": 21.475005,
         "expected": 20.99,
-        "delta": 0.484788,
+        "delta": 0.485005,
         "tolerance": 1.5,
         "pass": true
       },
@@ -56,9 +56,9 @@
       },
       {
         "label": "weight_CN_pct",
-        "actual": 44.396698,
+        "actual": 44.397147,
         "expected": 43.4,
-        "delta": 0.996698,
+        "delta": 0.997147,
         "tolerance": 1.5,
         "pass": true
       },
@@ -80,9 +80,9 @@
       },
       {
         "label": "weight_EA_pct",
-        "actual": 17.434089,
+        "actual": 17.434266,
         "expected": 18.32,
-        "delta": -0.885911,
+        "delta": -0.885734,
         "tolerance": 1.5,
         "pass": true
       },
@@ -104,9 +104,9 @@
       },
       {
         "label": "weight_JP_pct",
-        "actual": 8.600956,
+        "actual": 8.601043,
         "expected": 8.41,
-        "delta": 0.190956,
+        "delta": 0.191043,
         "tolerance": 1.5,
         "pass": true
       },
@@ -128,9 +128,9 @@
       },
       {
         "label": "weight_GB_pct",
-        "actual": 4.132723,
+        "actual": 4.132765,
         "expected": 4.04,
-        "delta": 0.092723,
+        "delta": 0.092765,
         "tolerance": 1.5,
         "pass": true
       },
@@ -152,9 +152,9 @@
       },
       {
         "label": "weight_CA_pct",
-        "actual": 1.924861,
+        "actual": 1.92488,
         "expected": 2.66,
-        "delta": -0.735139,
+        "delta": -0.73512,
         "tolerance": 1.5,
         "pass": true
       },
@@ -176,9 +176,9 @@
       },
       {
         "label": "weight_AU_pct",
-        "actual": 2.035886,
+        "actual": 2.034894,
         "expected": 2.18,
-        "delta": -0.144114,
+        "delta": -0.145106,
         "tolerance": 1.5,
         "pass": true
       },
@@ -200,17 +200,17 @@
       },
       {
         "label": "gbm_usd_yoy_pct",
-        "actual": 9.300044,
+        "actual": 9.299931,
         "expected": 9.3258,
-        "delta": -0.025756,
+        "delta": -0.025869,
         "tolerance": 1.0,
         "pass": true
       },
       {
         "label": "gbm_fxn_yoy_pct",
-        "actual": 6.111608,
+        "actual": 6.11159,
         "expected": 6.1275,
-        "delta": -0.015892,
+        "delta": -0.01591,
         "tolerance": 0.7,
         "pass": true
       }
@@ -219,21 +219,21 @@
   "latest_eligible": {
     "month": "2026-07",
     "available_date": "2026-08-31",
-    "gbm_usd_yoy_pct": 7.490696,
-    "gbm_fxn_yoy_pct": 5.801939,
-    "fx_effect_pp": 1.688757,
-    "usd_z": 0.218953,
-    "usd_score": 53.6492,
-    "fxn_z": -0.381235,
-    "fxn_score": 43.6461,
+    "gbm_usd_yoy_pct": 7.490537,
+    "gbm_fxn_yoy_pct": 5.801898,
+    "fx_effect_pp": 1.688639,
+    "usd_z": 0.218932,
+    "usd_score": 53.6489,
+    "fxn_z": -0.381227,
+    "fxn_score": 43.6462,
     "weights_pct": {
-      "US": 21.3022,
-      "CN": 44.4804,
-      "EA": 17.7707,
-      "JP": 8.3417,
+      "US": 21.3027,
+      "CN": 44.4814,
+      "EA": 17.771,
+      "JP": 8.3419,
       "GB": 4.121,
       "CA": 1.922,
-      "AU": 2.062
+      "AU": 2.0599
     },
     "local_yoy_pct": {
       "US": 5.4132,
@@ -257,21 +257,21 @@
   "latest_source_preview": {
     "month": "2026-07",
     "available_date": "2026-08-31",
-    "gbm_usd_yoy_pct": 7.490696,
-    "gbm_fxn_yoy_pct": 5.801939,
-    "fx_effect_pp": 1.688757,
-    "usd_z": 0.218953,
-    "usd_score": 53.6492,
-    "fxn_z": -0.381235,
-    "fxn_score": 43.6461,
+    "gbm_usd_yoy_pct": 7.490537,
+    "gbm_fxn_yoy_pct": 5.801898,
+    "fx_effect_pp": 1.688639,
+    "usd_z": 0.218932,
+    "usd_score": 53.6489,
+    "fxn_z": -0.381227,
+    "fxn_score": 43.6462,
     "weights_pct": {
-      "US": 21.3022,
-      "CN": 44.4804,
-      "EA": 17.7707,
-      "JP": 8.3417,
+      "US": 21.3027,
+      "CN": 44.4814,
+      "EA": 17.771,
+      "JP": 8.3419,
       "GB": 4.121,
       "CA": 1.922,
-      "AU": 2.062
+      "AU": 2.0599
     },
     "local_yoy_pct": {
       "US": 5.4132,
@@ -317,7 +317,7 @@
     {
       "filename": "raw/jp-boj-m2.json",
       "bytes": 2894,
-      "sha256": "bdab5e43a1fbd6c6d4fdd24e42e47bddba38c2bdba55d80283cc975920fa2b95",
+      "sha256": "65db5550606752c28d45fe4bd4d657ede705bb86b70bfb77de6bfae256925fb9",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
@@ -334,14 +334,14 @@
     },
     {
       "filename": "raw/au-rba-d3.csv",
-      "bytes": 60591,
-      "sha256": "511c4df6322db1e80f3f944d21558b895969d902d7761733d49dae767aa9c7d6",
+      "bytes": 60692,
+      "sha256": "7491a3c7b92a164ebe50e5433b0a20ad4a39217cc86a55be6829462184e54976",
       "source_url": "https://www.rba.gov.au/statistics/tables/csv/d3-data.csv"
     },
     {
       "filename": "raw/au-rba-d1.csv",
-      "bytes": 59249,
-      "sha256": "d51998798fa6172f52812dafbf66293f3d0661b522bc38fe07b534e1debb28a0",
+      "bytes": 59345,
+      "sha256": "dceb8208f49c886ec507d6d19ebd2071e4868a0e97f6e2e61b706b47d5d986ce",
       "source_url": "https://www.rba.gov.au/statistics/tables/csv/d1-data.csv"
     },
     {
