@@ -4,7 +4,7 @@
   "guardrail": "This capture does not compute, backfill or advance the production Fiscal score. Current revised history is not an exact substitute for the missing historical strict-release runner/vintages.",
   "production_state_modified": false,
   "purpose": "Preserve future source bytes prospectively so release/vintage provenance is not lost again.",
-  "retrieved_at": "2026-09-30T14:00:14Z",
+  "retrieved_at": "2026-10-01T14:38:58Z",
   "series": {
     "A091RC1Q027SBEA": {
       "content_type": "application/csv",
@@ -15,7 +15,7 @@
       "observation_count": 50,
       "raw_bytes": 994,
       "raw_sha256": "aecc72d79b5454e522512286058f72a38f1c8107d8c1c04053a3f77e70e5688a",
-      "retrieved_at": "2026-09-30T14:00:14Z",
+      "retrieved_at": "2026-10-01T14:38:58Z",
       "role": "federal_interest_payments",
       "source": "Federal Reserve Bank of St. Louis / FRED",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=A091RC1Q027SBEA&cosd=2014-01-01"
@@ -29,7 +29,7 @@
       "observation_count": 50,
       "raw_bytes": 1025,
       "raw_sha256": "716a6943646401760255b6096ba95dc7d2cdc621521d156c68cc9b95fb7f7419",
-      "retrieved_at": "2026-09-30T14:00:14Z",
+      "retrieved_at": "2026-10-01T14:38:58Z",
       "role": "federal_government_current_expenditures",
       "source": "Federal Reserve Bank of St. Louis / FRED",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=FGEXPND&cosd=2014-01-01"
@@ -43,7 +43,7 @@
       "observation_count": 50,
       "raw_bytes": 1025,
       "raw_sha256": "c6e96af7f4872b9f618b7a68d08353a6c511eaac615bc7cc3d2cd9d5e73893dc",
-      "retrieved_at": "2026-09-30T14:00:14Z",
+      "retrieved_at": "2026-10-01T14:38:58Z",
       "role": "federal_government_current_receipts",
       "source": "Federal Reserve Bank of St. Louis / FRED",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=FGRECPT&cosd=2014-01-01"
@@ -57,21 +57,21 @@
       "observation_count": 50,
       "raw_bytes": 1071,
       "raw_sha256": "872832187b1284d3d0c0e6e304de65fbcdf3f616c9b57664031a8e886f9f2ae8",
-      "retrieved_at": "2026-09-30T14:00:14Z",
+      "retrieved_at": "2026-10-01T14:38:58Z",
       "role": "nominal_gdp",
       "source": "Federal Reserve Bank of St. Louis / FRED",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=GDP&cosd=2014-01-01"
     },
     "GFDEBTN": {
       "content_type": "application/csv",
-      "first_observed_at": "2026-08-24T08:51:52Z",
+      "first_observed_at": "2026-10-01T14:38:58Z",
       "http_status": 200,
-      "latest_observation_date": "2026-01-01",
-      "latest_value": 39065421.0,
-      "observation_count": 49,
-      "raw_bytes": 1495,
-      "raw_sha256": "1df415170b08b93f309a64b5d85269e07ba998a8ae4fedb0c46b7b79376798a2",
-      "retrieved_at": "2026-09-30T14:00:14Z",
+      "latest_observation_date": "2026-04-01",
+      "latest_value": 39462398.0,
+      "observation_count": 50,
+      "raw_bytes": 1525,
+      "raw_sha256": "4b0ada484c9a1dbb531473e25b96d9ad3ba97a6d7b51df0393eb1204c53fb2f4",
+      "retrieved_at": "2026-10-01T14:38:58Z",
       "role": "federal_debt_total",
       "source": "Federal Reserve Bank of St. Louis / FRED",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=GFDEBTN&cosd=2014-01-01"
@@ -85,7 +85,7 @@
       "observation_count": 152,
       "raw_bytes": 4198,
       "raw_sha256": "15c85e14128222ca70300d5828c7c844eb79f08bca7128992115c7812b755528",
-      "retrieved_at": "2026-09-30T14:00:14Z",
+      "retrieved_at": "2026-10-01T14:38:58Z",
       "role": "monthly_federal_surplus_deficit",
       "source": "Federal Reserve Bank of St. Louis / FRED",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=MTSDS133FMS&cosd=2014-01-01"
