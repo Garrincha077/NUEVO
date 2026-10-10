@@ -21,26 +21,27 @@ function renderMoneyCharts(){const rows=moneyRangeRows();drawMoneyChart('moneyYo
 function initMoneyCharts(h){gmliMoneyHistory=h?.rows||[];document.querySelectorAll('[data-money-range]').forEach(b=>b.onclick=()=>setMoneyRange(b.dataset.moneyRange));renderMoneyCharts()}
 `;
 
-function req(html, old, replacement, label) {
-  if (!html.includes(old)) throw new Error(`Pages UI marker missing: ${label}`);
-  return html.replace(old, replacement);
+function req(html, old, replacement, label, enhancedMarker = replacement) {
+  if (html.includes(old)) return html.replace(old, replacement);
+  if (enhancedMarker && html.includes(enhancedMarker)) return html;
+  throw new Error(`Pages UI marker missing: ${label}`);
 }
 
 export function enhancePagesHtml(input) {
   let html = input;
-  html = req(html, '</head>', `${STYLE}\n</head>`, 'head');
-  html = req(html, '<nav class="nav"><a href="#now">REGIME</a>', '<nav class="nav"><a href="#now">REGIME</a><a href="#moneyTrend">MONEY TREND</a>', 'nav');
-  html = req(html, '</div></section>\n<section id="market"', `</div></section>\n${SECTION}\n<section id="market"`, 'trend section');
-  html = req(html, '<div class="tag">ENGINE FACT · USD Money</div>', '<div class="tag">ENGINE FACT · Global Money · USD-translated <span class="info" title="Broad money iz sedam regija preveden u USD. Uključuje i FX translation efekt.">i</span></div>', 'USD label');
-  html = req(html, '<div class="tag">ENGINE FACT · FX-neutral</div>', '<div class="tag">ENGINE FACT · Global Money · FX-neutral <span class="info" title="Underlying broad-money rast uz neutraliziranje FX translation efekta.">i</span></div>', 'FXN label');
+  html = req(html, '</head>', `${STYLE}\n</head>`, 'head', '.trendHead{display:flex');
+  html = req(html, '<nav class="nav"><a href="#now">REGIME</a>', '<nav class="nav"><a href="#now">REGIME</a><a href="#moneyTrend">MONEY TREND</a>', 'nav', '<a href="#moneyTrend">MONEY TREND</a>');
+  html = req(html, '</div></section>\n<section id="market"', `</div></section>\n${SECTION}\n<section id="market"`, 'trend section', '<section id="moneyTrend" class="section">');
+  html = req(html, '<div class="tag">ENGINE FACT · USD Money</div>', '<div class="tag">ENGINE FACT · Global Money · USD-translated <span class="info" title="Broad money iz sedam regija preveden u USD. Uključuje i FX translation efekt.">i</span></div>', 'USD label', 'ENGINE FACT · Global Money · USD-translated');
+  html = req(html, '<div class="tag">ENGINE FACT · FX-neutral</div>', '<div class="tag">ENGINE FACT · Global Money · FX-neutral <span class="info" title="Underlying broad-money rast uz neutraliziranje FX translation efekta.">i</span></div>', 'FXN label', 'ENGINE FACT · Global Money · FX-neutral');
   html = req(html, '<div class="tag">CURRENT INFERENCE</div>', '<div class="tag">CURRENT INFERENCE <span class="info" title="Research interpretacija: Money Core + Funding + market confirmation. Ne mijenja frozen Money metodologiju.">i</span></div>', 'inference tooltip');
   html = req(html, '<div class="tag">CONVICTION</div>', '<div class="tag">CONVICTION <span class="info" title="0-10 kvaliteta i slaganje dokaza. Nije očekivani return niti probability forecast.">i</span></div>', 'conviction tooltip');
-  html = req(html, '<section id="radar" class="section"><h2>Contrarian Trend Radar</h2>', '<section id="radar" class="section"><h2>Contrarian Trend Radar <span class="info" title="RESEARCH overlay za rano prepoznavanje asimetrije i promjene trenda. Nije Core niti automatski trading signal.">i</span></h2>', 'radar tooltip');
-  html = req(html, 'function marketCards(cm){', `${CHART_JS}\nfunction marketCards(cm){`, 'chart JS');
-  html = req(html, "const [r,d]=await Promise.all([fetch('/api/report').then(x=>x.json()),fetch('/api/radar').then(x=>x.json())]);", "const [r,d,h]=await Promise.all([fetch('/api/report').then(x=>x.json()),fetch('/api/radar').then(x=>x.json()),fetch('/api/history').then(x=>x.json())]);", 'history fetch');
+  html = req(html, '<section id="radar" class="section"><h2>Contrarian Trend Radar</h2>', '<section id="radar" class="section"><h2>Contrarian Trend Radar <span class="info" title="RESEARCH overlay za rano prepoznavanje asimetrije i promjene trenda. Nije Core niti automatski trading signal.">i</span></h2>', 'radar tooltip', 'Contrarian Trend Radar <span class="info"');
+  html = req(html, 'function marketCards(cm){', `${CHART_JS}\nfunction marketCards(cm){`, 'chart JS', 'let gmliMoneyHistory=[];let gmliMoneyRange=\'5Y\';');
+  html = req(html, "const [r,d]=await Promise.all([fetch('/api/report').then(x=>x.json()),fetch('/api/radar').then(x=>x.json())]);", "const [r,d,h]=await Promise.all([fetch('/api/report').then(x=>x.json()),fetch('/api/radar').then(x=>x.json()),fetch('/api/history').then(x=>x.json())]);", 'history fetch', "fetch('./api/history.json', {cache:'no-store'})");
   html = req(html, "usd.textContent=m.usd_score.toFixed(1);usdRegime.textContent=m.usd_regime+' · '+m.available_date;fxn.textContent=m.fx_neutral_score.toFixed(1);fxnRegime.textContent=m.fx_neutral_regime+' · '+m.agreement;", "usd.textContent=(m.usd_yoy_pct>=0?'+':'')+m.usd_yoy_pct.toFixed(2)+'% YoY';usdRegime.innerHTML='Score <b>'+m.usd_score.toFixed(1)+'</b> · '+m.usd_regime+' · '+m.available_date+'<br><span class=\"small muted\">FX contribution ≈ '+(m.usd_yoy_pct-m.fx_neutral_yoy_pct>=0?'+':'')+(m.usd_yoy_pct-m.fx_neutral_yoy_pct).toFixed(2)+' pp</span>';fxn.textContent=(m.fx_neutral_yoy_pct>=0?'+':'')+m.fx_neutral_yoy_pct.toFixed(2)+'% YoY';fxnRegime.innerHTML='Score <b>'+m.fx_neutral_score.toFixed(1)+'</b> · '+m.fx_neutral_regime+' · '+m.agreement+'<br><span class=\"small muted\">Underlying global broad-money growth, FX-neutral</span>';", 'Money display');
   html = req(html, "fresh.innerHTML=`<b>ENGINE FACT:</b> Core ${m.available_date} (${m.freshness}). <b>NOWCAST:</b>", "fresh.innerHTML=`<b>GLOBAL MONEY:</b> USD-translated ${(m.usd_yoy_pct>=0?'+':'')+m.usd_yoy_pct.toFixed(2)}% YoY · FX-neutral ${(m.fx_neutral_yoy_pct>=0?'+':'')+m.fx_neutral_yoy_pct.toFixed(2)}% YoY. <b>ENGINE FACT:</b> Core ${m.available_date} (${m.freshness}). <b>NOWCAST:</b>", 'headline growth');
-  html = req(html, ';marketGrid.innerHTML=marketCards(cm);', ';initMoneyCharts(h);marketGrid.innerHTML=marketCards(cm);', 'chart init');
-  html = req(html, '<a href="/api/report">/api/report</a>', '<a href="/api/report">/api/report</a> · <a href="/api/history">/api/history</a>', 'history link');
+  html = req(html, ';marketGrid.innerHTML=marketCards(cm);', ';initMoneyCharts(h);marketGrid.innerHTML=marketCards(cm);', 'chart init', ';initMoneyCharts(h);marketGrid.innerHTML=marketCards(cm);');
+  html = req(html, '<a href="/api/report">/api/report</a>', '<a href="/api/report">/api/report</a> · <a href="/api/history">/api/history</a>', 'history link', '<a href="/api/history">/api/history</a>');
   return html;
 }
