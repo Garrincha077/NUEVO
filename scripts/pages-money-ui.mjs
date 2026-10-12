@@ -22,8 +22,8 @@ function initMoneyCharts(h){gmliMoneyHistory=h?.rows||[];document.querySelectorA
 `;
 
 function req(html, old, replacement, label, enhancedMarker = replacement) {
-  if (html.includes(old)) return html.replace(old, replacement);
   if (enhancedMarker && html.includes(enhancedMarker)) return html;
+  if (html.includes(old)) return html.replace(old, replacement);
   throw new Error(`Pages UI marker missing: ${label}`);
 }
 
@@ -42,6 +42,6 @@ export function enhancePagesHtml(input) {
   html = req(html, "usd.textContent=m.usd_score.toFixed(1);usdRegime.textContent=m.usd_regime+' · '+m.available_date;fxn.textContent=m.fx_neutral_score.toFixed(1);fxnRegime.textContent=m.fx_neutral_regime+' · '+m.agreement;", "usd.textContent=(m.usd_yoy_pct>=0?'+':'')+m.usd_yoy_pct.toFixed(2)+'% YoY';usdRegime.innerHTML='Score <b>'+m.usd_score.toFixed(1)+'</b> · '+m.usd_regime+' · '+m.available_date+'<br><span class=\"small muted\">FX contribution ≈ '+(m.usd_yoy_pct-m.fx_neutral_yoy_pct>=0?'+':'')+(m.usd_yoy_pct-m.fx_neutral_yoy_pct).toFixed(2)+' pp</span>';fxn.textContent=(m.fx_neutral_yoy_pct>=0?'+':'')+m.fx_neutral_yoy_pct.toFixed(2)+'% YoY';fxnRegime.innerHTML='Score <b>'+m.fx_neutral_score.toFixed(1)+'</b> · '+m.fx_neutral_regime+' · '+m.agreement+'<br><span class=\"small muted\">Underlying global broad-money growth, FX-neutral</span>';", 'Money display');
   html = req(html, "fresh.innerHTML=`<b>ENGINE FACT:</b> Core ${m.available_date} (${m.freshness}). <b>NOWCAST:</b>", "fresh.innerHTML=`<b>GLOBAL MONEY:</b> USD-translated ${(m.usd_yoy_pct>=0?'+':'')+m.usd_yoy_pct.toFixed(2)}% YoY · FX-neutral ${(m.fx_neutral_yoy_pct>=0?'+':'')+m.fx_neutral_yoy_pct.toFixed(2)}% YoY. <b>ENGINE FACT:</b> Core ${m.available_date} (${m.freshness}). <b>NOWCAST:</b>", 'headline growth');
   html = req(html, ';marketGrid.innerHTML=marketCards(cm);', ';initMoneyCharts(h);marketGrid.innerHTML=marketCards(cm);', 'chart init', ';initMoneyCharts(h);marketGrid.innerHTML=marketCards(cm);');
-  html = req(html, '<a href="/api/report">/api/report</a>', '<a href="/api/report">/api/report</a> · <a href="/api/history">/api/history</a>', 'history link', '<a href="/api/history">/api/history</a>');
+  html = req(html, '<a href="/api/report">/api/report</a>', '<a href="/api/report">/api/report</a> · <a href="/api/history">/api/history</a>', 'history link', 'href="./api/history.json"');
   return html;
 }
