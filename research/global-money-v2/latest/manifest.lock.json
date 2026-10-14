@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-10-13T15:03:55Z",
+  "built_at": "2026-10-14T12:52:55Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -219,13 +219,13 @@
   "latest_eligible": {
     "month": "2026-07",
     "available_date": "2026-08-31",
-    "gbm_usd_yoy_pct": 7.490537,
-    "gbm_fxn_yoy_pct": 5.801898,
-    "fx_effect_pp": 1.688639,
-    "usd_z": 0.218932,
+    "gbm_usd_yoy_pct": 7.490545,
+    "gbm_fxn_yoy_pct": 5.801907,
+    "fx_effect_pp": 1.688638,
+    "usd_z": 0.218933,
     "usd_score": 53.6489,
-    "fxn_z": -0.381227,
-    "fxn_score": 43.6462,
+    "fxn_z": -0.381224,
+    "fxn_score": 43.6463,
     "weights_pct": {
       "US": 21.3027,
       "CN": 44.4814,
@@ -239,7 +239,7 @@
       "US": 5.4132,
       "CN": 7.7483,
       "EA": 3.326,
-      "JP": 2.1292,
+      "JP": 2.1293,
       "GB": 4.4226,
       "CA": 4.8205,
       "AU": 7.7
@@ -257,13 +257,13 @@
   "latest_source_preview": {
     "month": "2026-07",
     "available_date": "2026-08-31",
-    "gbm_usd_yoy_pct": 7.490537,
-    "gbm_fxn_yoy_pct": 5.801898,
-    "fx_effect_pp": 1.688639,
-    "usd_z": 0.218932,
+    "gbm_usd_yoy_pct": 7.490545,
+    "gbm_fxn_yoy_pct": 5.801907,
+    "fx_effect_pp": 1.688638,
+    "usd_z": 0.218933,
     "usd_score": 53.6489,
-    "fxn_z": -0.381227,
-    "fxn_score": 43.6462,
+    "fxn_z": -0.381224,
+    "fxn_score": 43.6463,
     "weights_pct": {
       "US": 21.3027,
       "CN": 44.4814,
@@ -277,7 +277,7 @@
       "US": 5.4132,
       "CN": 7.7483,
       "EA": 3.326,
-      "JP": 2.1292,
+      "JP": 2.1293,
       "GB": 4.4226,
       "CA": 4.8205,
       "AU": 7.7
@@ -304,8 +304,8 @@
     },
     {
       "filename": "raw/cn-pboc-v2.csv",
-      "bytes": 32594,
-      "sha256": "4e17726399824b58aab0844a85355e16bc7adede0c9bb96e8b31eaa8e1b76262",
+      "bytes": 32800,
+      "sha256": "c08428b2e0a6e2f12779aedfdeda23a9d2c550d710d6295a7266c8eef3e5e2c4",
       "source_url": "research/china-m2-official-v2/latest/china_m2_100m.csv"
     },
     {
@@ -316,8 +316,8 @@
     },
     {
       "filename": "raw/jp-boj-m2.json",
-      "bytes": 2894,
-      "sha256": "073c4275a59ac91a170c0f96b0673a611d6a59e03bb5354fbe01fabe0d51a1b0",
+      "bytes": 2910,
+      "sha256": "8a203a9026507c4258c8f75db81c37d0d10737c55a7f653dc8cf0daf3f853c54",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
@@ -328,8 +328,8 @@
     },
     {
       "filename": "raw/ca-boc-m2.csv",
-      "bytes": 3841,
-      "sha256": "35ea0d8ddbcaaed8f80afb2e5f75b1fd97419de0abc988b6d123f1f497818cbc",
+      "bytes": 3865,
+      "sha256": "5af4bc59c15a769806c498ca09e0c9ccf62a8cfc0aaea1e6ec928545e787551a",
       "source_url": "https://www.bankofcanada.ca/valet/observations/V41552796/csv?start_date=2014-01-01"
     },
     {

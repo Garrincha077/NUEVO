@@ -2,8 +2,8 @@
 "https://www.bankofcanada.ca/terms/"
 
 "SERIES"
-"id","label","description"
-"V41552796","M2 (gross) (Seasonally adjusted)","M3 (gross) - M2 (gross)"
+"id","label","description","date_format"
+"V41552796","M2 (gross) (Seasonally adjusted)","M3 (gross) - M2 (gross)","monthly"
 
 "OBSERVATIONS"
 "date","V41552796"
