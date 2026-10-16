@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-10-15T12:39:42Z",
+  "built_at": "2026-10-16T12:25:47Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -317,7 +317,7 @@
     {
       "filename": "raw/jp-boj-m2.json",
       "bytes": 2910,
-      "sha256": "54c2951279de4c7266ab7dd10058a6c6b92c7f6a3ade6c74de9abc246fbd418c",
+      "sha256": "80691f7e4e9b2806d2e4653a1a94f7c892d2fab9c67c0aacdd2d82814f7f6e16",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
