@@ -23,6 +23,8 @@ const MOBILE_INFO_SCRIPT = `<script>
 </script>`;
 
 export function enhanceMobileInfo(input) {
+  // The checked-in Pages template already contains the complete popover UI.
+  if (input.includes('id="infoPopover"') && input.includes('id="infoPopoverClose"') && input.includes('id="infoPopoverText"')) return input;
   if (!input.includes('class="info"')) throw new Error('Pages info markers missing');
   let html = input.replace('</head>', `${MOBILE_INFO_STYLE}\n</head>`);
   html = html.replace('</main>', '<div id="infoPopover" class="infoPopover" role="status" aria-live="polite"><button id="infoPopoverClose" class="infoPopoverClose" aria-label="Zatvori">×</button><div id="infoPopoverText"></div></div></main>');
