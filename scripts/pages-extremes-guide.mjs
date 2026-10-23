@@ -247,6 +247,16 @@ export function enhanceExtremesGuide(input, data) {
 </section>`;
 
   let html = input;
+  // Existing template has the UI: replace the data-dependent historical charts
+  // with the freshly verified snapshot rather than injecting a duplicate section.
+  if (html.includes('<section id="moneyExtremes" class="section">')) {
+    const start = html.indexOf('<section id="moneyExtremes" class="section">');
+    const end = html.indexOf('<section id="market"', start);
+    if (end < 0 || !html.slice(start, end).trimEnd().endsWith('</section>') || !html.includes('<section id="investorGuide"')) {
+      throw new Error('Pages extremes/guide existing section boundary missing');
+    }
+    return html.slice(0, start) + section + '\n' + html.slice(end);
+  }
   html = req(html, '</head>', `${STYLE}\n</head>`, 'head');
   html = req(html, '<a href="#moneyTrend">MONEY TREND</a>', '<a href="#moneyTrend">MONEY TREND</a><a href="#moneyExtremes">EXTREMES</a>', 'money nav');
   html = req(html, '</nav>', '<a href="#investorGuide">GUIDE</a></nav>', 'guide nav');
