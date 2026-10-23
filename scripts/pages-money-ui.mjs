@@ -28,6 +28,14 @@ function req(html, old, replacement, label) {
 
 export function enhancePagesHtml(input) {
   let html = input;
+  // The checked-in Pages template may already contain the complete Money UI.
+  // Never inject it twice; leave partially enhanced templates fail-closed below.
+  if (html.includes('<section id="moneyTrend" class="section">') &&
+      html.includes('let gmliMoneyHistory=[];') &&
+      html.includes('ENGINE FACT · Global Money · USD-translated') &&
+      html.includes('initMoneyCharts(h);marketGrid.innerHTML=marketCards(cm);')) {
+    return html;
+  }
   html = req(html, '</head>', `${STYLE}\n</head>`, 'head');
   html = req(html, '<nav class="nav"><a href="#now">REGIME</a>', '<nav class="nav"><a href="#now">REGIME</a><a href="#moneyTrend">MONEY TREND</a>', 'nav');
   html = req(html, '</div></section>\n<section id="market"', `</div></section>\n${SECTION}\n<section id="market"`, 'trend section');
