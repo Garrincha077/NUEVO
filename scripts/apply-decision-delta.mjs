@@ -21,6 +21,15 @@ function assert(value, message) {
 }
 
 function enhanceVerifiedPagesHtml(rawHtml) {
+  // The checked-in template may already contain the independently initialized
+  // Decision Brief. Validate it without reinjecting duplicate nav/scripts.
+  if (rawHtml.includes('<section id="decisionBrief"') &&
+      rawHtml.includes('<a href="#decisionBrief">DECISION</a>') &&
+      rawHtml.includes('Decision Brief unavailable: ') &&
+      rawHtml.includes('window.renderDecisionBrief')) {
+    assert(!rawHtml.includes('initMoneyCharts(h);renderDecisionBrief(r);'), 'Decision Delta UI unsafe initialization order remains');
+    return rawHtml;
+  }
   const contextLink = '<a href="#contextLayers">CONTEXT</a>';
   const hadContextLink = rawHtml.includes(contextLink);
   let prepared = hadContextLink ? rawHtml.replace(contextLink, '') : rawHtml;
