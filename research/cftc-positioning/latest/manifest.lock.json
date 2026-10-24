@@ -1,9 +1,9 @@
 {
   "status": "PASS_CFTC_POSITIONING_SOURCE_GUARDS",
   "source_contract": "CFTC_OFFICIAL_HISTORICAL_COMPRESSED_FUTURES_ONLY",
-  "refreshed_at": "2026-10-17T01:20:05.966550Z",
-  "window_start": "2023-09-17",
-  "latest_report_date": "2026-10-13",
+  "refreshed_at": "2026-10-24T01:37:04.411179Z",
+  "window_start": "2023-09-24",
+  "latest_report_date": "2026-10-20",
   "latest_report_age_days": 4,
   "years": [
     2023,
@@ -42,11 +42,11 @@
     {
       "kind": "tff",
       "url": "https://www.cftc.gov/files/dea/history/fut_fin_txt_2026.zip",
-      "sha256": "6722fc377087c9380d7504345ac7145a891185ea7d57c9ad3f184b29da43aa57",
-      "zip_bytes": 578812,
+      "sha256": "b9920b083356418e594da9a9903c5e0782984780c1af970d34f949e1b27d3559",
+      "zip_bytes": 596508,
       "member": "FinFutYY.txt",
-      "member_bytes": 2807533,
-      "usable_rows": 3625
+      "member_bytes": 2884064,
+      "usable_rows": 3724
     },
     {
       "kind": "disagg",
@@ -78,11 +78,11 @@
     {
       "kind": "disagg",
       "url": "https://www.cftc.gov/files/dea/history/fut_disagg_txt_2026.zip",
-      "sha256": "be28cebb914e0b4ef9325df0a66d1594a478f19f906ec23a289339977cbd13b0",
-      "zip_bytes": 1981329,
+      "sha256": "131a1a6d909481633425609b6563f0257a36a57427fec070910e23e8297551c3",
+      "zip_bytes": 2028941,
       "member": "f_year.txt",
-      "member_bytes": 18047430,
-      "usable_rows": 11170
+      "member_bytes": 18494823,
+      "usable_rows": 11447
     }
   ],
   "core_mapping_guard": "PASS_SPY_QQQ_GLD_DBC",
