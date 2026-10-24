@@ -1,0 +1,5693 @@
+{
+  "schema_version": "gmli-pages-context-history-v1",
+  "generated_at": "2026-10-24T11:38:49.924Z",
+  "source": "VERIFIED_REPOSITORY_HISTORY_AND_ARCHIVED_MONTHLY_PRICE_INPUTS",
+  "scoring_effect": "NONE",
+  "availability_policy": "ONLY_ROWS_AVAILABLE_ON_OR_BEFORE_ACTIVE_CANONICAL_REPORT_VINTAGE",
+  "funding": {
+    "evidence_tier": "OVERLAY",
+    "version": "GMLI_FUNDING_V2_EFFECTIVE_CONDITIONS",
+    "role": "REACTIVE_CONFIRMATION",
+    "active_available_date": "2026-09-30",
+    "source_file": "research/funding-v2/latest/history.csv",
+    "excluded_future_rows": 1,
+    "rows": [
+      {
+        "observation_month": "2006-02",
+        "available_date": "2006-03-31",
+        "score": 40.6573,
+        "regime": "NEUTRAL",
+        "structural_support_score": 47.0113,
+        "observed_conditions_score": 40.6573
+      },
+      {
+        "observation_month": "2006-03",
+        "available_date": "2006-04-30",
+        "score": 41.7846,
+        "regime": "NEUTRAL",
+        "structural_support_score": 48.1793,
+        "observed_conditions_score": 41.7846
+      },
+      {
+        "observation_month": "2006-04",
+        "available_date": "2006-05-31",
+        "score": 36.9418,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 39.7126,
+        "observed_conditions_score": 36.9418
+      },
+      {
+        "observation_month": "2006-05",
+        "available_date": "2006-06-30",
+        "score": 32.0626,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 40.2737,
+        "observed_conditions_score": 32.0626
+      },
+      {
+        "observation_month": "2006-06",
+        "available_date": "2006-07-31",
+        "score": 24.0833,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 33.1201,
+        "observed_conditions_score": 24.0833
+      },
+      {
+        "observation_month": "2006-07",
+        "available_date": "2006-08-31",
+        "score": 27.5178,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 35.9837,
+        "observed_conditions_score": 27.5178
+      },
+      {
+        "observation_month": "2006-08",
+        "available_date": "2006-09-30",
+        "score": 38.0881,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 48.8197,
+        "observed_conditions_score": 38.0881
+      },
+      {
+        "observation_month": "2006-09",
+        "available_date": "2006-10-31",
+        "score": 41.1552,
+        "regime": "NEUTRAL",
+        "structural_support_score": 47.7511,
+        "observed_conditions_score": 41.1552
+      },
+      {
+        "observation_month": "2006-10",
+        "available_date": "2006-11-30",
+        "score": 47.7824,
+        "regime": "NEUTRAL",
+        "structural_support_score": 47.7824,
+        "observed_conditions_score": 49.827
+      },
+      {
+        "observation_month": "2006-11",
+        "available_date": "2006-12-31",
+        "score": 48.099,
+        "regime": "NEUTRAL",
+        "structural_support_score": 48.099,
+        "observed_conditions_score": 50.4326
+      },
+      {
+        "observation_month": "2006-12",
+        "available_date": "2007-01-31",
+        "score": 34.3647,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 44.906,
+        "observed_conditions_score": 34.3647
+      },
+      {
+        "observation_month": "2007-01",
+        "available_date": "2007-02-28",
+        "score": 42.4157,
+        "regime": "NEUTRAL",
+        "structural_support_score": 52.4074,
+        "observed_conditions_score": 42.4157
+      },
+      {
+        "observation_month": "2007-02",
+        "available_date": "2007-03-31",
+        "score": 49.6988,
+        "regime": "NEUTRAL",
+        "structural_support_score": 49.6988,
+        "observed_conditions_score": 50.75
+      },
+      {
+        "observation_month": "2007-03",
+        "available_date": "2007-04-30",
+        "score": 39.9987,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 53.9888,
+        "observed_conditions_score": 39.9987
+      },
+      {
+        "observation_month": "2007-04",
+        "available_date": "2007-05-31",
+        "score": 36.5155,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 42.6678,
+        "observed_conditions_score": 36.5155
+      },
+      {
+        "observation_month": "2007-05",
+        "available_date": "2007-06-30",
+        "score": 23.8808,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 39.2501,
+        "observed_conditions_score": 23.8808
+      },
+      {
+        "observation_month": "2007-06",
+        "available_date": "2007-07-31",
+        "score": 16.2877,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 30.1388,
+        "observed_conditions_score": 16.2877
+      },
+      {
+        "observation_month": "2007-07",
+        "available_date": "2007-08-31",
+        "score": 10.7714,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 31.7771,
+        "observed_conditions_score": 10.7714
+      },
+      {
+        "observation_month": "2007-08",
+        "available_date": "2007-09-30",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 35.5889,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2007-09",
+        "available_date": "2007-10-31",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 46.6244,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2007-10",
+        "available_date": "2007-11-30",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 42.5467,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2007-11",
+        "available_date": "2007-12-31",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 46.6753,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2007-12",
+        "available_date": "2008-01-31",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.7222,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2008-01",
+        "available_date": "2008-02-29",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 55.1327,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2008-02",
+        "available_date": "2008-03-31",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 48.3167,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2008-03",
+        "available_date": "2008-04-30",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 52.958,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2008-04",
+        "available_date": "2008-05-31",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 44.1309,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2008-05",
+        "available_date": "2008-06-30",
+        "score": 8.5916,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 52.5227,
+        "observed_conditions_score": 8.5916
+      },
+      {
+        "observation_month": "2008-06",
+        "available_date": "2008-07-31",
+        "score": 6.0594,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 44.4629,
+        "observed_conditions_score": 6.0594
+      },
+      {
+        "observation_month": "2008-07",
+        "available_date": "2008-08-31",
+        "score": 3.7329,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 51.037,
+        "observed_conditions_score": 3.7329
+      },
+      {
+        "observation_month": "2008-08",
+        "available_date": "2008-09-30",
+        "score": 8.1744,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 41.6585,
+        "observed_conditions_score": 8.1744
+      },
+      {
+        "observation_month": "2008-09",
+        "available_date": "2008-10-31",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 53.3755,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2008-10",
+        "available_date": "2008-11-30",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 39.3598,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2008-11",
+        "available_date": "2008-12-31",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.71,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2008-12",
+        "available_date": "2009-01-31",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 44.8941,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2009-01",
+        "available_date": "2009-02-28",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 44.3988,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2009-02",
+        "available_date": "2009-03-31",
+        "score": 4.8258,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 44.0882,
+        "observed_conditions_score": 4.8258
+      },
+      {
+        "observation_month": "2009-03",
+        "available_date": "2009-04-30",
+        "score": 5.9178,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 45.3762,
+        "observed_conditions_score": 5.9178
+      },
+      {
+        "observation_month": "2009-04",
+        "available_date": "2009-05-31",
+        "score": 17.195,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 49.684,
+        "observed_conditions_score": 17.195
+      },
+      {
+        "observation_month": "2009-05",
+        "available_date": "2009-06-30",
+        "score": 27.1892,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 47.6813,
+        "observed_conditions_score": 27.1892
+      },
+      {
+        "observation_month": "2009-06",
+        "available_date": "2009-07-31",
+        "score": 31.6874,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 42.812,
+        "observed_conditions_score": 31.6874
+      },
+      {
+        "observation_month": "2009-07",
+        "available_date": "2009-08-31",
+        "score": 36.2161,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 46.036,
+        "observed_conditions_score": 36.2161
+      },
+      {
+        "observation_month": "2009-08",
+        "available_date": "2009-09-30",
+        "score": 41.5027,
+        "regime": "NEUTRAL",
+        "structural_support_score": 47.5216,
+        "observed_conditions_score": 41.5027
+      },
+      {
+        "observation_month": "2009-09",
+        "available_date": "2009-10-31",
+        "score": 44.2281,
+        "regime": "NEUTRAL",
+        "structural_support_score": 51.4944,
+        "observed_conditions_score": 44.2281
+      },
+      {
+        "observation_month": "2009-10",
+        "available_date": "2009-11-30",
+        "score": 45.5989,
+        "regime": "NEUTRAL",
+        "structural_support_score": 54.0087,
+        "observed_conditions_score": 45.5989
+      },
+      {
+        "observation_month": "2009-11",
+        "available_date": "2009-12-31",
+        "score": 46.9347,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.7132,
+        "observed_conditions_score": 46.9347
+      },
+      {
+        "observation_month": "2009-12",
+        "available_date": "2010-01-31",
+        "score": 48.9804,
+        "regime": "NEUTRAL",
+        "structural_support_score": 54.9877,
+        "observed_conditions_score": 48.9804
+      },
+      {
+        "observation_month": "2010-01",
+        "available_date": "2010-02-28",
+        "score": 51.4355,
+        "regime": "NEUTRAL",
+        "structural_support_score": 53.9983,
+        "observed_conditions_score": 51.4355
+      },
+      {
+        "observation_month": "2010-02",
+        "available_date": "2010-03-31",
+        "score": 51.5463,
+        "regime": "NEUTRAL",
+        "structural_support_score": 54.145,
+        "observed_conditions_score": 51.5463
+      },
+      {
+        "observation_month": "2010-03",
+        "available_date": "2010-04-30",
+        "score": 53.727,
+        "regime": "NEUTRAL",
+        "structural_support_score": 53.727,
+        "observed_conditions_score": 54.4184
+      },
+      {
+        "observation_month": "2010-04",
+        "available_date": "2010-05-31",
+        "score": 53.3847,
+        "regime": "NEUTRAL",
+        "structural_support_score": 53.3847,
+        "observed_conditions_score": 56.8337
+      },
+      {
+        "observation_month": "2010-05",
+        "available_date": "2010-06-30",
+        "score": 51.6512,
+        "regime": "NEUTRAL",
+        "structural_support_score": 57.3648,
+        "observed_conditions_score": 51.6512
+      },
+      {
+        "observation_month": "2010-06",
+        "available_date": "2010-07-31",
+        "score": 49.7196,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.955,
+        "observed_conditions_score": 49.7196
+      },
+      {
+        "observation_month": "2010-07",
+        "available_date": "2010-08-31",
+        "score": 52.5144,
+        "regime": "NEUTRAL",
+        "structural_support_score": 61.7796,
+        "observed_conditions_score": 52.5144
+      },
+      {
+        "observation_month": "2010-08",
+        "available_date": "2010-09-30",
+        "score": 53.8496,
+        "regime": "NEUTRAL",
+        "structural_support_score": 66.9178,
+        "observed_conditions_score": 53.8496
+      },
+      {
+        "observation_month": "2010-09",
+        "available_date": "2010-10-31",
+        "score": 54.5234,
+        "regime": "NEUTRAL",
+        "structural_support_score": 68.1449,
+        "observed_conditions_score": 54.5234
+      },
+      {
+        "observation_month": "2010-10",
+        "available_date": "2010-11-30",
+        "score": 56.384,
+        "regime": "NEUTRAL",
+        "structural_support_score": 72.0281,
+        "observed_conditions_score": 56.384
+      },
+      {
+        "observation_month": "2010-11",
+        "available_date": "2010-12-31",
+        "score": 57.4468,
+        "regime": "NEUTRAL",
+        "structural_support_score": 69.6729,
+        "observed_conditions_score": 57.4468
+      },
+      {
+        "observation_month": "2010-12",
+        "available_date": "2011-01-31",
+        "score": 58.4597,
+        "regime": "NEUTRAL",
+        "structural_support_score": 61.3855,
+        "observed_conditions_score": 58.4597
+      },
+      {
+        "observation_month": "2011-01",
+        "available_date": "2011-02-28",
+        "score": 60.0858,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 60.7902,
+        "observed_conditions_score": 60.0858
+      },
+      {
+        "observation_month": "2011-02",
+        "available_date": "2011-03-31",
+        "score": 57.5171,
+        "regime": "NEUTRAL",
+        "structural_support_score": 57.5171,
+        "observed_conditions_score": 60.7104
+      },
+      {
+        "observation_month": "2011-03",
+        "available_date": "2011-04-30",
+        "score": 58.9626,
+        "regime": "NEUTRAL",
+        "structural_support_score": 60.7113,
+        "observed_conditions_score": 58.9626
+      },
+      {
+        "observation_month": "2011-04",
+        "available_date": "2011-05-31",
+        "score": 59.7761,
+        "regime": "NEUTRAL",
+        "structural_support_score": 60.964,
+        "observed_conditions_score": 59.7761
+      },
+      {
+        "observation_month": "2011-05",
+        "available_date": "2011-06-30",
+        "score": 59.9399,
+        "regime": "NEUTRAL",
+        "structural_support_score": 63.9529,
+        "observed_conditions_score": 59.9399
+      },
+      {
+        "observation_month": "2011-06",
+        "available_date": "2011-07-31",
+        "score": 58.9741,
+        "regime": "NEUTRAL",
+        "structural_support_score": 65.4552,
+        "observed_conditions_score": 58.9741
+      },
+      {
+        "observation_month": "2011-07",
+        "available_date": "2011-08-31",
+        "score": 58.1509,
+        "regime": "NEUTRAL",
+        "structural_support_score": 65.9728,
+        "observed_conditions_score": 58.1509
+      },
+      {
+        "observation_month": "2011-08",
+        "available_date": "2011-09-30",
+        "score": 52.8016,
+        "regime": "NEUTRAL",
+        "structural_support_score": 72.3736,
+        "observed_conditions_score": 52.8016
+      },
+      {
+        "observation_month": "2011-09",
+        "available_date": "2011-10-31",
+        "score": 49.5537,
+        "regime": "NEUTRAL",
+        "structural_support_score": 73.1895,
+        "observed_conditions_score": 49.5537
+      },
+      {
+        "observation_month": "2011-10",
+        "available_date": "2011-11-30",
+        "score": 50.3379,
+        "regime": "NEUTRAL",
+        "structural_support_score": 70.8822,
+        "observed_conditions_score": 50.3379
+      },
+      {
+        "observation_month": "2011-11",
+        "available_date": "2011-12-31",
+        "score": 50.6349,
+        "regime": "NEUTRAL",
+        "structural_support_score": 72.4926,
+        "observed_conditions_score": 50.6349
+      },
+      {
+        "observation_month": "2011-12",
+        "available_date": "2012-01-31",
+        "score": 50.3859,
+        "regime": "NEUTRAL",
+        "structural_support_score": 72.0728,
+        "observed_conditions_score": 50.3859
+      },
+      {
+        "observation_month": "2012-01",
+        "available_date": "2012-02-29",
+        "score": 53.3686,
+        "regime": "NEUTRAL",
+        "structural_support_score": 72.8921,
+        "observed_conditions_score": 53.3686
+      },
+      {
+        "observation_month": "2012-02",
+        "available_date": "2012-03-31",
+        "score": 56.1151,
+        "regime": "NEUTRAL",
+        "structural_support_score": 74.06,
+        "observed_conditions_score": 56.1151
+      },
+      {
+        "observation_month": "2012-03",
+        "available_date": "2012-04-30",
+        "score": 57.26,
+        "regime": "NEUTRAL",
+        "structural_support_score": 71.5543,
+        "observed_conditions_score": 57.26
+      },
+      {
+        "observation_month": "2012-04",
+        "available_date": "2012-05-31",
+        "score": 56.9708,
+        "regime": "NEUTRAL",
+        "structural_support_score": 72.2924,
+        "observed_conditions_score": 56.9708
+      },
+      {
+        "observation_month": "2012-05",
+        "available_date": "2012-06-30",
+        "score": 55.2325,
+        "regime": "NEUTRAL",
+        "structural_support_score": 73.586,
+        "observed_conditions_score": 55.2325
+      },
+      {
+        "observation_month": "2012-06",
+        "available_date": "2012-07-31",
+        "score": 53.918,
+        "regime": "NEUTRAL",
+        "structural_support_score": 74.3824,
+        "observed_conditions_score": 53.918
+      },
+      {
+        "observation_month": "2012-07",
+        "available_date": "2012-08-31",
+        "score": 55.9059,
+        "regime": "NEUTRAL",
+        "structural_support_score": 75.2254,
+        "observed_conditions_score": 55.9059
+      },
+      {
+        "observation_month": "2012-08",
+        "available_date": "2012-09-30",
+        "score": 57.4664,
+        "regime": "NEUTRAL",
+        "structural_support_score": 73.6556,
+        "observed_conditions_score": 57.4664
+      },
+      {
+        "observation_month": "2012-09",
+        "available_date": "2012-10-31",
+        "score": 59.107,
+        "regime": "NEUTRAL",
+        "structural_support_score": 73.8833,
+        "observed_conditions_score": 59.107
+      },
+      {
+        "observation_month": "2012-10",
+        "available_date": "2012-11-30",
+        "score": 60.3098,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 73.4354,
+        "observed_conditions_score": 60.3098
+      },
+      {
+        "observation_month": "2012-11",
+        "available_date": "2012-12-31",
+        "score": 60.1114,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 73.2139,
+        "observed_conditions_score": 60.1114
+      },
+      {
+        "observation_month": "2012-12",
+        "available_date": "2013-01-31",
+        "score": 60.4948,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 72.2949,
+        "observed_conditions_score": 60.4948
+      },
+      {
+        "observation_month": "2013-01",
+        "available_date": "2013-02-28",
+        "score": 61.1331,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 70.1685,
+        "observed_conditions_score": 61.1331
+      },
+      {
+        "observation_month": "2013-02",
+        "available_date": "2013-03-31",
+        "score": 61.2463,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 69.1666,
+        "observed_conditions_score": 61.2463
+      },
+      {
+        "observation_month": "2013-03",
+        "available_date": "2013-04-30",
+        "score": 62.2363,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 69.2285,
+        "observed_conditions_score": 62.2363
+      },
+      {
+        "observation_month": "2013-04",
+        "available_date": "2013-05-31",
+        "score": 63.2145,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 70.2801,
+        "observed_conditions_score": 63.2145
+      },
+      {
+        "observation_month": "2013-05",
+        "available_date": "2013-06-30",
+        "score": 63.7091,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 67.8372,
+        "observed_conditions_score": 63.7091
+      },
+      {
+        "observation_month": "2013-06",
+        "available_date": "2013-07-31",
+        "score": 61.7042,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 62.1063,
+        "observed_conditions_score": 61.7042
+      },
+      {
+        "observation_month": "2013-07",
+        "available_date": "2013-08-31",
+        "score": 59.4291,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.4291,
+        "observed_conditions_score": 61.7469
+      },
+      {
+        "observation_month": "2013-08",
+        "available_date": "2013-09-30",
+        "score": 58.1069,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.1069,
+        "observed_conditions_score": 62.4827
+      },
+      {
+        "observation_month": "2013-09",
+        "available_date": "2013-10-31",
+        "score": 56.977,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.977,
+        "observed_conditions_score": 62.4619
+      },
+      {
+        "observation_month": "2013-10",
+        "available_date": "2013-11-30",
+        "score": 59.4227,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.4227,
+        "observed_conditions_score": 63.0364
+      },
+      {
+        "observation_month": "2013-11",
+        "available_date": "2013-12-31",
+        "score": 58.7158,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.7158,
+        "observed_conditions_score": 64.1302
+      },
+      {
+        "observation_month": "2013-12",
+        "available_date": "2014-01-31",
+        "score": 56.6672,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.6672,
+        "observed_conditions_score": 64.6312
+      },
+      {
+        "observation_month": "2014-01",
+        "available_date": "2014-02-28",
+        "score": 56.8452,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.8452,
+        "observed_conditions_score": 64.6281
+      },
+      {
+        "observation_month": "2014-02",
+        "available_date": "2014-03-31",
+        "score": 58.0928,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.0928,
+        "observed_conditions_score": 64.6912
+      },
+      {
+        "observation_month": "2014-03",
+        "available_date": "2014-04-30",
+        "score": 57.6154,
+        "regime": "NEUTRAL",
+        "structural_support_score": 57.6154,
+        "observed_conditions_score": 64.5007
+      },
+      {
+        "observation_month": "2014-04",
+        "available_date": "2014-05-31",
+        "score": 57.2109,
+        "regime": "NEUTRAL",
+        "structural_support_score": 57.2109,
+        "observed_conditions_score": 63.917
+      },
+      {
+        "observation_month": "2014-05",
+        "available_date": "2014-06-30",
+        "score": 58.6959,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.6959,
+        "observed_conditions_score": 63.7078
+      },
+      {
+        "observation_month": "2014-06",
+        "available_date": "2014-07-31",
+        "score": 58.3567,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.3567,
+        "observed_conditions_score": 64.214
+      },
+      {
+        "observation_month": "2014-07",
+        "available_date": "2014-08-31",
+        "score": 58.6449,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.6449,
+        "observed_conditions_score": 63.4908
+      },
+      {
+        "observation_month": "2014-08",
+        "available_date": "2014-09-30",
+        "score": 59.2136,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.2136,
+        "observed_conditions_score": 62.9816
+      },
+      {
+        "observation_month": "2014-09",
+        "available_date": "2014-10-31",
+        "score": 57.1708,
+        "regime": "NEUTRAL",
+        "structural_support_score": 57.1708,
+        "observed_conditions_score": 62.8049
+      },
+      {
+        "observation_month": "2014-10",
+        "available_date": "2014-11-30",
+        "score": 58.6108,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.6108,
+        "observed_conditions_score": 61.8044
+      },
+      {
+        "observation_month": "2014-11",
+        "available_date": "2014-12-31",
+        "score": 58.0828,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.0828,
+        "observed_conditions_score": 62.2928
+      },
+      {
+        "observation_month": "2014-12",
+        "available_date": "2015-01-31",
+        "score": 58.0849,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.0849,
+        "observed_conditions_score": 61.1889
+      },
+      {
+        "observation_month": "2015-01",
+        "available_date": "2015-02-28",
+        "score": 59.7034,
+        "regime": "NEUTRAL",
+        "structural_support_score": 60.668,
+        "observed_conditions_score": 59.7034
+      },
+      {
+        "observation_month": "2015-02",
+        "available_date": "2015-03-31",
+        "score": 59.3184,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.791,
+        "observed_conditions_score": 59.3184
+      },
+      {
+        "observation_month": "2015-03",
+        "available_date": "2015-04-30",
+        "score": 59.3565,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.3565,
+        "observed_conditions_score": 59.4972
+      },
+      {
+        "observation_month": "2015-04",
+        "available_date": "2015-05-31",
+        "score": 59.5335,
+        "regime": "NEUTRAL",
+        "structural_support_score": 60.9835,
+        "observed_conditions_score": 59.5335
+      },
+      {
+        "observation_month": "2015-05",
+        "available_date": "2015-06-30",
+        "score": 58.0903,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.0903,
+        "observed_conditions_score": 59.3378
+      },
+      {
+        "observation_month": "2015-06",
+        "available_date": "2015-07-31",
+        "score": 56.1407,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.1407,
+        "observed_conditions_score": 59.3168
+      },
+      {
+        "observation_month": "2015-07",
+        "available_date": "2015-08-31",
+        "score": 56.3316,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.3316,
+        "observed_conditions_score": 58.6956
+      },
+      {
+        "observation_month": "2015-08",
+        "available_date": "2015-09-30",
+        "score": 56.9,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.9,
+        "observed_conditions_score": 57.5366
+      },
+      {
+        "observation_month": "2015-09",
+        "available_date": "2015-10-31",
+        "score": 56.1247,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.1247,
+        "observed_conditions_score": 56.6888
+      },
+      {
+        "observation_month": "2015-10",
+        "available_date": "2015-11-30",
+        "score": 57.2195,
+        "regime": "NEUTRAL",
+        "structural_support_score": 57.2195,
+        "observed_conditions_score": 57.421
+      },
+      {
+        "observation_month": "2015-11",
+        "available_date": "2015-12-31",
+        "score": 55.3762,
+        "regime": "NEUTRAL",
+        "structural_support_score": 55.3762,
+        "observed_conditions_score": 57.6576
+      },
+      {
+        "observation_month": "2015-12",
+        "available_date": "2016-01-31",
+        "score": 55.1261,
+        "regime": "NEUTRAL",
+        "structural_support_score": 55.1261,
+        "observed_conditions_score": 55.9522
+      },
+      {
+        "observation_month": "2016-01",
+        "available_date": "2016-02-29",
+        "score": 54.814,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.125,
+        "observed_conditions_score": 54.814
+      },
+      {
+        "observation_month": "2016-02",
+        "available_date": "2016-03-31",
+        "score": 54.7069,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.9496,
+        "observed_conditions_score": 54.7069
+      },
+      {
+        "observation_month": "2016-03",
+        "available_date": "2016-04-30",
+        "score": 55.5861,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.8674,
+        "observed_conditions_score": 55.5861
+      },
+      {
+        "observation_month": "2016-04",
+        "available_date": "2016-05-31",
+        "score": 55.4373,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.8324,
+        "observed_conditions_score": 55.4373
+      },
+      {
+        "observation_month": "2016-05",
+        "available_date": "2016-06-30",
+        "score": 55.2932,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.4798,
+        "observed_conditions_score": 55.2932
+      },
+      {
+        "observation_month": "2016-06",
+        "available_date": "2016-07-31",
+        "score": 54.8565,
+        "regime": "NEUTRAL",
+        "structural_support_score": 60.3655,
+        "observed_conditions_score": 54.8565
+      },
+      {
+        "observation_month": "2016-07",
+        "available_date": "2016-08-31",
+        "score": 54.6688,
+        "regime": "NEUTRAL",
+        "structural_support_score": 61.6634,
+        "observed_conditions_score": 54.6688
+      },
+      {
+        "observation_month": "2016-08",
+        "available_date": "2016-09-30",
+        "score": 54.6561,
+        "regime": "NEUTRAL",
+        "structural_support_score": 60.9052,
+        "observed_conditions_score": 54.6561
+      },
+      {
+        "observation_month": "2016-09",
+        "available_date": "2016-10-31",
+        "score": 53.694,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.8992,
+        "observed_conditions_score": 53.694
+      },
+      {
+        "observation_month": "2016-10",
+        "available_date": "2016-11-30",
+        "score": 54.3097,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.2619,
+        "observed_conditions_score": 54.3097
+      },
+      {
+        "observation_month": "2016-11",
+        "available_date": "2016-12-31",
+        "score": 56.1352,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.4665,
+        "observed_conditions_score": 56.1352
+      },
+      {
+        "observation_month": "2016-12",
+        "available_date": "2017-01-31",
+        "score": 53.2518,
+        "regime": "NEUTRAL",
+        "structural_support_score": 53.2518,
+        "observed_conditions_score": 56.9521
+      },
+      {
+        "observation_month": "2017-01",
+        "available_date": "2017-02-28",
+        "score": 54.295,
+        "regime": "NEUTRAL",
+        "structural_support_score": 54.295,
+        "observed_conditions_score": 56.9657
+      },
+      {
+        "observation_month": "2017-02",
+        "available_date": "2017-03-31",
+        "score": 54.5245,
+        "regime": "NEUTRAL",
+        "structural_support_score": 54.5245,
+        "observed_conditions_score": 57.215
+      },
+      {
+        "observation_month": "2017-03",
+        "available_date": "2017-04-30",
+        "score": 54.3022,
+        "regime": "NEUTRAL",
+        "structural_support_score": 54.3022,
+        "observed_conditions_score": 57.5153
+      },
+      {
+        "observation_month": "2017-04",
+        "available_date": "2017-05-31",
+        "score": 56.0746,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.0746,
+        "observed_conditions_score": 57.8003
+      },
+      {
+        "observation_month": "2017-05",
+        "available_date": "2017-06-30",
+        "score": 55.8822,
+        "regime": "NEUTRAL",
+        "structural_support_score": 55.8822,
+        "observed_conditions_score": 58.395
+      },
+      {
+        "observation_month": "2017-06",
+        "available_date": "2017-07-31",
+        "score": 56.8617,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.8617,
+        "observed_conditions_score": 58.9349
+      },
+      {
+        "observation_month": "2017-07",
+        "available_date": "2017-08-31",
+        "score": 55.8841,
+        "regime": "NEUTRAL",
+        "structural_support_score": 55.8841,
+        "observed_conditions_score": 59.5751
+      },
+      {
+        "observation_month": "2017-08",
+        "available_date": "2017-09-30",
+        "score": 56.8272,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.8272,
+        "observed_conditions_score": 59.0268
+      },
+      {
+        "observation_month": "2017-09",
+        "available_date": "2017-10-31",
+        "score": 56.9759,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.9759,
+        "observed_conditions_score": 58.3084
+      },
+      {
+        "observation_month": "2017-10",
+        "available_date": "2017-11-30",
+        "score": 55.3987,
+        "regime": "NEUTRAL",
+        "structural_support_score": 55.3987,
+        "observed_conditions_score": 58.8977
+      },
+      {
+        "observation_month": "2017-11",
+        "available_date": "2017-12-31",
+        "score": 55.6523,
+        "regime": "NEUTRAL",
+        "structural_support_score": 55.6523,
+        "observed_conditions_score": 59.4182
+      },
+      {
+        "observation_month": "2017-12",
+        "available_date": "2018-01-31",
+        "score": 55.2741,
+        "regime": "NEUTRAL",
+        "structural_support_score": 55.2741,
+        "observed_conditions_score": 59.3038
+      },
+      {
+        "observation_month": "2018-01",
+        "available_date": "2018-02-28",
+        "score": 54.1661,
+        "regime": "NEUTRAL",
+        "structural_support_score": 54.1661,
+        "observed_conditions_score": 59.3666
+      },
+      {
+        "observation_month": "2018-02",
+        "available_date": "2018-03-31",
+        "score": 51.1984,
+        "regime": "NEUTRAL",
+        "structural_support_score": 51.1984,
+        "observed_conditions_score": 58.1566
+      },
+      {
+        "observation_month": "2018-03",
+        "available_date": "2018-04-30",
+        "score": 51.2033,
+        "regime": "NEUTRAL",
+        "structural_support_score": 51.2033,
+        "observed_conditions_score": 56.8101
+      },
+      {
+        "observation_month": "2018-04",
+        "available_date": "2018-05-31",
+        "score": 51.1042,
+        "regime": "NEUTRAL",
+        "structural_support_score": 51.1042,
+        "observed_conditions_score": 56.5696
+      },
+      {
+        "observation_month": "2018-05",
+        "available_date": "2018-06-30",
+        "score": 50.13,
+        "regime": "NEUTRAL",
+        "structural_support_score": 50.13,
+        "observed_conditions_score": 57.3462
+      },
+      {
+        "observation_month": "2018-06",
+        "available_date": "2018-07-31",
+        "score": 50.6762,
+        "regime": "NEUTRAL",
+        "structural_support_score": 50.6762,
+        "observed_conditions_score": 56.9667
+      },
+      {
+        "observation_month": "2018-07",
+        "available_date": "2018-08-31",
+        "score": 50.9953,
+        "regime": "NEUTRAL",
+        "structural_support_score": 50.9953,
+        "observed_conditions_score": 56.942
+      },
+      {
+        "observation_month": "2018-08",
+        "available_date": "2018-09-30",
+        "score": 51.2358,
+        "regime": "NEUTRAL",
+        "structural_support_score": 51.2358,
+        "observed_conditions_score": 57.7806
+      },
+      {
+        "observation_month": "2018-09",
+        "available_date": "2018-10-31",
+        "score": 50.243,
+        "regime": "NEUTRAL",
+        "structural_support_score": 50.243,
+        "observed_conditions_score": 57.934
+      },
+      {
+        "observation_month": "2018-10",
+        "available_date": "2018-11-30",
+        "score": 48.3326,
+        "regime": "NEUTRAL",
+        "structural_support_score": 48.3326,
+        "observed_conditions_score": 57.353
+      },
+      {
+        "observation_month": "2018-11",
+        "available_date": "2018-12-31",
+        "score": 47.127,
+        "regime": "NEUTRAL",
+        "structural_support_score": 47.127,
+        "observed_conditions_score": 56.1373
+      },
+      {
+        "observation_month": "2018-12",
+        "available_date": "2019-01-31",
+        "score": 47.4865,
+        "regime": "NEUTRAL",
+        "structural_support_score": 47.4865,
+        "observed_conditions_score": 53.8642
+      },
+      {
+        "observation_month": "2019-01",
+        "available_date": "2019-02-28",
+        "score": 47.0522,
+        "regime": "NEUTRAL",
+        "structural_support_score": 47.0522,
+        "observed_conditions_score": 55.04
+      },
+      {
+        "observation_month": "2019-02",
+        "available_date": "2019-03-31",
+        "score": 50.3576,
+        "regime": "NEUTRAL",
+        "structural_support_score": 50.3576,
+        "observed_conditions_score": 57.4003
+      },
+      {
+        "observation_month": "2019-03",
+        "available_date": "2019-04-30",
+        "score": 53.6929,
+        "regime": "NEUTRAL",
+        "structural_support_score": 53.6929,
+        "observed_conditions_score": 59.6126
+      },
+      {
+        "observation_month": "2019-04",
+        "available_date": "2019-05-31",
+        "score": 52.8707,
+        "regime": "NEUTRAL",
+        "structural_support_score": 52.8707,
+        "observed_conditions_score": 60.9951
+      },
+      {
+        "observation_month": "2019-05",
+        "available_date": "2019-06-30",
+        "score": 54.1784,
+        "regime": "NEUTRAL",
+        "structural_support_score": 54.1784,
+        "observed_conditions_score": 61.025
+      },
+      {
+        "observation_month": "2019-06",
+        "available_date": "2019-07-31",
+        "score": 56.5174,
+        "regime": "NEUTRAL",
+        "structural_support_score": 56.5174,
+        "observed_conditions_score": 60.3215
+      },
+      {
+        "observation_month": "2019-07",
+        "available_date": "2019-08-31",
+        "score": 60.3555,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 60.3555,
+        "observed_conditions_score": 60.5567
+      },
+      {
+        "observation_month": "2019-08",
+        "available_date": "2019-09-30",
+        "score": 57.3282,
+        "regime": "NEUTRAL",
+        "structural_support_score": 61.8643,
+        "observed_conditions_score": 57.3282
+      },
+      {
+        "observation_month": "2019-09",
+        "available_date": "2019-10-31",
+        "score": 56.0661,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.6839,
+        "observed_conditions_score": 56.0661
+      },
+      {
+        "observation_month": "2019-10",
+        "available_date": "2019-11-30",
+        "score": 55.3457,
+        "regime": "NEUTRAL",
+        "structural_support_score": 58.9652,
+        "observed_conditions_score": 55.3457
+      },
+      {
+        "observation_month": "2019-11",
+        "available_date": "2019-12-31",
+        "score": 59.1626,
+        "regime": "NEUTRAL",
+        "structural_support_score": 60.7804,
+        "observed_conditions_score": 59.1626
+      },
+      {
+        "observation_month": "2019-12",
+        "available_date": "2020-01-31",
+        "score": 55.5166,
+        "regime": "NEUTRAL",
+        "structural_support_score": 66.8945,
+        "observed_conditions_score": 55.5166
+      },
+      {
+        "observation_month": "2020-01",
+        "available_date": "2020-02-29",
+        "score": 59.4899,
+        "regime": "NEUTRAL",
+        "structural_support_score": 65.3624,
+        "observed_conditions_score": 59.4899
+      },
+      {
+        "observation_month": "2020-02",
+        "available_date": "2020-03-31",
+        "score": 57.4797,
+        "regime": "NEUTRAL",
+        "structural_support_score": 66.7971,
+        "observed_conditions_score": 57.4797
+      },
+      {
+        "observation_month": "2020-03",
+        "available_date": "2020-04-30",
+        "score": 1.3363,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 63.7955,
+        "observed_conditions_score": 1.3363
+      },
+      {
+        "observation_month": "2020-04",
+        "available_date": "2020-05-31",
+        "score": 0,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 67.4022,
+        "observed_conditions_score": 0
+      },
+      {
+        "observation_month": "2020-05",
+        "available_date": "2020-06-30",
+        "score": 20.7796,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 72.4745,
+        "observed_conditions_score": 20.7796
+      },
+      {
+        "observation_month": "2020-06",
+        "available_date": "2020-07-31",
+        "score": 43.8765,
+        "regime": "NEUTRAL",
+        "structural_support_score": 74.0571,
+        "observed_conditions_score": 43.8765
+      },
+      {
+        "observation_month": "2020-07",
+        "available_date": "2020-08-31",
+        "score": 46.901,
+        "regime": "NEUTRAL",
+        "structural_support_score": 64.2086,
+        "observed_conditions_score": 46.901
+      },
+      {
+        "observation_month": "2020-08",
+        "available_date": "2020-09-30",
+        "score": 51.5922,
+        "regime": "NEUTRAL",
+        "structural_support_score": 67.0566,
+        "observed_conditions_score": 51.5922
+      },
+      {
+        "observation_month": "2020-09",
+        "available_date": "2020-10-31",
+        "score": 58.3529,
+        "regime": "NEUTRAL",
+        "structural_support_score": 70.5487,
+        "observed_conditions_score": 58.3529
+      },
+      {
+        "observation_month": "2020-10",
+        "available_date": "2020-11-30",
+        "score": 51.9619,
+        "regime": "NEUTRAL",
+        "structural_support_score": 70.5352,
+        "observed_conditions_score": 51.9619
+      },
+      {
+        "observation_month": "2020-11",
+        "available_date": "2020-12-31",
+        "score": 52.1285,
+        "regime": "NEUTRAL",
+        "structural_support_score": 68.7069,
+        "observed_conditions_score": 52.1285
+      },
+      {
+        "observation_month": "2020-12",
+        "available_date": "2021-01-31",
+        "score": 53.8638,
+        "regime": "NEUTRAL",
+        "structural_support_score": 69.7289,
+        "observed_conditions_score": 53.8638
+      },
+      {
+        "observation_month": "2021-01",
+        "available_date": "2021-02-28",
+        "score": 55.4975,
+        "regime": "NEUTRAL",
+        "structural_support_score": 69.0865,
+        "observed_conditions_score": 55.4975
+      },
+      {
+        "observation_month": "2021-02",
+        "available_date": "2021-03-31",
+        "score": 58.8689,
+        "regime": "NEUTRAL",
+        "structural_support_score": 67.8042,
+        "observed_conditions_score": 58.8689
+      },
+      {
+        "observation_month": "2021-03",
+        "available_date": "2021-04-30",
+        "score": 59.5263,
+        "regime": "NEUTRAL",
+        "structural_support_score": 67.0082,
+        "observed_conditions_score": 59.5263
+      },
+      {
+        "observation_month": "2021-04",
+        "available_date": "2021-05-31",
+        "score": 60.4502,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 66.3813,
+        "observed_conditions_score": 60.4502
+      },
+      {
+        "observation_month": "2021-05",
+        "available_date": "2021-06-30",
+        "score": 60.8148,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 65.3105,
+        "observed_conditions_score": 60.8148
+      },
+      {
+        "observation_month": "2021-06",
+        "available_date": "2021-07-31",
+        "score": 61.6914,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 61.6914,
+        "observed_conditions_score": 62.6246
+      },
+      {
+        "observation_month": "2021-07",
+        "available_date": "2021-08-31",
+        "score": 62.6867,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 65.9731,
+        "observed_conditions_score": 62.6867
+      },
+      {
+        "observation_month": "2021-08",
+        "available_date": "2021-09-30",
+        "score": 61.5168,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 67.5138,
+        "observed_conditions_score": 61.5168
+      },
+      {
+        "observation_month": "2021-09",
+        "available_date": "2021-10-31",
+        "score": 64.2802,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 66.3962,
+        "observed_conditions_score": 64.2802
+      },
+      {
+        "observation_month": "2021-10",
+        "available_date": "2021-11-30",
+        "score": 61.6601,
+        "regime": "SUPPORTIVE",
+        "structural_support_score": 61.6601,
+        "observed_conditions_score": 61.7593
+      },
+      {
+        "observation_month": "2021-11",
+        "available_date": "2021-12-31",
+        "score": 53.1344,
+        "regime": "NEUTRAL",
+        "structural_support_score": 59.0869,
+        "observed_conditions_score": 53.1344
+      },
+      {
+        "observation_month": "2021-12",
+        "available_date": "2022-01-31",
+        "score": 47.955,
+        "regime": "NEUTRAL",
+        "structural_support_score": 57.6469,
+        "observed_conditions_score": 47.955
+      },
+      {
+        "observation_month": "2022-01",
+        "available_date": "2022-02-28",
+        "score": 50.0147,
+        "regime": "NEUTRAL",
+        "structural_support_score": 52.0989,
+        "observed_conditions_score": 50.0147
+      },
+      {
+        "observation_month": "2022-02",
+        "available_date": "2022-03-31",
+        "score": 43.1527,
+        "regime": "NEUTRAL",
+        "structural_support_score": 47.7617,
+        "observed_conditions_score": 43.1527
+      },
+      {
+        "observation_month": "2022-03",
+        "available_date": "2022-04-30",
+        "score": 28.517,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 44.8714,
+        "observed_conditions_score": 28.517
+      },
+      {
+        "observation_month": "2022-04",
+        "available_date": "2022-05-31",
+        "score": 28.2998,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 35.6759,
+        "observed_conditions_score": 28.2998
+      },
+      {
+        "observation_month": "2022-05",
+        "available_date": "2022-06-30",
+        "score": 17.1143,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 30.256,
+        "observed_conditions_score": 17.1143
+      },
+      {
+        "observation_month": "2022-06",
+        "available_date": "2022-07-31",
+        "score": 9.0459,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 24.4328,
+        "observed_conditions_score": 9.0459
+      },
+      {
+        "observation_month": "2022-07",
+        "available_date": "2022-08-31",
+        "score": 12.3476,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 33.8512,
+        "observed_conditions_score": 12.3476
+      },
+      {
+        "observation_month": "2022-08",
+        "available_date": "2022-09-30",
+        "score": 21.8827,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.6425,
+        "observed_conditions_score": 21.8827
+      },
+      {
+        "observation_month": "2022-09",
+        "available_date": "2022-10-31",
+        "score": 15.7218,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 27.853,
+        "observed_conditions_score": 15.7218
+      },
+      {
+        "observation_month": "2022-10",
+        "available_date": "2022-11-30",
+        "score": 9.4876,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 21.3571,
+        "observed_conditions_score": 9.4876
+      },
+      {
+        "observation_month": "2022-11",
+        "available_date": "2022-12-31",
+        "score": 19.1943,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 27.7195,
+        "observed_conditions_score": 19.1943
+      },
+      {
+        "observation_month": "2022-12",
+        "available_date": "2023-01-31",
+        "score": 22.8416,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 34.0749,
+        "observed_conditions_score": 22.8416
+      },
+      {
+        "observation_month": "2023-01",
+        "available_date": "2023-02-28",
+        "score": 30.8958,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 37.5095,
+        "observed_conditions_score": 30.8958
+      },
+      {
+        "observation_month": "2023-02",
+        "available_date": "2023-03-31",
+        "score": 33.3224,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 35.0196,
+        "observed_conditions_score": 33.3224
+      },
+      {
+        "observation_month": "2023-03",
+        "available_date": "2023-04-30",
+        "score": 21.1115,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 37.885,
+        "observed_conditions_score": 21.1115
+      },
+      {
+        "observation_month": "2023-04",
+        "available_date": "2023-05-31",
+        "score": 26.0638,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 39.8526,
+        "observed_conditions_score": 26.0638
+      },
+      {
+        "observation_month": "2023-05",
+        "available_date": "2023-06-30",
+        "score": 30.9856,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 41.9072,
+        "observed_conditions_score": 30.9856
+      },
+      {
+        "observation_month": "2023-06",
+        "available_date": "2023-07-31",
+        "score": 31.4055,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 34.9717,
+        "observed_conditions_score": 31.4055
+      },
+      {
+        "observation_month": "2023-07",
+        "available_date": "2023-08-31",
+        "score": 34.1869,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 36.984,
+        "observed_conditions_score": 34.1869
+      },
+      {
+        "observation_month": "2023-08",
+        "available_date": "2023-09-30",
+        "score": 33.808,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 33.808,
+        "observed_conditions_score": 36.6564
+      },
+      {
+        "observation_month": "2023-09",
+        "available_date": "2023-10-31",
+        "score": 31.6218,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 31.6218,
+        "observed_conditions_score": 35.7402
+      },
+      {
+        "observation_month": "2023-10",
+        "available_date": "2023-11-30",
+        "score": 27.0294,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 27.0294,
+        "observed_conditions_score": 33.3405
+      },
+      {
+        "observation_month": "2023-11",
+        "available_date": "2023-12-31",
+        "score": 32.6673,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 32.6673,
+        "observed_conditions_score": 37.9272
+      },
+      {
+        "observation_month": "2023-12",
+        "available_date": "2024-01-31",
+        "score": 40.1981,
+        "regime": "NEUTRAL",
+        "structural_support_score": 40.1981,
+        "observed_conditions_score": 42.2635
+      },
+      {
+        "observation_month": "2024-01",
+        "available_date": "2024-02-29",
+        "score": 41.0637,
+        "regime": "NEUTRAL",
+        "structural_support_score": 41.0637,
+        "observed_conditions_score": 45.6492
+      },
+      {
+        "observation_month": "2024-02",
+        "available_date": "2024-03-31",
+        "score": 38.5366,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.5366,
+        "observed_conditions_score": 47.6512
+      },
+      {
+        "observation_month": "2024-03",
+        "available_date": "2024-04-30",
+        "score": 39.2617,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 39.2617,
+        "observed_conditions_score": 51.4249
+      },
+      {
+        "observation_month": "2024-04",
+        "available_date": "2024-05-31",
+        "score": 33.6468,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 33.6468,
+        "observed_conditions_score": 50.9391
+      },
+      {
+        "observation_month": "2024-05",
+        "available_date": "2024-06-30",
+        "score": 34.8004,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 34.8004,
+        "observed_conditions_score": 51.3426
+      },
+      {
+        "observation_month": "2024-06",
+        "available_date": "2024-07-31",
+        "score": 35.7858,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 35.7858,
+        "observed_conditions_score": 47.9924
+      },
+      {
+        "observation_month": "2024-07",
+        "available_date": "2024-08-31",
+        "score": 37.4188,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 37.4188,
+        "observed_conditions_score": 45.7365
+      },
+      {
+        "observation_month": "2024-08",
+        "available_date": "2024-09-30",
+        "score": 40.7083,
+        "regime": "NEUTRAL",
+        "structural_support_score": 40.7083,
+        "observed_conditions_score": 46.4661
+      },
+      {
+        "observation_month": "2024-09",
+        "available_date": "2024-10-31",
+        "score": 42.9836,
+        "regime": "NEUTRAL",
+        "structural_support_score": 42.9836,
+        "observed_conditions_score": 52.7159
+      },
+      {
+        "observation_month": "2024-10",
+        "available_date": "2024-11-30",
+        "score": 39.7767,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 39.7767,
+        "observed_conditions_score": 55.9181
+      },
+      {
+        "observation_month": "2024-11",
+        "available_date": "2024-12-31",
+        "score": 36.9525,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 36.9525,
+        "observed_conditions_score": 59.3015
+      },
+      {
+        "observation_month": "2024-12",
+        "available_date": "2025-01-31",
+        "score": 37.6752,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 37.6752,
+        "observed_conditions_score": 58.9735
+      },
+      {
+        "observation_month": "2025-01",
+        "available_date": "2025-02-28",
+        "score": 34.7176,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 34.7176,
+        "observed_conditions_score": 59.4807
+      },
+      {
+        "observation_month": "2025-02",
+        "available_date": "2025-03-31",
+        "score": 37.3277,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 37.3277,
+        "observed_conditions_score": 55.5765
+      },
+      {
+        "observation_month": "2025-03",
+        "available_date": "2025-04-30",
+        "score": 39.1051,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 39.1051,
+        "observed_conditions_score": 51.5319
+      },
+      {
+        "observation_month": "2025-04",
+        "available_date": "2025-05-31",
+        "score": 36.4714,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 36.4714,
+        "observed_conditions_score": 47.8707
+      },
+      {
+        "observation_month": "2025-05",
+        "available_date": "2025-06-30",
+        "score": 36.7123,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 36.7123,
+        "observed_conditions_score": 54.0234
+      },
+      {
+        "observation_month": "2025-06",
+        "available_date": "2025-07-31",
+        "score": 38.0653,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.0653,
+        "observed_conditions_score": 57.4015
+      },
+      {
+        "observation_month": "2025-07",
+        "available_date": "2025-08-31",
+        "score": 41.1169,
+        "regime": "NEUTRAL",
+        "structural_support_score": 41.1169,
+        "observed_conditions_score": 60.3471
+      },
+      {
+        "observation_month": "2025-08",
+        "available_date": "2025-09-30",
+        "score": 41.2753,
+        "regime": "NEUTRAL",
+        "structural_support_score": 41.2753,
+        "observed_conditions_score": 61.6845
+      },
+      {
+        "observation_month": "2025-09",
+        "available_date": "2025-10-31",
+        "score": 39.8482,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 39.8482,
+        "observed_conditions_score": 62.0199
+      },
+      {
+        "observation_month": "2025-10",
+        "available_date": "2025-11-30",
+        "score": 38.9798,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.9798,
+        "observed_conditions_score": 62.4712
+      },
+      {
+        "observation_month": "2025-11",
+        "available_date": "2025-12-31",
+        "score": 39.4392,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 39.4392,
+        "observed_conditions_score": 60.9112
+      },
+      {
+        "observation_month": "2025-12",
+        "available_date": "2026-01-31",
+        "score": 40.4469,
+        "regime": "NEUTRAL",
+        "structural_support_score": 40.4469,
+        "observed_conditions_score": 59.554
+      },
+      {
+        "observation_month": "2026-01",
+        "available_date": "2026-02-28",
+        "score": 41.4644,
+        "regime": "NEUTRAL",
+        "structural_support_score": 41.4644,
+        "observed_conditions_score": 62.0902
+      },
+      {
+        "observation_month": "2026-02",
+        "available_date": "2026-03-31",
+        "score": 41.8424,
+        "regime": "NEUTRAL",
+        "structural_support_score": 41.8424,
+        "observed_conditions_score": 58.3898
+      },
+      {
+        "observation_month": "2026-03",
+        "available_date": "2026-04-30",
+        "score": 38.8283,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.8283,
+        "observed_conditions_score": 51.2025
+      },
+      {
+        "observation_month": "2026-04",
+        "available_date": "2026-05-31",
+        "score": 38.7106,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.7106,
+        "observed_conditions_score": 53.1252
+      },
+      {
+        "observation_month": "2026-05",
+        "available_date": "2026-06-30",
+        "score": 38.4105,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.4105,
+        "observed_conditions_score": 55.086
+      },
+      {
+        "observation_month": "2026-06",
+        "available_date": "2026-07-31",
+        "score": 37.9294,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 37.9294,
+        "observed_conditions_score": 58.9431
+      },
+      {
+        "observation_month": "2026-07",
+        "available_date": "2026-08-31",
+        "score": 38.4063,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 38.4063,
+        "observed_conditions_score": 60.3026
+      },
+      {
+        "observation_month": "2026-08",
+        "available_date": "2026-09-30",
+        "score": 36.1414,
+        "regime": "RESTRICTIVE",
+        "structural_support_score": 36.1414,
+        "observed_conditions_score": 60.5483
+      }
+    ]
+  },
+  "fiscal": {
+    "evidence_tier": "OVERLAY",
+    "version": "GMLI_FISCAL_V2_DEFICIT_IMPULSE",
+    "role": "MIXED",
+    "active_available_date": "2026-09-30",
+    "source_file": "research/fiscal-v2/latest/history.csv",
+    "excluded_future_rows": 0,
+    "historical_caveat": "Revised FRED history with frozen conservative publication lags; not exact historical release-time vintages.",
+    "rows": [
+      {
+        "observation_month": "2017-11",
+        "available_date": "2017-12-31",
+        "score": 63.1661,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 3.4793,
+        "fiscal_impulse_pp": 0.4773
+      },
+      {
+        "observation_month": "2017-12",
+        "available_date": "2018-01-31",
+        "score": 58.7325,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 3.3979,
+        "fiscal_impulse_pp": 0.3584
+      },
+      {
+        "observation_month": "2018-01",
+        "available_date": "2018-02-28",
+        "score": 58.3678,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 3.408,
+        "fiscal_impulse_pp": 0.348
+      },
+      {
+        "observation_month": "2018-02",
+        "available_date": "2018-03-31",
+        "score": 62.5942,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 3.5238,
+        "fiscal_impulse_pp": 0.4668
+      },
+      {
+        "observation_month": "2018-03",
+        "available_date": "2018-04-30",
+        "score": 59.7604,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 3.6332,
+        "fiscal_impulse_pp": 0.2527
+      },
+      {
+        "observation_month": "2018-04",
+        "available_date": "2018-05-31",
+        "score": 61.1837,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 3.4766,
+        "fiscal_impulse_pp": 0.4902
+      },
+      {
+        "observation_month": "2018-05",
+        "available_date": "2018-06-30",
+        "score": 68.1056,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 3.7637,
+        "fiscal_impulse_pp": 0.5911
+      },
+      {
+        "observation_month": "2018-06",
+        "available_date": "2018-07-31",
+        "score": 52.7994,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 3.6429,
+        "fiscal_impulse_pp": -0.0003
+      },
+      {
+        "observation_month": "2018-07",
+        "available_date": "2018-08-31",
+        "score": 66.4276,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 3.8077,
+        "fiscal_impulse_pp": 0.5241
+      },
+      {
+        "observation_month": "2018-08",
+        "available_date": "2018-09-30",
+        "score": 83.9982,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.325,
+        "fiscal_impulse_pp": 1.0384
+      },
+      {
+        "observation_month": "2018-09",
+        "available_date": "2018-10-31",
+        "score": 59.5212,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 3.7455,
+        "fiscal_impulse_pp": 0.3724
+      },
+      {
+        "observation_month": "2018-10",
+        "available_date": "2018-11-30",
+        "score": 63.7378,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 3.9247,
+        "fiscal_impulse_pp": 0.4551
+      },
+      {
+        "observation_month": "2018-11",
+        "available_date": "2018-12-31",
+        "score": 74.3753,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.2437,
+        "fiscal_impulse_pp": 0.7645
+      },
+      {
+        "observation_month": "2018-12",
+        "available_date": "2019-01-31",
+        "score": 72.4149,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.1734,
+        "fiscal_impulse_pp": 0.7755
+      },
+      {
+        "observation_month": "2019-01",
+        "available_date": "2019-02-28",
+        "score": 77.8319,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.3673,
+        "fiscal_impulse_pp": 0.9593
+      },
+      {
+        "observation_month": "2019-02",
+        "available_date": "2019-03-31",
+        "score": 77.0744,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.4568,
+        "fiscal_impulse_pp": 0.933
+      },
+      {
+        "observation_month": "2019-03",
+        "available_date": "2019-04-30",
+        "score": 62.3717,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.1232,
+        "fiscal_impulse_pp": 0.49
+      },
+      {
+        "observation_month": "2019-04",
+        "available_date": "2019-05-31",
+        "score": 73.9,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.3787,
+        "fiscal_impulse_pp": 0.9021
+      },
+      {
+        "observation_month": "2019-05",
+        "available_date": "2019-06-30",
+        "score": 76.4956,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.6675,
+        "fiscal_impulse_pp": 0.9038
+      },
+      {
+        "observation_month": "2019-06",
+        "available_date": "2019-07-31",
+        "score": 65.6658,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.2948,
+        "fiscal_impulse_pp": 0.652
+      },
+      {
+        "observation_month": "2019-07",
+        "available_date": "2019-08-31",
+        "score": 68.3644,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.495,
+        "fiscal_impulse_pp": 0.6873
+      },
+      {
+        "observation_month": "2019-08",
+        "available_date": "2019-09-30",
+        "score": 54.5315,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 4.4305,
+        "fiscal_impulse_pp": 0.1055
+      },
+      {
+        "observation_month": "2019-09",
+        "available_date": "2019-10-31",
+        "score": 70.0706,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.5327,
+        "fiscal_impulse_pp": 0.7873
+      },
+      {
+        "observation_month": "2019-10",
+        "available_date": "2019-11-30",
+        "score": 70.7465,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.6892,
+        "fiscal_impulse_pp": 0.7645
+      },
+      {
+        "observation_month": "2019-11",
+        "available_date": "2019-12-31",
+        "score": 63.738,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.7073,
+        "fiscal_impulse_pp": 0.4636
+      },
+      {
+        "observation_month": "2019-12",
+        "available_date": "2020-01-31",
+        "score": 63.1949,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.6597,
+        "fiscal_impulse_pp": 0.4863
+      },
+      {
+        "observation_month": "2020-01",
+        "available_date": "2020-02-29",
+        "score": 64.6356,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.8479,
+        "fiscal_impulse_pp": 0.4807
+      },
+      {
+        "observation_month": "2020-02",
+        "available_date": "2020-03-31",
+        "score": 62.2655,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.8541,
+        "fiscal_impulse_pp": 0.3973
+      },
+      {
+        "observation_month": "2020-03",
+        "available_date": "2020-04-30",
+        "score": 66.4689,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 4.7668,
+        "fiscal_impulse_pp": 0.6437
+      },
+      {
+        "observation_month": "2020-04",
+        "available_date": "2020-05-31",
+        "score": 100,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 8.896,
+        "fiscal_impulse_pp": 4.5173
+      },
+      {
+        "observation_month": "2020-05",
+        "available_date": "2020-06-30",
+        "score": 100,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 9.7744,
+        "fiscal_impulse_pp": 5.1069
+      },
+      {
+        "observation_month": "2020-06",
+        "available_date": "2020-07-31",
+        "score": 100,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 14.9394,
+        "fiscal_impulse_pp": 10.6446
+      },
+      {
+        "observation_month": "2020-07",
+        "available_date": "2020-08-31",
+        "score": 100,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 14.6553,
+        "fiscal_impulse_pp": 10.1603
+      },
+      {
+        "observation_month": "2020-08",
+        "available_date": "2020-09-30",
+        "score": 100,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 14.654,
+        "fiscal_impulse_pp": 10.2235
+      },
+      {
+        "observation_month": "2020-09",
+        "available_date": "2020-10-31",
+        "score": 100,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 14.4306,
+        "fiscal_impulse_pp": 9.8978
+      },
+      {
+        "observation_month": "2020-10",
+        "available_date": "2020-11-30",
+        "score": 100,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 15.1199,
+        "fiscal_impulse_pp": 10.4307
+      },
+      {
+        "observation_month": "2020-11",
+        "available_date": "2020-12-31",
+        "score": 97.1325,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 14.827,
+        "fiscal_impulse_pp": 10.1196
+      },
+      {
+        "observation_month": "2020-12",
+        "available_date": "2021-01-31",
+        "score": 95.4632,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 15.1599,
+        "fiscal_impulse_pp": 10.5002
+      },
+      {
+        "observation_month": "2021-01",
+        "available_date": "2021-02-28",
+        "score": 94.5788,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 15.7496,
+        "fiscal_impulse_pp": 10.9017
+      },
+      {
+        "observation_month": "2021-02",
+        "available_date": "2021-03-31",
+        "score": 93.2172,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 16.0918,
+        "fiscal_impulse_pp": 11.2377
+      },
+      {
+        "observation_month": "2021-03",
+        "available_date": "2021-04-30",
+        "score": 98.0074,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 18.0346,
+        "fiscal_impulse_pp": 13.2678
+      },
+      {
+        "observation_month": "2021-04",
+        "available_date": "2021-05-31",
+        "score": 78.5211,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 15.7783,
+        "fiscal_impulse_pp": 6.8823
+      },
+      {
+        "observation_month": "2021-05",
+        "available_date": "2021-06-30",
+        "score": 71.2062,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 14.603,
+        "fiscal_impulse_pp": 4.8286
+      },
+      {
+        "observation_month": "2021-06",
+        "available_date": "2021-07-31",
+        "score": 46.2969,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 11.1935,
+        "fiscal_impulse_pp": -3.7459
+      },
+      {
+        "observation_month": "2021-07",
+        "available_date": "2021-08-31",
+        "score": 50.9385,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 12.2127,
+        "fiscal_impulse_pp": -2.4426
+      },
+      {
+        "observation_month": "2021-08",
+        "available_date": "2021-09-30",
+        "score": 50.4248,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 12.0871,
+        "fiscal_impulse_pp": -2.567
+      },
+      {
+        "observation_month": "2021-09",
+        "available_date": "2021-10-31",
+        "score": 48.8374,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 11.5513,
+        "fiscal_impulse_pp": -2.8793
+      },
+      {
+        "observation_month": "2021-10",
+        "available_date": "2021-11-30",
+        "score": 45.5904,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 11.0553,
+        "fiscal_impulse_pp": -4.0645
+      },
+      {
+        "observation_month": "2021-11",
+        "available_date": "2021-12-31",
+        "score": 47.0825,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 11.2473,
+        "fiscal_impulse_pp": -3.5797
+      },
+      {
+        "observation_month": "2021-12",
+        "available_date": "2022-01-31",
+        "score": 43.2779,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 10.3813,
+        "fiscal_impulse_pp": -4.7787
+      },
+      {
+        "observation_month": "2022-01",
+        "available_date": "2022-02-28",
+        "score": 38.1987,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 9.2471,
+        "fiscal_impulse_pp": -6.5025
+      },
+      {
+        "observation_month": "2022-02",
+        "available_date": "2022-03-31",
+        "score": 36.6744,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 8.8671,
+        "fiscal_impulse_pp": -7.2247
+      },
+      {
+        "observation_month": "2022-03",
+        "available_date": "2022-04-30",
+        "score": 26.7621,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 6.8654,
+        "fiscal_impulse_pp": -11.1692
+      },
+      {
+        "observation_month": "2022-04",
+        "available_date": "2022-05-31",
+        "score": 24.5153,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 4.7522,
+        "fiscal_impulse_pp": -11.0262
+      },
+      {
+        "observation_month": "2022-05",
+        "available_date": "2022-06-30",
+        "score": 26.6304,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 4.4919,
+        "fiscal_impulse_pp": -10.111
+      },
+      {
+        "observation_month": "2022-06",
+        "available_date": "2022-07-31",
+        "score": 31.4784,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 4.0563,
+        "fiscal_impulse_pp": -7.1372
+      },
+      {
+        "observation_month": "2022-07",
+        "available_date": "2022-08-31",
+        "score": 28.9767,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 3.7046,
+        "fiscal_impulse_pp": -8.5081
+      },
+      {
+        "observation_month": "2022-08",
+        "available_date": "2022-09-30",
+        "score": 30.3173,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 3.8938,
+        "fiscal_impulse_pp": -8.1933
+      },
+      {
+        "observation_month": "2022-09",
+        "available_date": "2022-10-31",
+        "score": 36.1625,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 5.2228,
+        "fiscal_impulse_pp": -6.3285
+      },
+      {
+        "observation_month": "2022-10",
+        "available_date": "2022-11-30",
+        "score": 36.1662,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 4.9294,
+        "fiscal_impulse_pp": -6.1259
+      },
+      {
+        "observation_month": "2022-11",
+        "available_date": "2022-12-31",
+        "score": 36.8124,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 5.1466,
+        "fiscal_impulse_pp": -6.1007
+      },
+      {
+        "observation_month": "2022-12",
+        "available_date": "2023-01-31",
+        "score": 38.9291,
+        "regime": "RESTRICTIVE",
+        "deficit_pct_gdp": 5.3002,
+        "fiscal_impulse_pp": -5.0811
+      },
+      {
+        "observation_month": "2023-01",
+        "available_date": "2023-02-28",
+        "score": 42.965,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.8884,
+        "fiscal_impulse_pp": -3.3587
+      },
+      {
+        "observation_month": "2023-02",
+        "available_date": "2023-03-31",
+        "score": 44.2544,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.0596,
+        "fiscal_impulse_pp": -2.8075
+      },
+      {
+        "observation_month": "2023-03",
+        "available_date": "2023-04-30",
+        "score": 49.6675,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.6362,
+        "fiscal_impulse_pp": -0.2291
+      },
+      {
+        "observation_month": "2023-04",
+        "available_date": "2023-05-31",
+        "score": 54.9332,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 7.1209,
+        "fiscal_impulse_pp": 2.3688
+      },
+      {
+        "observation_month": "2023-05",
+        "available_date": "2023-06-30",
+        "score": 57.6367,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 7.7601,
+        "fiscal_impulse_pp": 3.2682
+      },
+      {
+        "observation_month": "2023-06",
+        "available_date": "2023-07-31",
+        "score": 59.8339,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 8.1822,
+        "fiscal_impulse_pp": 4.1259
+      },
+      {
+        "observation_month": "2023-07",
+        "available_date": "2023-08-31",
+        "score": 60.4731,
+        "regime": "SUPPORTIVE",
+        "deficit_pct_gdp": 8.2176,
+        "fiscal_impulse_pp": 4.513
+      },
+      {
+        "observation_month": "2023-08",
+        "available_date": "2023-09-30",
+        "score": 55.997,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 7.0958,
+        "fiscal_impulse_pp": 3.202
+      },
+      {
+        "observation_month": "2023-09",
+        "available_date": "2023-10-31",
+        "score": 49.8402,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.04,
+        "fiscal_impulse_pp": 0.8172
+      },
+      {
+        "observation_month": "2023-10",
+        "available_date": "2023-11-30",
+        "score": 50.0629,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.9644,
+        "fiscal_impulse_pp": 1.0349
+      },
+      {
+        "observation_month": "2023-11",
+        "available_date": "2023-12-31",
+        "score": 50.5541,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.1977,
+        "fiscal_impulse_pp": 1.0511
+      },
+      {
+        "observation_month": "2023-12",
+        "available_date": "2024-01-31",
+        "score": 50.5422,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.2664,
+        "fiscal_impulse_pp": 0.9662
+      },
+      {
+        "observation_month": "2024-01",
+        "available_date": "2024-02-29",
+        "score": 49.2982,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.2072,
+        "fiscal_impulse_pp": 0.3188
+      },
+      {
+        "observation_month": "2024-02",
+        "available_date": "2024-03-31",
+        "score": 49.4507,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.3261,
+        "fiscal_impulse_pp": 0.2665
+      },
+      {
+        "observation_month": "2024-03",
+        "available_date": "2024-04-30",
+        "score": 46.3114,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.7619,
+        "fiscal_impulse_pp": -0.8743
+      },
+      {
+        "observation_month": "2024-04",
+        "available_date": "2024-05-31",
+        "score": 45.0401,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.6461,
+        "fiscal_impulse_pp": -1.4748
+      },
+      {
+        "observation_month": "2024-05",
+        "available_date": "2024-06-30",
+        "score": 45.3551,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.017,
+        "fiscal_impulse_pp": -1.7431
+      },
+      {
+        "observation_month": "2024-06",
+        "available_date": "2024-07-31",
+        "score": 42.1742,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.373,
+        "fiscal_impulse_pp": -2.8092
+      },
+      {
+        "observation_month": "2024-07",
+        "available_date": "2024-08-31",
+        "score": 42.4646,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.4515,
+        "fiscal_impulse_pp": -2.766
+      },
+      {
+        "observation_month": "2024-08",
+        "available_date": "2024-09-30",
+        "score": 50.7015,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 7.057,
+        "fiscal_impulse_pp": -0.0388
+      },
+      {
+        "observation_month": "2024-09",
+        "available_date": "2024-10-31",
+        "score": 49.1915,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.1814,
+        "fiscal_impulse_pp": 0.1414
+      },
+      {
+        "observation_month": "2024-10",
+        "available_date": "2024-11-30",
+        "score": 51.8488,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.827,
+        "fiscal_impulse_pp": 0.8626
+      },
+      {
+        "observation_month": "2024-11",
+        "available_date": "2024-12-31",
+        "score": 52.117,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 7.0054,
+        "fiscal_impulse_pp": 0.8077
+      },
+      {
+        "observation_month": "2024-12",
+        "available_date": "2025-01-31",
+        "score": 51.0889,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.7784,
+        "fiscal_impulse_pp": 0.512
+      },
+      {
+        "observation_month": "2025-01",
+        "available_date": "2025-02-28",
+        "score": 52.6014,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 7.1349,
+        "fiscal_impulse_pp": 0.9277
+      },
+      {
+        "observation_month": "2025-02",
+        "available_date": "2025-03-31",
+        "score": 52.5138,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 7.1708,
+        "fiscal_impulse_pp": 0.8447
+      },
+      {
+        "observation_month": "2025-03",
+        "available_date": "2025-04-30",
+        "score": 52.3077,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.8615,
+        "fiscal_impulse_pp": 1.0996
+      },
+      {
+        "observation_month": "2025-04",
+        "available_date": "2025-05-31",
+        "score": 51.8626,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.6996,
+        "fiscal_impulse_pp": 1.0534
+      },
+      {
+        "observation_month": "2025-05",
+        "available_date": "2025-06-30",
+        "score": 50.75,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.5964,
+        "fiscal_impulse_pp": 0.5794
+      },
+      {
+        "observation_month": "2025-06",
+        "available_date": "2025-07-31",
+        "score": 50.3227,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.1942,
+        "fiscal_impulse_pp": 0.8212
+      },
+      {
+        "observation_month": "2025-07",
+        "available_date": "2025-08-31",
+        "score": 50.8024,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.3489,
+        "fiscal_impulse_pp": 0.8974
+      },
+      {
+        "observation_month": "2025-08",
+        "available_date": "2025-09-30",
+        "score": 47.307,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 6.2337,
+        "fiscal_impulse_pp": -0.8233
+      },
+      {
+        "observation_month": "2025-09",
+        "available_date": "2025-10-31",
+        "score": 46.7678,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.6949,
+        "fiscal_impulse_pp": -0.4864
+      },
+      {
+        "observation_month": "2025-10",
+        "available_date": "2025-11-30",
+        "score": 45.9122,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.7812,
+        "fiscal_impulse_pp": -1.0458
+      },
+      {
+        "observation_month": "2025-11",
+        "available_date": "2025-12-31",
+        "score": 43.0333,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.1607,
+        "fiscal_impulse_pp": -1.8447
+      },
+      {
+        "observation_month": "2025-12",
+        "available_date": "2026-01-31",
+        "score": 44.0063,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.2988,
+        "fiscal_impulse_pp": -1.4795
+      },
+      {
+        "observation_month": "2026-01",
+        "available_date": "2026-02-28",
+        "score": 42.828,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.1907,
+        "fiscal_impulse_pp": -1.9442
+      },
+      {
+        "observation_month": "2026-02",
+        "available_date": "2026-03-31",
+        "score": 42.7219,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.1922,
+        "fiscal_impulse_pp": -1.9786
+      },
+      {
+        "observation_month": "2026-03",
+        "available_date": "2026-04-30",
+        "score": 43.0203,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.1312,
+        "fiscal_impulse_pp": -1.7303
+      },
+      {
+        "observation_month": "2026-04",
+        "available_date": "2026-05-31",
+        "score": 43.87,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.2671,
+        "fiscal_impulse_pp": -1.4324
+      },
+      {
+        "observation_month": "2026-05",
+        "available_date": "2026-06-30",
+        "score": 43.7262,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.1939,
+        "fiscal_impulse_pp": -1.4024
+      },
+      {
+        "observation_month": "2026-06",
+        "available_date": "2026-07-31",
+        "score": 45.9146,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.5416,
+        "fiscal_impulse_pp": -0.6526
+      },
+      {
+        "observation_month": "2026-07",
+        "available_date": "2026-08-31",
+        "score": 47.3827,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.9751,
+        "fiscal_impulse_pp": -0.3738
+      },
+      {
+        "observation_month": "2026-08",
+        "available_date": "2026-09-30",
+        "score": 45.2504,
+        "regime": "NEUTRAL",
+        "deficit_pct_gdp": 5.4285,
+        "fiscal_impulse_pp": -0.8052
+      }
+    ]
+  },
+  "market_confirmation": {
+    "evidence_tier": "RESEARCH",
+    "role": "REACTIVE_CONFIRMATION",
+    "source_files": [
+      "research/global-money-v2/transfer/latest/raw/SPY-yahoo-monthly.json",
+      "research/global-money-v2/transfer/latest/raw/QQQ-yahoo-monthly.json",
+      "research/global-money-v2/transfer/latest/raw/GLD-yahoo-monthly.json",
+      "research/global-money-v2/transfer/latest/raw/DBC-yahoo-monthly.json"
+    ],
+    "methodology": "Completed-month positive turn per asset = adjusted close above 10M average OR positive 3M return; score 2 for 3-4 positive assets, 1 for 2, else 0. Same fixed definition used by the Funding/Market overlap diagnostic.",
+    "cutoff_month": "2026-09",
+    "rows": [
+      {
+        "month": "2007-03",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2007-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2007-05",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2007-06",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2007-07",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2007-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2007-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2007-10",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2007-11",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2007-12",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2008-01",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2008-02",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2008-03",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2008-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2008-05",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2008-06",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2008-07",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2008-08",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2008-09",
+        "positive": 0,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2008-10",
+        "positive": 0,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2008-11",
+        "positive": 0,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2008-12",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2009-01",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2009-02",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2009-03",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2009-04",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2009-05",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2009-06",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2009-07",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2009-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2009-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2009-10",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2009-11",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2009-12",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2010-01",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2010-02",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2010-03",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2010-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2010-05",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2010-06",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2010-07",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2010-08",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2010-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2010-10",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2010-11",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2010-12",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2011-01",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2011-02",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2011-03",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2011-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2011-05",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2011-06",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2011-07",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2011-08",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2011-09",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2011-10",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2011-11",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2011-12",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2012-01",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2012-02",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2012-03",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2012-04",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2012-05",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2012-06",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2012-07",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2012-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2012-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2012-10",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2012-11",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2012-12",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2013-01",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2013-02",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2013-03",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2013-04",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2013-05",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2013-06",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2013-07",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2013-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2013-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2013-10",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2013-11",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2013-12",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2014-01",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2014-02",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2014-03",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2014-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2014-05",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2014-06",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2014-07",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2014-08",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2014-09",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2014-10",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2014-11",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2014-12",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-01",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-02",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-03",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-04",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2015-05",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-06",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2015-07",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-08",
+        "positive": 0,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-09",
+        "positive": 0,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-10",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-11",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2015-12",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2016-01",
+        "positive": 0,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2016-02",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2016-03",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2016-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2016-05",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2016-06",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2016-07",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2016-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2016-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2016-10",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2016-11",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2016-12",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2017-01",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2017-02",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2017-03",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2017-04",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2017-05",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2017-06",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2017-07",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2017-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2017-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2017-10",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2017-11",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2017-12",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-01",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-02",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-03",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-05",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-06",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-07",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-08",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-09",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2018-10",
+        "positive": 0,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2018-11",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2018-12",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2019-01",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2019-02",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2019-03",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2019-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2019-05",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2019-06",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2019-07",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2019-08",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2019-09",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2019-10",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2019-11",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2019-12",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2020-01",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2020-02",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2020-03",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2020-04",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2020-05",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2020-06",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2020-07",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2020-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2020-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2020-10",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2020-11",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2020-12",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-01",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-02",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-03",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-04",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-05",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-06",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-07",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-09",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-10",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-11",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2021-12",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2022-01",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2022-02",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2022-03",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2022-04",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2022-05",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2022-06",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2022-07",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2022-08",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2022-09",
+        "positive": 0,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2022-10",
+        "positive": 0,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": false,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2022-11",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2022-12",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2023-01",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2023-02",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2023-03",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2023-04",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2023-05",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2023-06",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2023-07",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2023-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2023-09",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2023-10",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2023-11",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2023-12",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2024-01",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2024-02",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2024-03",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2024-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2024-05",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2024-06",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2024-07",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2024-08",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2024-09",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2024-10",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2024-11",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2024-12",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-01",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-02",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-03",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-04",
+        "positive": 1,
+        "total": 4,
+        "score_0_2": 0,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2025-05",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": false
+        }
+      },
+      {
+        "month": "2025-06",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-07",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-08",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-10",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-11",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2025-12",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2026-01",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2026-02",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2026-03",
+        "positive": 2,
+        "total": 4,
+        "score_0_2": 1,
+        "assets_positive": {
+          "SPY": false,
+          "QQQ": false,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2026-04",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2026-05",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2026-06",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2026-07",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2026-08",
+        "positive": 3,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": false,
+          "DBC": true
+        }
+      },
+      {
+        "month": "2026-09",
+        "positive": 4,
+        "total": 4,
+        "score_0_2": 2,
+        "assets_positive": {
+          "SPY": true,
+          "QQQ": true,
+          "GLD": true,
+          "DBC": true
+        }
+      }
+    ]
+  },
+  "signal_role_chain": {
+    "evidence_tier": "RESEARCH",
+    "version": "GMLI_SIGNAL_ROLE_TAXONOMY_V1",
+    "scoring_effect": "NONE",
+    "historical_series": false,
+    "note": "Role taxonomy is categorical interpretation metadata, not a numeric historical signal. No synthetic history is created."
+  }
+}

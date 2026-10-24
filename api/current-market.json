@@ -1,0 +1,69 @@
+{
+  "schema_version": "gmli-current-market-v1",
+  "status": "OK",
+  "evidence_tier": "RESEARCH",
+  "role": "CURRENT_MARKET_CONFIRMATION_ONLY",
+  "generated_at": "2026-10-24T11:38:55.017Z",
+  "coverage": "4/4",
+  "positive": 3,
+  "negative": 1,
+  "summary": "BROADLY_POSITIVE",
+  "divergences": [
+    {
+      "asset": "GLD",
+      "type": "NEGATIVE_DIVERGENCE"
+    }
+  ],
+  "assets": {
+    "SPY": {
+      "latest_completed_session": "2026-10-23",
+      "price": 759.97,
+      "return_1m_pct": -0.94,
+      "ma50": 766.8982,
+      "ma200": 724.0023,
+      "trend": "POSITIVE_MIXED",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "QQQ": {
+      "latest_completed_session": "2026-10-23",
+      "price": 704.4,
+      "return_1m_pct": -4.95,
+      "ma50": 725.4402,
+      "ma200": 676.0983,
+      "trend": "POSITIVE_MIXED",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "GLD": {
+      "latest_completed_session": "2026-10-23",
+      "price": 366.61,
+      "return_1m_pct": -6.4,
+      "ma50": 394.505,
+      "ma200": 414.2092,
+      "trend": "BEARISH",
+      "structural_monthly_stage": "EARLY_UP",
+      "divergence_vs_structural": "NEGATIVE_DIVERGENCE",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "DBC": {
+      "latest_completed_session": "2026-10-23",
+      "price": 34.1,
+      "return_1m_pct": 2.77,
+      "ma50": 32.391,
+      "ma200": 28.9692,
+      "trend": "BULLISH",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    }
+  },
+  "errors": [],
+  "note": "Current daily market confirmation can raise/lower conviction or highlight divergence; it never rewrites frozen Money Core or completed-month structural signals."
+}
