@@ -2,7 +2,7 @@
   "status": "PASS_FIXED_TRANSMISSION_DIRECTION_TRANSFER",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-10-25T09:00:33Z",
+  "built_at": "2026-10-25T12:34:25Z",
   "core_modified": false,
   "parameter_search": false,
   "lag_search": false,
@@ -30,8 +30,8 @@
     "DBC": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/DBC?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/DBC?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "2dda1c39c77ae17c6a176721e00eaa39261875e389326e8e50a4d226ba5258d1",
-      "bytes": 28592,
+      "sha256": "c1e709c69459d6aa1aa7e5c7d6581f7139d0ee1947dff1ac3e6711039e5356a8",
+      "bytes": 28608,
       "months": 248,
       "first_month": "2006-03",
       "last_month": "2026-10"
@@ -39,7 +39,7 @@
     "GLD": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "0d552bb0758a43a4ce7230879f4308edfdb19aaba080e9213b3da6fde9cb2c7b",
+      "sha256": "8e7ab4c90b8d759a05b13bfa316e94146c158c765b3385ca8462084375fd9f81",
       "bytes": 30373,
       "months": 263,
       "first_month": "2004-12",
@@ -48,8 +48,8 @@
     "QQQ": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "eb1e1133717bbfa2689675d1cafc3e3bbb16394dbdd628e85599ed7297f6bee3",
-      "bytes": 36953,
+      "sha256": "a9ac79a8dfc901f07e167d5dc7a00f733f9c7c7035f4b7de9050442239bdf1b7",
+      "bytes": 36973,
       "months": 331,
       "first_month": "1999-04",
       "last_month": "2026-10"
@@ -57,8 +57,8 @@
     "SPY": {
       "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=max&interval=1mo&events=history&includeAdjustedClose=true",
       "final_url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=max&interval=1mo&events=history&includeAdjustedClose=true",
-      "sha256": "16e0377760c41459cada266fa74f84f3311820c1f4789cb6894b40b89e3bb166",
-      "bytes": 42646,
+      "sha256": "e8c2acd870456e65f5a0f725db9736592b59e9aca8d6a9d4ec1ca568ec46df22",
+      "bytes": 42630,
       "months": 405,
       "first_month": "1993-02",
       "last_month": "2026-10"
