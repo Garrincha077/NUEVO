@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-10-27T13:12:44Z",
+  "built_at": "2026-10-28T09:00:25Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -32,17 +32,17 @@
     "checks": [
       {
         "label": "weight_US_pct",
-        "actual": 21.475006,
+        "actual": 21.453917,
         "expected": 20.99,
-        "delta": 0.485006,
+        "delta": 0.463917,
         "tolerance": 1.5,
         "pass": true
       },
       {
         "label": "local_US_yoy_pct",
-        "actual": 5.392904,
+        "actual": 5.374436,
         "expected": 5.58,
-        "delta": -0.187096,
+        "delta": -0.205564,
         "tolerance": 0.65,
         "pass": true
       },
@@ -56,9 +56,9 @@
       },
       {
         "label": "weight_CN_pct",
-        "actual": 44.397149,
+        "actual": 44.409072,
         "expected": 43.4,
-        "delta": 0.997149,
+        "delta": 1.009072,
         "tolerance": 1.5,
         "pass": true
       },
@@ -80,9 +80,9 @@
       },
       {
         "label": "weight_EA_pct",
-        "actual": 17.434262,
+        "actual": 17.438944,
         "expected": 18.32,
-        "delta": -0.885738,
+        "delta": -0.881056,
         "tolerance": 1.5,
         "pass": true
       },
@@ -104,9 +104,9 @@
       },
       {
         "label": "weight_JP_pct",
-        "actual": 8.601044,
+        "actual": 8.603354,
         "expected": 8.41,
-        "delta": 0.191044,
+        "delta": 0.193354,
         "tolerance": 1.5,
         "pass": true
       },
@@ -128,9 +128,9 @@
       },
       {
         "label": "weight_GB_pct",
-        "actual": 4.132765,
+        "actual": 4.133875,
         "expected": 4.04,
-        "delta": 0.092765,
+        "delta": 0.093875,
         "tolerance": 1.5,
         "pass": true
       },
@@ -152,9 +152,9 @@
       },
       {
         "label": "weight_CA_pct",
-        "actual": 1.924881,
+        "actual": 1.925398,
         "expected": 2.66,
-        "delta": -0.735119,
+        "delta": -0.734602,
         "tolerance": 1.5,
         "pass": true
       },
@@ -176,9 +176,9 @@
       },
       {
         "label": "weight_AU_pct",
-        "actual": 2.034894,
+        "actual": 2.03544,
         "expected": 2.18,
-        "delta": -0.145106,
+        "delta": -0.14456,
         "tolerance": 1.5,
         "pass": true
       },
@@ -200,17 +200,17 @@
       },
       {
         "label": "gbm_usd_yoy_pct",
-        "actual": 9.300113,
+        "actual": 9.2972,
         "expected": 9.3258,
-        "delta": -0.025687,
+        "delta": -0.0286,
         "tolerance": 1.0,
         "pass": true
       },
       {
         "label": "gbm_fxn_yoy_pct",
-        "actual": 6.111765,
+        "actual": 6.107996,
         "expected": 6.1275,
-        "delta": -0.015735,
+        "delta": -0.019504,
         "tolerance": 0.7,
         "pass": true
       }
@@ -219,24 +219,24 @@
   "latest_eligible": {
     "month": "2026-08",
     "available_date": "2026-09-30",
-    "gbm_usd_yoy_pct": 8.323143,
-    "gbm_fxn_yoy_pct": 5.685265,
-    "fx_effect_pp": 2.637878,
-    "usd_z": 0.371066,
-    "usd_score": 56.1844,
-    "fxn_z": -0.419758,
-    "fxn_score": 43.004,
+    "gbm_usd_yoy_pct": 8.310631,
+    "gbm_fxn_yoy_pct": 5.672074,
+    "fx_effect_pp": 2.638557,
+    "usd_z": 0.36896,
+    "usd_score": 56.1493,
+    "fxn_z": -0.423643,
+    "fxn_score": 42.9393,
     "weights_pct": {
-      "US": 21.2948,
-      "CN": 44.6129,
-      "EA": 17.6959,
-      "JP": 8.3085,
-      "GB": 4.1177,
-      "CA": 1.9137,
-      "AU": 2.0564
+      "US": 21.2746,
+      "CN": 44.6244,
+      "EA": 17.7005,
+      "JP": 8.3106,
+      "GB": 4.1188,
+      "CA": 1.9142,
+      "AU": 2.057
     },
     "local_yoy_pct": {
-      "US": 5.6589,
+      "US": 5.5969,
       "CN": 7.4779,
       "EA": 3.2771,
       "JP": 1.9845,
@@ -257,24 +257,24 @@
   "latest_source_preview": {
     "month": "2026-08",
     "available_date": "2026-09-30",
-    "gbm_usd_yoy_pct": 8.323143,
-    "gbm_fxn_yoy_pct": 5.685265,
-    "fx_effect_pp": 2.637878,
-    "usd_z": 0.371066,
-    "usd_score": 56.1844,
-    "fxn_z": -0.419758,
-    "fxn_score": 43.004,
+    "gbm_usd_yoy_pct": 8.310631,
+    "gbm_fxn_yoy_pct": 5.672074,
+    "fx_effect_pp": 2.638557,
+    "usd_z": 0.36896,
+    "usd_score": 56.1493,
+    "fxn_z": -0.423643,
+    "fxn_score": 42.9393,
     "weights_pct": {
-      "US": 21.2948,
-      "CN": 44.6129,
-      "EA": 17.6959,
-      "JP": 8.3085,
-      "GB": 4.1177,
-      "CA": 1.9137,
-      "AU": 2.0564
+      "US": 21.2746,
+      "CN": 44.6244,
+      "EA": 17.7005,
+      "JP": 8.3106,
+      "GB": 4.1188,
+      "CA": 1.9142,
+      "AU": 2.057
     },
     "local_yoy_pct": {
-      "US": 5.6589,
+      "US": 5.5969,
       "CN": 7.4779,
       "EA": 3.2771,
       "JP": 1.9845,
@@ -298,8 +298,8 @@
   "raw_sources": [
     {
       "filename": "raw/us-m2sl.csv",
-      "bytes": 2910,
-      "sha256": "8695f3389c800be2fa4a9d93acc331d167e60120bcb6734c8bcffb4fa51e661c",
+      "bytes": 2929,
+      "sha256": "f62d291690159dc39318c4a84539f6d13c12a0a1ba0d89394deed1d1de98c017",
       "source_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=M2SL&cosd=2014-01-01"
     },
     {
@@ -317,7 +317,7 @@
     {
       "filename": "raw/jp-boj-m2.json",
       "bytes": 2910,
-      "sha256": "accf5ec1f7032054d40d7a0ae148a84c128c33f845d221aa23bc378fba9ed460",
+      "sha256": "1f7ab1c11633c32f6312a75f74f554388216b546d0c7c904928a50c217c91f12",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
