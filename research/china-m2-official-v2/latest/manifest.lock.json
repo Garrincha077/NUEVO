@@ -3,7 +3,7 @@
   "candidate_version": "PBOC_OFFICIAL_M2_V2",
   "source_contract": "PBOC_OFFICIAL_HTML_MONEY_SUPPLY_TABLES",
   "evidence_tier": "RESEARCH_SOURCE_CANDIDATE",
-  "built_at": "2026-10-29T13:44:16Z",
+  "built_at": "2026-10-30T09:00:49Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "start_month": "2014-01",
@@ -152,7 +152,7 @@
       "last_month": "2026-09",
       "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/2026ntjsj/hbtjgl/index.html",
       "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417435141164.htm",
-      "overview_sha256": "dffb9d26e34593a2cbd57a7fac0a90388203582969e33279e3f6abfb1987f3a0",
+      "overview_sha256": "357f62f66b868d0b48c47c077474c8fbbe77eb510ae921464b7fb865a7fecf3b",
       "supply_sha256": "7240e02eee12b46e4e8199a5977cd2868778a79cca4aacfc1d97335299ef6ff8"
     }
   ],
@@ -269,8 +269,8 @@
     },
     {
       "filename": "raw/2026-money-banking-overview.html",
-      "bytes": 31753,
-      "sha256": "dffb9d26e34593a2cbd57a7fac0a90388203582969e33279e3f6abfb1987f3a0"
+      "bytes": 31811,
+      "sha256": "357f62f66b868d0b48c47c077474c8fbbe77eb510ae921464b7fb865a7fecf3b"
     },
     {
       "filename": "raw/2026-money-supply.html",
