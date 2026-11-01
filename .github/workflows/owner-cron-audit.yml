@@ -1,0 +1,68 @@
+name: Owner cron execution audit (read-only)
+
+on:
+  schedule:
+    # Supplementary check; external 10:00 Europe/Zagreb watchdog remains primary.
+    - cron: '15 10 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'ops/owner_cron_audit.py'
+      - 'ops/test_owner_cron_audit.py'
+      - 'ops/OWNER_CRON_AUDIT.md'
+      - '.github/workflows/owner-cron-audit.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'ops/owner_cron_audit.py'
+      - 'ops/test_owner_cron_audit.py'
+      - 'ops/OWNER_CRON_AUDIT.md'
+      - '.github/workflows/owner-cron-audit.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: owner-cron-execution-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install YAML parser
+        run: python -m pip install 'PyYAML==6.0.3'
+      - name: Test time, cron parsing and no-false-recovery rules
+        run: python -m unittest discover -s ops -p 'test_owner_cron_audit.py' -v
+
+  audit:
+    if: github.event_name != 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install YAML parser
+        run: python -m pip install 'PyYAML==6.0.3'
+      - name: Scan expected and actual scheduled runs without mutations
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python ops/owner_cron_audit.py --owner Garrincha077 --output owner-cron-audit.json
+      - name: Preserve inspection evidence even on incomplete discovery
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: owner-cron-audit-${{ github.run_id }}
+          path: owner-cron-audit.json
+          if-no-files-found: warn
+          retention-days: 30
