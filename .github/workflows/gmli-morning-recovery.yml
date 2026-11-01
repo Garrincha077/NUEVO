@@ -121,14 +121,21 @@ jobs:
           selected pboc    && dispatch_and_wait pboc    gmli-china-m2-v2-capture.yml        "PBoC M2 V2"
           selected global  && dispatch_and_wait global  gmli-global-money-v2-capture.yml    "Global Money V2"
           selected fiscal  && dispatch_and_wait fiscal  gmli-fiscal-prospective-capture.yml "Fiscal V2"
+          pages_started="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           selected pages   && dispatch_and_wait pages   gmli-pages.yml                      "GitHub Pages"
 
           if selected pages; then
             published="not verified"
             for _ in $(seq 1 30); do
               if curl -fsS "https://garrincha077.github.io/NUEVO/api/report.json" -o /tmp/gmli-report.json \
-                && jq -e '.meta.canonical == true or .meta.canonical == "true"' /tmp/gmli-report.json >/dev/null 2>&1; then
-                published="report.json live"
+                && jq -e --arg since "$pages_started" '
+                     (.meta.canonical == true)
+                     and (.data_health.status == "HEALTHY" or .data_health.status == "ACCEPTABLE")
+                     and ((.generated_at | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601) as $published
+                          | $published >= ($since | fromdateiso8601)
+                            and $published <= (now + 300))
+                   ' /tmp/gmli-report.json >/dev/null 2>&1; then
+                published="fresh canonical report.json, healthy data"
                 break
               fi
               sleep 6
@@ -140,7 +147,7 @@ jobs:
               echo "- GMLI Pages: **$published**"
               echo "- Report: https://garrincha077.github.io/NUEVO/api/report.json"
             } >> "$GITHUB_STEP_SUMMARY"
-            [ "$published" = "report.json live" ] || failed=1
+            [ "$published" = "fresh canonical report.json, healthy data" ] || failed=1
           fi
 
           if [ "$TARGETS" = "none" ]; then
