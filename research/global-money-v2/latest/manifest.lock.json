@@ -2,7 +2,7 @@
   "status": "PASS_GLOBAL_MONEY_V2_HEADLINE",
   "candidate_version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
   "evidence_tier": "RESEARCH_PROMOTION_CANDIDATE",
-  "built_at": "2026-11-10T15:35:52Z",
+  "built_at": "2026-11-11T15:12:37Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "methodology": {
@@ -219,13 +219,13 @@
   "latest_eligible": {
     "month": "2026-08",
     "available_date": "2026-09-30",
-    "gbm_usd_yoy_pct": 8.314537,
-    "gbm_fxn_yoy_pct": 5.675999,
-    "fx_effect_pp": 2.638537,
-    "usd_z": 0.369677,
-    "usd_score": 56.1613,
-    "fxn_z": -0.422142,
-    "fxn_score": 42.9643,
+    "gbm_usd_yoy_pct": 8.314484,
+    "gbm_fxn_yoy_pct": 5.675943,
+    "fx_effect_pp": 2.638541,
+    "usd_z": 0.369668,
+    "usd_score": 56.1611,
+    "fxn_z": -0.422163,
+    "fxn_score": 42.9639,
     "weights_pct": {
       "US": 21.275,
       "CN": 44.6254,
@@ -239,7 +239,7 @@
       "US": 5.5969,
       "CN": 7.4779,
       "EA": 3.2771,
-      "JP": 1.9845,
+      "JP": 1.9838,
       "GB": 4.2436,
       "CA": 4.5259,
       "AU": 6.9
@@ -257,13 +257,13 @@
   "latest_source_preview": {
     "month": "2026-08",
     "available_date": "2026-09-30",
-    "gbm_usd_yoy_pct": 8.314537,
-    "gbm_fxn_yoy_pct": 5.675999,
-    "fx_effect_pp": 2.638537,
-    "usd_z": 0.369677,
-    "usd_score": 56.1613,
-    "fxn_z": -0.422142,
-    "fxn_score": 42.9643,
+    "gbm_usd_yoy_pct": 8.314484,
+    "gbm_fxn_yoy_pct": 5.675943,
+    "fx_effect_pp": 2.638541,
+    "usd_z": 0.369668,
+    "usd_score": 56.1611,
+    "fxn_z": -0.422163,
+    "fxn_score": 42.9639,
     "weights_pct": {
       "US": 21.275,
       "CN": 44.6254,
@@ -277,7 +277,7 @@
       "US": 5.5969,
       "CN": 7.4779,
       "EA": 3.2771,
-      "JP": 1.9845,
+      "JP": 1.9838,
       "GB": 4.2436,
       "CA": 4.5259,
       "AU": 6.9
@@ -316,8 +316,8 @@
     },
     {
       "filename": "raw/jp-boj-m2.json",
-      "bytes": 2910,
-      "sha256": "7985a8aca975353dca937f2314e0af7c4d5491720cfb5caf3b62fa4da842654b",
+      "bytes": 2926,
+      "sha256": "2014bcc8d9be6c12d948c499b23f677f961e7a19255b0e9ead6d783b1bf77b3a",
       "source_url": "https://www.stat-search.boj.or.jp/api/v1/getDataCode?format=json&lang=en&db=MD02&startDate=201401&code=MAM1NAM2M2MO"
     },
     {
