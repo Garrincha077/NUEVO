@@ -3,20 +3,20 @@
   "candidate_version": "PBOC_OFFICIAL_M2_V2",
   "source_contract": "PBOC_OFFICIAL_HTML_MONEY_SUPPLY_TABLES",
   "evidence_tier": "RESEARCH_SOURCE_CANDIDATE",
-  "built_at": "2026-11-13T09:26:26Z",
+  "built_at": "2026-11-13T14:55:25Z",
   "core_modified": false,
   "legacy_exact_rerun": false,
   "start_month": "2014-01",
-  "end_month": "2026-09",
-  "months": 153,
+  "end_month": "2026-10",
+  "months": 154,
   "missing_months": [],
   "latest": {
-    "month": "2026-09",
-    "m2_100m": 3596289.7,
-    "derived_yoy_pct": 7.231223,
+    "month": "2026-10",
+    "m2_100m": 3590550.61,
+    "derived_yoy_pct": 7.138645,
     "source_type": "PBOC_OFFICIAL_MONEY_SUPPLY_HTML",
-    "source_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417435141164.htm",
-    "raw_sha256": "7240e02eee12b46e4e8199a5977cd2868778a79cca4aacfc1d97335299ef6ff8"
+    "source_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/11/2026111317321971322.htm",
+    "raw_sha256": "435e52aac890a5f6068c297fe7143663bb758f74abb13060f45f47f6f7dd23b3"
   },
   "current_report_cross_check_diff_100m": -22.76,
   "statistics_index": {
@@ -147,13 +147,13 @@
     },
     {
       "year": 2026,
-      "months": 9,
+      "months": 10,
       "first_month": "2026-01",
-      "last_month": "2026-09",
+      "last_month": "2026-10",
       "overview_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116319/2026ntjsj/hbtjgl/index.html",
-      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/10/2026101417435141164.htm",
-      "overview_sha256": "dbfee9df742be83d899cb8e764943ce4c1a1d33bf4cd91d95eae7d58af4e6496",
-      "supply_sha256": "7240e02eee12b46e4e8199a5977cd2868778a79cca4aacfc1d97335299ef6ff8"
+      "supply_url": "https://www.pbc.gov.cn/diaochatongjisi/attachDir/2026/11/2026111317321971322.htm",
+      "overview_sha256": "3c912a87867d34b8a7e5cc83b2453a7272f92ef9f9a5ef9668e651609507ac6e",
+      "supply_sha256": "435e52aac890a5f6068c297fe7143663bb758f74abb13060f45f47f6f7dd23b3"
     }
   ],
   "raw_source_files": [
@@ -270,12 +270,12 @@
     {
       "filename": "raw/2026-money-banking-overview.html",
       "bytes": 31811,
-      "sha256": "dbfee9df742be83d899cb8e764943ce4c1a1d33bf4cd91d95eae7d58af4e6496"
+      "sha256": "3c912a87867d34b8a7e5cc83b2453a7272f92ef9f9a5ef9668e651609507ac6e"
     },
     {
       "filename": "raw/2026-money-supply.html",
-      "bytes": 47514,
-      "sha256": "7240e02eee12b46e4e8199a5977cd2868778a79cca4aacfc1d97335299ef6ff8"
+      "bytes": 47532,
+      "sha256": "435e52aac890a5f6068c297fe7143663bb758f74abb13060f45f47f6f7dd23b3"
     },
     {
       "filename": "raw/statistics-index.html",
