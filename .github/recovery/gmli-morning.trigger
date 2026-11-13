@@ -1,5 +1,5 @@
 # Managed by the ChatGPT morning watchdog.
-# Set targets to a comma-separated subset of: money,funding,pboc,global,fiscal,pages
-targets=money,funding,pboc,global,fiscal,pages
-reason=2026-11-01-six-due-daily-crons-missed-after-30m-grace-restore-daily-canonical-output
-requested_at=2026-11-01T08:55:22Z
+# Minimal guarded source recovery only; no scoring/data semantics changes.
+targets=pboc,global,pages
+reason=2026-11-13-pboc-october-2026-m2-release-verified-and-daily-crons-missed-canonical-report-AGING
+requested_at=2026-11-13T09:25:22.121Z
