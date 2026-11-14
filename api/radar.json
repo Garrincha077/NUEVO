@@ -1,0 +1,1580 @@
+{
+  "schema_version": "gmli-radar-v1.2",
+  "engine_version": "GMLI 2.4.2 Radar Research Overlay",
+  "as_of": "2026-11-14T03:20:38.001Z",
+  "status": "RESEARCH_OVERLAY_NOT_CORE",
+  "purpose": "Find asymmetric contrarian setups and early 3–12M trend turns across a compact cross-asset universe without retuning the frozen Money Core.",
+  "universe": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "GLD",
+    "SLV",
+    "DBC",
+    "USO",
+    "CPER",
+    "DBA",
+    "TLT",
+    "IEF",
+    "FXY",
+    "HYG",
+    "VNQ",
+    "EEM",
+    "VEA",
+    "BTC"
+  ],
+  "regime_context": {
+    "label": "NEUTRAL",
+    "tilt": "NEUTRAL",
+    "conviction": "7/10",
+    "funding": "RESTRICTIVE",
+    "money": {
+      "status": "CORE",
+      "role": "ACTIVE_PROMOTED_MONEY_CORE_V2",
+      "version": "GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL",
+      "methodology_status": "FROZEN_V2_SPEC",
+      "data_vintage_status": "VALIDATED_CORE_ACTIVE",
+      "observation_month": "2026-08",
+      "usd_yoy_pct": 8.314484,
+      "usd_score": 56.2,
+      "usd_regime": "NEUTRAL",
+      "fx_neutral_yoy_pct": 5.675943,
+      "fx_neutral_score": 43,
+      "fx_neutral_regime": "NEUTRAL",
+      "agreement": "AGREE",
+      "available_date": "2026-09-30",
+      "freshness": "AGING",
+      "age_days": 45,
+      "promotion_status": "PASS_MONEY_V2_PRODUCTION_PROMOTION"
+    },
+    "money_candidate": null,
+    "money_nowcast": {
+      "status": "RESEARCH",
+      "tilt": "NEUTRAL_TO_SUPPORTIVE",
+      "coverage": "4/4",
+      "accelerating": "2/4",
+      "expanding_yoy": "4/4",
+      "blocks": {
+        "us": "2026-09",
+        "euro_area": "2026-09",
+        "japan": "2026-10",
+        "china": "2026-10"
+      },
+      "details": "/api/money-nowcast",
+      "current_research_inference": "NEUTRAL_TO_SUPPORTIVE: verified monthly snapshots are US 2026-09, EA 2026-09, JP 2026-10, CN 2026-10. Request-time live parsing is disabled; scheduled validated refresh is the intended path."
+    }
+  },
+  "buckets": {
+    "early_longs": [
+      {
+        "asset": "TLT",
+        "asset_class": "US LONG DURATION",
+        "asymmetry": "MEDIUM",
+        "preferred_side": "LONG",
+        "conflicts": [
+          "Long case conflicts with weakening relative strength versus SPY."
+        ],
+        "why": [
+          "Money/transmission context supports the long side.",
+          "Contrarian long dislocation threshold is met.",
+          "Price is in an early upside turn rather than a mature confirmed trend."
+        ]
+      },
+      {
+        "asset": "FXY",
+        "asset_class": "JAPANESE YEN",
+        "asymmetry": "MEDIUM",
+        "preferred_side": "LONG",
+        "conflicts": [
+          "Long case conflicts with crowded positioning.",
+          "Long case conflicts with weakening relative strength versus SPY."
+        ],
+        "why": [
+          "Money/transmission context supports the long side.",
+          "Contrarian long dislocation threshold is met.",
+          "CFTC positioning is crowded in the upper quartile."
+        ]
+      }
+    ],
+    "early_shorts": [],
+    "setup_longs": [
+      {
+        "asset": "VNQ",
+        "asset_class": "US REITS",
+        "asymmetry": "MEDIUM",
+        "preferred_side": "LONG",
+        "conflicts": [
+          "Long case conflicts with weakening relative strength versus SPY."
+        ],
+        "why": [
+          "Money/transmission context supports the long side.",
+          "Contrarian long dislocation threshold is met.",
+          "Price is in an early downside turn rather than a mature confirmed trend."
+        ]
+      }
+    ],
+    "setup_shorts": [],
+    "confirmed_longs": [
+      {
+        "asset": "USO",
+        "asset_class": "WTI CRUDE OIL",
+        "asymmetry": "MEDIUM",
+        "preferred_side": "LONG",
+        "conflicts": [
+          "Long contrarian evidence conflicts with an expensive/stretched price dislocation."
+        ],
+        "why": [
+          "Money/transmission context supports the long side.",
+          "Opposite-side dislocation is stretched enough to support a contrarian short watch.",
+          "CFTC positioning is in the contrarian-friendly lower quartile."
+        ]
+      }
+    ],
+    "confirmed_shorts": [
+      {
+        "asset": "GLD",
+        "asset_class": "GOLD",
+        "asymmetry": "MEDIUM",
+        "preferred_side": "SHORT",
+        "conflicts": [
+          "Short case conflicts with washed-out positioning."
+        ],
+        "why": [
+          "Money/transmission context is not supportive and can support the short side.",
+          "Opposite-side dislocation is stretched enough to support a contrarian short watch.",
+          "CFTC positioning is in the contrarian-friendly lower quartile."
+        ]
+      }
+    ],
+    "mature_dont_chase": [
+      {
+        "asset": "SPY",
+        "phase": "MATURE_LONG_DONT_CHASE",
+        "conflicts": []
+      },
+      {
+        "asset": "QQQ",
+        "phase": "MATURE_LONG_DONT_CHASE",
+        "conflicts": []
+      },
+      {
+        "asset": "SLV",
+        "phase": "MATURE_SHORT_DONT_CHASE",
+        "conflicts": []
+      },
+      {
+        "asset": "DBC",
+        "phase": "MATURE_LONG_DONT_CHASE",
+        "conflicts": []
+      }
+    ]
+  },
+  "assets": {
+    "SPY": {
+      "asset_class": "US EQUITY",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": true,
+      "phase": "MATURE_LONG_DONT_CHASE",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/3",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": null
+        }
+      },
+      "short_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/3",
+        "adverse_cap": false,
+        "components": {
+          "macro": false,
+          "contrarian": true,
+          "turn": false,
+          "relative_strength": null
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "USD Money",
+        "score": 56.2,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": true,
+        "positioning_washed": false,
+        "positioning_crowded": true,
+        "dislocation_z": 1.62,
+        "positioning_percentile": 78.8
+      },
+      "trend": {
+        "stage": "CONFIRMED_UP",
+        "price": 755.72,
+        "ma10": 725.5647,
+        "ma10_slope_3m_pct": 3.7,
+        "return_3m_pct": 1.4,
+        "return_6m_pct": 5.7,
+        "relative_strength_vs_spy": {
+          "available": false,
+          "pass": false,
+          "benchmark": "SELF",
+          "note": "SPY is the radar reference for relative strength."
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Opposite-side dislocation is stretched enough to support a contrarian short watch.",
+        "CFTC positioning is crowded in the upper quartile."
+      ],
+      "invalidation": [
+        "USD Money deteriorates materially.",
+        "Positioning remains or becomes crowded while price loses confirmation."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "QQQ": {
+      "asset_class": "US GROWTH",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": true,
+      "phase": "MATURE_LONG_DONT_CHASE",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": false,
+        "components": {
+          "macro": false,
+          "contrarian": true,
+          "turn": false,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "USD Money",
+        "score": 56.2,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": true,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": 1.5,
+        "positioning_percentile": 71.2
+      },
+      "trend": {
+        "stage": "CONFIRMED_UP",
+        "price": 690.49,
+        "ma10": 677.316,
+        "ma10_slope_3m_pct": 4.5,
+        "return_3m_pct": 0.5,
+        "return_6m_pct": 3.6,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "EARLY_DOWN",
+          "price": 0.9137,
+          "ma10": 0.9322,
+          "ma10_slope_3m_pct": 0.8,
+          "return_3m_pct": -0.9,
+          "return_6m_pct": -2,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Opposite-side dislocation is stretched enough to support a contrarian short watch.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "USD Money deteriorates materially.",
+        "Completed-month price turn rolls over."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "IWM": {
+      "asset_class": "US SMALL CAPS",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "WATCH",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "3/4",
+        "adverse_cap": false,
+        "components": {
+          "macro": false,
+          "contrarian": true,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "Broad Money context only",
+        "score": null,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": true,
+        "dislocation_z": -0.94,
+        "positioning_percentile": 98.6
+      },
+      "trend": {
+        "stage": "EARLY_DOWN",
+        "price": 279.33,
+        "ma10": 277.0384,
+        "ma10_slope_3m_pct": 4.4,
+        "return_3m_pct": -3.8,
+        "return_6m_pct": 1,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "EARLY_DOWN",
+          "price": 0.3696,
+          "ma10": 0.3818,
+          "ma10_slope_3m_pct": 0.8,
+          "return_3m_pct": -5.2,
+          "return_6m_pct": -4.4,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "CFTC positioning is crowded in the upper quartile.",
+        "Price is in an early downside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks.",
+        "Positioning remains or becomes crowded while price loses confirmation."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "GLD": {
+      "asset_class": "GOLD",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": true,
+      "phase": "CONFIRMED_SHORT",
+      "preferred_side": "SHORT",
+      "best_asymmetry": "MEDIUM",
+      "long_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": false,
+          "contrarian": true,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "4/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": true,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": false,
+        "short_support": true,
+        "basis": "FX-neutral Money",
+        "score": 43,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": true,
+        "positioning_washed": true,
+        "positioning_crowded": false,
+        "dislocation_z": 1.13,
+        "positioning_percentile": 15.6
+      },
+      "trend": {
+        "stage": "CONFIRMED_DOWN",
+        "price": 355.78,
+        "ma10": 408.473,
+        "ma10_slope_3m_pct": -0.2,
+        "return_3m_pct": -4.2,
+        "return_6m_pct": -16,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "CONFIRMED_DOWN",
+          "price": 0.4708,
+          "ma10": 0.5667,
+          "ma10_slope_3m_pct": -3.4,
+          "return_3m_pct": -5.6,
+          "return_6m_pct": -20.5,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [
+        "Short case conflicts with washed-out positioning."
+      ],
+      "mechanical_reasons": [
+        "Money/transmission context is not supportive and can support the short side.",
+        "Opposite-side dislocation is stretched enough to support a contrarian short watch.",
+        "CFTC positioning is in the contrarian-friendly lower quartile.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "FX-neutral Money deteriorates materially."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "SLV": {
+      "asset_class": "SILVER",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "MATURE_SHORT_DONT_CHASE",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": false,
+          "contrarian": true,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "3/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": false,
+        "short_support": true,
+        "basis": "FX-neutral Money",
+        "score": 43,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": false,
+        "positioning_washed": true,
+        "positioning_crowded": false,
+        "dislocation_z": 0.93,
+        "positioning_percentile": 8.1
+      },
+      "trend": {
+        "stage": "CONFIRMED_DOWN",
+        "price": 44.6,
+        "ma10": 62.863,
+        "ma10_slope_3m_pct": -0.1,
+        "return_3m_pct": -14.8,
+        "return_6m_pct": -33.1,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "CONFIRMED_DOWN",
+          "price": 0.059,
+          "ma10": 0.0875,
+          "ma10_slope_3m_pct": -3,
+          "return_3m_pct": -16,
+          "return_6m_pct": -36.7,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context is not supportive and can support the short side.",
+        "CFTC positioning is in the contrarian-friendly lower quartile.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "DBC": {
+      "asset_class": "BROAD COMMODITIES",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": true,
+      "phase": "MATURE_LONG_DONT_CHASE",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "3/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "short_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": false,
+          "contrarian": true,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "USD Money",
+        "score": 56.2,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": true,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": 2.79,
+        "positioning_percentile": 44.7
+      },
+      "trend": {
+        "stage": "CONFIRMED_UP",
+        "price": 33.61,
+        "ma10": 29.24,
+        "ma10_slope_3m_pct": 11.6,
+        "return_3m_pct": 14.1,
+        "return_6m_pct": 8.1,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": true,
+          "stage": "CONFIRMED_UP",
+          "price": 0.0445,
+          "ma10": 0.0403,
+          "ma10_slope_3m_pct": 7.7,
+          "return_3m_pct": 12.5,
+          "return_6m_pct": 2.3,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Opposite-side dislocation is stretched enough to support a contrarian short watch.",
+        "Relative strength versus SPY is improving."
+      ],
+      "invalidation": [
+        "USD Money deteriorates materially.",
+        "Completed-month price turn rolls over."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "USO": {
+      "asset_class": "WTI CRUDE OIL",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "CONFIRMED_LONG",
+      "preferred_side": "LONG",
+      "best_asymmetry": "MEDIUM",
+      "long_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "4/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": true,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "short_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": false,
+          "contrarian": true,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "USD Money",
+        "score": 56.2,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": true,
+        "positioning_washed": true,
+        "positioning_crowded": false,
+        "dislocation_z": 3.25,
+        "positioning_percentile": 8.8
+      },
+      "trend": {
+        "stage": "CONFIRMED_UP",
+        "price": 168.83,
+        "ma10": 124.87,
+        "ma10_slope_3m_pct": 23.2,
+        "return_3m_pct": 30.7,
+        "return_6m_pct": 14.8,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": true,
+          "stage": "CONFIRMED_UP",
+          "price": 0.2234,
+          "ma10": 0.1715,
+          "ma10_slope_3m_pct": 19,
+          "return_3m_pct": 28.9,
+          "return_6m_pct": 8.6,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [
+        "Long contrarian evidence conflicts with an expensive/stretched price dislocation."
+      ],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Opposite-side dislocation is stretched enough to support a contrarian short watch.",
+        "CFTC positioning is in the contrarian-friendly lower quartile.",
+        "Relative strength versus SPY is improving."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks.",
+        "Completed-month price turn rolls over."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "CPER": {
+      "asset_class": "COPPER",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "WATCH",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "3/4",
+        "adverse_cap": false,
+        "components": {
+          "macro": false,
+          "contrarian": true,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "USD Money",
+        "score": 56.2,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": true,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": 1.76,
+        "positioning_percentile": 38.8
+      },
+      "trend": {
+        "stage": "EARLY_DOWN",
+        "price": 38.99,
+        "ma10": 37.919,
+        "ma10_slope_3m_pct": 5.6,
+        "return_3m_pct": -1.4,
+        "return_6m_pct": 6.7,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "EARLY_DOWN",
+          "price": 0.0516,
+          "ma10": 0.0523,
+          "ma10_slope_3m_pct": 1.9,
+          "return_3m_pct": -2.8,
+          "return_6m_pct": 1,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Opposite-side dislocation is stretched enough to support a contrarian short watch.",
+        "Price is in an early downside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks.",
+        "Completed-month price turn rolls over."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "DBA": {
+      "asset_class": "AGRICULTURE",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "WATCH",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": false,
+        "components": {
+          "macro": false,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "USD Money",
+        "score": 56.2,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": 0.98,
+        "positioning_percentile": 62.3
+      },
+      "trend": {
+        "stage": "EARLY_DOWN",
+        "price": 26.89,
+        "ma10": 27.281,
+        "ma10_slope_3m_pct": 3,
+        "return_3m_pct": -2.3,
+        "return_6m_pct": -4.1,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "CONFIRMED_DOWN",
+          "price": 0.0356,
+          "ma10": 0.0377,
+          "ma10_slope_3m_pct": -0.6,
+          "return_3m_pct": -3.6,
+          "return_6m_pct": -9.2,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Price is in an early downside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "TLT": {
+      "asset_class": "US LONG DURATION",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "EARLY_LONG",
+      "preferred_side": "LONG",
+      "best_asymmetry": "MEDIUM",
+      "long_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "3/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": true,
+          "turn": true,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": false,
+          "contrarian": false,
+          "turn": false,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "Broad Money context only",
+        "score": null,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": true,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": 1.18,
+        "positioning_percentile": null
+      },
+      "trend": {
+        "stage": "EARLY_UP",
+        "price": 81.497,
+        "ma10": 82.8484,
+        "ma10_slope_3m_pct": -1.9,
+        "return_3m_pct": 0.7,
+        "return_6m_pct": -2.2,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "CONFIRMED_DOWN",
+          "price": 0.1078,
+          "ma10": 0.1147,
+          "ma10_slope_3m_pct": -5.2,
+          "return_3m_pct": -0.7,
+          "return_6m_pct": -7.4,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [
+        "Long case conflicts with weakening relative strength versus SPY."
+      ],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Contrarian long dislocation threshold is met.",
+        "Price is in an early upside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks.",
+        "Completed-month price turn rolls over."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": null,
+        "money": "2026-09-30"
+      }
+    },
+    "IEF": {
+      "asset_class": "US INTERMEDIATE TREASURIES",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "TREND_DOWN_NO_CONTRARIAN_EDGE",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": false,
+        "components": {
+          "macro": false,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "Broad Money context only",
+        "score": null,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": 0.94,
+        "positioning_percentile": null
+      },
+      "trend": {
+        "stage": "CONFIRMED_DOWN",
+        "price": 91.449,
+        "ma10": 92.2819,
+        "ma10_slope_3m_pct": -0.8,
+        "return_3m_pct": -0.2,
+        "return_6m_pct": -1.4,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "CONFIRMED_DOWN",
+          "price": 0.121,
+          "ma10": 0.1276,
+          "ma10_slope_3m_pct": -4.2,
+          "return_3m_pct": -1.6,
+          "return_6m_pct": -6.7,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": null,
+        "money": "2026-09-30"
+      }
+    },
+    "FXY": {
+      "asset_class": "JAPANESE YEN",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "EARLY_LONG",
+      "preferred_side": "LONG",
+      "best_asymmetry": "MEDIUM",
+      "long_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "3/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": true,
+          "turn": true,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": false,
+          "contrarian": true,
+          "turn": false,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "Broad Money context only",
+        "score": null,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": true,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": true,
+        "dislocation_z": -1,
+        "positioning_percentile": 81.2
+      },
+      "trend": {
+        "stage": "EARLY_UP",
+        "price": 58.19,
+        "ma10": 58.03,
+        "ma10_slope_3m_pct": -0.6,
+        "return_3m_pct": 0.9,
+        "return_6m_pct": -0.8,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "CONFIRMED_DOWN",
+          "price": 0.077,
+          "ma10": 0.0802,
+          "ma10_slope_3m_pct": -4.1,
+          "return_3m_pct": -0.5,
+          "return_6m_pct": -6.1,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [
+        "Long case conflicts with crowded positioning.",
+        "Long case conflicts with weakening relative strength versus SPY."
+      ],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Contrarian long dislocation threshold is met.",
+        "CFTC positioning is crowded in the upper quartile.",
+        "Price is in an early upside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks.",
+        "Positioning remains or becomes crowded while price loses confirmation."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": "2026-11-03",
+        "money": "2026-09-30"
+      }
+    },
+    "HYG": {
+      "asset_class": "HIGH YIELD CREDIT",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "WATCH",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": false,
+        "components": {
+          "macro": false,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "Broad Money context only",
+        "score": null,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": null,
+        "positioning_percentile": null
+      },
+      "trend": {
+        "stage": "EARLY_DOWN",
+        "price": 77.029,
+        "ma10": 77.4494,
+        "ma10_slope_3m_pct": 0.4,
+        "return_3m_pct": -1.1,
+        "return_6m_pct": -0.8,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "CONFIRMED_DOWN",
+          "price": 0.1019,
+          "ma10": 0.107,
+          "ma10_slope_3m_pct": -3.1,
+          "return_3m_pct": -2.5,
+          "return_6m_pct": -6.1,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Price is in an early downside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": null,
+        "money": "2026-09-30"
+      }
+    },
+    "VNQ": {
+      "asset_class": "US REITS",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "SETUP_LONG",
+      "preferred_side": "LONG",
+      "best_asymmetry": "MEDIUM",
+      "long_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": true,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": false,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "Broad Money context only",
+        "score": null,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": true,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": -1.43,
+        "positioning_percentile": null
+      },
+      "trend": {
+        "stage": "EARLY_DOWN",
+        "price": 93.94,
+        "ma10": 93.0098,
+        "ma10_slope_3m_pct": 2.1,
+        "return_3m_pct": -4.2,
+        "return_6m_pct": -0.8,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "CONFIRMED_DOWN",
+          "price": 0.1243,
+          "ma10": 0.1284,
+          "ma10_slope_3m_pct": -1.4,
+          "return_3m_pct": -5.6,
+          "return_6m_pct": -6.1,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [
+        "Long case conflicts with weakening relative strength versus SPY."
+      ],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Contrarian long dislocation threshold is met.",
+        "Price is in an early downside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks.",
+        "Completed-month price turn rolls over."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": null,
+        "money": "2026-09-30"
+      }
+    },
+    "EEM": {
+      "asset_class": "EM EQUITY",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "WATCH",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": false,
+        "components": {
+          "macro": false,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "Broad Money context only",
+        "score": null,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": -0.5,
+        "positioning_percentile": null
+      },
+      "trend": {
+        "stage": "EARLY_DOWN",
+        "price": 61.04,
+        "ma10": 63.6802,
+        "ma10_slope_3m_pct": 5.4,
+        "return_3m_pct": -4.8,
+        "return_6m_pct": -4.1,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "EARLY_DOWN",
+          "price": 0.0808,
+          "ma10": 0.0878,
+          "ma10_slope_3m_pct": 1.9,
+          "return_3m_pct": -6.1,
+          "return_6m_pct": -9.3,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Price is in an early downside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": null,
+        "money": "2026-09-30"
+      }
+    },
+    "VEA": {
+      "asset_class": "DEVELOPED EX-US",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "WATCH",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "LOW",
+        "evidence": "1/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "short_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "2/4",
+        "adverse_cap": false,
+        "components": {
+          "macro": false,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "Broad Money context only",
+        "score": null,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": -0.39,
+        "positioning_percentile": null
+      },
+      "trend": {
+        "stage": "EARLY_DOWN",
+        "price": 69.44,
+        "ma10": 69.2547,
+        "ma10_slope_3m_pct": 4.8,
+        "return_3m_pct": -1.4,
+        "return_6m_pct": 1.7,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": false,
+          "stage": "EARLY_DOWN",
+          "price": 0.0919,
+          "ma10": 0.0956,
+          "ma10_slope_3m_pct": 1.2,
+          "return_3m_pct": -2.8,
+          "return_6m_pct": -3.8,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Price is in an early downside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is weakening."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks.",
+        "Completed-month price turn rolls over."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": null,
+        "money": "2026-09-30"
+      }
+    },
+    "BTC": {
+      "asset_class": "BITCOIN",
+      "evidence_tier": "RESEARCH_RADAR_OVERLAY",
+      "core_transmission": false,
+      "phase": "WATCH",
+      "preferred_side": "NONE",
+      "best_asymmetry": "LOW",
+      "long_asymmetry": {
+        "label": "MEDIUM",
+        "evidence": "3/4",
+        "adverse_cap": false,
+        "components": {
+          "macro": true,
+          "contrarian": false,
+          "turn": true,
+          "relative_strength": true
+        }
+      },
+      "short_asymmetry": {
+        "label": "LOW",
+        "evidence": "0/4",
+        "adverse_cap": true,
+        "components": {
+          "macro": false,
+          "contrarian": false,
+          "turn": false,
+          "relative_strength": false
+        }
+      },
+      "macro": {
+        "long_support": true,
+        "short_support": false,
+        "basis": "Broad Money context only",
+        "score": null,
+        "freshness_turn": "NEUTRAL_TO_SUPPORTIVE"
+      },
+      "contrarian": {
+        "cheap_long": false,
+        "expensive_short": false,
+        "positioning_washed": false,
+        "positioning_crowded": false,
+        "dislocation_z": null,
+        "positioning_percentile": null
+      },
+      "trend": {
+        "stage": "EARLY_UP",
+        "price": 77434.75,
+        "ma10": 72464.4137,
+        "ma10_slope_3m_pct": -6.2,
+        "return_3m_pct": 23.3,
+        "return_6m_pct": 1.5,
+        "relative_strength_vs_spy": {
+          "available": true,
+          "pass": true,
+          "stage": "EARLY_UP",
+          "price": 102.4649,
+          "ma10": 100.0443,
+          "ma10_slope_3m_pct": -10,
+          "return_3m_pct": 21.6,
+          "return_6m_pct": -4,
+          "as_of": "2026-10",
+          "rule": "relative price versus SPY > 10M MA OR 3M return > 0; stage also uses 3M return and 10M-MA 3M slope",
+          "benchmark": "SPY"
+        }
+      },
+      "conflicts": [],
+      "mechanical_reasons": [
+        "Money/transmission context supports the long side.",
+        "Price is in an early upside turn rather than a mature confirmed trend.",
+        "Relative strength versus SPY is improving."
+      ],
+      "invalidation": [
+        "Broad Money freshness deteriorates across several major blocks.",
+        "Completed-month price turn rolls over."
+      ],
+      "freshness": {
+        "price": "2026-10",
+        "positioning": null,
+        "money": "2026-09-30"
+      }
+    }
+  },
+  "research_design": {
+    "principles": [
+      "Liquidity/Money is a prior, not a standalone trade signal.",
+      "Contrarian dislocation and positioning create asymmetry; trend/relative-strength confirmation reduces the risk of fighting a persistent move.",
+      "Early turn is distinct from confirmed trend so the radar can surface candidates before a mature move.",
+      "Conflicting stretch or relative-strength evidence caps asymmetry rather than being averaged away.",
+      "New IWM/SLV/USO/CPER/DBA/IEF/FXY relationships are RESEARCH proxies, never promoted transmission.",
+      "Missing or unsupported data never count as a pass.",
+      "No new parameter search, FDR sweep or Core retuning is performed by this radar."
+    ]
+  },
+  "copilot_contract": {
+    "mechanical_radar_is_not_final_opinion": true,
+    "current_research_required": true,
+    "instruction": "After reading /api/radar, independently check current macro/policy changes, asset-specific catalysts, market structure and material divergences. State the resulting COPILOT VIEW separately from ENGINE FACT and RADAR FACT. The Copilot may disagree with a mechanical ranking, but must explain the conflict and may not silently promote RESEARCH/OVERLAY to CORE.",
+    "default_output": [
+      "EARLY LONG",
+      "EARLY SHORT",
+      "SETUP WATCH",
+      "MATURE / DO NOT CHASE",
+      "COPILOT VIEW",
+      "WHAT WOULD INVALIDATE IT"
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "gmli-current-market-v1",
+  "status": "OK",
+  "evidence_tier": "RESEARCH",
+  "role": "CURRENT_MARKET_CONFIRMATION_ONLY",
+  "generated_at": "2026-11-14T03:20:37.874Z",
+  "coverage": "4/4",
+  "positive": 2,
+  "negative": 2,
+  "summary": "MIXED",
+  "divergences": [
+    {
+      "asset": "QQQ",
+      "type": "NEGATIVE_DIVERGENCE"
+    }
+  ],
+  "assets": {
+    "SPY": {
+      "latest_completed_session": "2026-11-13",
+      "price": 754.37,
+      "return_1m_pct": -2.26,
+      "ma50": 764.0882,
+      "ma200": 729.3152,
+      "trend": "POSITIVE_MIXED",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "QQQ": {
+      "latest_completed_session": "2026-11-13",
+      "price": 679.89,
+      "return_1m_pct": -6.61,
+      "ma50": 717.7187,
+      "ma200": 681.2007,
+      "trend": "NEGATIVE_MIXED",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "NEGATIVE_DIVERGENCE",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "GLD": {
+      "latest_completed_session": "2026-11-13",
+      "price": 355.45,
+      "return_1m_pct": -7.12,
+      "ma50": 380.906,
+      "ma200": 408.4167,
+      "trend": "BEARISH",
+      "structural_monthly_stage": "CONFIRMED_DOWN",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "DBC": {
+      "latest_completed_session": "2026-11-13",
+      "price": 30.79,
+      "return_1m_pct": -7.54,
+      "ma50": 32.7344,
+      "ma200": 29.5971,
+      "trend": "POSITIVE_MIXED",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    }
+  },
+  "errors": [],
+  "note": "Current daily market confirmation can raise/lower conviction or highlight divergence; it never rewrites frozen Money Core or completed-month structural signals."
+}
