@@ -44,8 +44,8 @@ jobs:
           {
             echo "## GMLI Morning Recovery"
             echo
-            echo "- Trigger: `${{ github.event_name }}`"
-            echo "- Targets: `$targets`"
+            echo '- Trigger: `${{ github.event_name }}`'
+            echo "- Targets: \`$targets\`"
             echo
             echo "| Target | Run | Result | Published output |"
             echo "|---|---|---|---|"
