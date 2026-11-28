@@ -1,0 +1,77 @@
+{
+  "schema_version": "gmli-current-market-v1",
+  "status": "OK",
+  "evidence_tier": "RESEARCH",
+  "role": "CURRENT_MARKET_CONFIRMATION_ONLY",
+  "generated_at": "2026-11-28T15:41:42.628Z",
+  "coverage": "4/4",
+  "positive": 0,
+  "negative": 4,
+  "summary": "BROADLY_NEGATIVE",
+  "divergences": [
+    {
+      "asset": "SPY",
+      "type": "NEGATIVE_DIVERGENCE"
+    },
+    {
+      "asset": "QQQ",
+      "type": "NEGATIVE_DIVERGENCE"
+    },
+    {
+      "asset": "DBC",
+      "type": "NEGATIVE_DIVERGENCE"
+    }
+  ],
+  "assets": {
+    "SPY": {
+      "latest_completed_session": "2026-11-27",
+      "price": 728.32,
+      "return_1m_pct": -5.7,
+      "ma50": 757.2032,
+      "ma200": 730.9807,
+      "trend": "NEGATIVE_MIXED",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "NEGATIVE_DIVERGENCE",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "QQQ": {
+      "latest_completed_session": "2026-11-27",
+      "price": 650.99,
+      "return_1m_pct": -10.28,
+      "ma50": 705.716,
+      "ma200": 682.7437,
+      "trend": "NEGATIVE_MIXED",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "NEGATIVE_DIVERGENCE",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "GLD": {
+      "latest_completed_session": "2026-11-27",
+      "price": 334.4,
+      "return_1m_pct": -10.47,
+      "ma50": 369.7642,
+      "ma200": 403.1678,
+      "trend": "BEARISH",
+      "structural_monthly_stage": "CONFIRMED_DOWN",
+      "divergence_vs_structural": "CONFIRMS",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    },
+    "DBC": {
+      "latest_completed_session": "2026-11-27",
+      "price": 29.55,
+      "return_1m_pct": -12.55,
+      "ma50": 32.112,
+      "ma200": 29.8422,
+      "trend": "NEGATIVE_MIXED",
+      "structural_monthly_stage": "CONFIRMED_UP",
+      "divergence_vs_structural": "NEGATIVE_DIVERGENCE",
+      "evidence_tier": "RESEARCH",
+      "role": "CURRENT_MARKET_CONFIRMATION_ONLY"
+    }
+  },
+  "errors": [],
+  "note": "Current daily market confirmation can raise/lower conviction or highlight divergence; it never rewrites frozen Money Core or completed-month structural signals."
+}

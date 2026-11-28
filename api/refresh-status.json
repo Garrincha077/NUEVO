@@ -1,0 +1,98 @@
+{
+  "schema_version": "gmli-pages-refresh-v1",
+  "started_at": "2026-11-28T15:36:36.896300Z",
+  "policy": "FETCH_FIRST_WITH_PER_LAYER_LAST_GOOD_FALLBACK",
+  "production_state_commit": false,
+  "layers": {
+    "money_core": {
+      "status": "LAST_GOOD_FALLBACK",
+      "failed_command": "python scripts/run-global-money-v2.py --build-full",
+      "working_tree_changed": false,
+      "paths": [
+        "research/china-m2-official-v2/latest",
+        "research/global-money-v2/latest",
+        "research/global-money-v2/transfer/latest",
+        "lib/money-v2-active.js"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/extend-pboc-m2-v2-2014.py --build-full",
+          "exit_code": 0,
+          "output_tail": "bf3b5ddae8b149b84e\",\n        \"hash_same_as_discovery\": true,\n        \"title_mode\": \"PERIOD_END\",\n        \"source_contract\": \"LOCKED_OFFICIAL_PBOC_URL_SEMANTICALLY_VALIDATED\"\n      },\n      {\n        \"seed_month\": \"2014-10\",\n        \"source_month\": \"2015-10\",\n        \"implied_comparable_base_100m\": 1199137.180617,\n        \"precision_current_level_100m\": 1361020.7,\n        \"published_yoy_pct\": 13.5,\n        \"reported_level_trn_cny\": 136.1,\n        \"article_url\": \"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/f8385792c6b44ab9b396737fdfead3ee/index.html\",\n        \"article_sha256\": \"efa45af65740ed62c33c9c5a72210ab55ac73d22eed89179643eb327dbf1ffd8\",\n        \"discovery_sha256\": \"efa45af65740ed62c33c9c5a72210ab55ac73d22eed89179643eb327dbf1ffd8\",\n        \"hash_same_as_discovery\": true,\n        \"title_mode\": \"EXACT_MONTH\",\n        \"source_contract\": \"LOCKED_OFFICIAL_PBOC_URL_SEMANTICALLY_VALIDATED\"\n      },\n      {\n        \"seed_month\": \"2014-11\",\n        \"source_month\": \"2015-11\",\n        \"implied_comparable_base_100m\": 1208404.582234,\n        \"precision_current_level_100m\": 1373956.01,\n        \"published_yoy_pct\": 13.7,\n        \"reported_level_trn_cny\": 137.4,\n        \"article_url\": \"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/eaa8c83b22bb4532b094b87341a94379/index.html\",\n        \"article_sha256\": \"9082622b971b03de7f266f47c9d01047d26b3004df0e0bd6d601136f379908ec\",\n        \"discovery_sha256\": \"9082622b971b03de7f266f47c9d01047d26b3004df0e0bd6d601136f379908ec\",\n        \"hash_same_as_discovery\": true,\n        \"title_mode\": \"EXACT_MONTH\",\n        \"source_contract\": \"LOCKED_OFFICIAL_PBOC_URL_SEMANTICALLY_VALIDATED\"\n      },\n      {\n        \"seed_month\": \"2014-12\",\n        \"source_month\": \"2015-12\",\n        \"implied_comparable_base_100m\": 1228842.109444,\n        \"precision_current_level_100m\": 1392278.11,\n        \"published_yoy_pct\": 13.3,\n        \"reported_level_trn_cny\": 139.23,\n        \"article_url\": \"https://www.pbc.gov.cn/diaochatongjisi/116219/116225/97765ac732da497b842c87a46b880718/index.html\",\n        \"article_sha256\": \"4abd4b51f226d68b6cfd166664f6ff09fcbd85e6a9211544b8a522f5acde4160\",\n        \"discovery_sha256\": \"4abd4b51f226d68b6cfd166664f6ff09fcbd85e6a9211544b8a522f5acde4160\",\n        \"hash_same_as_discovery\": true,\n        \"title_mode\": \"PERIOD_END\",\n        \"source_contract\": \"LOCKED_OFFICIAL_PBOC_URL_SEMANTICALLY_VALIDATED\"\n      }\n    ]\n  }\n}"
+        },
+        {
+          "command": "python scripts/run-global-money-v2.py --build-full",
+          "exit_code": 1,
+          "output_tail": "{\n  \"status\": \"FAIL\",\n  \"candidate_version\": \"GMLI_GLOBAL_MONEY_V2_PBOC_OFFICIAL\",\n  \"core_modified\": false,\n  \"error\": \"The read operation timed out\"\n}"
+        }
+      ]
+    },
+    "money_nowcast": {
+      "status": "REFRESH_OK",
+      "working_tree_changed": true,
+      "paths": [
+        "lib/nowcast-state.js"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/refresh-money-nowcast.py",
+          "exit_code": 0,
+          "output_tail": "{\n  \"attempted_at\": \"2026-11-28T15:39:57Z\",\n  \"changed\": true,\n  \"results\": {\n    \"us\": {\n      \"status\": \"PRESERVED_LAST_VERIFIED\",\n      \"error\": \"The read operation timed out\"\n    },\n    \"euro_area\": {\n      \"status\": \"PASS\",\n      \"changed\": false\n    },\n    \"japan\": {\n      \"status\": \"PASS\",\n      \"changed\": false\n    },\n    \"usd_translation\": {\n      \"status\": \"PRESERVED_LAST_VERIFIED\",\n      \"error\": \"The read operation timed out\"\n    },\n    \"china\": {\n      \"status\": \"PASS\",\n      \"changed\": true,\n      \"report_month\": \"2026-10\",\n      \"level_trn_cny\": 359.06,\n      \"yoy_pct\": 7.1,\n      \"source_url\": \"https://www.pbc.gov.cn/goutongjiaoliu/113456/113469/2026111315073060062/index.html\",\n      \"source_article_sha256\": \"48461c69ab2b86e9cc69ae6f691263b472bdc5ee95c9f81f99df2cf88a604341\",\n      \"source_search_sha256\": \"717e68fe1a62b8edafe4706ee750b5959ace562636ea09aabb309a2941081c6c\"\n    }\n  }\n}"
+        }
+      ]
+    },
+    "funding_v2": {
+      "status": "LAST_GOOD_FALLBACK",
+      "failed_command": "python scripts/refresh-funding-v2.py --apply",
+      "working_tree_changed": false,
+      "paths": [
+        "research/funding-v2/latest",
+        "lib/funding-v2-active.js"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/refresh-funding-v2.py --apply",
+          "exit_code": 1,
+          "output_tail": "{\n  \"status\": \"FAIL_ACTIVE_FUNDING_V2_REFRESH_GUARDS\",\n  \"error\": \"FRED fetch failed for ANFCI after 2 attempts: The read operation timed out\",\n  \"production_files_written\": false,\n  \"money_core_modified\": false,\n  \"last_good_preserved\": true\n}"
+        }
+      ]
+    },
+    "fiscal_v2": {
+      "status": "LAST_GOOD_FALLBACK",
+      "failed_command": "python scripts/capture-prospective-fiscal-inputs.py",
+      "working_tree_changed": false,
+      "paths": [
+        "research/fiscal-prospective/latest",
+        "research/fiscal-v2/latest",
+        "lib/fiscal-v2-active.js"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/capture-prospective-fiscal-inputs.py",
+          "exit_code": 1,
+          "output_tail": "ure-prospective-fiscal-inputs.py\", line 43, in fetch\n    with urllib.request.urlopen(req, timeout=timeout) as r:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/urllib/request.py\", line 215, in urlopen\n    return opener.open(url, data, timeout)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/urllib/request.py\", line 515, in open\n    response = self._open(req, data)\n               ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/urllib/request.py\", line 532, in _open\n    result = self._call_chain(self.handle_open, protocol, protocol +\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/urllib/request.py\", line 492, in _call_chain\n    result = func(*args)\n             ^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/urllib/request.py\", line 1405, in https_open\n    return self.do_open(http.client.HTTPSConnection, req,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/urllib/request.py\", line 1361, in do_open\n    r = h.getresponse()\n        ^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/http/client.py\", line 1478, in getresponse\n    response.begin()\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/http/client.py\", line 343, in begin\n    version, status, reason = self._read_status()\n                              ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/http/client.py\", line 304, in _read_status\n    line = str(self.fp.readline(_MAXLINE + 1), \"iso-8859-1\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/socket.py\", line 720, in readinto\n    return self._sock.recv_into(b)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/ssl.py\", line 1264, in recv_into\n    return self.read(nbytes, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/ssl.py\", line 1116, in read\n    return self._sslobj.read(len, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTimeoutError: The read operation timed out"
+        }
+      ]
+    },
+    "cftc_positioning": {
+      "status": "REFRESH_OK",
+      "working_tree_changed": true,
+      "paths": [
+        "research/cftc-positioning/latest"
+      ],
+      "commands": [
+        {
+          "command": "python scripts/refresh-cftc-positioning.py --apply",
+          "exit_code": 0,
+          "output_tail": "{\n  \"status\": \"PASS_CFTC_POSITIONING_REFRESH\",\n  \"source_guard\": \"PASS_CFTC_POSITIONING_SOURCE_GUARDS\",\n  \"latest_report_date\": \"2026-11-17\",\n  \"latest_report_age_days\": 11,\n  \"window_start\": \"2023-10-28\",\n  \"core_mapping_guard\": \"PASS_SPY_QQQ_GLD_DBC\",\n  \"applied\": true,\n  \"methodology_changed\": false,\n  \"scoring_effect\": \"NONE\",\n  \"automatic_weight_change\": 0\n}"
+        }
+      ]
+    }
+  },
+  "current_market": {
+    "status": "LIVE_DURING_REPORT_BUILD",
+    "source": "Yahoo daily SPY/QQQ/GLD/DBC through lib/current-market.js"
+  },
+  "status": "PASS_WITH_LAST_GOOD_FALLBACK",
+  "completed_at": "2026-11-28T15:41:35.336876Z"
+}
